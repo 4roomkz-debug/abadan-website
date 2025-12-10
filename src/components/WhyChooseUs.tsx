@@ -98,7 +98,7 @@ export default function WhyChooseUs() {
               >
                 {/* Highlight badge for special offer */}
                 {reason.highlight && (
-                  <div className="absolute -top-3 -right-3 px-4 py-1.5 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full text-[#050508] text-xs font-bold uppercase tracking-wide shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full text-[#050508] text-xs font-bold uppercase tracking-wide shadow-[0_0_20px_rgba(212,175,55,0.4)]">
                     Акция
                   </div>
                 )}
