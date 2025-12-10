@@ -6,19 +6,19 @@ export default function Trainers() {
       name: "Шамсутдинова Земфира Ильясовна",
       role: "Эксперт по HR и трудовому законодательству",
       description: "Семинары и вебинары по трудовому законодательству, кадровому администрированию и делопроизводству, кадровому аудиту, регистрации трудовых договоров на веб-портале enbek.kz, оформлению документов на привлечение иностранной рабочей силы.",
-      color: "from-[#14B8A6] to-[#0D9488]"
+      photo: "/images/shamsutdinova.png"
     },
     {
       name: "Курпенов Бакыт Касымович",
       role: "Старший преподаватель АУЭС",
       description: "Старший преподаватель АУЭС кафедры: Электрические станций, сети и системы. Исследования изменения влагосодержания яблок в гелиосушильном модуле.",
-      color: "from-[#FBBF24] to-[#F59E0B]"
+      photo: "/images/kurpenov.png"
     },
     {
       name: "Серикбекулы Асхат",
       role: "Бизнес-консультант, MSc in Finance",
       description: "Консультант крупнейших организаций Республики Казахстан. Бизнес-консультант в области управления финансами и привлечения инвестиций, Управляющий партнер.",
-      color: "from-[#14B8A6] to-[#0D9488]"
+      photo: "/images/serikbekuly.png"
     }
   ];
 
@@ -46,10 +46,14 @@ export default function Trainers() {
                 key={index}
                 className="dark-card p-6 space-y-5 gradient-border-dark"
               >
-                {/* Avatar - square */}
+                {/* Avatar with photo */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-14 h-14 rounded-lg bg-gradient-to-br ${trainer.color} flex items-center justify-center text-white text-xl font-bold`}>
-                    {trainer.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
+                  <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
+                    <img
+                      src={trainer.photo}
+                      alt={trainer.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div>
                     <h3 className="font-bold text-[#F1F5F9]">
