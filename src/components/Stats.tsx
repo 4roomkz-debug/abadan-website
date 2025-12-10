@@ -1,38 +1,110 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+
+function useCountUp(end: number, duration: number = 2000, start: boolean = false) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+
+    let startTime: number | null = null;
+    let animationFrame: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+
+      // Easing function for smooth deceleration
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+
+      setCount(Math.floor(easeOutQuart * end));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, start]);
+
+  return count;
+}
+
+function formatNumber(num: number, format: string): string {
+  if (format === "space") {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+  return num.toString();
+}
+
+function AnimatedStat({
+  targetNumber,
+  label,
+  suffix,
+  format,
+  isVisible,
+  delay
+}: {
+  targetNumber: number;
+  label: string;
+  suffix: string;
+  format: string;
+  isVisible: boolean;
+  delay: number;
+}) {
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => setShouldAnimate(true), delay);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, delay]);
+
+  const count = useCountUp(targetNumber, 2000, shouldAnimate);
+
+  return (
+    <div className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gradient-gold tracking-tight whitespace-nowrap">
+      {formatNumber(count, format)}<span className="text-[#D4AF37]">{suffix}</span>
+    </div>
+  );
+}
 
 export default function Stats() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const stats = [
-    { number: "359", label: "компаний возвращаются снова", suffix: "" },
-    { number: "14 275", label: "сотрудников применяют знания", suffix: "" },
-    { number: "200", label: "экспертов под любую задачу", suffix: "+" },
-    { number: "2015", label: "год первого результата", suffix: "" }
+    { number: 359, label: "компаний возвращаются снова", suffix: "", format: "plain" },
+    { number: 14275, label: "сотрудников применяют знания", suffix: "", format: "space" },
+    { number: 200, label: "экспертов под любую задачу", suffix: "+", format: "plain" },
+    { number: 2015, label: "год первого результата", suffix: "", format: "plain" }
   ];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
+  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    if (entry.isIntersecting) {
+      setIsVisible(true);
+    }
+  }, []);
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+  useEffect(() => {
+    const observer = new IntersectionObserver(observerCallback, { threshold: 0.3 });
+    const currentRef = sectionRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [observerCallback]);
 
   return (
     <section ref={sectionRef} className="relative py-24 sm:py-32 section-dark-2">
@@ -71,9 +143,14 @@ export default function Stats() {
                 }`}
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gradient-gold tracking-tight whitespace-nowrap">
-                  {stat.number}<span className="text-[#D4AF37]">{stat.suffix}</span>
-                </div>
+                <AnimatedStat
+                  targetNumber={stat.number}
+                  label={stat.label}
+                  suffix={stat.suffix}
+                  format={stat.format}
+                  isVisible={isVisible}
+                  delay={index * 150}
+                />
                 <div className="text-[#71717A] font-medium text-sm leading-relaxed uppercase tracking-wide">
                   {stat.label}
                 </div>
