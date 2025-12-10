@@ -78,7 +78,7 @@ export default function WhyChooseUs() {
           {/* Section header */}
           <div className="text-center mb-20 space-y-4">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FAFAFA]">
-              Почему нас <span className="text-gradient-gold">выбирают?</span>
+              Почему нас <span className="text-gradient-primary">выбирают?</span>
             </h2>
             <p className="text-xl text-[#71717A] max-w-2xl mx-auto">
               6 причин работать с Abadan & Company

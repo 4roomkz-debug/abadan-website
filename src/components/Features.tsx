@@ -56,7 +56,7 @@ export default function Features() {
           {/* Section header */}
           <div className="text-center mb-20 space-y-4">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FAFAFA]">
-              Что вы <span className="text-gradient-gold">получите</span>
+              Что вы <span className="text-gradient-primary">получите</span>
             </h2>
 
             <p className="text-xl text-[#71717A] max-w-2xl mx-auto">

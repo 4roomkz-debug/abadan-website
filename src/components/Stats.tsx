@@ -53,7 +53,7 @@ export default function Stats() {
           {/* Section header */}
           <div className="text-center mb-20">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FAFAFA]">
-              Цифры, которые <span className="text-gradient-gold">говорят</span>
+              Цифры, которые <span className="text-gradient-primary">говорят</span>
             </h2>
           </div>
 
