@@ -45,21 +45,21 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="relative py-24 sm:py-32 section-dark-2">
+    <section id="features" className="relative py-24 sm:py-32 section-subtle">
       {/* Ambient glow */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#D4AF37]/[0.04] to-transparent blur-[100px]"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#00767D]/[0.03] to-transparent blur-[100px]"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-20 space-y-4">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FAFAFA]">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C]">
               Что вы <span className="text-gradient-primary">получите</span>
             </h2>
 
-            <p className="text-xl text-[#71717A] max-w-2xl mx-auto">
+            <p className="text-xl text-[#7A8B8E] max-w-2xl mx-auto">
               Не процесс обучения, а конкретный бизнес-результат
             </p>
           </div>
@@ -69,20 +69,20 @@ export default function Features() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="premium-card p-8 space-y-5 group hover:border-[#D4AF37]/30 transition-all duration-300"
+                className="premium-card p-8 space-y-5 group hover:border-[#00767D]/20 transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#B8860B] flex items-center justify-center text-[#050508] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] transition-all duration-500">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white group-hover:shadow-[0_0_30px_rgba(0,118,125,0.2)] transition-all duration-500">
                     {feature.icon}
                   </div>
-                  <span className="text-3xl font-extrabold text-[#27272A]">{feature.number}</span>
+                  <span className="text-3xl font-extrabold text-[#E0E5E6]">{feature.number}</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-[#FAFAFA]">
+                <h3 className="text-xl font-bold text-[#2D3A3C]">
                   {feature.title}
                 </h3>
 
-                <p className="text-[#A1A1AA] leading-relaxed">
+                <p className="text-[#546569] leading-relaxed">
                   {feature.subtitle}
                 </p>
               </div>
@@ -92,21 +92,21 @@ export default function Features() {
           {/* Bottom highlight */}
           <div className="mt-20">
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#D4AF37]/10 via-transparent to-[#14B8A6]/10 rounded-3xl blur-2xl"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#00767D]/5 via-transparent to-[#F0BB1E]/5 rounded-3xl blur-2xl"></div>
 
               <div className="premium-card p-10 sm:p-12 max-w-4xl mx-auto relative">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
                   <div className="flex items-center gap-5">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#B8860B] flex items-center justify-center shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-                      <svg className="w-8 h-8 text-[#050508]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center shadow-[0_0_30px_rgba(240,187,30,0.2)]">
+                      <svg className="w-8 h-8 text-[#2D3A3C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-[#FAFAFA]">
+                      <h3 className="text-xl sm:text-2xl font-bold text-[#2D3A3C]">
                         Готовы увидеть результат?
                       </h3>
-                      <p className="text-[#A1A1AA]">
+                      <p className="text-[#546569]">
                         Получите КП с расчётом ROI в день запроса
                       </p>
                     </div>
@@ -126,7 +126,7 @@ export default function Features() {
       </div>
 
       {/* Bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
     </section>
   );
 }

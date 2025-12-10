@@ -66,21 +66,21 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="relative py-24 sm:py-32 section-dark-1">
+    <section className="relative py-24 sm:py-32 section-white">
       {/* Ambient lighting */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-gradient-to-r from-[#D4AF37]/[0.04] to-transparent blur-[100px]"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-[#14B8A6]/[0.03] to-transparent blur-[100px]"></div>
+        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-gradient-to-r from-[#00767D]/[0.03] to-transparent blur-[100px]"></div>
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-[#F0BB1E]/[0.03] to-transparent blur-[100px]"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-20 space-y-4">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FAFAFA]">
+          <div className="text-center mb-20 space-y-4 scroll-fade-in">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C]">
               Почему нас <span className="text-gradient-primary">выбирают?</span>
             </h2>
-            <p className="text-xl text-[#71717A] max-w-2xl mx-auto">
+            <p className="text-xl text-[#7A8B8E] max-w-2xl mx-auto">
               6 причин работать с Abadan & Company
             </p>
           </div>
@@ -90,15 +90,15 @@ export default function WhyChooseUs() {
             {reasons.map((reason, index) => (
               <div
                 key={index}
-                className={`relative group overflow-visible ${
+                className={`relative group overflow-visible scroll-fade-in scroll-delay-${(index % 3) + 1} ${
                   reason.highlight
-                    ? 'premium-card p-8 border-[#D4AF37]/30'
-                    : 'dark-card p-8'
+                    ? 'glass-card-gold p-8'
+                    : 'glass-card p-8'
                 }`}
               >
                 {/* Highlight badge for special offer */}
                 {reason.highlight && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full text-[#050508] text-xs font-bold uppercase tracking-wide shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] rounded-full text-[#2D3A3C] text-xs font-bold uppercase tracking-wide shadow-[0_0_20px_rgba(240,187,30,0.3)]">
                     Акция
                   </div>
                 )}
@@ -108,13 +108,13 @@ export default function WhyChooseUs() {
                   <div className="flex items-center justify-between">
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                       reason.highlight
-                        ? 'bg-gradient-to-br from-[#D4AF37] to-[#B8860B] text-[#050508] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]'
-                        : 'bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-white group-hover:shadow-[0_0_30px_rgba(20,184,166,0.4)]'
+                        ? 'bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] group-hover:shadow-[0_0_30px_rgba(240,187,30,0.3)]'
+                        : 'bg-gradient-to-br from-[#00767D] to-[#006D77] text-white group-hover:shadow-[0_0_30px_rgba(0,118,125,0.3)]'
                     }`}>
                       {reason.icon}
                     </div>
                     <span className={`text-3xl font-extrabold ${
-                      reason.highlight ? 'text-[#D4AF37]/30' : 'text-[#27272A]'
+                      reason.highlight ? 'text-[#F0BB1E]/30' : 'text-[#E0E5E6]'
                     }`}>
                       {reason.number}
                     </span>
@@ -122,13 +122,13 @@ export default function WhyChooseUs() {
 
                   {/* Title */}
                   <h3 className={`text-xl font-bold ${
-                    reason.highlight ? 'text-gradient-gold' : 'text-[#FAFAFA]'
+                    reason.highlight ? 'text-gradient-gold' : 'text-[#2D3A3C]'
                   }`}>
                     {reason.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[#A1A1AA] leading-relaxed">
+                  <p className="text-[#546569] leading-relaxed">
                     {reason.description}
                   </p>
                 </div>
@@ -136,8 +136,8 @@ export default function WhyChooseUs() {
                 {/* Hover glow effect */}
                 <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${
                   reason.highlight
-                    ? 'bg-gradient-to-br from-[#D4AF37]/5 to-transparent'
-                    : 'bg-gradient-to-br from-[#14B8A6]/5 to-transparent'
+                    ? 'bg-gradient-to-br from-[#F0BB1E]/5 to-transparent'
+                    : 'bg-gradient-to-br from-[#00767D]/5 to-transparent'
                 }`}></div>
               </div>
             ))}
@@ -145,19 +145,19 @@ export default function WhyChooseUs() {
 
           {/* Bottom CTA banner */}
           <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-[#D4AF37]/10 via-transparent to-[#14B8A6]/10 rounded-3xl blur-2xl"></div>
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#00767D]/5 via-transparent to-[#F0BB1E]/5 rounded-3xl blur-2xl"></div>
 
             <div className="premium-card p-10 sm:p-12 relative overflow-hidden">
               {/* Decorative corners */}
-              <div className="absolute top-0 left-0 w-24 h-24 border-t border-l border-[#D4AF37]/20 rounded-tl-2xl"></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 border-b border-r border-[#D4AF37]/20 rounded-br-2xl"></div>
+              <div className="absolute top-0 left-0 w-24 h-24 border-t border-l border-[#00767D]/15 rounded-tl-2xl"></div>
+              <div className="absolute bottom-0 right-0 w-24 h-24 border-b border-r border-[#00767D]/15 rounded-br-2xl"></div>
 
               <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                 <div className="text-center lg:text-left space-y-3">
-                  <p className="text-2xl sm:text-3xl font-bold text-[#FAFAFA]">
+                  <p className="text-2xl sm:text-3xl font-bold text-[#2D3A3C]">
                     Присоединяйтесь к <span className="text-gradient-gold">359 компаниям</span>
                   </p>
-                  <p className="text-[#A1A1AA] text-lg">
+                  <p className="text-[#546569] text-lg">
                     которые уже доверяют нам развитие своих команд
                   </p>
                 </div>
@@ -175,7 +175,7 @@ export default function WhyChooseUs() {
       </div>
 
       {/* Bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
     </section>
   );
 }

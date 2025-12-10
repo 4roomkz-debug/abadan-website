@@ -5,22 +5,14 @@ const TELEGRAM_CHAT_ID = "127052678";
 
 export async function POST(request: Request) {
   try {
-    const { name, company, phone, email, message } = await request.json();
-
-    // Экранируем специальные символы Markdown
-    const escapeMarkdown = (text: string) => {
-      if (!text) return "";
-      return text.replace(/[_*[\]()~`>#+=|{}.!-]/g, "\\$&");
-    };
+    const { name, phone, message } = await request.json();
 
     const text = `
 🔔 Новая заявка с сайта Abadan
 
-👤 Имя: ${escapeMarkdown(name)}
-🏢 Компания: ${escapeMarkdown(company)}
-📞 Телефон: ${escapeMarkdown(phone)}
-📧 Email: ${escapeMarkdown(email) || "Не указан"}
-💬 Сообщение: ${escapeMarkdown(message) || "Не указано"}
+👤 Имя: ${name}
+📞 Телефон: ${phone}
+💬 Комментарий: ${message || "Не указан"}
     `.trim();
 
     const response = await fetch(

@@ -25,18 +25,18 @@ export default function Problems() {
   ];
 
   return (
-    <section className="relative py-24 sm:py-32 section-dark-1">
+    <section className="relative py-24 sm:py-32 section-white">
       {/* Ambient glow */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#EF4444]/[0.03] to-transparent blur-[100px]"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#14B8A6]/[0.03] to-transparent blur-[100px]"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#EF4444]/[0.02] to-transparent blur-[100px]"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#00767D]/[0.03] to-transparent blur-[100px]"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FAFAFA]">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C]">
               Какую задачу <span className="text-gradient-gold">решаем?</span>
             </h2>
           </div>
@@ -47,7 +47,7 @@ export default function Problems() {
               {problems.map((item, index) => (
                 <div
                   key={index}
-                  className="premium-card p-6 space-y-3 group hover:border-[#D4AF37]/30 transition-all duration-300"
+                  className="premium-card p-6 space-y-3 group hover:border-[#00767D]/20 transition-all duration-300"
                 >
                   {/* Pain point - crossed out style */}
                   <div className="flex items-start gap-4">
@@ -56,12 +56,12 @@ export default function Problems() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </div>
-                    <p className="text-[#71717A] text-sm line-through">{item.pain}</p>
+                    <p className="text-[#7A8B8E] text-sm line-through">{item.pain}</p>
                   </div>
 
                   {/* Job to be done - highlighted */}
                   <div className="flex items-start gap-4 pl-12">
-                    <p className="text-[#FAFAFA] font-medium group-hover:text-[#D4AF37] transition-colors">
+                    <p className="text-[#2D3A3C] font-medium group-hover:text-[#00767D] transition-colors">
                       {item.job}
                     </p>
                   </div>
@@ -71,21 +71,21 @@ export default function Problems() {
 
             {/* Right column - Solution highlight */}
             <div className="relative lg:sticky lg:top-8">
-              <div className="absolute -inset-4 bg-gradient-to-br from-[#D4AF37]/10 to-[#14B8A6]/10 rounded-3xl blur-2xl"></div>
+              <div className="absolute -inset-4 bg-gradient-to-br from-[#00767D]/5 to-[#F0BB1E]/5 rounded-3xl blur-2xl"></div>
 
               <div className="premium-card p-10 sm:p-12 space-y-8 text-center relative">
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#B8860B] flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.3)]">
-                  <svg className="w-10 h-10 text-[#050508]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center shadow-[0_0_40px_rgba(240,187,30,0.2)]">
+                  <svg className="w-10 h-10 text-[#2D3A3C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-[#FAFAFA]">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[#2D3A3C]">
                     Мы закрываем <span className="text-gradient-gold">именно эти задачи</span>
                   </h3>
 
-                  <p className="text-lg text-[#A1A1AA] leading-relaxed">
+                  <p className="text-lg text-[#546569] leading-relaxed">
                     Каждая программа = конкретный бизнес-результат, который вы сможете измерить
                   </p>
                 </div>
@@ -100,24 +100,24 @@ export default function Problems() {
                 </div>
 
                 {/* Results indicators */}
-                <div className="flex flex-wrap justify-center gap-6 pt-6 border-t border-[#D4AF37]/10">
+                <div className="flex flex-wrap justify-center gap-6 pt-6 border-t border-[#00767D]/10">
                   <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#D4AF37]" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm text-[#A1A1AA]">Рост метрик</span>
+                    <span className="text-sm text-[#546569]">Рост метрик</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#14B8A6]" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm text-[#A1A1AA]">Применение</span>
+                    <span className="text-sm text-[#546569]">Применение</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 text-[#D4AF37]" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm text-[#A1A1AA]">Закрепление</span>
+                    <span className="text-sm text-[#546569]">Закрепление</span>
                   </div>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function Problems() {
       </div>
 
       {/* Bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
     </section>
   );
 }

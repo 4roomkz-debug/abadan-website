@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import ScrollAnimationProvider from "@/components/ScrollAnimationProvider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${manrope.variable} antialiased`}>
+        <ScrollAnimationProvider />
         {children}
       </body>
     </html>

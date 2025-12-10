@@ -56,10 +56,10 @@ export default function Formats() {
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl sm:text-5xl font-bold text-[#F1F5F9]">
+            <h2 className="text-4xl sm:text-5xl font-bold text-[#2D3A3C]">
               Форматы <span className="text-gradient-primary">обучения</span>
             </h2>
-            <p className="text-xl text-[#94A3B8]">
+            <p className="text-xl text-[#546569]">
               Выберите удобный для вас формат
             </p>
           </div>
@@ -67,20 +67,20 @@ export default function Formats() {
           {/* Formats grid - horizontal layout */}
           <div className="grid md:grid-cols-3 gap-6 mb-16">
             {formats.map((format, index) => (
-              <div key={index} className="dark-card p-8 space-y-6">
+              <div key={index} className="glass-card p-8 space-y-6">
                 <div className="flex items-center justify-between">
                   <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${format.color} flex items-center justify-center`}>
                     {format.icon}
                   </div>
-                  <span className="text-2xl font-bold text-[#64748B]/50">{format.number}</span>
+                  <span className="text-2xl font-bold text-[#E0E5E6]">{format.number}</span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-[#F1F5F9]">{format.title}</h3>
+                <h3 className="text-2xl font-bold text-[#2D3A3C]">{format.title}</h3>
 
                 <ul className="space-y-3">
                   {format.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-[#94A3B8]">
-                      <span className="text-[#14B8A6] mt-1.5">•</span>
+                    <li key={idx} className="flex items-start gap-2 text-[#546569]">
+                      <span className="text-[#00767D] mt-1.5">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -91,39 +91,39 @@ export default function Formats() {
 
           {/* Additional benefits - horizontal */}
           <div className="flex flex-wrap justify-center gap-6">
-            <div className="dark-glass px-6 py-4 rounded-xl flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#14B8A6] to-[#0D9488] flex items-center justify-center text-white">
+            <div className="glass-card-teal px-6 py-4 rounded-xl flex items-center gap-4">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-[#F1F5F9]">Гибкий график</p>
-                <p className="text-xs text-[#64748B]">Подстраиваемся под ваш процесс</p>
+                <p className="font-semibold text-[#2D3A3C]">Гибкий график</p>
+                <p className="text-xs text-[#546569]">Подстраиваемся под ваш процесс</p>
               </div>
             </div>
 
-            <div className="dark-glass px-6 py-4 rounded-xl flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#FBBF24] to-[#F59E0B] flex items-center justify-center text-white">
+            <div className="glass-card-gold px-6 py-4 rounded-xl flex items-center gap-4">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center text-[#2D3A3C]">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-[#F1F5F9]">Группы от 2 человек</p>
-                <p className="text-xs text-[#64748B]">Даже для малых команд</p>
+                <p className="font-semibold text-[#2D3A3C]">Группы от 2 человек</p>
+                <p className="text-xs text-[#546569]">Даже для малых команд</p>
               </div>
             </div>
 
-            <div className="dark-glass px-6 py-4 rounded-xl flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#14B8A6] to-[#0D9488] flex items-center justify-center text-white">
+            <div className="glass-card-teal px-6 py-4 rounded-xl flex items-center gap-4">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-[#F1F5F9]">На вашей территории</p>
-                <p className="text-xs text-[#64748B]">Обучение в удобном месте</p>
+                <p className="font-semibold text-[#2D3A3C]">На вашей территории</p>
+                <p className="text-xs text-[#546569]">Обучение в удобном месте</p>
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function Formats() {
       </div>
 
       {/* Bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
     </section>
   );
 }
