@@ -10,12 +10,34 @@ export default function Contact() {
     email: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Спасибо за запрос! Мы свяжемся с вами в ближайшее время.");
-    setFormData({ name: "", company: "", phone: "", email: "", message: "" });
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({ name: "", company: "", phone: "", email: "", message: "" });
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -138,10 +160,23 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="w-full gold-button text-center cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full gold-button text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Отправить запрос
+                    {isSubmitting ? "Отправка..." : "Отправить запрос"}
                   </button>
+
+                  {submitStatus === "success" && (
+                    <p className="text-sm text-[#14B8A6] text-center font-medium">
+                      Спасибо! Мы свяжемся с вами в ближайшее время.
+                    </p>
+                  )}
+
+                  {submitStatus === "error" && (
+                    <p className="text-sm text-[#EF4444] text-center font-medium">
+                      Произошла ошибка. Попробуйте ещё раз или позвоните нам.
+                    </p>
+                  )}
 
                   <p className="text-xs text-[#71717A] text-center">
                     Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
