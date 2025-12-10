@@ -7,14 +7,20 @@ export async function POST(request: Request) {
   try {
     const { name, company, phone, email, message } = await request.json();
 
-    const text = `
-🔔 *Новая заявка с сайта Abadan*
+    // Экранируем специальные символы Markdown
+    const escapeMarkdown = (text: string) => {
+      if (!text) return "";
+      return text.replace(/[_*[\]()~`>#+=|{}.!-]/g, "\\$&");
+    };
 
-👤 *Имя:* ${name}
-🏢 *Компания:* ${company}
-📞 *Телефон:* ${phone}
-📧 *Email:* ${email || "Не указан"}
-💬 *Сообщение:* ${message || "Не указано"}
+    const text = `
+🔔 Новая заявка с сайта Abadan
+
+👤 Имя: ${escapeMarkdown(name)}
+🏢 Компания: ${escapeMarkdown(company)}
+📞 Телефон: ${escapeMarkdown(phone)}
+📧 Email: ${escapeMarkdown(email) || "Не указан"}
+💬 Сообщение: ${escapeMarkdown(message) || "Не указано"}
     `.trim();
 
     const response = await fetch(
@@ -27,13 +33,15 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           chat_id: TELEGRAM_CHAT_ID,
           text: text,
-          parse_mode: "Markdown",
         }),
       }
     );
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error("Failed to send message to Telegram");
+      console.error("Telegram API error:", data);
+      throw new Error(data.description || "Failed to send message to Telegram");
     }
 
     return NextResponse.json({ success: true });
