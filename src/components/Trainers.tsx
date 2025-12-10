@@ -51,7 +51,7 @@ export default function Trainers() {
               >
                 {/* Avatar with photo */}
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
                     <img
                       src={trainer.photo}
                       alt={trainer.name}

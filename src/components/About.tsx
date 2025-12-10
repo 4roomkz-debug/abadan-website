@@ -52,7 +52,7 @@ export default function About() {
               <div className="premium-card p-10 space-y-6 relative">
                 <div className="flex items-start gap-6">
                   {/* Founder photo */}
-                  <div className="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(212,175,55,0.2)] ring-2 ring-[#D4AF37]/20">
+                  <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(212,175,55,0.2)] ring-2 ring-[#D4AF37]/20">
                     <img
                       src="/images/founder.jpg"
                       alt="Гани Абадан"

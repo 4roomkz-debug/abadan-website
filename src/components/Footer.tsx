@@ -103,7 +103,7 @@ export default function Footer() {
 
               <div className="flex items-center gap-4">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/abadangani/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl border border-[#D4AF37]/20 flex items-center justify-center text-[#71717A] hover:text-[#D4AF37] hover:border-[#D4AF37]/40 hover:shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-all duration-300"
@@ -113,7 +113,7 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/abadangani"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl border border-[#D4AF37]/20 flex items-center justify-center text-[#71717A] hover:text-[#D4AF37] hover:border-[#D4AF37]/40 hover:shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-all duration-300"

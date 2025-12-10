@@ -235,6 +235,7 @@ export default function Contact() {
                     </p>
                   </div>
                 </div>
+
               </div>
 
               {/* Benefits */}
