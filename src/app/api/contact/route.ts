@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const TELEGRAM_BOT_TOKEN = "8351809456:AAF8OsK251bpvwNl60NOZZ0Np9fXRr7yQPY";
-const TELEGRAM_CHAT_ID = "251499578";
+const TELEGRAM_CHAT_ID = "127052678";
 
 export async function POST(request: Request) {
   try {
