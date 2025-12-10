@@ -6,19 +6,22 @@ export default function Trainers() {
       name: "Шамсутдинова Земфира Ильясовна",
       role: "Эксперт по HR и трудовому законодательству",
       description: "Семинары и вебинары по трудовому законодательству, кадровому администрированию и делопроизводству, кадровому аудиту, регистрации трудовых договоров на веб-портале enbek.kz, оформлению документов на привлечение иностранной рабочей силы.",
-      photo: "/images/shamsutdinova.png"
+      photo: "/images/shamsutdinova.png",
+      scale: "scale-[1.65]"
     },
     {
       name: "Курпенов Бакыт Касымович",
       role: "Старший преподаватель АУЭС",
       description: "Старший преподаватель АУЭС кафедры: Электрические станций, сети и системы. Исследования изменения влагосодержания яблок в гелиосушильном модуле.",
-      photo: "/images/kurpenov.png"
+      photo: "/images/kurpenov.png",
+      scale: "scale-150"
     },
     {
       name: "Серикбекулы Асхат",
       role: "Бизнес-консультант, MSc in Finance",
       description: "Консультант крупнейших организаций Республики Казахстан. Бизнес-консультант в области управления финансами и привлечения инвестиций, Управляющий партнер.",
-      photo: "/images/serikbekuly.png"
+      photo: "/images/serikbekuly.png",
+      scale: "scale-150"
     }
   ];
 
@@ -52,7 +55,7 @@ export default function Trainers() {
                     <img
                       src={trainer.photo}
                       alt={trainer.name}
-                      className="w-full h-full object-cover scale-150"
+                      className={`w-full h-full object-cover ${trainer.scale}`}
                     />
                   </div>
                   <div>
