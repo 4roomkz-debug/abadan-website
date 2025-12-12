@@ -12,7 +12,7 @@ export default function AiChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Здравствуйте! 👋 Я AI-консультант Abadan & Co. Помогу подобрать программу обучения для вашей команды. Какие задачи хотите решить с помощью тренингов?"
+      content: "Привет! Меня зовут Асем, я виртуальная помощница Abadan & Co. Помогу подобрать обучение для вашей команды. Расскажите, какие задачи хотите решить?"
     }
   ]);
   const [input, setInput] = useState("");
@@ -106,7 +106,7 @@ export default function AiChat() {
       {/* Badge */}
       {!isOpen && (
         <div className="fixed bottom-24 right-6 z-50 bg-white px-4 py-2 rounded-full shadow-lg border border-[#00767D]/20 animate-bounce">
-          <span className="text-sm font-medium text-[#2D3A3C]">AI-консультант 🤖</span>
+          <span className="text-sm font-medium text-[#2D3A3C]">Спросите Асем 👩‍💼</span>
         </div>
       )}
 
@@ -115,14 +115,12 @@ export default function AiChat() {
         <div className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl border border-[#00767D]/10 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#00767D] to-[#006D77] px-5 py-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg">
+              👩‍💼
             </div>
             <div>
-              <h3 className="text-white font-bold">AI-консультант</h3>
-              <p className="text-white/80 text-xs">Abadan & Co.</p>
+              <h3 className="text-white font-bold">Асем</h3>
+              <p className="text-white/80 text-xs">Виртуальная помощница</p>
             </div>
             <div className="ml-auto flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-[#4ADE80] animate-pulse"></span>

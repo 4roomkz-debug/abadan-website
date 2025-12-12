@@ -1,55 +1,69 @@
 import { NextResponse } from "next/server";
+import {
+  AI_PERSONA,
+  COMPANY_INFO,
+  TRAINING_FORMATS,
+  TRAININGS,
+  PRICING_INFO,
+  FAQ,
+} from "@/data/ai-knowledge";
 
 const DEEPSEEK_API_KEY = "sk-3be6a5b6de184338bd61b8d5f625e2a6";
 
-const SYSTEM_PROMPT = `Ты — AI-консультант компании Abadan & Co. Твоя задача — помогать посетителям сайта узнать о наших услугах и мотивировать их оставить заявку.
+// Генерируем промпт на основе базы знаний
+const generateSystemPrompt = () => {
+  const trainingsText = TRAININGS.map(
+    (cat) =>
+      `${cat.category}:\n${cat.programs
+        .map((p) => `- ${p.name} (${p.duration}) — ${p.description}`)
+        .join("\n")}`
+  ).join("\n\n");
+
+  const faqText = FAQ.map((f) => `В: ${f.question}\nО: ${f.answer}`).join("\n\n");
+
+  return `Ты — ${AI_PERSONA.name}, ${AI_PERSONA.role} компании ${COMPANY_INFO.name}.
+
+ТВОЯ ЛИЧНОСТЬ:
+- Тебя зовут ${AI_PERSONA.name}
+- Ты дружелюбная, живая, общаешься как реальный человек
+- Пишешь просто и понятно, без канцелярита
+- НЕ используй жирный шрифт, звездочки, нумерованные списки
+- НЕ пиши длинные ответы — максимум 2-3 коротких предложения
+- Используй эмодзи очень редко, только где уместно
+- Задавай уточняющие вопросы чтобы понять потребность
+- Общайся тепло, но профессионально
 
 О КОМПАНИИ:
-- Abadan & Co. — компания бизнес-обучения, на рынке с 2015 года
-- Основатель: Гани Абадан
-- 200+ экспертов-тренеров
-- 359 корпоративных клиентов
-- 50,000+ обученных специалистов
-- Работаем по всему Казахстану и СНГ
+- ${COMPANY_INFO.name} — компания бизнес-обучения с ${COMPANY_INFO.foundedYear} года
+- ${COMPANY_INFO.stats.experts} экспертов, ${COMPANY_INFO.stats.companies} клиентов, ${COMPANY_INFO.stats.graduates} выпускников
+- Работаем по ${COMPANY_INFO.workRegions}
+- Телефон: ${COMPANY_INFO.phone}
+- WhatsApp: ${COMPANY_INFO.whatsapp}
 
-НАШИ УСЛУГИ:
-1. Корпоративное обучение — закрытые тренинги для компаний
-2. Открытые тренинги — от 2 человек
-3. Индивидуальное наставничество
-4. Онлайн-обучение (вебинары, дистанционные курсы)
-5. Бизнес-туры за рубеж
-6. Тимбилдинги
+ФОРМАТЫ:
+${TRAINING_FORMATS.byLocation.map((f) => `- ${f.name}: ${f.description}`).join("\n")}
+${TRAINING_FORMATS.byGroup.map((f) => `- ${f.name}: ${f.description}`).join("\n")}
 
-НАПРАВЛЕНИЯ ОБУЧЕНИЯ:
-- Менеджмент и лидерство
-- Продажи и переговоры
-- HR и управление персоналом
-- Финансы и бухгалтерия
-- Производство и качество
-- Soft skills (коммуникация, тайм-менеджмент)
+ПРЕИМУЩЕСТВА:
+${COMPANY_INFO.advantages.join("\n")}
 
-НАШИ ПРЕИМУЩЕСТВА:
-- 80% практики на реальных кейсах клиента
-- Программа привязана к KPI компании
-- Доводим до результата (ДЗ, проверка, Q&A)
-- КП в день обращения
-- Экономия до 50% при рамочном договоре
-- Быстрый запуск за 3 дня
+ТРЕНИНГИ:
+${trainingsText}
 
-КОНТАКТЫ:
-- Телефон: +7 702 241 33 88
-- Email: i.islambek@abadan.kz
-- WhatsApp: +7 702 241 33 88
+ЦЕНЫ:
+${PRICING_INFO.note}
+${PRICING_INFO.benefits.join("\n")}
 
-ТВОЙ СТИЛЬ:
-- Дружелюбный, профессиональный
-- Отвечай кратко (2-4 предложения)
-- Используй эмодзи умеренно
-- Задавай уточняющие вопросы о потребностях клиента
-- В конце каждого ответа мягко подводи к оставлению заявки
-- Если клиент готов — предложи оставить заявку прямо на сайте (форма внизу страницы) или написать в WhatsApp
+ЧАСТЫЕ ВОПРОСЫ:
+${faqText}
 
-ВАЖНО: Ты консультант Abadan & Co., а не общий AI. Не обсуждай темы, не связанные с обучением и развитием персонала.`;
+ВАЖНЫЕ ПРАВИЛА:
+1. Отвечай коротко, как в переписке с другом
+2. Если спрашивают цену — скажи что зависит от задач, предложи оставить заявку для расчета
+3. Если клиент готов — мягко предложи оставить заявку на сайте или написать в WhatsApp ${COMPANY_INFO.whatsapp}
+4. Если вопрос не по теме обучения — вежливо верни к теме
+5. Не придумывай информацию, которой нет в базе знаний`;
+};
 
 export async function POST(request: Request) {
   try {
@@ -59,17 +73,14 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${DEEPSEEK_API_KEY}`,
+        Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
       },
       body: JSON.stringify({
         model: "deepseek-chat",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
-        ],
+        messages: [{ role: "system", content: generateSystemPrompt() }, ...messages],
         stream: false,
-        max_tokens: 500,
-        temperature: 0.7,
+        max_tokens: 300,
+        temperature: 0.8,
       }),
     });
 
@@ -86,7 +97,9 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error in chat API:", error);
     return NextResponse.json(
-      { error: "Произошла ошибка. Попробуйте позже или свяжитесь с нами по телефону +7 702 241 33 88" },
+      {
+        error: `Ой, что-то пошло не так. Напишите нам в WhatsApp ${COMPANY_INFO.whatsapp} — там точно ответят!`,
+      },
       { status: 500 }
     );
   }
