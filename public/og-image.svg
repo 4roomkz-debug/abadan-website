@@ -1,0 +1,61 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+
+  <!-- Subtle gradient overlay -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Decorative elements -->
+  <circle cx="1100" cy="100" r="200" fill="#00767D" opacity="0.05"/>
+  <circle cx="100" cy="530" r="150" fill="#F0BB1E" opacity="0.08"/>
+
+  <!-- Top accent line -->
+  <rect y="0" width="1200" height="6" fill="url(#accentGradient)"/>
+
+  <!-- Logo placeholder area -->
+  <rect x="80" y="180" width="400" height="100" rx="8" fill="#00767D" opacity="0.05"/>
+
+  <!-- Company name -->
+  <text x="100" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" fill="#2D3A3C">Abadan & Co.</text>
+
+  <!-- Tagline -->
+  <text x="100" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="500" fill="#546569">Курсы повышения квалификации</text>
+  <text x="100" y="385" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="500" fill="#546569">и бизнес-обучение</text>
+
+  <!-- Key message -->
+  <text x="100" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="600" fill="#00767D">80% практики на ваших кейсах</text>
+
+  <!-- Stats badges -->
+  <rect x="700" y="200" width="180" height="90" rx="16" fill="#00767D"/>
+  <text x="790" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF" text-anchor="middle">200+</text>
+  <text x="790" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" fill="#FFFFFF" opacity="0.9" text-anchor="middle">экспертов</text>
+
+  <rect x="900" y="200" width="180" height="90" rx="16" fill="#F0BB1E"/>
+  <text x="990" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#2D3A3C" text-anchor="middle">359</text>
+  <text x="990" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" fill="#2D3A3C" opacity="0.8" text-anchor="middle">компаний</text>
+
+  <rect x="700" y="310" width="180" height="90" rx="16" fill="#F0BB1E"/>
+  <text x="790" y="355" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#2D3A3C" text-anchor="middle">10+</text>
+  <text x="790" y="385" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" fill="#2D3A3C" opacity="0.8" text-anchor="middle">лет опыта</text>
+
+  <rect x="900" y="310" width="180" height="90" rx="16" fill="#00767D"/>
+  <text x="990" y="355" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="800" fill="#FFFFFF" text-anchor="middle">50K+</text>
+  <text x="990" y="385" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" fill="#FFFFFF" opacity="0.9" text-anchor="middle">выпускников</text>
+
+  <!-- Bottom badge -->
+  <rect x="100" y="530" width="200" height="40" rx="20" fill="#00767D" opacity="0.1"/>
+  <text x="200" y="557" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#00767D" text-anchor="middle">С 2015 года</text>
+
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1200" y2="630">
+      <stop offset="0%" stop-color="#00767D" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#F0BB1E" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0" y1="0" x2="1200" y2="0">
+      <stop offset="0%" stop-color="#00767D"/>
+      <stop offset="50%" stop-color="#F0BB1E"/>
+      <stop offset="100%" stop-color="#00767D"/>
+    </linearGradient>
+  </defs>
+</svg>
