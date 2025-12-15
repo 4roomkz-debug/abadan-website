@@ -73,7 +73,7 @@ const generateSystemPrompt = () => {
 
   return `Отвечай на таком же языке на котором к тебе обратились.
 
-Ты ${AI_PERSONA.name} — ${AI_PERSONA.role} компании ${COMPANY_INFO.name}, работающий на модели ${AI_PERSONA.model}.
+Ты ${AI_PERSONA.name} — ${AI_PERSONA.role} компании ${COMPANY_INFO.name}.
 
 ТВОЯ ЛИЧНОСТЬ:
 - Общайся максимально естественно, как живой человек

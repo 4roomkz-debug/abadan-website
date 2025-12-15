@@ -3,7 +3,6 @@
 export default function Features() {
   const features = [
     {
-      number: "01",
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -13,7 +12,6 @@ export default function Features() {
       subtitle: "Не теория, а отработка на ваших реальных кейсах. Команда использует знания сразу после тренинга."
     },
     {
-      number: "02",
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -23,7 +21,6 @@ export default function Features() {
       subtitle: "Каждый модуль привязан к метрикам, которые вы хотите улучшить. Измеримый результат."
     },
     {
-      number: "03",
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -33,7 +30,6 @@ export default function Features() {
       subtitle: "Не бросаем после тренинга. ДЗ, проверка, Q&A — пока навык не закрепится."
     },
     {
-      number: "04",
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -71,11 +67,8 @@ export default function Features() {
                 key={index}
                 className="premium-card p-8 space-y-5 group hover:border-[#00767D]/20 transition-all duration-300"
               >
-                <div className="flex items-center justify-between">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white group-hover:shadow-[0_0_30px_rgba(0,118,125,0.2)] transition-all duration-500">
-                    {feature.icon}
-                  </div>
-                  <span className="text-3xl font-extrabold text-[#E0E5E6]">{feature.number}</span>
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white group-hover:shadow-[0_0_20px_rgba(0,118,125,0.15)] transition-all duration-500">
+                  {feature.icon}
                 </div>
 
                 <h3 className="text-xl font-bold text-[#2D3A3C]">

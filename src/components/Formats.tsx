@@ -1,55 +1,8 @@
 "use client";
 
-export default function Formats() {
-  const formats = [
-    {
-      number: "01",
-      title: "Очное",
-      icon: (
-        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-        </svg>
-      ),
-      color: "from-[#FBBF24] to-[#F59E0B]",
-      items: [
-        "В Алматы и других городах РК",
-        "На территории заказчика",
-        "Бизнес-туры за рубеж",
-        "Тимбилдинги и выезды"
-      ]
-    },
-    {
-      number: "02",
-      title: "По составу",
-      icon: (
-        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      ),
-      color: "from-[#14B8A6] to-[#0D9488]",
-      items: [
-        "Индивидуальное наставничество",
-        "Корпоративное (закрытые группы)",
-        "Открытые тренинги (от 2 чел.)"
-      ]
-    },
-    {
-      number: "03",
-      title: "Онлайн",
-      icon: (
-        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-      color: "from-[#14B8A6] to-[#0D9488]",
-      items: [
-        "Вебинары (Zoom / MS Teams)",
-        "Дистанционное обучение на портале",
-        "100% техническая поддержка"
-      ]
-    }
-  ];
+import Image from "next/image";
 
+export default function Formats() {
   return (
     <section className="relative py-20 sm:py-32 section-dark-2">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,29 +17,85 @@ export default function Formats() {
             </p>
           </div>
 
-          {/* Formats grid - horizontal layout */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            {formats.map((format, index) => (
-              <div key={index} className="glass-card p-8 space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${format.color} flex items-center justify-center`}>
-                    {format.icon}
-                  </div>
-                  <span className="text-2xl font-bold text-[#E0E5E6]">{format.number}</span>
+          {/* Formats grid with real photos */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {/* Corporate training - with photo */}
+            <div className="glass-card overflow-hidden">
+              <div className="relative h-56">
+                <Image
+                  src="/images/photos/IMG_1227.JPG"
+                  alt="Корпоративный тренинг Abadan & Co."
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white">Корпоративные тренинги</h3>
+                  <p className="text-white/80 text-sm mt-1">Закрытые группы для вашей команды</p>
                 </div>
-
-                <h3 className="text-2xl font-bold text-[#2D3A3C]">{format.title}</h3>
-
-                <ul className="space-y-3">
-                  {format.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-[#546569]">
-                      <span className="text-[#00767D] mt-1.5">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
+              </div>
+              <div className="p-6">
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-[#546569]">
+                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>На территории заказчика</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#546569]">
+                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Адаптация под ваши задачи</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#546569]">
+                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Конфиденциальность</span>
+                  </li>
                 </ul>
               </div>
-            ))}
+            </div>
+
+            {/* Open training - with photo */}
+            <div className="glass-card overflow-hidden">
+              <div className="relative h-56">
+                <Image
+                  src="/images/photos/IMG_6890.JPG"
+                  alt="Открытый тренинг Abadan & Co."
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white">Открытые тренинги</h3>
+                  <p className="text-white/80 text-sm mt-1">Присоединяйтесь к группе</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-[#546569]">
+                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>От 2 человек</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#546569]">
+                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Нетворкинг с коллегами</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#546569]">
+                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Фиксированные даты</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Additional benefits - horizontal */}

@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
+
 export default function About() {
   return (
     <section id="about" className="relative py-24 sm:py-32 section-white">
-      {/* Subtle ambient glow */}
-      <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-gradient-to-bl from-[#00767D]/[0.03] to-transparent blur-[100px]"></div>
+      {/* Minimal ambient effect */}
+      <div className="absolute top-0 right-0 w-[400px] h-[300px] bg-gradient-to-bl from-[#00767D]/[0.02] to-transparent blur-[80px]"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -45,14 +47,26 @@ export default function About() {
               </div>
             </div>
 
-            {/* Right - Founder card */}
-            <div className="relative scroll-fade-in-right scroll-delay-2">
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#00767D]/5 to-[#F0BB1E]/5 rounded-3xl blur-2xl"></div>
+            {/* Right - Photo and Founder */}
+            <div className="space-y-8 scroll-fade-in-right scroll-delay-2">
+              {/* Real training photo */}
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <Image
+                  src="/images/photos/IMG_1227.JPG"
+                  alt="Корпоративный тренинг Abadan & Co. в компании Polpharma"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                  <p className="text-white font-medium">Корпоративный тренинг для Polpharma</p>
+                </div>
+              </div>
 
-              <div className="premium-card p-10 space-y-6 relative">
-                <div className="flex items-start gap-6">
-                  {/* Founder photo */}
-                  <div className="flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,118,125,0.15)] ring-2 ring-[#00767D]/20">
+              {/* Founder mini card */}
+              <div className="premium-card p-6 relative">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden ring-2 ring-[#00767D]/20">
                     <img
                       src="/images/founder.jpg"
                       alt="Гани Абадан"
@@ -60,32 +74,13 @@ export default function About() {
                     />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#2D3A3C]">Гани Абадан</h3>
-                    <p className="text-[#00767D] font-medium">Основатель и руководитель</p>
-                    <p className="text-sm text-[#7A8B8E] mt-2">Предприниматель, автор книги «Бизнес по любви 2.0»</p>
+                    <h3 className="text-lg font-bold text-[#2D3A3C]">Гани Абадан</h3>
+                    <p className="text-[#00767D] text-sm font-medium">Основатель Abadan & Co.</p>
                   </div>
                 </div>
-
-                <div className="h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
-
-                <blockquote className="text-[#546569] italic leading-relaxed">
-                  «Когда к нам приходит клиент, первый вопрос не "какой тренинг нужен?", а "какую бизнес-задачу решаем?". Только так обучение становится инвестицией, а не расходом.»
-                </blockquote>
-
-                <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <div className="flex items-center gap-2 text-sm text-[#7A8B8E]">
-                    <svg className="w-4 h-4 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Certified Business Trainer</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-[#7A8B8E]">
-                    <svg className="w-4 h-4 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>YBI International</span>
-                  </div>
-                </div>
+                <p className="text-[#546569] text-sm mt-4 italic">
+                  «Мы не "проводим тренинги" — мы решаем бизнес-задачи через развитие команд»
+                </p>
               </div>
             </div>
           </div>

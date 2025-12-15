@@ -3,7 +3,6 @@
 export default function WhyChooseUs() {
   const reasons = [
     {
-      number: "01",
       title: "Решение в день обращения",
       description: "КП с расчётом ROI в день запроса. Без долгих согласований и бюрократии.",
       icon: (
@@ -13,7 +12,6 @@ export default function WhyChooseUs() {
       )
     },
     {
-      number: "02",
       title: "Экономия до 50%",
       description: "При рамочном договоре — существенная экономия на развитии команды.",
       highlight: true,
@@ -24,7 +22,6 @@ export default function WhyChooseUs() {
       )
     },
     {
-      number: "03",
       title: "Внимание каждому",
       description: "Обучение от 2 участников. Каждый получает обратную связь.",
       icon: (
@@ -34,7 +31,6 @@ export default function WhyChooseUs() {
       )
     },
     {
-      number: "04",
       title: "Эксперт под любую задачу",
       description: "200+ специалистов в базе. Подберём под вашу специфику.",
       icon: (
@@ -44,7 +40,6 @@ export default function WhyChooseUs() {
       )
     },
     {
-      number: "05",
       title: "Закрытие без задержек",
       description: "Все документы в день завершения. Бухгалтерия будет довольна.",
       icon: (
@@ -54,7 +49,6 @@ export default function WhyChooseUs() {
       )
     },
     {
-      number: "06",
       title: "Заботимся о логистике",
       description: "Жильё и трансфер для участников из регионов — на нас.",
       icon: (
@@ -104,20 +98,13 @@ export default function WhyChooseUs() {
                 )}
 
                 <div className="space-y-5">
-                  {/* Number and icon */}
-                  <div className="flex items-center justify-between">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                      reason.highlight
-                        ? 'bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] group-hover:shadow-[0_0_30px_rgba(240,187,30,0.3)]'
-                        : 'bg-gradient-to-br from-[#00767D] to-[#006D77] text-white group-hover:shadow-[0_0_30px_rgba(0,118,125,0.3)]'
-                    }`}>
-                      {reason.icon}
-                    </div>
-                    <span className={`text-3xl font-extrabold ${
-                      reason.highlight ? 'text-[#F0BB1E]/30' : 'text-[#E0E5E6]'
-                    }`}>
-                      {reason.number}
-                    </span>
+                  {/* Icon */}
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                    reason.highlight
+                      ? 'bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] group-hover:shadow-[0_0_20px_rgba(240,187,30,0.2)]'
+                      : 'bg-gradient-to-br from-[#00767D] to-[#006D77] text-white group-hover:shadow-[0_0_20px_rgba(0,118,125,0.15)]'
+                  }`}>
+                    {reason.icon}
                   </div>
 
                   {/* Title */}

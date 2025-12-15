@@ -1,23 +1,13 @@
 "use client";
 
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center gradient-hero overflow-hidden">
-      {/* Subtle ambient lighting for light theme */}
+      {/* Subtle ambient lighting - simplified */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Teal top glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-to-b from-[#00767D]/[0.05] via-[#00767D]/[0.02] to-transparent rounded-full blur-[120px]"></div>
-
-        {/* Subtle side accents */}
-        <div className="absolute top-1/3 left-0 w-[400px] h-[800px] bg-gradient-to-r from-[#F0BB1E]/[0.03] to-transparent blur-[100px]"></div>
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gradient-to-tl from-[#00767D]/[0.03] to-transparent blur-[120px]"></div>
-      </div>
-
-      {/* Elegant vertical lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-[20%] w-px h-[40vh] bg-gradient-to-b from-[#00767D]/15 via-[#00767D]/5 to-transparent"></div>
-        <div className="absolute top-[10vh] left-[40%] w-px h-[30vh] bg-gradient-to-b from-[#00767D]/10 via-[#00767D]/3 to-transparent"></div>
-        <div className="absolute top-0 right-[25%] w-px h-[50vh] bg-gradient-to-b from-[#00767D]/10 via-[#00767D]/5 to-transparent"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-gradient-to-b from-[#00767D]/[0.04] to-transparent rounded-full blur-[100px]"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -88,74 +78,36 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Right column - Premium card */}
+            {/* Right column - Real photo */}
             <div className="relative animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              {/* Decorative glow behind card */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#00767D]/5 via-transparent to-[#F0BB1E]/5 rounded-3xl blur-2xl opacity-50"></div>
+              {/* Photo container with styling */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/photos/IMG_6890.JPG"
+                  alt="Тренинг по лидерству — Abadan & Co."
+                  width={600}
+                  height={450}
+                  className="w-full h-auto object-cover"
+                  priority
+                />
+                {/* Overlay with caption */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6">
+                  <p className="text-white font-semibold text-lg">Тренинг «Лидерство»</p>
+                  <p className="text-white/80 text-sm">Реальные кейсы, практика, результат</p>
+                </div>
+              </div>
 
-              <div className="glass-premium p-10 sm:p-12 space-y-8 relative">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-bold text-[#2D3A3C]">
-                    Что вы получите
-                  </h3>
+              {/* Stats badge */}
+              <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 border border-[#00767D]/10">
+                <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center">
                     <svg className="w-6 h-6 text-[#2D3A3C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                     </svg>
                   </div>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="flex gap-5 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(240,187,30,0.3)] transition-all duration-500">
-                      <span className="text-[#2D3A3C] font-extrabold text-lg">01</span>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#2D3A3C] text-lg">Применение с первого дня</h4>
-                      <p className="text-[#546569] text-sm mt-1">Команда использует знания сразу после тренинга</p>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
-
-                  <div className="flex gap-5 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(0,118,125,0.3)] transition-all duration-500">
-                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#2D3A3C] text-lg">Привязка к вашим метрикам</h4>
-                      <p className="text-[#546569] text-sm mt-1">Каждый модуль работает на конкретные KPI</p>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
-
-                  <div className="flex gap-5 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(240,187,30,0.3)] transition-all duration-500">
-                      <svg className="w-7 h-7 text-[#2D3A3C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#2D3A3C] text-lg">Доведём до результата</h4>
-                      <p className="text-[#546569] text-sm mt-1">ДЗ, проверка, Q&A — пока навык не закрепится</p>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-gradient-to-r from-transparent via-[#00767D]/15 to-transparent"></div>
-
-                  <div className="flex gap-5 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(0,118,125,0.3)] transition-all duration-500">
-                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-[#2D3A3C] text-lg">Запуск за 3 дня</h4>
-                      <p className="text-[#546569] text-sm mt-1">КП в день обращения, без бюрократии</p>
-                    </div>
+                  <div>
+                    <p className="text-2xl font-bold text-[#2D3A3C]">50 000+</p>
+                    <p className="text-sm text-[#546569]">обучено специалистов</p>
                   </div>
                 </div>
               </div>
