@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 export default function Formats() {
   return (
     <section className="relative py-20 sm:py-32 section-dark-2">
@@ -17,87 +15,79 @@ export default function Formats() {
             </p>
           </div>
 
-          {/* Formats grid with real photos */}
+          {/* Formats grid */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {/* Corporate training - with photo */}
-            <div className="glass-card overflow-hidden">
-              <div className="relative h-56">
-                <Image
-                  src="/images/photos/20241004_130415000_iOS.jpg"
-                  alt="Корпоративный тренинг Abadan & Co."
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-3">
-                    <h3 className="text-2xl font-bold text-white">Корпоративные тренинги</h3>
-                    <p className="text-white/90 text-sm mt-1">Закрытые группы для вашей команды</p>
-                  </div>
+            {/* Corporate training */}
+            <div className="glass-card p-8">
+              <div className="flex items-start gap-6">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white flex-shrink-0">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
                 </div>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-[#546569]">
-                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>На территории заказчика</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-[#546569]">
-                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Адаптация под ваши задачи</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-[#546569]">
-                    <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Конфиденциальность</span>
-                  </li>
-                </ul>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-[#2D3A3C]">Корпоративные тренинги</h3>
+                    <p className="text-[#546569] mt-1">Закрытые группы для вашей команды</p>
+                  </div>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2 text-[#546569]">
+                      <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>На территории заказчика</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-[#546569]">
+                      <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Адаптация под ваши задачи</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-[#546569]">
+                      <svg className="w-5 h-5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Конфиденциальность</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            {/* Open training - with photo */}
-            <div className="glass-card overflow-hidden">
-              <div className="relative h-56">
-                <Image
-                  src="/images/photos/20241115_115834038_iOS.jpg"
-                  alt="Открытый тренинг Abadan & Co."
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-3">
-                    <h3 className="text-2xl font-bold text-white">Открытые тренинги</h3>
-                    <p className="text-white/90 text-sm mt-1">Присоединяйтесь к группе</p>
-                  </div>
+            {/* Open training */}
+            <div className="glass-card-gold p-8">
+              <div className="flex items-start gap-6">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] flex items-center justify-center text-[#2D3A3C] flex-shrink-0">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
                 </div>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-[#546569]">
-                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>От 2 человек</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-[#546569]">
-                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Нетворкинг с коллегами</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-[#546569]">
-                    <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Фиксированные даты</span>
-                  </li>
-                </ul>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-[#2D3A3C]">Открытые тренинги</h3>
+                    <p className="text-[#546569] mt-1">Присоединяйтесь к группе</p>
+                  </div>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2 text-[#546569]">
+                      <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>От 2 человек</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-[#546569]">
+                      <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Нетворкинг с коллегами</span>
+                    </li>
+                    <li className="flex items-center gap-2 text-[#546569]">
+                      <svg className="w-5 h-5 text-[#F0BB1E]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Фиксированные даты</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
