@@ -23,15 +23,17 @@ export default function Formats() {
             <div className="glass-card overflow-hidden">
               <div className="relative h-56">
                 <Image
-                  src="/images/photos/IMG_1227.JPG"
+                  src="/images/photos/20241004_130415000_iOS.jpg"
                   alt="Корпоративный тренинг Abadan & Co."
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+                <div className="absolute inset-0 bg-black/40"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white drop-shadow-lg">Корпоративные тренинги</h3>
-                  <p className="text-white/90 text-sm mt-1 drop-shadow-md">Закрытые группы для вашей команды</p>
+                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-3">
+                    <h3 className="text-2xl font-bold text-white">Корпоративные тренинги</h3>
+                    <p className="text-white/90 text-sm mt-1">Закрытые группы для вашей команды</p>
+                  </div>
                 </div>
               </div>
               <div className="p-6">
@@ -62,15 +64,17 @@ export default function Formats() {
             <div className="glass-card overflow-hidden">
               <div className="relative h-56">
                 <Image
-                  src="/images/photos/IMG_6890.JPG"
+                  src="/images/photos/20241115_115834038_iOS.jpg"
                   alt="Открытый тренинг Abadan & Co."
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+                <div className="absolute inset-0 bg-black/40"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white drop-shadow-lg">Открытые тренинги</h3>
-                  <p className="text-white/90 text-sm mt-1 drop-shadow-md">Присоединяйтесь к группе</p>
+                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-4 py-3">
+                    <h3 className="text-2xl font-bold text-white">Открытые тренинги</h3>
+                    <p className="text-white/90 text-sm mt-1">Присоединяйтесь к группе</p>
+                  </div>
                 </div>
               </div>
               <div className="p-6">
