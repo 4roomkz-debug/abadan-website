@@ -28,10 +28,10 @@ export default function Formats() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white">Корпоративные тренинги</h3>
-                  <p className="text-white/80 text-sm mt-1">Закрытые группы для вашей команды</p>
+                  <h3 className="text-2xl font-bold text-white drop-shadow-lg">Корпоративные тренинги</h3>
+                  <p className="text-white/90 text-sm mt-1 drop-shadow-md">Закрытые группы для вашей команды</p>
                 </div>
               </div>
               <div className="p-6">
@@ -67,10 +67,10 @@ export default function Formats() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white">Открытые тренинги</h3>
-                  <p className="text-white/80 text-sm mt-1">Присоединяйтесь к группе</p>
+                  <h3 className="text-2xl font-bold text-white drop-shadow-lg">Открытые тренинги</h3>
+                  <p className="text-white/90 text-sm mt-1 drop-shadow-md">Присоединяйтесь к группе</p>
                 </div>
               </div>
               <div className="p-6">

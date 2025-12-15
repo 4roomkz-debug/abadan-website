@@ -52,14 +52,14 @@ export default function About() {
               {/* Real training photo */}
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="/images/photos/IMG_1227.JPG"
-                  alt="Корпоративный тренинг Abadan & Co. в компании Polpharma"
+                  src="/images/photos/20241113_114950139_iOS.jpg"
+                  alt="Команда Abadan & Co. с участниками тренинга"
                   width={600}
                   height={400}
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                  <p className="text-white font-medium">Корпоративный тренинг для Polpharma</p>
+                  <p className="text-white font-medium">Гани Абадан с участниками тренинга</p>
                 </div>
               </div>
 
