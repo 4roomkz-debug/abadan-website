@@ -2,12 +2,65 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { SCHEDULE_DATA, MONTHS, CATEGORIES, type ScheduleItem } from "@/data/schedule";
+import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, type ScheduleItem } from "@/data/schedule";
 
 export default function SchedulePage() {
   const [categoryFilter, setCategoryFilter] = useState<"all" | "business" | "technical">("all");
   const [monthFilter, setMonthFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    participants: "1"
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const openModal = (courseName: string) => {
+    setSelectedCourse(courseName);
+    setIsModalOpen(true);
+    setSubmitSuccess(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCourse("");
+    setFormData({ name: "", phone: "", email: "", participants: "1" });
+    setSubmitSuccess(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Send to Telegram bot
+      const message = `🎓 Новая заявка на курс!\n\n📚 Курс: ${selectedCourse}\n👤 Имя: ${formData.name}\n📱 Телефон: ${formData.phone}\n📧 Email: ${formData.email || "не указан"}\n👥 Участников: ${formData.participants}`;
+
+      await fetch("https://api.telegram.org/bot8351809456:AAF8OsK251bpvwNl60NOZZ0Np9fXRr7yQPY/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: "127052678",
+          text: message
+        })
+      });
+
+      setSubmitSuccess(true);
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Get unique months from data
   const availableMonths = useMemo(() => {
@@ -15,20 +68,22 @@ export default function SchedulePage() {
     return MONTHS.filter(m => months.has(m));
   }, []);
 
-  // Filter data
+  // Filter and sort data by calendar date
   const filteredData = useMemo(() => {
-    return SCHEDULE_DATA.filter(item => {
-      const matchesCategory = categoryFilter === "all" || item.category === categoryFilter;
-      const matchesMonth = monthFilter === "all" || item.month === monthFilter;
-      const matchesSearch = searchQuery === "" ||
-        item.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesMonth && matchesSearch;
-    });
+    return SCHEDULE_DATA
+      .filter(item => {
+        const matchesCategory = categoryFilter === "all" || item.category === categoryFilter;
+        const matchesMonth = monthFilter === "all" || item.month === monthFilter;
+        const matchesSearch = searchQuery === "" ||
+          item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesMonth && matchesSearch;
+      })
+      .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month));
   }, [categoryFilter, monthFilter, searchQuery]);
 
-  // Format price
+  // Format price (without currency suffix - footnote explains it's in tenge)
   const formatPrice = (price: number) => {
-    return price.toLocaleString("ru-RU") + " тг";
+    return price.toLocaleString("ru-RU");
   };
 
   return (
@@ -55,7 +110,7 @@ export default function SchedulePage() {
         {/* Page title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            Расписание <span className="text-[#F0BB1E]">открытых тренингов</span>
+            <span className="text-[#14B8A6]">Расписание</span> открытых тренингов
           </h1>
           <p className="text-[#94A3B8] text-lg max-w-2xl mx-auto">
             Выберите интересующий курс и запишитесь на обучение.
@@ -153,12 +208,12 @@ export default function SchedulePage() {
                     <td className="px-6 py-4 text-right text-[#14B8A6] font-medium">{formatPrice(item.priceOnline)}</td>
                     <td className="px-6 py-4 text-right text-[#F0BB1E] font-medium">{formatPrice(item.priceOffline)}</td>
                     <td className="px-6 py-4 text-center">
-                      <Link
-                        href={`/#contact?course=${encodeURIComponent(item.name)}`}
-                        className="inline-block px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-[#00767D]/20 transition-all"
+                      <button
+                        onClick={() => openModal(item.name)}
+                        className="inline-block px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-[#00767D]/20 transition-all cursor-pointer"
                       >
                         Записаться
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -191,12 +246,12 @@ export default function SchedulePage() {
                     <span className="text-[#F0BB1E] font-medium">{formatPrice(item.priceOffline)}</span>
                   </div>
                 </div>
-                <Link
-                  href={`/#contact?course=${encodeURIComponent(item.name)}`}
-                  className="block w-full text-center px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all"
+                <button
+                  onClick={() => openModal(item.name)}
+                  className="block w-full text-center px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all cursor-pointer"
                 >
                   Записаться
-                </Link>
+                </button>
               </div>
             ))}
           </div>
@@ -214,6 +269,11 @@ export default function SchedulePage() {
             </div>
           )}
         </div>
+
+        {/* Price footnote */}
+        <p className="mt-4 text-sm text-[#64748B] text-center">
+          * Все цены указаны в тенге (₸)
+        </p>
 
         {/* Back button */}
         <div className="mt-8 text-center">
@@ -237,6 +297,106 @@ export default function SchedulePage() {
           </p>
         </div>
       </footer>
+
+      {/* Registration Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={closeModal}
+          />
+
+          {/* Modal */}
+          <div className="relative bg-[#1e2d30] rounded-2xl border border-white/10 w-full max-w-md p-6 shadow-2xl">
+            {/* Close button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-[#64748B] hover:text-white transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {submitSuccess ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#14B8A6]/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-[#14B8A6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Заявка отправлена!</h3>
+                <p className="text-[#94A3B8]">Мы свяжемся с вами в ближайшее время</p>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold text-white mb-2">Записаться на курс</h3>
+                <p className="text-[#94A3B8] text-sm mb-6 line-clamp-2">{selectedCourse}</p>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm text-[#94A3B8] mb-1">Ваше имя *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 bg-[#0f1819] border border-white/10 rounded-xl text-white placeholder-[#64748B] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
+                      placeholder="Введите ваше имя"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-[#94A3B8] mb-1">Телефон *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-4 py-3 bg-[#0f1819] border border-white/10 rounded-xl text-white placeholder-[#64748B] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
+                      placeholder="+7 (___) ___-__-__"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-[#94A3B8] mb-1">Email</label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 bg-[#0f1819] border border-white/10 rounded-xl text-white placeholder-[#64748B] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
+                      placeholder="email@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm text-[#94A3B8] mb-1">Количество участников</label>
+                    <select
+                      value={formData.participants}
+                      onChange={(e) => setFormData({ ...formData, participants: e.target.value })}
+                      className="w-full px-4 py-3 bg-[#0f1819] border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all cursor-pointer"
+                    >
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                        <option key={n} value={n}>{n} {n === 1 ? "человек" : n < 5 ? "человека" : "человек"}</option>
+                      ))}
+                      <option value="10+">Более 10</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-[#00767D]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    {isSubmitting ? "Отправка..." : "Отправить заявку"}
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

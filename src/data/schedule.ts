@@ -1567,3 +1567,13 @@ export const CATEGORIES = {
   technical: "Технические семинары"
 };
 
+// Helper function to parse date for sorting
+export function parseDateForSort(date: string, month: string): number {
+  const monthIndex = MONTHS.indexOf(month);
+  // Extract first day number from date string like "8-9 января" or "8 января"
+  const dayMatch = date.match(/^(\d+)/);
+  const day = dayMatch ? parseInt(dayMatch[1], 10) : 1;
+  // Return numeric value for sorting: month * 100 + day
+  return monthIndex * 100 + day;
+}
+
