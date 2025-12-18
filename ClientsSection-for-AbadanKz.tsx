@@ -1,8 +1,19 @@
-"use client";
+/**
+ * Секция "Нам доверяют" с логотипами клиентов
+ * Для использования в AbadanKz
+ *
+ * Требования:
+ * - Next.js с App Router
+ * - Framer Motion: npm install framer-motion
+ * - Tailwind CSS
+ * - Логотипы клиентов в папке public/images/clients/
+ */
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
+'use client';
+
+import { useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 // ============================================
 // Компонент нейросети на фоне
@@ -36,15 +47,15 @@ function NeuralBackground({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     // Brand colors (Abadan & Company)
     const colors = {
-      teal: "#00767D",
-      tealLight: "#009BA3",
-      gold: "#F0BB1E",
-      goldLight: "#F5CA3B",
+      teal: '#00767D',
+      tealLight: '#009BA3',
+      gold: '#F0BB1E',
+      goldLight: '#F5CA3B',
     };
 
     const colorArray = [colors.teal, colors.tealLight, colors.gold, colors.goldLight];
@@ -124,16 +135,14 @@ function NeuralBackground({
     initParticles();
     animate();
 
-    const handleResize = () => {
+    window.addEventListener('resize', () => {
       resizeCanvas();
       initParticles();
-    };
-
-    window.addEventListener("resize", handleResize);
+    });
 
     return () => {
       cancelAnimationFrame(animationRef.current);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', resizeCanvas);
     };
   }, [particleCount, connectionDistance, opacity]);
 
@@ -141,7 +150,7 @@ function NeuralBackground({
     <canvas
       ref={canvasRef}
       className="absolute inset-0 pointer-events-none"
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: '100%', height: '100%' }}
     />
   );
 }
@@ -150,35 +159,31 @@ function NeuralBackground({
 // Логотипы клиентов
 // ============================================
 
-const clients = [
-  { name: "Самрук-Казына", logo: "/images/clients/samruk.png" },
-  { name: "КазМунайГаз", logo: "/images/clients/kmg.png" },
-  { name: "Kaspi Bank", logo: "/images/clients/kaspi.png" },
-  { name: "Kcell", logo: "/images/clients/kcell.png" },
-  { name: "КТЖ", logo: "/images/clients/ktj.png" },
-  { name: "inDrive", logo: "/images/clients/indrive.png" },
-  { name: "Kazminerals", logo: "/images/clients/kazminerals.png" },
-  { name: "Рахат", logo: "/images/clients/rakhat.png" },
-  { name: "Santo", logo: "/images/clients/santo.png" },
-  { name: "Атамекен", logo: "/images/clients/atameken.png" },
-  { name: "КазРосГаз", logo: "/images/clients/kazrosgaz.png" },
-  { name: "ПетроКазахстан", logo: "/images/clients/petro.png" },
-  { name: "Кашаган", logo: "/images/clients/kashagan.png" },
-  { name: "ММГ", logo: "/images/clients/mmg.png" },
-  { name: "Байтерек", logo: "/images/clients/baiterek.png" },
-  { name: "КБМ", logo: "/images/clients/kbm.png" },
+const clientLogos = [
+  { name: 'Samruk-Kazyna', logo: '/images/clients/samruk.png' },
+  { name: 'КазМунайГаз', logo: '/images/clients/kmg.png' },
+  { name: 'Kaspi', logo: '/images/clients/kaspi.png' },
+  { name: 'Kcell', logo: '/images/clients/kcell.png' },
+  { name: 'КТЖ', logo: '/images/clients/ktj.png' },
+  { name: 'InDrive', logo: '/images/clients/indrive.png' },
+  { name: 'KAZ Minerals', logo: '/images/clients/kazminerals.png' },
+  { name: 'Рахат', logo: '/images/clients/rakhat.png' },
+  { name: 'Santo', logo: '/images/clients/santo.png' },
+  { name: 'Атамекен', logo: '/images/clients/atameken.png' },
+  { name: 'КазРосГаз', logo: '/images/clients/kazrosgaz.png' },
+  { name: 'OMV Petrom', logo: '/images/clients/petro.png' },
 ];
 
 // ============================================
 // Основной компонент секции
 // ============================================
 
-export default function Clients() {
+export function ClientsSection() {
   // Дублируем логотипы для бесшовной прокрутки
-  const duplicatedLogos = [...clients, ...clients];
+  const duplicatedLogos = [...clientLogos, ...clientLogos];
 
   return (
-    <section id="clients" className="relative py-20 md:py-28 bg-[#2D3A3C] overflow-hidden">
+    <section className="relative py-16 md:py-24 bg-[#2D3A3C] overflow-hidden">
       {/* Анимированный фон с нейросетью */}
       <NeuralBackground
         particleCount={60}
@@ -190,44 +195,44 @@ export default function Clients() {
       <div className="relative z-10">
         {/* Заголовок */}
         <div className="text-center mb-12 px-4">
-          <span className="inline-block px-4 py-2 bg-[#00767D]/20 text-[#14B8A6] rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-2 bg-[#00767D]/20 text-[#009BA3] rounded-full text-sm font-medium mb-4">
             Нам доверяют
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Среди наших <span className="text-[#F0BB1E]">клиентов</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Среди наших клиентов
           </h2>
-          <p className="text-[#94A3B8] max-w-2xl mx-auto text-lg">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             Ведущие компании Казахстана, которые выбрали нас для развития своих команд
           </p>
         </div>
 
         {/* Прокручивающиеся логотипы */}
-        <div className="overflow-hidden mb-16">
+        <div className="overflow-hidden">
           <motion.div
-            className="flex items-center gap-6 md:gap-8"
+            className="flex items-center gap-8"
             animate={{
-              x: [0, -156 * clients.length],
+              x: [0, -160 * clientLogos.length],
             }}
             transition={{
               x: {
                 repeat: Infinity,
-                repeatType: "loop",
-                duration: 30,
-                ease: "linear",
+                repeatType: 'loop',
+                duration: 25,
+                ease: 'linear',
               },
             }}
           >
             {duplicatedLogos.map((client, index) => (
               <div
                 key={`${client.name}-${index}`}
-                className="flex-shrink-0 flex items-center justify-center p-4 bg-white/95 backdrop-blur-sm rounded-xl min-w-[130px] md:min-w-[140px] h-[70px] md:h-20 shadow-lg hover:shadow-xl transition-shadow"
+                className="flex-shrink-0 flex items-center justify-center p-4 bg-white rounded-xl min-w-[140px] h-20"
               >
                 <Image
                   src={client.logo}
                   alt={client.name}
                   width={100}
                   height={50}
-                  className="object-contain max-h-10 md:max-h-12"
+                  className="object-contain max-h-10"
                 />
               </div>
             ))}
@@ -235,21 +240,39 @@ export default function Clients() {
         </div>
 
         {/* Статистика */}
-        <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto text-center px-4">
-          <div className="p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00767D] mb-1 md:mb-2">359</div>
-            <div className="text-[#94A3B8] text-sm md:text-base">компаний</div>
+        <div className="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto text-center px-4">
+          <div>
+            <div className="text-4xl md:text-5xl font-bold text-[#00767D] mb-2">359</div>
+            <div className="text-gray-400">компаний</div>
           </div>
-          <div className="p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#F0BB1E] mb-1 md:mb-2">50 000+</div>
-            <div className="text-[#94A3B8] text-sm md:text-base">обученных</div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold text-[#F0BB1E] mb-2">50 000+</div>
+            <div className="text-gray-400">обученных</div>
           </div>
-          <div className="p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#14B8A6] mb-1 md:mb-2">200+</div>
-            <div className="text-[#94A3B8] text-sm md:text-base">экспертов</div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold text-[#009BA3] mb-2">200+</div>
+            <div className="text-gray-400">экспертов</div>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
+// ============================================
+// Использование:
+// ============================================
+//
+// import { ClientsSection } from './ClientsSection';
+//
+// export default function Page() {
+//   return (
+//     <main>
+//       {/* ... другие секции ... */}
+//       <ClientsSection />
+//       {/* ... другие секции ... */}
+//     </main>
+//   );
+// }
+//
+// Не забудьте скопировать логотипы в public/images/clients/
