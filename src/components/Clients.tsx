@@ -39,12 +39,12 @@ function NeuralBackground({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Brand colors (Abadan & Company)
+    // Brand colors (Abadan & Company) - slightly more visible for light background
     const colors = {
       teal: "#00767D",
-      tealLight: "#009BA3",
+      tealLight: "#14B8A6",
       gold: "#F0BB1E",
-      goldLight: "#F5CA3B",
+      goldLight: "#EBB417",
     };
 
     const colorArray = [colors.teal, colors.tealLight, colors.gold, colors.goldLight];
@@ -178,25 +178,25 @@ export default function Clients() {
   const duplicatedLogos = [...clients, ...clients];
 
   return (
-    <section id="clients" className="relative py-20 md:py-28 bg-[#2D3A3C] overflow-hidden">
+    <section id="clients" className="relative py-20 md:py-28 bg-[#FAFAFA] overflow-hidden">
       {/* Анимированный фон с нейросетью */}
       <NeuralBackground
-        particleCount={60}
-        connectionDistance={180}
-        opacity={0.25}
+        particleCount={50}
+        connectionDistance={150}
+        opacity={0.35}
       />
 
       {/* Контент */}
       <div className="relative z-10">
         {/* Заголовок */}
         <div className="text-center mb-12 px-4">
-          <span className="inline-block px-4 py-2 bg-[#00767D]/20 text-[#14B8A6] rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-2 bg-[#00767D]/10 text-[#00767D] rounded-full text-sm font-medium mb-4">
             Нам доверяют
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#2D3A3C] mb-4">
             Среди наших <span className="text-[#F0BB1E]">клиентов</span>
           </h2>
-          <p className="text-[#94A3B8] max-w-2xl mx-auto text-lg">
+          <p className="text-[#546569] max-w-2xl mx-auto text-lg">
             Ведущие компании Казахстана, которые выбрали нас для развития своих команд
           </p>
         </div>
@@ -220,7 +220,7 @@ export default function Clients() {
             {duplicatedLogos.map((client, index) => (
               <div
                 key={`${client.name}-${index}`}
-                className="flex-shrink-0 flex items-center justify-center p-4 bg-white/95 backdrop-blur-sm rounded-xl min-w-[130px] md:min-w-[140px] h-[70px] md:h-20 shadow-lg hover:shadow-xl transition-shadow"
+                className="flex-shrink-0 flex items-center justify-center p-4 bg-white rounded-xl min-w-[130px] md:min-w-[140px] h-[70px] md:h-20 shadow-md hover:shadow-lg border border-[#00767D]/10 transition-shadow"
               >
                 <Image
                   src={client.logo}
@@ -235,18 +235,18 @@ export default function Clients() {
         </div>
 
         {/* Статистика */}
-        <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto text-center px-4">
-          <div className="p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00767D] mb-1 md:mb-2">359</div>
-            <div className="text-[#94A3B8] text-sm md:text-base">компаний</div>
+        <div className="grid grid-cols-3 gap-3 md:gap-8 max-w-3xl mx-auto text-center px-4">
+          <div className="p-3 md:p-6 rounded-2xl bg-white shadow-sm border border-[#00767D]/10">
+            <div className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#00767D] mb-1 md:mb-2">359</div>
+            <div className="text-[#546569] text-xs md:text-base">компаний</div>
           </div>
-          <div className="p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#F0BB1E] mb-1 md:mb-2">50 000+</div>
-            <div className="text-[#94A3B8] text-sm md:text-base">обученных</div>
+          <div className="p-3 md:p-6 rounded-2xl bg-white shadow-sm border border-[#00767D]/10">
+            <div className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#F0BB1E] mb-1 md:mb-2 whitespace-nowrap">50 000+</div>
+            <div className="text-[#546569] text-xs md:text-base">обученных</div>
           </div>
-          <div className="p-4 md:p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#14B8A6] mb-1 md:mb-2">200+</div>
-            <div className="text-[#94A3B8] text-sm md:text-base">экспертов</div>
+          <div className="p-3 md:p-6 rounded-2xl bg-white shadow-sm border border-[#00767D]/10">
+            <div className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#00767D] mb-1 md:mb-2">200+</div>
+            <div className="text-[#546569] text-xs md:text-base">экспертов</div>
           </div>
         </div>
       </div>
