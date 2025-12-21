@@ -1,6 +1,5 @@
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import VisionMission from "@/components/VisionMission";
+import AboutTeaser from "@/components/AboutTeaser";
 import Problems from "@/components/Problems";
 import Features from "@/components/Features";
 import Stats from "@/components/Stats";
@@ -18,8 +17,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <VisionMission />
+      <AboutTeaser />
       <Problems />
       <Features />
       <Stats />

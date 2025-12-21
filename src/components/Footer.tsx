@@ -45,17 +45,22 @@ export default function Footer() {
               <h4 className="text-sm font-bold text-[#2D3A3C] mb-6 uppercase tracking-[0.15em]">Навигация</h4>
               <ul className="space-y-4">
                 <li>
-                  <a href="#about" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
+                  <a href="/about" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
                     О компании
                   </a>
                 </li>
                 <li>
-                  <a href="#features" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
-                    Наш подход
+                  <a href="/projects" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
+                    Проекты
                   </a>
                 </li>
                 <li>
-                  <a href="#contact" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
+                  <a href="/schedule" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
+                    Расписание
+                  </a>
+                </li>
+                <li>
+                  <a href="/#contact" className="text-[#546569] hover:text-[#00767D] transition-colors duration-300">
                     Контакты
                   </a>
                 </li>

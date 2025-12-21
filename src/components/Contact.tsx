@@ -46,7 +46,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-24 sm:py-32 section-white">
+    <section id="contact" className="relative py-16 sm:py-20 section-white">
       {/* Subtle ambient glow */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-gradient-to-br from-[#00767D]/[0.03] to-transparent blur-[100px]"></div>
@@ -56,7 +56,7 @@ export default function Contact() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-20 space-y-4">
+          <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C]">
               Начнем <span className="text-gradient-gold">сотрудничество?</span>
             </h2>

@@ -15,8 +15,12 @@ export default function Hero() {
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             {/* Left column - Text content */}
             <div className="space-y-10 animate-fade-in-up">
-              {/* Exclusive badge */}
-              <div className="inline-flex items-center gap-3">
+              {/* PGT Badge */}
+              <div className="inline-flex items-center gap-3 flex-wrap">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00767D]/10 text-[#00767D] text-sm font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-[#00767D] animate-pulse"></span>
+                  People Growth Technology
+                </div>
                 <div className="status-badge">
                   <span className="w-2 h-2 rounded-full bg-[#F0BB1E] animate-pulse"></span>
                   <span>С 2015 года на рынке</span>

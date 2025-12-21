@@ -4,11 +4,11 @@ import Link from "next/link";
 
 export default function Formats() {
   return (
-    <section className="relative py-20 sm:py-32 section-dark-2">
+    <section className="relative py-16 sm:py-20 section-dark-2">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-16 space-y-4">
+          <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl sm:text-5xl font-bold text-[#2D3A3C]">
               Форматы <span className="text-gradient-primary">обучения</span>
             </h2>
@@ -18,7 +18,7 @@ export default function Formats() {
           </div>
 
           {/* Formats grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 gap-8 mb-10">
             {/* Corporate training */}
             <div className="glass-card p-8">
               <div className="flex items-start gap-6">

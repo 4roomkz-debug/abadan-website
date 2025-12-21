@@ -43,8 +43,16 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+    other: [
+      { rel: "icon", url: "/favicon-192x192.png", sizes: "192x192", type: "image/png" },
+      { rel: "icon", url: "/favicon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
   },
   openGraph: {
     title: "Abadan & Co. — Корпоративное обучение и бизнес-тренинги",
@@ -55,7 +63,7 @@ export const metadata: Metadata = {
     siteName: "Abadan & Co.",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Abadan & Co. — Корпоративное обучение в Казахстане",
@@ -66,7 +74,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Abadan & Co. — Корпоративное обучение в Казахстане",
     description: "80% практики на ваших кейсах. 200+ экспертов, 359 компаний-клиентов.",
-    images: ["/og-image.svg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

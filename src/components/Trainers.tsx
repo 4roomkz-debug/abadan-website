@@ -28,7 +28,7 @@ export default function Trainers() {
   const expertises = ["HR", "Финансы", "Закупки", "Логистика", "Soft Skills", "Управление проектами", "Нефтегаз"];
 
   return (
-    <section className="relative py-20 sm:py-32 section-subtle">
+    <section className="relative py-16 sm:py-20 section-subtle">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}

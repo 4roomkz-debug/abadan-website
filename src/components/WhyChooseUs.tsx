@@ -60,7 +60,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="relative py-24 sm:py-32 section-white">
+    <section className="relative py-16 sm:py-20 section-white">
       {/* Ambient lighting */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-gradient-to-r from-[#00767D]/[0.03] to-transparent blur-[100px]"></div>
@@ -70,7 +70,7 @@ export default function WhyChooseUs() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-20 space-y-4 scroll-fade-in">
+          <div className="text-center mb-12 space-y-4 scroll-fade-in">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C]">
               Почему нас <span className="text-gradient-primary">выбирают?</span>
             </h2>
@@ -80,7 +80,7 @@ export default function WhyChooseUs() {
           </div>
 
           {/* Reasons grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 pt-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 pt-4">
             {reasons.map((reason, index) => (
               <div
                 key={index}
