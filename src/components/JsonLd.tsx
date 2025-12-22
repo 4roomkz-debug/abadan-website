@@ -4,8 +4,8 @@ export function OrganizationJsonLd() {
     "@type": "Organization",
     name: "Abadan & Co.",
     alternateName: "Абадан",
-    url: "https://abadan.kz",
-    logo: "https://abadan.kz/favicon.svg",
+    url: "https://www.abadan.kz",
+    logo: "https://www.abadan.kz/images/logo.png",
     description:
       "Корпоративное обучение и курсы повышения квалификации в Казахстане. Бизнес-тренинги, технические семинары.",
     foundingDate: "2015",
@@ -55,10 +55,10 @@ export function LocalBusinessJsonLd() {
   const localBusinessData = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
-    "@id": "https://abadan.kz/#organization",
+    "@id": "https://www.abadan.kz/#organization",
     name: "Abadan & Co.",
-    image: "https://abadan.kz/og-image.svg",
-    url: "https://abadan.kz",
+    image: "https://www.abadan.kz/og-image.png",
+    url: "https://www.abadan.kz",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Алматы",
@@ -91,12 +91,12 @@ export function WebSiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Abadan & Co.",
-    url: "https://abadan.kz",
+    url: "https://www.abadan.kz",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://abadan.kz/schedule?search={search_term_string}",
+        urlTemplate: "https://www.abadan.kz/schedule?search={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -116,7 +116,7 @@ export function CourseListJsonLd() {
     "@type": "ItemList",
     name: "Открытые тренинги Abadan & Co.",
     description: "Расписание бизнес-тренингов и технических семинаров на 2026 год",
-    url: "https://abadan.kz/schedule",
+    url: "https://www.abadan.kz/schedule",
     numberOfItems: 172,
     itemListElement: [
       {
