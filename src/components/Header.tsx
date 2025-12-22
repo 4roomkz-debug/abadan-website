@@ -9,6 +9,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
+    { href: "/", label: "Главная" },
     { href: "/about", label: "О компании" },
     { href: "/projects", label: "Проекты" },
     { href: "/schedule", label: "Расписание" },

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Header from "@/components/Header";
 import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, type ScheduleItem } from "@/data/schedule";
 
 export default function SchedulePage() {
@@ -88,25 +89,19 @@ export default function SchedulePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F8FAFB] to-white">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-[#00767D]/10 sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2 text-[#2D3A3C] font-bold text-xl">
-              <span className="text-[#F0BB1E]">Abadan</span> & Co.
-            </Link>
-            <Link
-              href="/#contact"
-              className="px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg hover:shadow-lg transition-all text-sm"
-            >
-              Оставить заявку
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main content */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Breadcrumbs */}
+        <nav className="flex items-center gap-2 text-sm text-[#7A8B8E] mb-8">
+          <Link href="/" className="hover:text-[#00767D] transition-colors">Главная</Link>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+          <span className="text-[#2D3A3C] font-medium">Расписание</span>
+        </nav>
+
         {/* Page title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-[#2D3A3C] mb-4">

@@ -77,6 +77,15 @@ export default function ProjectsPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#00767D]/5 via-transparent to-[#F0BB1E]/5"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
+            {/* Breadcrumbs */}
+            <nav className="flex items-center justify-center gap-2 text-sm text-[#7A8B8E] mb-6">
+              <Link href="/" className="hover:text-[#00767D] transition-colors">Главная</Link>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              <span className="text-[#2D3A3C] font-medium">Проекты</span>
+            </nav>
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F0BB1E]/10 text-[#D4A017] text-sm font-semibold mb-6">
               <span className="w-2 h-2 rounded-full bg-[#F0BB1E] animate-pulse"></span>
               Наши проекты
