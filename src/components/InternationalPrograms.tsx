@@ -19,7 +19,7 @@ const locations = [
   {
     city: "Баку",
     country: "Азербайджан",
-    image: "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?w=400&h=300&fit=crop",
+    image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&h=300&fit=crop",
     flag: "🇦🇿",
   },
   {
