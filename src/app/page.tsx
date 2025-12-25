@@ -7,6 +7,7 @@ import Stats from "@/components/Stats";
 import Clients from "@/components/Clients";
 import TrainingDirections from "@/components/TrainingDirections";
 import Formats from "@/components/Formats";
+import InternationalPrograms from "@/components/InternationalPrograms";
 import UpcomingTrainings from "@/components/UpcomingTrainings";
 import Gallery from "@/components/Gallery";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -26,6 +27,7 @@ export default function Home() {
       <Clients />
       <TrainingDirections />
       <Formats />
+      <InternationalPrograms />
       <UpcomingTrainings />
       <Gallery />
       <WhyChooseUs />
