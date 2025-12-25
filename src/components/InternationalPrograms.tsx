@@ -19,7 +19,7 @@ const locations = [
   {
     city: "Баку",
     country: "Азербайджан",
-    image: "https://images.unsplash.com/photo-1603554347536-e79a8067b8d3?w=400&h=300&fit=crop",
+    image: "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?w=400&h=300&fit=crop",
     flag: "🇦🇿",
   },
   {
@@ -71,7 +71,7 @@ const features = [
 
 export default function InternationalPrograms() {
   return (
-    <section className="relative py-16 sm:py-20 bg-gradient-to-br from-[#00767D]/5 via-white to-[#F0BB1E]/5 overflow-hidden">
+    <section id="international" className="relative py-16 sm:py-20 bg-gradient-to-br from-[#00767D]/5 via-white to-[#F0BB1E]/5 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}

@@ -123,7 +123,7 @@ export default function Formats() {
                 </li>
               </ul>
               <Link
-                href="#contact"
+                href="#international"
                 className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#00767D] text-[#00767D] font-semibold rounded-lg hover:bg-[#00767D] hover:text-white transition-all text-sm"
               >
                 Узнать подробнее
