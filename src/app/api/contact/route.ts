@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
 
-const TELEGRAM_BOT_TOKEN = "8351809456:AAF8OsK251bpvwNl60NOZZ0Np9fXRr7yQPY";
-const TELEGRAM_CHAT_ID = "-5032889199"; // Группа "Заявки Абадан"
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 export async function POST(request: Request) {
   try {
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      console.error("Telegram credentials not configured");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
     const { name, phone, message } = await request.json();
 
     const text = `
