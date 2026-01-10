@@ -47,8 +47,16 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="https://ibirai.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 border border-[#00767D] text-[#00767D] font-semibold rounded-lg hover:bg-[#00767D] hover:text-white transition-all text-sm"
+            >
+              Иберай
+            </Link>
             <Link
               href="/#contact"
               className="px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg hover:shadow-lg transition-all text-sm"
@@ -94,9 +102,18 @@ export default function Header() {
                 </Link>
               ))}
               <Link
+                href="https://ibirai.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-2 px-4 py-2 border border-[#00767D] text-[#00767D] font-semibold rounded-lg text-center text-sm hover:bg-[#00767D] hover:text-white transition-all"
+              >
+                Иберай
+              </Link>
+              <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-2 px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg text-center text-sm"
+                className="px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg text-center text-sm"
               >
                 Оставить заявку
               </Link>
