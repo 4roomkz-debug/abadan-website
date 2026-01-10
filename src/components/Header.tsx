@@ -53,9 +53,10 @@ export default function Header() {
               href="https://ibirai.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 border border-[#00767D] text-[#00767D] font-semibold rounded-lg hover:bg-[#00767D] hover:text-white transition-all text-sm"
+              className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-2"
             >
-              Иберай
+              <span>🤖</span>
+              ibirAi
             </Link>
             <Link
               href="/#contact"
@@ -106,9 +107,10 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-2 px-4 py-2 border border-[#00767D] text-[#00767D] font-semibold rounded-lg text-center text-sm hover:bg-[#00767D] hover:text-white transition-all"
+                className="mt-2 px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
-                Иберай
+                <span>🤖</span>
+                ibirAi
               </Link>
               <Link
                 href="/#contact"
