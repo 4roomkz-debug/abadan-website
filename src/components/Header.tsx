@@ -32,32 +32,65 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-medium transition-colors ${
-                  isActive(item.href)
-                    ? "text-[#00767D]"
-                    : "text-[#546569] hover:text-[#00767D]"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Главная
+            </Link>
+            <Link
+              href="/about"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/about")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              О компании
+            </Link>
             <Link
               href="https://ibirai.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-2"
+              className="px-3 py-1.5 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-1.5"
             >
               <span>🤖</span>
               ibirAi
             </Link>
+            <Link
+              href="/projects"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/projects")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Проекты
+            </Link>
+            <Link
+              href="/schedule"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/schedule")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Расписание
+            </Link>
+            <Link
+              href="/#contact"
+              className="text-sm font-medium text-[#546569] hover:text-[#00767D] transition-colors"
+            >
+              Контакты
+            </Link>
+          </nav>
+
+          {/* CTA Button */}
+          <div className="hidden md:block">
             <Link
               href="/#contact"
               className="px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg hover:shadow-lg transition-all text-sm"
@@ -88,34 +121,71 @@ export default function Header() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-[#00767D]/10">
             <nav className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-sm font-medium py-2 transition-colors ${
-                    isActive(item.href)
-                      ? "text-[#00767D]"
-                      : "text-[#546569] hover:text-[#00767D]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <Link
+                href="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Главная
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/about")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                О компании
+              </Link>
               <Link
                 href="https://ibirai.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-2 px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <span>🤖</span>
                 ibirAi
               </Link>
               <Link
+                href="/projects"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/projects")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Проекты
+              </Link>
+              <Link
+                href="/schedule"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/schedule")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Расписание
+              </Link>
+              <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg text-center text-sm"
+                className="text-sm font-medium py-2 text-[#546569] hover:text-[#00767D] transition-colors"
+              >
+                Контакты
+              </Link>
+              <Link
+                href="/#contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-2 px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg text-center text-sm"
               >
                 Оставить заявку
               </Link>
