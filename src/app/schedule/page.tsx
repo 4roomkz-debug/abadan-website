@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
-import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, type ScheduleItem } from "@/data/schedule";
+import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort } from "@/data/schedule";
 
 export default function SchedulePage() {
   const [categoryFilter, setCategoryFilter] = useState<"all" | "business" | "technical">("all");
@@ -112,6 +112,36 @@ export default function SchedulePage() {
             Мы проводим тренинги онлайн и очно в Алматы.
           </p>
         </div>
+
+        {/* Special Event Banner */}
+        <Link
+          href="/events/business-breakfast-ai-hr"
+          className="block mb-8 bg-gradient-to-r from-[#00767D] to-[#006D77] rounded-2xl p-6 sm:p-8 text-white hover:shadow-xl hover:shadow-[#00767D]/20 transition-all group"
+        >
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+            <div className="flex-shrink-0">
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">
+                🤖
+              </div>
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-3 py-1 bg-[#F0BB1E] text-[#2D3A3C] text-xs font-bold rounded-full">БЕСПЛАТНО</span>
+                <span className="px-3 py-1 bg-white/20 text-white text-xs font-medium rounded-full">30 января 2026</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-1">Бизнес-завтрак: AI в HR</h3>
+              <p className="text-white/80 text-sm sm:text-base">Революция найма и обучения — кейсы, метрики, практика. 3 спикера, нетворкинг, демо ibirAi.</p>
+            </div>
+            <div className="flex-shrink-0">
+              <div className="flex items-center gap-2 text-[#F0BB1E] font-semibold group-hover:translate-x-1 transition-transform">
+                Подробнее
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </Link>
 
         {/* Filters */}
         <div className="bg-white rounded-2xl p-6 mb-8 border border-[#00767D]/10 shadow-sm">
