@@ -79,11 +79,12 @@ function generateGoogleCalendarUrl() {
     "Регистрация: https://www.abadan.kz/events/business-breakfast-ai-hr"
   );
   const location = encodeURIComponent("г. Алматы, ул. Абая 44а, Променад бизнес-парк, конференц-зал «Орда»");
-  // 2026-01-30 09:00 - 11:30 Almaty time (UTC+6) = 03:00 - 05:30 UTC
-  const startDate = "20260130T030000Z";
-  const endDate = "20260130T053000Z";
+  // Local time format (without Z) + timezone parameter for Almaty
+  const startDate = "20260130T090000";
+  const endDate = "20260130T113000";
+  const timezone = "Asia/Almaty";
 
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}&ctz=${timezone}`;
 }
 
 // LinkedIn Share URL generator
