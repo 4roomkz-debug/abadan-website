@@ -1,9 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
+
+// Countdown Timer Hook
+function useCountdown(targetDate: Date) {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = targetDate.getTime() - new Date().getTime();
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  return timeLeft;
+}
+
+const EVENT_DATE = new Date("2026-01-30T09:00:00+06:00");
 
 const speakers = [
   {
@@ -43,7 +75,7 @@ const speakers = [
   {
     name: "Гани Абадан",
     role: "Модератор + демо ibirAi",
-    image: null,
+    image: "/speakers/gani.jpg",
     bio: [
       "10+ лет в бизнес-обучении",
       "Основатель ibirAi",
@@ -73,6 +105,7 @@ const program = [
 ];
 
 export default function BusinessBreakfastPage() {
+  const timeLeft = useCountdown(EVENT_DATE);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -114,7 +147,13 @@ export default function BusinessBreakfastPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#00767D]/5 via-transparent to-[#F0BB1E]/5" />
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#00767D]/10 via-[#F8FAFB] to-[#F0BB1E]/10" />
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-[#00767D]/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#F0BB1E]/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#00767D]/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: "2s" }} />
+        </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-sm text-[#7A8B8E] mb-8">
@@ -157,11 +196,34 @@ export default function BusinessBreakfastPage() {
               </div>
               <div className="flex items-center gap-2 text-[#2D3A3C]">
                 <span className="text-2xl">📍</span>
-                <span className="font-semibold">Алматы</span>
+                <span className="font-semibold">Алматы, Променад</span>
               </div>
               <div className="flex items-center gap-2 text-[#2D3A3C]">
                 <span className="text-2xl">👥</span>
                 <span className="font-semibold">25-30 мест</span>
+              </div>
+            </div>
+
+            {/* Countdown Timer */}
+            <div className="mb-10">
+              <p className="text-[#546569] text-sm mb-4">До начала мероприятия:</p>
+              <div className="flex justify-center gap-3 sm:gap-6">
+                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg border border-[#00767D]/10 min-w-[70px] sm:min-w-[80px]">
+                  <div className="text-2xl sm:text-4xl font-bold text-[#00767D]">{timeLeft.days}</div>
+                  <div className="text-xs sm:text-sm text-[#546569]">дней</div>
+                </div>
+                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg border border-[#00767D]/10 min-w-[70px] sm:min-w-[80px]">
+                  <div className="text-2xl sm:text-4xl font-bold text-[#00767D]">{timeLeft.hours}</div>
+                  <div className="text-xs sm:text-sm text-[#546569]">часов</div>
+                </div>
+                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg border border-[#00767D]/10 min-w-[70px] sm:min-w-[80px]">
+                  <div className="text-2xl sm:text-4xl font-bold text-[#00767D]">{timeLeft.minutes}</div>
+                  <div className="text-xs sm:text-sm text-[#546569]">минут</div>
+                </div>
+                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-lg border border-[#00767D]/10 min-w-[70px] sm:min-w-[80px]">
+                  <div className="text-2xl sm:text-4xl font-bold text-[#F0BB1E]">{timeLeft.seconds}</div>
+                  <div className="text-xs sm:text-sm text-[#546569]">секунд</div>
+                </div>
               </div>
             </div>
 
@@ -285,8 +347,79 @@ export default function BusinessBreakfastPage() {
         </div>
       </section>
 
+      {/* Venue */}
+      <section className="py-16 bg-[#F8FAFB]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12">
+            <span className="text-[#00767D]">Место</span> проведения
+          </h2>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl overflow-hidden border border-[#00767D]/10 shadow-sm">
+              {/* Map */}
+              <div className="h-64 sm:h-80 bg-gray-200 relative">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.5123!2d76.9456!3d43.2387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836eb5!2z0J_RgNC-0LzQtdC90LDQtCDQkdC40LfQvdC10YEt0L_QsNGA0Lo!5e0!3m2!1sru!2skz!4v1234567890"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0"
+                />
+              </div>
+
+              {/* Address Info */}
+              <div className="p-6 sm:p-8">
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <div className="flex-1">
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="w-10 h-10 bg-[#00767D]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span className="text-xl">📍</span>
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-[#2D3A3C] mb-1">Адрес</h3>
+                        <p className="text-[#546569]">г. Алматы, ул. Абая 44а</p>
+                        <p className="text-[#546569]">Променад бизнес-парк, цокольный этаж</p>
+                        <p className="text-[#00767D] font-medium">Конференц-зал «Орда»</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="w-10 h-10 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span className="text-xl">🚗</span>
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-[#2D3A3C] mb-1">Как добраться</h3>
+                        <p className="text-[#546569]">Рядом с пересечением Абая и Достык</p>
+                        <p className="text-[#546569]">Есть бесплатная парковка</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <a
+                  href="https://2gis.kz/almaty/search/%D0%9F%D1%80%D0%BE%D0%BC%D0%B5%D0%BD%D0%B0%D0%B4%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%BF%D0%B0%D1%80%D0%BA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-[#00767D]/10 text-[#00767D] font-medium rounded-lg hover:bg-[#00767D]/20 transition-colors"
+                >
+                  <span>Открыть в 2ГИС</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Registration Form */}
-      <section id="register" className="py-16 bg-gradient-to-b from-[#F8FAFB] to-white">
+      <section id="register" className="py-16 bg-gradient-to-b from-white to-[#F8FAFB]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl mx-auto">
             <div className="text-center mb-8">
