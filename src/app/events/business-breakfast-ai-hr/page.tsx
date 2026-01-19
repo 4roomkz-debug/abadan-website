@@ -379,6 +379,92 @@ export default function BusinessBreakfastPage() {
         </div>
       </section>
 
+      {/* Why You Should Come */}
+      <section className="py-16 bg-gradient-to-b from-white to-[#F8FAFB]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-4">
+            Зачем вам <span className="text-[#00767D]">стоит прийти?</span>
+          </h2>
+          <p className="text-[#546569] text-center max-w-2xl mx-auto mb-12">
+            Если вы узнаёте себя хотя бы в одном из этих пунктов — это мероприятие для вас
+          </p>
+
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">💸</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2D3A3C] mb-2">Провели тренинг за 2 млн — через месяц никто не помнит</h3>
+                  <p className="text-[#546569] text-sm">Узнаете, как сделать обучение измеримым и с долгосрочным эффектом</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#00767D]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">📊</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2D3A3C] mb-2">Руководство спрашивает: «Какой ROI?» — а цифр нет</h3>
+                  <p className="text-[#546569] text-sm">Покажем, как собирать метрики и доказывать эффективность HR-инициатив</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">🤔</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2D3A3C] mb-2">Все говорят про AI, но непонятно — с чего начать?</h3>
+                  <p className="text-[#546569] text-sm">Увидите конкретные инструменты, которые можно внедрить уже завтра</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#00767D]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">⏰</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2D3A3C] mb-2">Найм занимает слишком много времени</h3>
+                  <p className="text-[#546569] text-sm">Узнаете, как AI помогает отбирать кандидатов быстрее и точнее</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">🏃</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2D3A3C] mb-2">Не хотите отстать от конкурентов</h3>
+                  <p className="text-[#546569] text-sm">Познакомитесь с теми, кто уже внедряет AI, и узнаете их опыт</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#00767D]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">🎯</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2D3A3C] mb-2">Хотите ответы, а не теорию</h3>
+                  <p className="text-[#546569] text-sm">Формат: практические кейсы, живое демо, вопросы спикерам</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Speakers */}
       <section className="py-16 bg-gradient-to-b from-white to-[#F8FAFB]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -509,7 +595,7 @@ export default function BusinessBreakfastPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-[#2D3A3C] mb-1">Как добраться</h3>
-                        <p className="text-[#546569]">Рядом с пересечением Абая и Достык</p>
+                        <p className="text-[#546569]">Угол Абая и Байтурсынова</p>
                         <p className="text-[#546569]">Есть бесплатная парковка</p>
                       </div>
                     </div>
@@ -517,7 +603,7 @@ export default function BusinessBreakfastPage() {
                 </div>
 
                 <a
-                  href="https://2gis.kz/almaty/search/%D0%9F%D1%80%D0%BE%D0%BC%D0%B5%D0%BD%D0%B0%D0%B4%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%BF%D0%B0%D1%80%D0%BA"
+                  href="https://2gis.kz/almaty/geo/70000001099018961"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-[#00767D]/10 text-[#00767D] font-medium rounded-lg hover:bg-[#00767D]/20 transition-colors"
