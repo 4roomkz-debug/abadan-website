@@ -37,6 +37,89 @@ function useCountdown(targetDate: Date) {
 
 const EVENT_DATE = new Date("2026-01-30T09:00:00+06:00");
 
+// FAQ Item Component
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="bg-[#F8FAFB] rounded-xl border border-[#00767D]/10 overflow-hidden">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-5 text-left hover:bg-[#00767D]/5 transition-colors"
+      >
+        <span className="font-semibold text-[#2D3A3C] pr-4">{question}</span>
+        <svg
+          className={`w-5 h-5 text-[#00767D] flex-shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {isOpen && (
+        <div className="px-5 pb-5">
+          <p className="text-[#546569]">{answer}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Google Calendar URL generator
+function generateGoogleCalendarUrl() {
+  const title = encodeURIComponent("Бизнес-завтрак: AI в HR — Abadan & Co.");
+  const details = encodeURIComponent(
+    "Бесплатный бизнес-завтрак для HR-директоров и L&D специалистов.\n\n" +
+    "Темы:\n" +
+    "• Революция найма с помощью ИИ: кейсы и метрики\n" +
+    "• ИИ-агенты для HR: когда убрать человека\n" +
+    "• Демо ibirAi: микрообучение в Telegram\n\n" +
+    "Спикеры: Диас Жумагалиев, Даниэль Алисов, Гани Абадан\n\n" +
+    "Регистрация: https://www.abadan.kz/events/business-breakfast-ai-hr"
+  );
+  const location = encodeURIComponent("г. Алматы, ул. Абая 44а, Променад бизнес-парк, конференц-зал «Орда»");
+  // 2026-01-30 09:00 - 11:30 Almaty time (UTC+6) = 03:00 - 05:30 UTC
+  const startDate = "20260130T030000Z";
+  const endDate = "20260130T053000Z";
+
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
+}
+
+// LinkedIn Share URL generator
+function generateLinkedInShareUrl() {
+  const url = encodeURIComponent("https://www.abadan.kz/events/business-breakfast-ai-hr");
+  return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+}
+
+// FAQ Data
+const faqItems = [
+  {
+    question: "Мероприятие бесплатное?",
+    answer: "Да, участие полностью бесплатное. Мы оплачиваем площадку и кофе-брейк. Вам нужно только зарегистрироваться, чтобы забронировать место.",
+  },
+  {
+    question: "Для кого это мероприятие?",
+    answer: "Для HR-директоров, L&D специалистов, руководителей HR-отделов и всех, кто хочет узнать, как AI меняет сферу HR и обучения персонала.",
+  },
+  {
+    question: "Что я получу на мероприятии?",
+    answer: "Реальные кейсы внедрения AI в HR, практические инструменты, демо ibirAi-платформы и возможность познакомиться с HR-руководителями из других компаний.",
+  },
+  {
+    question: "Нужно ли иметь опыт работы с AI?",
+    answer: "Нет, никакого технического опыта не требуется. Мы объясняем всё простым языком и показываем готовые решения, которые можно внедрить сразу.",
+  },
+  {
+    question: "Будет ли запись мероприятия?",
+    answer: "Мы планируем сделать краткий обзор с ключевыми моментами. Но живое участие даёт возможность задать вопросы спикерам и пообщаться с коллегами.",
+  },
+  {
+    question: "Есть ли парковка?",
+    answer: "Да, на территории Променад бизнес-парка есть бесплатная парковка для гостей.",
+  },
+];
+
 const speakers = [
   {
     name: "Диас Жумагалиев",
@@ -227,12 +310,44 @@ export default function BusinessBreakfastPage() {
               </div>
             </div>
 
-            <a
-              href="#register"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-bold text-lg rounded-xl hover:shadow-xl hover:shadow-[#F0BB1E]/30 transition-all transform hover:scale-105"
-            >
-              Зарегистрироваться бесплатно
-            </a>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+              <a
+                href="#register"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-bold text-lg rounded-xl hover:shadow-xl hover:shadow-[#F0BB1E]/30 transition-all transform hover:scale-105"
+              >
+                Зарегистрироваться бесплатно
+              </a>
+            </div>
+
+            {/* Calendar & Share Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={generateGoogleCalendarUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-[#00767D]/20 text-[#2D3A3C] font-medium rounded-lg hover:border-[#00767D] hover:shadow-md transition-all text-sm"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="#00767D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M16 2V6" stroke="#00767D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8 2V6" stroke="#00767D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M3 10H21" stroke="#00767D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Добавить в Google Calendar
+              </a>
+              <a
+                href={generateLinkedInShareUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#0A66C2] text-white font-medium rounded-lg hover:bg-[#004182] hover:shadow-md transition-all text-sm"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                Поделиться в LinkedIn
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -414,6 +529,21 @@ export default function BusinessBreakfastPage() {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12">
+            Часто задаваемые <span className="text-[#00767D]">вопросы</span>
+          </h2>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {faqItems.map((item, index) => (
+              <FAQItem key={index} question={item.question} answer={item.answer} />
+            ))}
           </div>
         </div>
       </section>
