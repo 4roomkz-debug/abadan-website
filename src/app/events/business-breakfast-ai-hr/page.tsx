@@ -841,12 +841,63 @@ export default function BusinessBreakfastPage() {
         </div>
       </section>
 
+      {/* Contact Section */}
+      <section className="py-12 bg-[#F8FAFB]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <h3 className="text-2xl font-bold text-[#2D3A3C] mb-4">
+              Остались вопросы?
+            </h3>
+            <p className="text-[#546569] mb-6">
+              Свяжитесь с нами — ответим на все вопросы о мероприятии
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="tel:+77022413388"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-xl border border-[#00767D]/10 hover:border-[#00767D] hover:shadow-md transition-all"
+              >
+                <div className="w-10 h-10 bg-[#00767D]/10 rounded-lg flex items-center justify-center">
+                  <span className="text-xl">📞</span>
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-[#94A3B8]">Позвонить</p>
+                  <p className="font-semibold text-[#2D3A3C]">+7 702 241 33 88</p>
+                </div>
+              </a>
+              <a
+                href="mailto:i.islambek@abadan.kz"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-xl border border-[#00767D]/10 hover:border-[#00767D] hover:shadow-md transition-all"
+              >
+                <div className="w-10 h-10 bg-[#F0BB1E]/20 rounded-lg flex items-center justify-center">
+                  <span className="text-xl">✉️</span>
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-[#94A3B8]">Написать</p>
+                  <p className="font-semibold text-[#2D3A3C]">i.islambek@abadan.kz</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-[#00767D]/10 py-8 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#94A3B8] text-sm">
-            © 2026 Abadan & Co. Все права защищены.
-          </p>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-[#94A3B8] text-sm">
+              © 2026 Abadan & Co. Все права защищены.
+            </p>
+            <div className="flex items-center gap-4 text-sm text-[#546569]">
+              <a href="tel:+77022413388" className="hover:text-[#00767D] transition-colors">
+                +7 702 241 33 88
+              </a>
+              <span className="text-[#00767D]/30">|</span>
+              <a href="mailto:i.islambek@abadan.kz" className="hover:text-[#00767D] transition-colors">
+                i.islambek@abadan.kz
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
