@@ -116,7 +116,7 @@ const faqItems = [
   },
   {
     question: "Есть ли парковка?",
-    answer: "Да, на территории Променад бизнес-парка есть бесплатная парковка для гостей.",
+    answer: "Да, парковка есть на территории бизнес-центра Променад.",
   },
 ];
 
@@ -465,6 +465,111 @@ export default function BusinessBreakfastPage() {
         </div>
       </section>
 
+      {/* ibirAi Section */}
+      <section className="py-16 bg-[#F8FAFB]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00767D]/10 rounded-full mb-4">
+                <span className="text-2xl">🤖</span>
+                <span className="text-[#00767D] font-semibold">Демо на мероприятии</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-4">
+                Что такое <span className="text-[#00767D]">ibirAi</span>?
+              </h2>
+              <p className="text-[#546569] text-lg max-w-2xl mx-auto">
+                Платформа корпоративного микрообучения с ИИ-коучем, которую мы покажем вживую
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+              <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm">
+                <div className="w-12 h-12 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">⏱️</span>
+                </div>
+                <h3 className="font-bold text-[#2D3A3C] mb-2">Микрообучение</h3>
+                <p className="text-[#546569] text-sm">5-7 минут в день вместо 8-часовых тренингов. Сотрудники учатся без отрыва от работы.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm">
+                <div className="w-12 h-12 bg-[#00767D]/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">🎯</span>
+                </div>
+                <h3 className="font-bold text-[#2D3A3C] mb-2">Персонализация</h3>
+                <p className="text-[#546569] text-sm">ИИ адаптирует контент под каждого сотрудника, учитывая уровень и прогресс.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm">
+                <div className="w-12 h-12 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">💬</span>
+                </div>
+                <h3 className="font-bold text-[#2D3A3C] mb-2">ИИ-коуч</h3>
+                <p className="text-[#546569] text-sm">Не просто тесты, а диалог с персональным наставником, который даёт обратную связь.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm">
+                <div className="w-12 h-12 bg-[#00767D]/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">📱</span>
+                </div>
+                <h3 className="font-bold text-[#2D3A3C] mb-2">В Telegram</h3>
+                <p className="text-[#546569] text-sm">Там, где люди уже есть. Без новых приложений и сложных интеграций.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm">
+                <div className="w-12 h-12 bg-[#F0BB1E]/20 rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">📊</span>
+                </div>
+                <h3 className="font-bold text-[#2D3A3C] mb-2">Измеримый результат</h3>
+                <p className="text-[#546569] text-sm">Панель аналитики для HR: видите прогресс каждого сотрудника и ROI обучения.</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-[#00767D]/10 shadow-sm">
+                <div className="w-12 h-12 bg-[#00767D]/10 rounded-xl flex items-center justify-center mb-4">
+                  <span className="text-2xl">🏆</span>
+                </div>
+                <h3 className="font-bold text-[#2D3A3C] mb-2">Кейс Polpharma Santo</h3>
+                <p className="text-[#546569] text-sm">Покажем результаты реального пилота: как обучали сотрудников фармкомпании.</p>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-[#00767D] to-[#006D77] rounded-2xl p-6 sm:p-8 text-white">
+              <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2">На демо вы увидите:</h3>
+                  <ul className="space-y-2 text-white/90">
+                    <li className="flex items-start gap-2">
+                      <span className="text-[#F0BB1E]">→</span>
+                      Как сотрудник проходит урок в Telegram за 5 минут
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[#F0BB1E]">→</span>
+                      Как ИИ-коуч даёт персональную обратную связь
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[#F0BB1E]">→</span>
+                      Панель аналитики для HR-руководителя
+                    </li>
+                  </ul>
+                </div>
+                <div className="flex-shrink-0">
+                  <a
+                    href="https://ibirai.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#00767D] font-bold rounded-xl hover:shadow-lg transition-all"
+                  >
+                    Узнать больше об ibirAi
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Speakers */}
       <section className="py-16 bg-gradient-to-b from-white to-[#F8FAFB]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -596,7 +701,7 @@ export default function BusinessBreakfastPage() {
                       <div>
                         <h3 className="font-bold text-[#2D3A3C] mb-1">Как добраться</h3>
                         <p className="text-[#546569]">Угол Абая и Байтурсынова</p>
-                        <p className="text-[#546569]">Есть бесплатная парковка</p>
+                        <p className="text-[#546569]">Парковка на территории БЦ</p>
                       </div>
                     </div>
                   </div>
