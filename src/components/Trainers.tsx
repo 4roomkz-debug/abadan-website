@@ -3,6 +3,22 @@
 export default function Trainers() {
   const trainers = [
     {
+      name: "Жумагалиев Диас",
+      role: "Эксперт по AI и технологиям",
+      description: "Специалист по техническим аспектам искусственного интеллекта, разработке AI-агентов, нейросетям и глубокому обучению. Проводит практические тренинги по внедрению ИИ в бизнес-процессы.",
+      photo: "/images/zhumagaliev.png",
+      scale: "scale-150",
+      isAI: true
+    },
+    {
+      name: "Алисов Даниель",
+      role: "AI-стратег, бизнес-применение ИИ",
+      description: "Эксперт по стратегическому применению искусственного интеллекта в бизнесе. Специализация: ИИ в HR-процессах, автоматизация подбора и обучения персонала, AI-трансформация компаний.",
+      photo: "/images/alisov.png",
+      scale: "scale-150",
+      isAI: true
+    },
+    {
       name: "Шамсутдинова Земфира Ильясовна",
       role: "Эксперт по HR и трудовому законодательству",
       description: "Семинары и вебинары по трудовому законодательству, кадровому администрированию и делопроизводству, кадровому аудиту, регистрации трудовых договоров на веб-портале enbek.kz, оформлению документов на привлечение иностранной рабочей силы.",
@@ -25,7 +41,7 @@ export default function Trainers() {
     }
   ];
 
-  const expertises = ["HR", "Финансы", "Закупки", "Логистика", "Soft Skills", "Управление проектами", "Нефтегаз"];
+  const expertises = ["AI", "HR", "Финансы", "Закупки", "Логистика", "Soft Skills", "Управление проектами", "Нефтегаз"];
 
   return (
     <section className="relative py-16 sm:py-20 section-subtle">
@@ -75,12 +91,25 @@ export default function Trainers() {
 
                 {/* Badges */}
                 <div className="flex gap-2 pt-3 border-t border-[#00767D]/10">
-                  <span className="px-3 py-1 rounded-lg bg-[#00767D]/5 text-xs font-medium text-[#546569]">
-                    Эксперт
-                  </span>
-                  <span className="px-3 py-1 rounded-lg bg-[#00767D]/5 text-xs font-medium text-[#546569]">
-                    Практик
-                  </span>
+                  {(trainer as { isAI?: boolean }).isAI ? (
+                    <>
+                      <span className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#8B5CF6]/10 to-[#6366F1]/10 text-xs font-medium text-[#8B5CF6]">
+                        AI-эксперт
+                      </span>
+                      <span className="px-3 py-1 rounded-lg bg-[#8B5CF6]/5 text-xs font-medium text-[#6366F1]">
+                        Практик
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="px-3 py-1 rounded-lg bg-[#00767D]/5 text-xs font-medium text-[#546569]">
+                        Эксперт
+                      </span>
+                      <span className="px-3 py-1 rounded-lg bg-[#00767D]/5 text-xs font-medium text-[#546569]">
+                        Практик
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             ))}

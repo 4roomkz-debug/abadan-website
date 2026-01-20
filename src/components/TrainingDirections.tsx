@@ -22,6 +22,17 @@ export default function TrainingDirections() {
     "Microsoft Office для бизнеса"
   ];
 
+  const aiPrograms = [
+    "AI STEP — массовое обучение по ИИ",
+    "ИИ в HR-процессах: подбор, обучение, оценка",
+    "ИИ для отчётности и аналитики",
+    "Создание прикладных ИИ-агентов для бизнеса",
+    "Практикум: готовые промпты под рабочие задачи",
+    "Нейросети и глубокое обучение",
+    "Информационная безопасность в корпоративной среде",
+    "Отраслевые AI-программы (нефтегаз, энергетика, телеком)"
+  ];
+
   return (
     <section className="relative py-20 sm:py-32 section-dark-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +45,7 @@ export default function TrainingDirections() {
           </div>
 
           {/* Programs grid */}
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8">
             {/* Business and Management */}
             <div className="dark-card p-8 space-y-6">
               <div className="flex items-center gap-4 mb-6">
@@ -83,6 +94,38 @@ export default function TrainingDirections() {
               <div className="pt-6 border-t border-white/5">
                 <p className="text-sm text-[#64748B] italic">
                   И более 50+ других направлений под запрос
+                </p>
+              </div>
+            </div>
+
+            {/* AI Programs */}
+            <div className="dark-card p-8 space-y-6 relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <span className="px-2 py-1 bg-gradient-to-r from-[#8B5CF6] to-[#6366F1] text-white text-xs font-semibold rounded-full">NEW</span>
+              </div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-[#6366F1] flex items-center justify-center text-white">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-[#F1F5F9]">Искусственный интеллект</h3>
+              </div>
+
+              <ul className="space-y-3">
+                {aiPrograms.map((program, index) => (
+                  <li key={index} className="flex items-start gap-3 group">
+                    <svg className="w-5 h-5 text-[#8B5CF6] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-[#94A3B8] group-hover:text-[#F1F5F9] transition-colors duration-200">{program}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="pt-6 border-t border-white/5">
+                <p className="text-sm text-[#64748B] italic">
+                  Онлайн и офлайн форматы
                 </p>
               </div>
             </div>
