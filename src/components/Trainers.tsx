@@ -6,7 +6,7 @@ export default function Trainers() {
       name: "Жумагалиев Диас",
       role: "Эксперт по AI и технологиям",
       description: "Специалист по техническим аспектам искусственного интеллекта, разработке AI-агентов, нейросетям и глубокому обучению. Проводит практические тренинги по внедрению ИИ в бизнес-процессы.",
-      photo: "/images/zhumagaliev.png",
+      photo: "/speakers/dias.jpg",
       scale: "scale-150",
       isAI: true
     },
@@ -14,7 +14,7 @@ export default function Trainers() {
       name: "Алисов Даниель",
       role: "AI-стратег, бизнес-применение ИИ",
       description: "Эксперт по стратегическому применению искусственного интеллекта в бизнесе. Специализация: ИИ в HR-процессах, автоматизация подбора и обучения персонала, AI-трансформация компаний.",
-      photo: "/images/alisov.png",
+      photo: "/speakers/daniel.jpg",
       scale: "scale-150",
       isAI: true
     },
