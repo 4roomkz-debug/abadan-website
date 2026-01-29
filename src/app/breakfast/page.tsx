@@ -368,7 +368,7 @@ function ProgramSlide() {
     { time: "09:10", title: "AI в рекрутинге", speaker: "Диас Жумагалиев", icon: "🤖" },
     { time: "09:50", title: "AI-агенты для HR", speaker: "Даниэль Алисов", icon: "⚡" },
     { time: "10:30", title: "Кофе-брейк", speaker: "", icon: "☕" },
-    { time: "11:00", title: "Демо ibir.ai", speaker: "Гани Абадан", icon: "📱" },
+    { time: "11:00", title: "Демо ibirAi", speaker: "Гани Абадан", icon: "📱" },
     { time: "11:20", title: "Панельная дискуссия", speaker: "Все спикеры", icon: "💬" },
     { time: "11:40", title: "Нетворкинг", speaker: "", icon: "🤝" },
   ];
@@ -421,7 +421,7 @@ function AboutGaniSlide() {
         <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-2">
           Гани <span className="text-[#00767D]">Абадан</span>
         </h2>
-        <p className="text-xl text-[#00767D] mb-6">Основатель Abadan & Co. и ibir.ai</p>
+        <p className="text-xl text-[#00767D] mb-6">Основатель Abadan & Co. и ibirAi</p>
 
         <div className="space-y-3 text-lg text-[#546569]">
           <div className="flex items-center gap-3">
@@ -694,7 +694,7 @@ function IbiraiIntroSlide() {
       </div>
 
       <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6">
-        ibir<span className="text-[#00767D]">.ai</span>
+        ibir<span className="text-[#00767D]">Ai</span>
       </h2>
 
       <p className="text-2xl text-[#546569] mb-12">
@@ -716,23 +716,30 @@ function IbiraiIntroSlide() {
 
 function IbiraiFeaturesSlide() {
   const features = [
-    { icon: "📱", title: "3-5 минут в день", desc: "Микроуроки в Telegram" },
-    { icon: "🤖", title: "AI-коуч", desc: "Персональная обратная связь" },
-    { icon: "📊", title: "Аналитика", desc: "ROI и прогресс каждого" },
-    { icon: "💬", title: "В Telegram", desc: "Где люди уже есть" },
+    { icon: "📱", title: "3-5 минут в день", desc: "Микроуроки прямо в Telegram — не нужно учить новые системы" },
+    { icon: "🤖", title: "AI-аватар тренера", desc: "Персональная обратная связь 24/7 на основе вашего контента" },
+    { icon: "📊", title: "HR-аналитика", desc: "ROI, прогресс и профиль компетенций каждого сотрудника" },
+    { icon: "🎯", title: "87% завершаемость", desc: "vs 20-30% у обычных онлайн-курсов" },
   ];
 
   return (
-    <div className="max-w-4xl">
-      <h2 className="text-4xl font-bold text-[#2D3A3C] mb-12 text-center">
-        Как работает <span className="text-[#00767D]">ibir.ai</span>
+    <div className="max-w-5xl">
+      <h2 className="text-4xl font-bold text-[#2D3A3C] mb-4 text-center">
+        Как работает <span className="text-[#2D3A3C]">ibir</span><span className="text-[#00767D]">Ai</span>
       </h2>
+      <p className="text-center text-[#546569] mb-10">
+        Платформа микрообучения с AI для корпоративных команд
+      </p>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6 mb-8">
         {features.map((feature, index) => (
           <div
             key={index}
-            className="p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm hover:shadow-lg transition-shadow"
+            className={`p-6 rounded-2xl border shadow-sm hover:shadow-lg transition-shadow ${
+              index === 3
+                ? "bg-gradient-to-br from-[#00767D]/10 to-[#00767D]/5 border-[#00767D]/30"
+                : "bg-white border-[#00767D]/10"
+            }`}
           >
             <div className="text-4xl mb-4">{feature.icon}</div>
             <h3 className="text-xl font-bold text-[#2D3A3C] mb-2">{feature.title}</h3>
@@ -740,40 +747,80 @@ function IbiraiFeaturesSlide() {
           </div>
         ))}
       </div>
+
+      {/* Key differentiator */}
+      <div className="text-center p-4 bg-[#F0BB1E]/10 rounded-xl border border-[#F0BB1E]/30">
+        <p className="text-[#2D3A3C] font-medium">
+          ⚡ Запуск программы за <span className="font-bold text-[#00767D]">2 недели</span> — быстрее любой LMS
+        </p>
+      </div>
     </div>
   );
 }
 
 function IbiraiDemoSlide() {
-  return (
-    <div className="text-center max-w-4xl">
-      <h2 className="text-4xl font-bold text-[#2D3A3C] mb-8">
-        Демо: <span className="text-[#00767D]">ibir.ai</span>
-      </h2>
+  // Santo/Polpharma case study data
+  const caseStats = [
+    { value: "117", label: "менеджеров", highlight: false },
+    { value: "3", label: "страны", highlight: false },
+    { value: "80%+", label: "дошли до финала", highlight: true },
+    { value: "100%", label: "применили на практике", highlight: true },
+  ];
 
-      <div className="bg-[#F8FAFB] rounded-2xl p-12 border-2 border-dashed border-[#00767D]/30">
-        <div className="text-6xl mb-6">📱</div>
-        <p className="text-2xl text-[#546569]">
-          Смотрите на экран
-        </p>
-        <p className="text-lg text-[#94A3B8] mt-4">
-          Живая демонстрация Telegram-бота
-        </p>
+  return (
+    <div className="max-w-5xl w-full">
+      <h2 className="text-4xl font-bold text-[#2D3A3C] mb-2 text-center">
+        Кейс: <span className="text-[#00767D]">Santo/Polpharma</span>
+      </h2>
+      <p className="text-center text-[#546569] mb-8">
+        Программа развития управленческих навыков • 12 недель
+      </p>
+
+      {/* Case study metrics */}
+      <div className="grid grid-cols-4 gap-4 mb-8">
+        {caseStats.map((stat, index) => (
+          <div
+            key={index}
+            className={`text-center p-5 rounded-2xl ${
+              stat.highlight
+                ? "bg-gradient-to-br from-[#00767D] to-[#006D77] text-white"
+                : "bg-white border border-[#00767D]/10"
+            }`}
+          >
+            <div className={`text-3xl md:text-4xl font-bold mb-1 ${
+              stat.highlight ? "text-white" : "text-[#00767D]"
+            }`}>
+              {stat.value}
+            </div>
+            <div className={`text-sm ${stat.highlight ? "text-white/80" : "text-[#546569]"}`}>
+              {stat.label}
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div className="mt-8 flex justify-center gap-8 text-left">
-        <div className="flex items-start gap-3">
-          <span className="text-[#F0BB1E] text-xl">1</span>
-          <span className="text-[#546569]">Микро-урок</span>
+      {/* AI avatar rating */}
+      <div className="bg-gradient-to-r from-[#F0BB1E]/20 to-[#F0BB1E]/5 rounded-2xl p-6 border border-[#F0BB1E]/30 mb-8">
+        <div className="flex items-center justify-center gap-6">
+          <div className="text-5xl">🤖</div>
+          <div className="text-left">
+            <div className="text-3xl font-bold text-[#2D3A3C]">
+              8.38<span className="text-xl text-[#546569]">/10</span>
+            </div>
+            <div className="text-[#546569]">Оценка AI-аватара тренера участниками</div>
+          </div>
+          <div className="text-left border-l border-[#F0BB1E]/30 pl-6">
+            <div className="text-xl font-bold text-[#00767D]">60%+</div>
+            <div className="text-sm text-[#546569]">отметили изменение<br/>поведения коллег</div>
+          </div>
         </div>
-        <div className="flex items-start gap-3">
-          <span className="text-[#F0BB1E] text-xl">2</span>
-          <span className="text-[#546569]">AI-коуч</span>
-        </div>
-        <div className="flex items-start gap-3">
-          <span className="text-[#F0BB1E] text-xl">3</span>
-          <span className="text-[#546569]">Аналитика HR</span>
-        </div>
+      </div>
+
+      {/* Demo CTA */}
+      <div className="text-center p-6 bg-[#F8FAFB] rounded-2xl border-2 border-dashed border-[#00767D]/30">
+        <div className="text-4xl mb-3">📱</div>
+        <p className="text-xl text-[#2D3A3C] font-semibold">Сейчас — живая демонстрация</p>
+        <p className="text-[#546569] mt-2">Как проходит обучение в Telegram с AI-коучем</p>
       </div>
     </div>
   );
@@ -922,7 +969,7 @@ function NextStepsSlide() {
         <div className="flex items-start gap-6 p-6 bg-gradient-to-r from-[#F0BB1E]/20 to-[#F0BB1E]/5 rounded-2xl border-2 border-[#F0BB1E]">
           <div className="text-4xl">🚀</div>
           <div>
-            <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Попробовать ibir.ai</h3>
+            <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Попробовать ibirAi</h3>
             <p className="text-[#546569]">Бесплатный пилот для первых 3 компаний</p>
             <p className="text-[#00767D] font-semibold mt-2">Напишите @gani_abadan</p>
           </div>
@@ -960,7 +1007,7 @@ function FinalSlide() {
         </div>
         <div className="w-px h-12 bg-[#00767D]/20" />
         <div className="text-center">
-          <p className="text-lg text-[#00767D] font-semibold">ibir.ai</p>
+          <p className="text-lg font-semibold"><span className="text-[#2D3A3C]">ibir</span><span className="text-[#00767D]">Ai</span></p>
           <p className="text-sm text-[#546569]">Микрообучение с AI</p>
         </div>
       </div>
