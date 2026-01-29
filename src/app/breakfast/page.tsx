@@ -10,22 +10,27 @@ const API_BASE = "https://breakfast-bot-production.up.railway.app";
 // Slide data
 const slides = [
   { id: "cover", type: "cover" },
-  { id: "telegram-start", type: "telegram" },
+  { id: "hook", type: "hook" },
+  { id: "telegram-start", type: "telegram-start" },
   { id: "program", type: "program" },
   { id: "about-gani", type: "about-gani" },
   { id: "story-1", type: "story-1" },
   { id: "story-2", type: "story-2" },
   { id: "story-3", type: "story-3" },
   { id: "top-requests", type: "top-requests" },
+  { id: "section-speakers", type: "section-speakers" },
   { id: "dias-intro", type: "dias-intro" },
   { id: "daniel-intro", type: "daniel-intro" },
+  { id: "section-ibirai", type: "section-ibirai" },
   { id: "ibirai-intro", type: "ibirai-intro" },
   { id: "ibirai-features", type: "ibirai-features" },
+  { id: "big-number-completion", type: "big-number-completion" },
   { id: "ibirai-demo", type: "ibirai-demo" },
   { id: "panel", type: "panel" },
   { id: "insights", type: "insights" },
+  { id: "takeaway", type: "takeaway" },
   { id: "next-steps", type: "next-steps" },
-  { id: "telegram-end", type: "telegram" },
+  { id: "telegram-end", type: "telegram-end" },
   { id: "final", type: "final" },
 ];
 
@@ -152,8 +157,12 @@ export default function BreakfastPresentation() {
     switch (type) {
       case "cover":
         return <CoverSlide />;
-      case "telegram":
-        return <TelegramSlide />;
+      case "hook":
+        return <HookSlide />;
+      case "telegram-start":
+        return <TelegramStartSlide />;
+      case "telegram-end":
+        return <TelegramEndSlide />;
       case "program":
         return <ProgramSlide />;
       case "about-gani":
@@ -166,20 +175,28 @@ export default function BreakfastPresentation() {
         return <Story3Slide />;
       case "top-requests":
         return <TopRequestsSlide />;
+      case "section-speakers":
+        return <SectionSpeakersSlide />;
       case "dias-intro":
         return <DiasIntroSlide />;
       case "daniel-intro":
         return <DanielIntroSlide />;
+      case "section-ibirai":
+        return <SectionIbiraiSlide />;
       case "ibirai-intro":
         return <IbiraiIntroSlide />;
       case "ibirai-features":
         return <IbiraiFeaturesSlide />;
+      case "big-number-completion":
+        return <BigNumberCompletionSlide />;
       case "ibirai-demo":
         return <IbiraiDemoSlide />;
       case "panel":
         return <PanelSlide />;
       case "insights":
         return <InsightsSlide />;
+      case "takeaway":
+        return <TakeawaySlide />;
       case "next-steps":
         return <NextStepsSlide />;
       case "final":
@@ -308,33 +325,65 @@ function CoverSlide() {
   );
 }
 
-function TelegramSlide() {
+// Hook slide - provocative opening statistic
+function HookSlide() {
+  return (
+    <div className="text-center max-w-4xl">
+      <div className="text-8xl md:text-9xl font-bold text-[#00767D] mb-6">
+        76%
+      </div>
+
+      <p className="text-2xl md:text-3xl text-[#2D3A3C] mb-8">
+        HR-директоров считают, что <span className="font-bold">AI изменит</span><br />
+        их работу в ближайшие <span className="text-[#00767D] font-bold">2 года</span>
+      </p>
+
+      <div className="w-24 h-1 bg-gradient-to-r from-[#F0BB1E] to-[#00767D] mx-auto mb-8" />
+
+      <p className="text-xl text-[#546569]">
+        Gartner, 2025
+      </p>
+
+      <div className="mt-12 p-6 bg-[#F0BB1E]/10 rounded-2xl border border-[#F0BB1E]/30 inline-block">
+        <p className="text-xl text-[#2D3A3C] font-semibold">
+          Вопрос не «будет ли AI в HR?»<br />
+          Вопрос — <span className="text-[#00767D]">«вы готовы?»</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Telegram slide - START (onboarding)
+function TelegramStartSlide() {
   return (
     <div className="text-center max-w-3xl">
-      <div className="text-6xl mb-6">🤖</div>
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00767D]/10 rounded-full mb-6">
+        <span className="text-xl">👋</span>
+        <span className="text-[#00767D] font-semibold">Давайте знакомиться</span>
+      </div>
 
       <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-4">
         Запустите <span className="text-[#00767D]">бота</span>
       </h2>
 
-      <p className="text-xl text-[#546569] mb-10">
-        Представьтесь, задавайте вопросы, делитесь инсайтами
+      <p className="text-xl text-[#546569] mb-8">
+        Представьтесь — мы хотим знать, кто в зале!
       </p>
 
       {/* QR Code */}
-      <div className="w-64 h-64 mx-auto bg-white rounded-2xl border-4 border-[#00767D] flex items-center justify-center mb-8 shadow-xl overflow-hidden">
+      <div className="w-56 h-56 mx-auto bg-white rounded-2xl border-4 border-[#00767D] flex items-center justify-center mb-6 shadow-xl overflow-hidden">
         <Image
           src="/images/qr-bot.png"
           alt="QR код бота"
-          width={240}
-          height={240}
+          width={220}
+          height={220}
           className="w-full h-full object-contain p-2"
           onError={(e) => {
-            // Fallback if image not found
             e.currentTarget.style.display = 'none';
             e.currentTarget.parentElement!.innerHTML = `
               <div class="text-center p-4">
-                <div class="text-5xl mb-2">💬</div>
+                <div class="text-4xl mb-2">💬</div>
                 <p class="text-[#00767D] font-semibold">@aihr_breakfast_bot</p>
               </div>
             `;
@@ -354,9 +403,74 @@ function TelegramSlide() {
         @aihr_breakfast_bot
       </a>
 
-      <p className="mt-6 text-[#94A3B8]">
-        Нажмите /start в боте
+      <div className="mt-6 flex justify-center gap-6 text-[#546569]">
+        <div className="flex items-center gap-2">
+          <span className="text-[#F0BB1E]">1</span>
+          <span>Нажмите /start</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[#F0BB1E]">2</span>
+          <span>Представьтесь</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[#F0BB1E]">3</span>
+          <span>Готово!</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Telegram slide - END (stay connected)
+function TelegramEndSlide() {
+  return (
+    <div className="text-center max-w-3xl">
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0BB1E]/20 rounded-full mb-6">
+        <span className="text-xl">🔗</span>
+        <span className="text-[#2D3A3C] font-semibold">Оставайтесь на связи</span>
+      </div>
+
+      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-4">
+        Не теряйте <span className="text-[#00767D]">контакт</span>
+      </h2>
+
+      <p className="text-xl text-[#546569] mb-8">
+        Материалы, запись и контакты спикеров — в боте
       </p>
+
+      <div className="w-48 h-48 mx-auto bg-white rounded-2xl border-4 border-[#F0BB1E] flex items-center justify-center mb-6 shadow-xl overflow-hidden">
+        <Image
+          src="/images/qr-bot.png"
+          alt="QR код бота"
+          width={180}
+          height={180}
+          className="w-full h-full object-contain p-2"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.parentElement!.innerHTML = `
+              <div class="text-center p-4">
+                <div class="text-4xl mb-2">💬</div>
+                <p class="text-[#F0BB1E] font-semibold">@aihr_breakfast_bot</p>
+              </div>
+            `;
+          }}
+        />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
+        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10">
+          <div className="text-2xl mb-2">📹</div>
+          <p className="text-sm text-[#546569]">Запись</p>
+        </div>
+        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10">
+          <div className="text-2xl mb-2">📑</div>
+          <p className="text-sm text-[#546569]">Слайды</p>
+        </div>
+        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10">
+          <div className="text-2xl mb-2">👥</div>
+          <p className="text-sm text-[#546569]">Контакты</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -591,6 +705,27 @@ function TopRequestsSlide() {
   );
 }
 
+// Section divider - Speakers
+function SectionSpeakersSlide() {
+  return (
+    <div className="text-center max-w-3xl">
+      <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
+        <span className="text-4xl">🎤</span>
+      </div>
+
+      <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6">
+        Эксперты
+      </h2>
+
+      <div className="w-24 h-1 bg-gradient-to-r from-[#00767D] to-[#F0BB1E] mx-auto mb-8" />
+
+      <p className="text-2xl text-[#546569]">
+        Практики, которые уже внедряют AI в HR
+      </p>
+    </div>
+  );
+}
+
 function DiasIntroSlide() {
   return (
     <div className="flex flex-col md:flex-row items-center gap-12 max-w-5xl">
@@ -685,6 +820,27 @@ function DanielIntroSlide() {
   );
 }
 
+// Section divider - ibirAi
+function SectionIbiraiSlide() {
+  return (
+    <div className="text-center max-w-3xl">
+      <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center">
+        <span className="text-4xl">🚀</span>
+      </div>
+
+      <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6">
+        Решение
+      </h2>
+
+      <div className="w-24 h-1 bg-gradient-to-r from-[#F0BB1E] to-[#00767D] mx-auto mb-8" />
+
+      <p className="text-2xl text-[#546569]">
+        Как мы решили проблему измерения ROI
+      </p>
+    </div>
+  );
+}
+
 function IbiraiIntroSlide() {
   return (
     <div className="text-center max-w-4xl">
@@ -752,6 +908,45 @@ function IbiraiFeaturesSlide() {
       <div className="text-center p-4 bg-[#F0BB1E]/10 rounded-xl border border-[#F0BB1E]/30">
         <p className="text-[#2D3A3C] font-medium">
           ⚡ Запуск программы за <span className="font-bold text-[#00767D]">2 недели</span> — быстрее любой LMS
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Big Number slide - Completion rate comparison
+function BigNumberCompletionSlide() {
+  return (
+    <div className="text-center max-w-4xl">
+      <p className="text-xl text-[#546569] mb-6">
+        Завершаемость онлайн-курсов
+      </p>
+
+      <div className="flex items-end justify-center gap-12 mb-12">
+        {/* Traditional */}
+        <div className="text-center">
+          <div className="text-6xl md:text-7xl font-bold text-[#94A3B8] mb-2">
+            20-30%
+          </div>
+          <p className="text-lg text-[#546569]">Традиционные<br />онлайн-курсы</p>
+        </div>
+
+        {/* Arrow */}
+        <div className="text-4xl text-[#F0BB1E] pb-8">→</div>
+
+        {/* ibirAi */}
+        <div className="text-center">
+          <div className="text-7xl md:text-8xl font-bold text-[#00767D] mb-2">
+            87%
+          </div>
+          <p className="text-lg text-[#00767D] font-semibold">ibir<span className="text-[#00767D]">Ai</span></p>
+        </div>
+      </div>
+
+      <div className="inline-block p-6 bg-gradient-to-r from-[#00767D]/10 to-[#00767D]/5 rounded-2xl border border-[#00767D]/20">
+        <p className="text-xl text-[#2D3A3C]">
+          <span className="font-bold text-[#00767D]">В 3-4 раза выше</span> благодаря микроформату<br />
+          и персональному AI-коучу
         </p>
       </div>
     </div>
@@ -946,6 +1141,31 @@ function InsightsSlide() {
           <p className="text-[#94A3B8] mt-2">Напишите боту @aihr_breakfast_bot</p>
         </div>
       )}
+    </div>
+  );
+}
+
+// Takeaway slide - one memorable message
+function TakeawaySlide() {
+  return (
+    <div className="text-center max-w-4xl">
+      <div className="text-6xl mb-8">💡</div>
+
+      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-8">
+        Одна мысль на сегодня
+      </h2>
+
+      <div className="bg-gradient-to-br from-[#00767D] to-[#006D77] rounded-3xl p-10 text-white mb-8">
+        <p className="text-3xl md:text-4xl font-bold leading-tight">
+          AI не заменит HR.<br />
+          <span className="text-[#F0BB1E]">HR с AI</span> заменит<br />
+          HR без AI.
+        </p>
+      </div>
+
+      <p className="text-xl text-[#546569]">
+        Начните с малого. Экспериментируйте. Масштабируйте.
+      </p>
     </div>
   );
 }
