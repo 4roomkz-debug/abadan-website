@@ -7,6 +7,159 @@ import Image from "next/image";
 // API Base URL
 const API_BASE = "https://breakfast-bot-production.up.railway.app";
 
+// === DECORATIVE SVG COMPONENTS ===
+
+// Abstract decorative shapes for background
+function DecorativeBackground() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Top right decorative circle */}
+      <svg
+        className="absolute -top-20 -right-20 w-80 h-80 opacity-[0.03]"
+        viewBox="0 0 200 200"
+      >
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#00767D" strokeWidth="2" />
+        <circle cx="100" cy="100" r="60" fill="none" stroke="#00767D" strokeWidth="1.5" />
+        <circle cx="100" cy="100" r="40" fill="none" stroke="#F0BB1E" strokeWidth="1" />
+      </svg>
+
+      {/* Bottom left decorative shape */}
+      <svg
+        className="absolute -bottom-16 -left-16 w-64 h-64 opacity-[0.04]"
+        viewBox="0 0 200 200"
+      >
+        <path
+          d="M100 20 L180 100 L100 180 L20 100 Z"
+          fill="none"
+          stroke="#00767D"
+          strokeWidth="2"
+        />
+        <path
+          d="M100 40 L160 100 L100 160 L40 100 Z"
+          fill="none"
+          stroke="#F0BB1E"
+          strokeWidth="1.5"
+        />
+      </svg>
+
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `
+            linear-gradient(#00767D 1px, transparent 1px),
+            linear-gradient(90deg, #00767D 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      {/* Gradient overlay */}
+      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#00767D]/[0.02] to-transparent" />
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-[#F0BB1E]/[0.02] to-transparent" />
+    </div>
+  );
+}
+
+// SVG Icon components (replacing emojis)
+const Icons = {
+  microphone: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+      <line x1="12" x2="12" y1="19" y2="22" />
+    </svg>
+  ),
+  robot: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="18" height="10" x="3" y="11" rx="2" />
+      <circle cx="12" cy="5" r="2" />
+      <path d="M12 7v4" />
+      <line x1="8" x2="8" y1="16" y2="16" />
+      <line x1="16" x2="16" y1="16" y2="16" />
+    </svg>
+  ),
+  lightning: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  ),
+  coffee: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+      <line x1="6" x2="6" y1="2" y2="4" />
+      <line x1="10" x2="10" y1="2" y2="4" />
+      <line x1="14" x2="14" y1="2" y2="4" />
+    </svg>
+  ),
+  phone: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+      <path d="M12 18h.01" />
+    </svg>
+  ),
+  chat: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  ),
+  users: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+  target: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  ),
+  rocket: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  ),
+  lightbulb: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+    </svg>
+  ),
+  chart: (
+    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 3v18h18" />
+      <path d="m19 9-5 5-4-4-3 3" />
+    </svg>
+  ),
+  question: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+      <path d="M12 17h.01" />
+    </svg>
+  ),
+  play: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+  ),
+  document: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+      <polyline points="14,2 14,8 20,8" />
+    </svg>
+  ),
+};
+
 // Slide data
 const slides = [
   { id: "cover", type: "cover" },
@@ -207,16 +360,19 @@ export default function BreakfastPresentation() {
   };
 
   return (
-    <main className="h-screen w-screen bg-gradient-to-br from-[#F8FAFB] to-white overflow-hidden relative select-none">
+    <main className="h-screen w-screen bg-gradient-to-br from-[#FAFBFC] via-white to-[#F8FAFB] overflow-hidden relative select-none">
+      {/* Decorative Background */}
+      <DecorativeBackground />
+
       {/* Slides */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="h-full w-full flex items-center justify-center p-8 md:p-16"
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -20, scale: 0.98 }}
+          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+          className="h-full w-full flex items-center justify-center p-8 md:p-16 relative z-10"
         >
           {renderSlide(slides[currentSlide].type)}
         </motion.div>
@@ -288,38 +444,72 @@ export default function BreakfastPresentation() {
 
 function CoverSlide() {
   return (
-    <div className="text-center max-w-4xl">
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00767D]/10 rounded-full mb-8">
-        <span className="text-2xl">🤖</span>
-        <span className="text-[#00767D] font-semibold">Бизнес-завтрак</span>
+    <div className="text-center max-w-4xl relative">
+      {/* Decorative rings behind title */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none">
+        <div className="absolute inset-0 border-2 border-[#00767D]/5 rounded-full animate-[pulse_4s_ease-in-out_infinite]" />
+        <div className="absolute inset-8 border border-[#F0BB1E]/5 rounded-full animate-[pulse_4s_ease-in-out_infinite_0.5s]" />
       </div>
 
-      <h1 className="text-5xl md:text-7xl font-bold text-[#2D3A3C] mb-4">
-        AI в <span className="text-[#00767D]">HR</span>
-      </h1>
-
-      <div className="w-32 h-1 bg-gradient-to-r from-[#00767D] to-[#F0BB1E] mx-auto mb-8" />
-
-      <p className="text-2xl md:text-3xl text-[#546569] mb-12">
-        Революция найма и обучения
-      </p>
-
-      <div className="flex flex-wrap justify-center gap-6 text-lg text-[#2D3A3C]">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">📅</span>
-          <span className="font-semibold">30 января 2026</span>
+      <div className="relative">
+        <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-sm rounded-full mb-8 shadow-sm border border-[#00767D]/10">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white">
+            {Icons.robot}
+          </div>
+          <span className="text-[#2D3A3C] font-semibold tracking-wide">Бизнес-завтрак</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">📍</span>
-          <span className="font-semibold">Алматы, Орда</span>
-        </div>
-      </div>
 
-      <div className="mt-16 flex items-center justify-center gap-2 text-[#00767D] animate-pulse">
-        <span>Нажмите →</span>
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
+        <h1 className="text-6xl md:text-8xl font-bold text-[#2D3A3C] mb-6 tracking-tight">
+          AI в <span className="text-[#00767D] relative">
+            HR
+            <svg className="absolute -bottom-2 left-0 w-full h-3 text-[#F0BB1E]/40" viewBox="0 0 100 12" preserveAspectRatio="none">
+              <path d="M0 6 Q25 0, 50 6 T100 6" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+          </span>
+        </h1>
+
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-[#00767D]/30" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-2 h-2 rounded-full bg-[#F0BB1E]" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-[#00767D]/30" />
+        </div>
+
+        <p className="text-2xl md:text-3xl text-[#546569] mb-12 font-light">
+          Революция найма и обучения
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-4 text-lg">
+          <div className="flex items-center gap-3 px-5 py-3 bg-white rounded-xl shadow-sm border border-[#00767D]/10">
+            <svg className="w-5 h-5 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+              <line x1="16" x2="16" y1="2" y2="6" />
+              <line x1="8" x2="8" y1="2" y2="6" />
+              <line x1="3" x2="21" y1="10" y2="10" />
+            </svg>
+            <span className="font-semibold text-[#2D3A3C]">30 января 2026</span>
+          </div>
+          <div className="flex items-center gap-3 px-5 py-3 bg-white rounded-xl shadow-sm border border-[#00767D]/10">
+            <svg className="w-5 h-5 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span className="font-semibold text-[#2D3A3C]">Алматы, Орда</span>
+          </div>
+        </div>
+
+        <div className="mt-16 flex items-center justify-center gap-2 text-[#00767D]">
+          <span className="text-sm font-medium">Нажмите для продолжения</span>
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
@@ -562,20 +752,35 @@ function AboutGaniSlide() {
 
 function Story1Slide() {
   return (
-    <div className="text-center max-w-4xl">
-      <div className="text-6xl mb-8">💭</div>
+    <div className="text-center max-w-4xl relative">
+      {/* Large decorative quote marks */}
+      <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-[200px] font-serif text-[#00767D]/5 leading-none pointer-events-none select-none">
+        "
+      </div>
 
-      <blockquote className="text-3xl md:text-5xl font-bold text-[#2D3A3C] leading-tight mb-8">
-        «Как измерить <span className="text-[#00767D]">ROI</span> от тренинга?»
-      </blockquote>
+      <div className="relative">
+        <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#00767D]/10 to-[#00767D]/5 flex items-center justify-center border border-[#00767D]/10">
+          <svg className="w-8 h-8 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M12 2a10 10 0 1 0 10 10H12V2Z" />
+            <path d="M12 12 2.1 9.1" />
+            <path d="m12 12 4.9 7.1" />
+          </svg>
+        </div>
 
-      <p className="text-xl md:text-2xl text-[#546569]">
-        Этот вопрос я слышал <span className="font-bold text-[#2D3A3C]">15 лет</span>.<br />
-        От каждого клиента.
-      </p>
+        <blockquote className="text-3xl md:text-5xl font-bold text-[#2D3A3C] leading-tight mb-8">
+          «Как измерить <span className="text-[#00767D]">ROI</span> от тренинга?»
+        </blockquote>
 
-      <div className="mt-12 text-lg text-[#94A3B8]">
-        И не мог на него ответить.
+        <p className="text-xl md:text-2xl text-[#546569]">
+          Этот вопрос я слышал <span className="font-bold text-[#2D3A3C]">15 лет</span>.<br />
+          От каждого клиента.
+        </p>
+
+        <div className="mt-12 inline-block px-6 py-3 bg-[#F8FAFB] rounded-full border border-[#00767D]/10">
+          <p className="text-lg text-[#94A3B8] italic">
+            И не мог на него ответить.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -615,7 +820,13 @@ function Story2Slide() {
 function Story3Slide() {
   return (
     <div className="text-center max-w-4xl">
-      <div className="text-6xl mb-8">💡</div>
+      <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center shadow-lg shadow-[#F0BB1E]/20">
+        <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+        </svg>
+      </div>
 
       <h2 className="text-3xl md:text-4xl font-bold text-[#2D3A3C] mb-8">
         А потом появился <span className="text-[#00767D]">AI</span>
@@ -626,16 +837,16 @@ function Story3Slide() {
         предсказывает на основе данных.
       </p>
 
-      <div className="bg-gradient-to-r from-[#00767D] to-[#006D77] rounded-2xl p-8 text-white">
-        <p className="text-xl mb-4">Если собирать данные о том, как человек учится —</p>
+      <div className="bg-gradient-to-br from-[#00767D] to-[#006D77] rounded-3xl p-8 text-white shadow-xl shadow-[#00767D]/20">
+        <p className="text-xl mb-4 text-white/80">Если собирать данные о том, как человек учится —</p>
         <p className="text-2xl font-bold">
           мы видим не просто «понял — не понял»,<br />
           а целый <span className="text-[#F0BB1E]">портрет</span>:
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <span className="px-4 py-2 bg-white/20 rounded-full">Потенциал</span>
-          <span className="px-4 py-2 bg-white/20 rounded-full">Таланты</span>
-          <span className="px-4 py-2 bg-white/20 rounded-full">Готовность к росту</span>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <span className="px-5 py-2.5 bg-white/10 backdrop-blur rounded-full border border-white/20 font-medium">Потенциал</span>
+          <span className="px-5 py-2.5 bg-white/10 backdrop-blur rounded-full border border-white/20 font-medium">Таланты</span>
+          <span className="px-5 py-2.5 bg-white/10 backdrop-blur rounded-full border border-white/20 font-medium">Готовность к росту</span>
         </div>
       </div>
     </div>
@@ -708,20 +919,38 @@ function TopRequestsSlide() {
 // Section divider - Speakers
 function SectionSpeakersSlide() {
   return (
-    <div className="text-center max-w-3xl">
-      <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
-        <span className="text-4xl">🎤</span>
+    <div className="text-center max-w-3xl relative">
+      {/* Decorative circles */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 pointer-events-none">
+        <div className="absolute inset-0 border border-[#00767D]/10 rounded-full" />
+        <div className="absolute inset-8 border border-[#00767D]/5 rounded-full" />
       </div>
 
-      <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6">
-        Эксперты
-      </h2>
+      <div className="relative">
+        <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center shadow-lg shadow-[#00767D]/20">
+          <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        </div>
 
-      <div className="w-24 h-1 bg-gradient-to-r from-[#00767D] to-[#F0BB1E] mx-auto mb-8" />
+        <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6 tracking-tight">
+          Эксперты
+        </h2>
 
-      <p className="text-2xl text-[#546569]">
-        Практики, которые уже внедряют AI в HR
-      </p>
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#00767D]" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-2 h-2 rounded-full bg-[#F0BB1E]" />
+          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#F0BB1E]" />
+        </div>
+
+        <p className="text-2xl text-[#546569] font-light">
+          Практики, которые уже внедряют AI в HR
+        </p>
+      </div>
     </div>
   );
 }
@@ -823,20 +1052,38 @@ function DanielIntroSlide() {
 // Section divider - ibirAi
 function SectionIbiraiSlide() {
   return (
-    <div className="text-center max-w-3xl">
-      <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center">
-        <span className="text-4xl">🚀</span>
+    <div className="text-center max-w-3xl relative">
+      {/* Decorative diamond shapes */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 pointer-events-none">
+        <div className="absolute inset-0 border border-[#F0BB1E]/10 rotate-45" />
+        <div className="absolute inset-8 border border-[#F0BB1E]/5 rotate-45" />
       </div>
 
-      <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6">
-        Решение
-      </h2>
+      <div className="relative">
+        <div className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center shadow-lg shadow-[#F0BB1E]/20">
+          <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+          </svg>
+        </div>
 
-      <div className="w-24 h-1 bg-gradient-to-r from-[#F0BB1E] to-[#00767D] mx-auto mb-8" />
+        <h2 className="text-5xl md:text-6xl font-bold text-[#2D3A3C] mb-6 tracking-tight">
+          Решение
+        </h2>
 
-      <p className="text-2xl text-[#546569]">
-        Как мы решили проблему измерения ROI
-      </p>
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#F0BB1E]" />
+          <div className="w-2 h-2 rounded-full bg-[#F0BB1E]" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#00767D]" />
+        </div>
+
+        <p className="text-2xl text-[#546569] font-light">
+          Как мы решили проблему измерения ROI
+        </p>
+      </div>
     </div>
   );
 }
@@ -844,8 +1091,12 @@ function SectionIbiraiSlide() {
 function IbiraiIntroSlide() {
   return (
     <div className="text-center max-w-4xl">
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0BB1E]/20 rounded-full mb-8">
-        <span className="text-2xl">🚀</span>
+      <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/80 backdrop-blur-sm rounded-full mb-8 shadow-sm border border-[#F0BB1E]/20">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center text-white">
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+        </div>
         <span className="text-[#2D3A3C] font-semibold">Демо</span>
       </div>
 
@@ -1148,24 +1399,35 @@ function InsightsSlide() {
 // Takeaway slide - one memorable message
 function TakeawaySlide() {
   return (
-    <div className="text-center max-w-4xl">
-      <div className="text-6xl mb-8">💡</div>
+    <div className="text-center max-w-4xl relative">
+      {/* Decorative glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-[#00767D]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-8">
-        Одна мысль на сегодня
-      </h2>
+      <div className="relative">
+        <div className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center shadow-lg shadow-[#F0BB1E]/20">
+          <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+            <path d="M9 18h6" />
+            <path d="M10 22h4" />
+          </svg>
+        </div>
 
-      <div className="bg-gradient-to-br from-[#00767D] to-[#006D77] rounded-3xl p-10 text-white mb-8">
-        <p className="text-3xl md:text-4xl font-bold leading-tight">
-          AI не заменит HR.<br />
-          <span className="text-[#F0BB1E]">HR с AI</span> заменит<br />
-          HR без AI.
+        <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-8">
+          Одна мысль на сегодня
+        </h2>
+
+        <div className="bg-gradient-to-br from-[#00767D] to-[#006D77] rounded-3xl p-10 text-white mb-8 shadow-xl shadow-[#00767D]/20">
+          <p className="text-3xl md:text-4xl font-bold leading-tight">
+            AI не заменит HR.<br />
+            <span className="text-[#F0BB1E]">HR с AI</span> заменит<br />
+            HR без AI.
+          </p>
+        </div>
+
+        <p className="text-xl text-[#546569] font-light">
+          Начните с малого. Экспериментируйте. Масштабируйте.
         </p>
       </div>
-
-      <p className="text-xl text-[#546569]">
-        Начните с малого. Экспериментируйте. Масштабируйте.
-      </p>
     </div>
   );
 }
@@ -1177,28 +1439,47 @@ function NextStepsSlide() {
         Что <span className="text-[#00767D]">дальше</span>?
       </h2>
 
-      <div className="space-y-6">
-        <div className="flex items-start gap-6 p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm">
-          <div className="text-4xl">📱</div>
+      <div className="space-y-5">
+        <div className="flex items-start gap-5 p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 rounded-xl bg-[#00767D]/10 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 text-[#00767D]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </div>
           <div>
             <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Telegram-группа</h3>
             <p className="text-[#546569]">Материалы, запись, контакты спикеров</p>
           </div>
         </div>
 
-        <div className="flex items-start gap-6 p-6 bg-gradient-to-r from-[#F0BB1E]/20 to-[#F0BB1E]/5 rounded-2xl border-2 border-[#F0BB1E]">
-          <div className="text-4xl">🚀</div>
+        <div className="flex items-start gap-5 p-6 bg-gradient-to-r from-[#F0BB1E]/10 to-transparent rounded-2xl border-2 border-[#F0BB1E]/30 hover:border-[#F0BB1E]/50 transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center flex-shrink-0 shadow-sm">
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+              <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+            </svg>
+          </div>
           <div>
             <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Попробовать ibirAi</h3>
             <p className="text-[#546569]">Бесплатный пилот для первых 3 компаний</p>
-            <a href="tel:+77022413388" className="text-[#00767D] font-semibold mt-2 block hover:underline">
-              📞 +7 702 241 33 88 (Индира)
+            <a href="tel:+77022413388" className="inline-flex items-center gap-2 text-[#00767D] font-semibold mt-2 hover:underline">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              +7 702 241 33 88 (Индира)
             </a>
           </div>
         </div>
 
-        <div className="flex items-start gap-6 p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm">
-          <div className="text-4xl">🤝</div>
+        <div className="flex items-start gap-5 p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 rounded-xl bg-[#00767D]/10 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
           <div>
             <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Нетворкинг</h3>
             <p className="text-[#546569]">30 минут — общайтесь, обменивайтесь контактами!</p>
@@ -1211,31 +1492,52 @@ function NextStepsSlide() {
 
 function FinalSlide() {
   return (
-    <div className="text-center max-w-4xl">
-      <h2 className="text-5xl md:text-7xl font-bold text-[#2D3A3C] mb-6">
-        Спасибо!
-      </h2>
-
-      <div className="w-32 h-1 bg-gradient-to-r from-[#00767D] to-[#F0BB1E] mx-auto mb-8" />
-
-      <p className="text-2xl text-[#546569] mb-12">
-        AI в HR • 30 января 2026
-      </p>
-
-      <div className="flex justify-center gap-8 items-center">
-        <div className="text-center">
-          <p className="text-lg text-[#2D3A3C] font-semibold">abadan.kz</p>
-          <p className="text-sm text-[#546569]">Корпоративное обучение</p>
-        </div>
-        <div className="w-px h-12 bg-[#00767D]/20" />
-        <div className="text-center">
-          <p className="text-lg font-semibold"><span className="text-[#2D3A3C]">ibir</span><span className="text-[#00767D]">Ai</span></p>
-          <p className="text-sm text-[#546569]">Микрообучение с AI</p>
-        </div>
+    <div className="text-center max-w-4xl relative">
+      {/* Decorative concentric circles */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] pointer-events-none">
+        <div className="absolute inset-0 border border-[#00767D]/5 rounded-full" />
+        <div className="absolute inset-12 border border-[#F0BB1E]/5 rounded-full" />
+        <div className="absolute inset-24 border border-[#00767D]/5 rounded-full" />
       </div>
 
-      <div className="mt-16 text-6xl">
-        🎯
+      <div className="relative">
+        <h2 className="text-6xl md:text-8xl font-bold text-[#2D3A3C] mb-6 tracking-tight">
+          Спасибо!
+        </h2>
+
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#00767D]" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-2 h-2 rounded-full bg-[#F0BB1E]" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#F0BB1E]" />
+        </div>
+
+        <p className="text-2xl text-[#546569] mb-12 font-light">
+          AI в HR • 30 января 2026
+        </p>
+
+        <div className="inline-flex items-center gap-6 px-8 py-5 bg-white rounded-2xl shadow-sm border border-[#00767D]/10">
+          <div className="text-center">
+            <p className="text-lg text-[#2D3A3C] font-semibold">abadan.kz</p>
+            <p className="text-sm text-[#546569]">Корпоративное обучение</p>
+          </div>
+          <div className="w-px h-10 bg-gradient-to-b from-[#00767D]/20 via-[#F0BB1E]/20 to-[#00767D]/20" />
+          <div className="text-center">
+            <p className="text-lg font-semibold"><span className="text-[#2D3A3C]">ibir</span><span className="text-[#00767D]">Ai</span></p>
+            <p className="text-sm text-[#546569]">Микрообучение с AI</p>
+          </div>
+        </div>
+
+        <div className="mt-12">
+          <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center shadow-lg shadow-[#00767D]/20">
+            <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="6" />
+              <circle cx="12" cy="12" r="2" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   );
