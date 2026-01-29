@@ -971,7 +971,9 @@ function NextStepsSlide() {
           <div>
             <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Попробовать ibirAi</h3>
             <p className="text-[#546569]">Бесплатный пилот для первых 3 компаний</p>
-            <p className="text-[#00767D] font-semibold mt-2">Напишите @gani_abadan</p>
+            <a href="tel:+77022413388" className="text-[#00767D] font-semibold mt-2 block hover:underline">
+              📞 +7 702 241 33 88 (Индира)
+            </a>
           </div>
         </div>
 
