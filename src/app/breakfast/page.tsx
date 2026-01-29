@@ -363,14 +363,14 @@ function TelegramSlide() {
 
 function ProgramSlide() {
   const program = [
-    { time: "08:30", title: "Сбор участников, кофе", speaker: "", icon: "☕" },
+    { time: "08:30", title: "Сбор участников, регистрация", speaker: "", icon: "☕" },
     { time: "09:00", title: "Открытие", speaker: "Гани Абадан", icon: "🎤" },
     { time: "09:10", title: "AI в рекрутинге", speaker: "Диас Жумагалиев", icon: "🤖" },
     { time: "09:50", title: "AI-агенты для HR", speaker: "Даниэль Алисов", icon: "⚡" },
-    { time: "10:20", title: "Перерыв", speaker: "", icon: "☕" },
-    { time: "10:30", title: "Демо ibir.ai", speaker: "Гани Абадан", icon: "📱" },
-    { time: "10:50", title: "Панельная дискуссия", speaker: "Все спикеры", icon: "💬" },
-    { time: "11:10", title: "Нетворкинг", speaker: "", icon: "🤝" },
+    { time: "10:30", title: "Кофе-брейк", speaker: "", icon: "☕" },
+    { time: "11:00", title: "Демо ibir.ai", speaker: "Гани Абадан", icon: "📱" },
+    { time: "11:20", title: "Панельная дискуссия", speaker: "Все спикеры", icon: "💬" },
+    { time: "11:40", title: "Нетворкинг", speaker: "", icon: "🤝" },
   ];
 
   return (
