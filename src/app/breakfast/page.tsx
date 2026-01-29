@@ -4,6 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
+// API Base URL
+const API_BASE = "https://breakfast-bot-production.up.railway.app";
+
 // Slide data
 const slides = [
   { id: "cover", type: "cover" },
@@ -26,19 +29,49 @@ const slides = [
   { id: "final", type: "final" },
 ];
 
-// Top requests data (will be updated before event)
-const topRequests = [
-  { rank: "🥇", text: "Как измерить ROI обучения?", count: 12 },
-  { rank: "🥈", text: "С чего начать внедрение AI?", count: 8 },
-  { rank: "🥉", text: "Как преодолеть сопротивление?", count: 5 },
-];
+// Types for API responses
+interface TopRequest {
+  rank: string;
+  text: string;
+  count: number;
+}
 
-// Participant insights (will be updated during event)
-const participantInsights = [
-  { text: "Начать надо с малого — один процесс", author: "Участник 1" },
-  { text: "Микрообучение — это про привычки", author: "Участник 2" },
-  { text: "AI экономит время, но решения за человеком", author: "Участник 3" },
-];
+interface Insight {
+  text: string;
+  author: string;
+  company?: string;
+}
+
+interface Question {
+  text: string;
+  author: string;
+  for_speaker?: string;
+}
+
+// Hook to fetch data from bot API
+function useApiData<T>(endpoint: string, defaultValue: T, refreshInterval = 30000): T {
+  const [data, setData] = useState<T>(defaultValue);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${API_BASE}${endpoint}`);
+        if (response.ok) {
+          const json = await response.json();
+          setData(json.data || json);
+        }
+      } catch (error) {
+        console.log(`API fetch error for ${endpoint}:`, error);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, refreshInterval);
+    return () => clearInterval(interval);
+  }, [endpoint, refreshInterval]);
+
+  return data;
+}
 
 export default function BreakfastPresentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -132,7 +165,7 @@ export default function BreakfastPresentation() {
       case "story-3":
         return <Story3Slide />;
       case "top-requests":
-        return <TopRequestsSlide requests={topRequests} />;
+        return <TopRequestsSlide />;
       case "dias-intro":
         return <DiasIntroSlide />;
       case "daniel-intro":
@@ -146,7 +179,7 @@ export default function BreakfastPresentation() {
       case "panel":
         return <PanelSlide />;
       case "insights":
-        return <InsightsSlide insights={participantInsights} />;
+        return <InsightsSlide />;
       case "next-steps":
         return <NextStepsSlide />;
       case "final":
@@ -278,27 +311,51 @@ function CoverSlide() {
 function TelegramSlide() {
   return (
     <div className="text-center max-w-3xl">
-      <div className="text-6xl mb-6">📱</div>
+      <div className="text-6xl mb-6">🤖</div>
 
       <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-4">
-        Присоединяйтесь к <span className="text-[#00767D]">чату</span>
+        Запустите <span className="text-[#00767D]">бота</span>
       </h2>
 
       <p className="text-xl text-[#546569] mb-10">
-        Задавайте вопросы, делитесь мыслями, получайте материалы
+        Представьтесь, задавайте вопросы, делитесь инсайтами
       </p>
 
-      {/* QR Code Placeholder */}
-      <div className="w-64 h-64 mx-auto bg-white rounded-2xl border-4 border-[#00767D] flex items-center justify-center mb-8 shadow-xl">
-        <div className="text-center">
-          <div className="text-5xl mb-2">💬</div>
-          <p className="text-[#546569] text-sm">QR-код</p>
-          <p className="text-[#00767D] font-semibold">Telegram</p>
-        </div>
+      {/* QR Code */}
+      <div className="w-64 h-64 mx-auto bg-white rounded-2xl border-4 border-[#00767D] flex items-center justify-center mb-8 shadow-xl overflow-hidden">
+        <Image
+          src="/images/qr-bot.png"
+          alt="QR код бота"
+          width={240}
+          height={240}
+          className="w-full h-full object-contain p-2"
+          onError={(e) => {
+            // Fallback if image not found
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.parentElement!.innerHTML = `
+              <div class="text-center p-4">
+                <div class="text-5xl mb-2">💬</div>
+                <p class="text-[#00767D] font-semibold">@aihr_breakfast_bot</p>
+              </div>
+            `;
+          }}
+        />
       </div>
 
-      <p className="text-lg text-[#2D3A3C]">
-        Или найдите: <span className="font-bold text-[#00767D]">@aihr_breakfast</span>
+      <a
+        href="https://t.me/aihr_breakfast_bot"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-[#00767D] text-white font-semibold rounded-xl hover:bg-[#006D77] transition-colors text-lg"
+      >
+        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        @aihr_breakfast_bot
+      </a>
+
+      <p className="mt-6 text-[#94A3B8]">
+        Нажмите /start в боте
       </p>
     </div>
   );
@@ -469,40 +526,65 @@ function Story3Slide() {
   );
 }
 
-function TopRequestsSlide({ requests }: { requests: typeof topRequests }) {
+function TopRequestsSlide() {
+  const ranks = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
+  const apiData = useApiData<{ top_requests?: TopRequest[]; analysis?: string }>("/api/top-requests", {});
+
+  // Default data if API not available
+  const defaultRequests: TopRequest[] = [
+    { rank: "🥇", text: "Ожидаем ваши запросы...", count: 0 },
+  ];
+
+  const requests = apiData.top_requests || defaultRequests;
+  const hasData = requests.length > 0 && requests[0].count > 0;
+
   return (
     <div className="max-w-3xl w-full">
       <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-4 text-center">
         Ваши <span className="text-[#00767D]">запросы</span>
       </h2>
-      <p className="text-center text-[#546569] mb-12">
-        Что вы хотите узнать сегодня
+      <p className="text-center text-[#546569] mb-8">
+        {hasData ? "Что вы хотите узнать сегодня" : "Напишите боту @aihr_breakfast_bot"}
       </p>
 
-      <div className="space-y-6">
-        {requests.map((request, index) => (
+      {/* Live indicator */}
+      <div className="flex justify-center mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 rounded-full">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-green-700 text-sm font-medium">Live</span>
+        </div>
+      </div>
+
+      <div className="space-y-4 max-h-[50vh] overflow-y-auto">
+        {requests.slice(0, 10).map((request, index) => (
           <div
             key={index}
-            className={`flex items-center gap-6 p-6 rounded-2xl ${
+            className={`flex items-center gap-6 p-5 rounded-2xl transition-all ${
               index === 0
                 ? "bg-gradient-to-r from-[#F0BB1E]/20 to-[#F0BB1E]/5 border-2 border-[#F0BB1E]"
+                : index < 3
+                ? "bg-white border-2 border-[#00767D]/20"
                 : "bg-white border border-[#00767D]/10"
             }`}
           >
-            <div className="text-4xl">{request.rank}</div>
+            <div className="text-3xl">{ranks[index] || `${index + 1}`}</div>
             <div className="flex-1">
-              <div className="text-xl font-semibold text-[#2D3A3C]">{request.text}</div>
+              <div className="text-lg font-semibold text-[#2D3A3C]">{request.text}</div>
             </div>
-            <div className="text-[#00767D] font-bold text-lg">
-              {request.count} чел.
-            </div>
+            {request.count > 0 && (
+              <div className="text-[#00767D] font-bold text-lg">
+                {request.count} чел.
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      <p className="text-center mt-10 text-[#00767D] font-semibold text-lg">
-        Спикеры, держите это в голове →
-      </p>
+      {hasData && (
+        <p className="text-center mt-8 text-[#00767D] font-semibold text-lg">
+          Спикеры, держите это в голове →
+        </p>
+      )}
     </div>
   );
 }
@@ -696,63 +778,125 @@ function IbiraiDemoSlide() {
 }
 
 function PanelSlide() {
-  const questions = [
+  const moderatorQuestions = [
     "AI заберёт работу у HR?",
     "Главные ошибки при внедрении AI?",
     "С чего начать — первый шаг?",
     "Как изменится HR через 3 года?",
   ];
 
+  const apiData = useApiData<{ questions?: Question[] }>("/api/questions", {});
+  const audienceQuestions = apiData.questions || [];
+
   return (
-    <div className="max-w-3xl">
-      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-12 text-center">
+    <div className="max-w-4xl w-full">
+      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-8 text-center">
         Панельная <span className="text-[#00767D]">дискуссия</span>
       </h2>
 
-      <div className="space-y-4 mb-10">
-        {questions.map((question, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-4 p-5 bg-white rounded-xl border border-[#00767D]/10 shadow-sm"
-          >
-            <span className="text-2xl text-[#F0BB1E]">❓</span>
-            <span className="text-lg text-[#2D3A3C]">{question}</span>
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Moderator questions */}
+        <div>
+          <h3 className="text-lg font-semibold text-[#546569] mb-4">Вопросы модератора:</h3>
+          <div className="space-y-3">
+            {moderatorQuestions.map((question, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-3 p-4 bg-white rounded-xl border border-[#00767D]/10"
+              >
+                <span className="text-xl text-[#F0BB1E]">❓</span>
+                <span className="text-[#2D3A3C]">{question}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Audience questions */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <h3 className="text-lg font-semibold text-[#546569]">Вопросы из зала:</h3>
+            <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 rounded-full">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-green-700 text-xs font-medium">Live</span>
+            </div>
+          </div>
+
+          {audienceQuestions.length > 0 ? (
+            <div className="space-y-3 max-h-[40vh] overflow-y-auto">
+              {audienceQuestions.slice(0, 5).map((q, index) => (
+                <div
+                  key={index}
+                  className="p-4 bg-gradient-to-r from-[#F0BB1E]/10 to-transparent rounded-xl border border-[#F0BB1E]/30"
+                >
+                  <p className="text-[#2D3A3C] mb-1">«{q.text}»</p>
+                  <p className="text-sm text-[#546569]">— {q.author}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-6 bg-[#F8FAFB] rounded-xl border-2 border-dashed border-[#00767D]/20 text-center">
+              <p className="text-[#546569]">Ожидаем вопросы...</p>
+              <p className="text-sm text-[#94A3B8] mt-1">@aihr_breakfast_bot</p>
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="text-center p-6 bg-[#00767D]/10 rounded-2xl">
-        <p className="text-xl text-[#00767D] font-semibold">
-          💬 Пишите вопросы в Telegram →
+      <div className="text-center mt-8 p-4 bg-[#00767D]/10 rounded-xl">
+        <p className="text-[#00767D] font-semibold">
+          💬 Пишите вопросы боту — они появятся здесь!
         </p>
       </div>
     </div>
   );
 }
 
-function InsightsSlide({ insights }: { insights: typeof participantInsights }) {
+function InsightsSlide() {
+  const apiData = useApiData<{ insights?: Insight[] }>("/api/insights", {});
+
+  const insights = apiData.insights || [];
+  const hasData = insights.length > 0;
+
   return (
-    <div className="max-w-3xl">
-      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-12 text-center">
+    <div className="max-w-3xl w-full">
+      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-4 text-center">
         Ваши <span className="text-[#00767D]">инсайты</span>
       </h2>
 
-      <div className="space-y-6">
-        {insights.map((insight, index) => (
-          <div
-            key={index}
-            className="p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm"
-          >
-            <div className="flex items-start gap-4">
-              <span className="text-3xl text-[#F0BB1E]">💡</span>
-              <div>
-                <p className="text-xl text-[#2D3A3C] mb-2">«{insight.text}»</p>
-                <p className="text-[#546569]">— {insight.author}</p>
+      {/* Live indicator */}
+      <div className="flex justify-center mb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 rounded-full">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-green-700 text-sm font-medium">Live</span>
+        </div>
+      </div>
+
+      {hasData ? (
+        <div className="space-y-4 max-h-[50vh] overflow-y-auto">
+          {insights.slice(0, 5).map((insight, index) => (
+            <div
+              key={index}
+              className="p-6 bg-white rounded-2xl border border-[#00767D]/10 shadow-sm"
+            >
+              <div className="flex items-start gap-4">
+                <span className="text-3xl text-[#F0BB1E]">💡</span>
+                <div>
+                  <p className="text-xl text-[#2D3A3C] mb-2">«{insight.text}»</p>
+                  <p className="text-[#546569]">
+                    — {insight.author}{insight.company ? `, ${insight.company}` : ""}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center p-12 bg-[#F8FAFB] rounded-2xl border-2 border-dashed border-[#00767D]/30">
+          <div className="text-5xl mb-4">💬</div>
+          <p className="text-xl text-[#546569]">Ожидаем ваши инсайты...</p>
+          <p className="text-[#94A3B8] mt-2">Напишите боту @aihr_breakfast_bot</p>
+        </div>
+      )}
     </div>
   );
 }
