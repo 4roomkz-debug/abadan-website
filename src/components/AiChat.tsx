@@ -1,13 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
+// Страницы где чат скрыт
+const HIDDEN_PATHS = ["/breakfast"];
+
 export default function AiChat() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -74,6 +79,11 @@ export default function AiChat() {
       sendMessage();
     }
   };
+
+  // Скрываем чат на определённых страницах
+  if (HIDDEN_PATHS.includes(pathname)) {
+    return null;
+  }
 
   return (
     <>
