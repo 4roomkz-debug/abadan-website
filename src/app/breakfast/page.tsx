@@ -158,6 +158,29 @@ const Icons = {
       <polyline points="14,2 14,8 20,8" />
     </svg>
   ),
+  handshake: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+      <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+      <path d="m21 3 1 11h-2" />
+      <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+      <path d="M3 4h8" />
+    </svg>
+  ),
+  video: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m22 8-6 4 6 4V8Z" />
+      <rect width="14" height="12" x="2" y="6" rx="2" ry="2" />
+    </svg>
+  ),
+  slides: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="18" height="14" x="3" y="3" rx="2" />
+      <path d="M3 9h18" />
+      <path d="M9 21h6" />
+      <path d="M12 17v4" />
+    </svg>
+  ),
 };
 
 // Slide data
@@ -521,23 +544,60 @@ function CoverSlide() {
 // Hook slide - provocative opening statistic
 function HookSlide() {
   return (
-    <div className="text-center max-w-4xl">
-      <div className="text-8xl md:text-9xl font-bold text-[#00767D] mb-6">
-        76%
+    <div className="text-center max-w-4xl relative">
+      {/* Animated progress ring */}
+      <div className="relative inline-block mb-8">
+        <svg className="w-56 h-56 md:w-72 md:h-72" viewBox="0 0 200 200">
+          {/* Background circle */}
+          <circle
+            cx="100"
+            cy="100"
+            r="85"
+            fill="none"
+            stroke="#E5E7EB"
+            strokeWidth="12"
+          />
+          {/* Animated progress arc (76%) */}
+          <motion.circle
+            cx="100"
+            cy="100"
+            r="85"
+            fill="none"
+            stroke="url(#gradient)"
+            strokeWidth="12"
+            strokeLinecap="round"
+            strokeDasharray={534}
+            strokeDashoffset={534 * 0.24}
+            initial={{ strokeDashoffset: 534 }}
+            animate={{ strokeDashoffset: 534 * 0.24 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            transform="rotate(-90 100 100)"
+          />
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#00767D" />
+              <stop offset="100%" stopColor="#F0BB1E" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-6xl md:text-7xl font-bold text-[#00767D]">76%</span>
+        </div>
       </div>
 
-      <p className="text-2xl md:text-3xl text-[#2D3A3C] mb-8">
+      <p className="text-2xl md:text-3xl text-[#2D3A3C] mb-6">
         HR-директоров считают, что <span className="font-bold">AI изменит</span><br />
         их работу в ближайшие <span className="text-[#00767D] font-bold">2 года</span>
       </p>
 
-      <div className="w-24 h-1 bg-gradient-to-r from-[#F0BB1E] to-[#00767D] mx-auto mb-8" />
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full border border-[#00767D]/10 mb-8">
+        <svg className="w-4 h-4 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+        </svg>
+        <span className="text-[#546569]">Gartner, 2025</span>
+      </div>
 
-      <p className="text-xl text-[#546569]">
-        Gartner, 2025
-      </p>
-
-      <div className="mt-12 p-6 bg-[#F0BB1E]/10 rounded-2xl border border-[#F0BB1E]/30 inline-block">
+      <div className="p-6 bg-gradient-to-r from-[#F0BB1E]/10 to-[#F0BB1E]/5 rounded-2xl border border-[#F0BB1E]/20 inline-block">
         <p className="text-xl text-[#2D3A3C] font-semibold">
           Вопрос не «будет ли AI в HR?»<br />
           Вопрос — <span className="text-[#00767D]">«вы готовы?»</span>
@@ -552,7 +612,12 @@ function TelegramStartSlide() {
   return (
     <div className="text-center max-w-3xl">
       <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00767D]/10 rounded-full mb-6">
-        <span className="text-xl">👋</span>
+        <svg className="w-5 h-5 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M7 11v6a4 4 0 0 0 8 0v-5" />
+          <path d="M5 11V7a5 5 0 0 1 10 0v6" />
+          <path d="M17 7a2 2 0 1 1 4 0c0 1.5-1 2-2 3" />
+          <path d="M21 15h.01" />
+        </svg>
         <span className="text-[#00767D] font-semibold">Давайте знакомиться</span>
       </div>
 
@@ -619,7 +684,10 @@ function TelegramEndSlide() {
   return (
     <div className="text-center max-w-3xl">
       <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0BB1E]/20 rounded-full mb-6">
-        <span className="text-xl">🔗</span>
+        <svg className="w-5 h-5 text-[#F0BB1E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg>
         <span className="text-[#2D3A3C] font-semibold">Оставайтесь на связи</span>
       </div>
 
@@ -642,7 +710,9 @@ function TelegramEndSlide() {
             e.currentTarget.style.display = 'none';
             e.currentTarget.parentElement!.innerHTML = `
               <div class="text-center p-4">
-                <div class="text-4xl mb-2">💬</div>
+                <svg class="w-12 h-12 mx-auto text-[#F0BB1E] mb-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
                 <p class="text-[#F0BB1E] font-semibold">@aihr_breakfast_bot</p>
               </div>
             `;
@@ -651,16 +721,22 @@ function TelegramEndSlide() {
       </div>
 
       <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto">
-        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10">
-          <div className="text-2xl mb-2">📹</div>
+        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10 hover:shadow-md transition-shadow">
+          <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-[#00767D]/10 flex items-center justify-center">
+            {Icons.video}
+          </div>
           <p className="text-sm text-[#546569]">Запись</p>
         </div>
-        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10">
-          <div className="text-2xl mb-2">📑</div>
+        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10 hover:shadow-md transition-shadow">
+          <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-[#00767D]/10 flex items-center justify-center">
+            {Icons.slides}
+          </div>
           <p className="text-sm text-[#546569]">Слайды</p>
         </div>
-        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10">
-          <div className="text-2xl mb-2">👥</div>
+        <div className="p-4 bg-white rounded-xl border border-[#00767D]/10 hover:shadow-md transition-shadow">
+          <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-[#00767D]/10 flex items-center justify-center">
+            {Icons.users}
+          </div>
           <p className="text-sm text-[#546569]">Контакты</p>
         </div>
       </div>
@@ -670,32 +746,55 @@ function TelegramEndSlide() {
 
 function ProgramSlide() {
   const program = [
-    { time: "08:30", title: "Сбор участников, регистрация", speaker: "", icon: "☕" },
-    { time: "09:00", title: "Открытие", speaker: "Гани Абадан", icon: "🎤" },
-    { time: "09:10", title: "AI в рекрутинге", speaker: "Диас Жумагалиев", icon: "🤖" },
-    { time: "09:50", title: "AI-агенты для HR", speaker: "Даниэль Алисов", icon: "⚡" },
-    { time: "10:30", title: "Кофе-брейк", speaker: "", icon: "☕" },
-    { time: "11:00", title: "Демо ibirAi", speaker: "Гани Абадан", icon: "📱" },
-    { time: "11:20", title: "Панельная дискуссия", speaker: "Все спикеры", icon: "💬" },
-    { time: "11:40", title: "Нетворкинг", speaker: "", icon: "🤝" },
+    { time: "08:30", title: "Сбор участников, регистрация", speaker: "", icon: "coffee", highlight: false },
+    { time: "09:00", title: "Открытие", speaker: "Гани Абадан", icon: "microphone", highlight: false },
+    { time: "09:10", title: "AI в рекрутинге", speaker: "Диас Жумагалиев", icon: "robot", highlight: true },
+    { time: "09:50", title: "AI-агенты для HR", speaker: "Даниэль Алисов", icon: "lightning", highlight: true },
+    { time: "10:30", title: "Кофе-брейк", speaker: "", icon: "coffee", highlight: false },
+    { time: "11:00", title: "Демо ibirAi", speaker: "Гани Абадан", icon: "phone", highlight: true },
+    { time: "11:20", title: "Панельная дискуссия", speaker: "Все спикеры", icon: "chat", highlight: false },
+    { time: "11:40", title: "Нетворкинг", speaker: "", icon: "users", highlight: false },
   ];
+
+  const getIcon = (iconName: string) => {
+    const iconMap: Record<string, React.ReactNode> = {
+      coffee: Icons.coffee,
+      microphone: Icons.microphone,
+      robot: Icons.robot,
+      lightning: Icons.lightning,
+      phone: Icons.phone,
+      chat: Icons.chat,
+      users: Icons.users,
+    };
+    return iconMap[iconName] || Icons.target;
+  };
 
   return (
     <div className="max-w-3xl w-full">
-      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-12 text-center">
+      <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-10 text-center">
         <span className="text-[#00767D]">Программа</span>
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {program.map((item, index) => (
           <div
             key={index}
-            className="flex items-center gap-4 p-4 bg-white rounded-xl border border-[#00767D]/10 shadow-sm hover:shadow-md transition-shadow"
+            className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${
+              item.highlight
+                ? "bg-gradient-to-r from-[#00767D]/5 to-transparent border-[#00767D]/20 shadow-sm"
+                : "bg-white border-[#00767D]/10 hover:shadow-sm"
+            }`}
           >
-            <div className="text-3xl">{item.icon}</div>
-            <div className="w-20 text-[#00767D] font-bold text-lg">{item.time}</div>
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+              item.highlight
+                ? "bg-gradient-to-br from-[#00767D] to-[#006D77] text-white"
+                : "bg-[#00767D]/10 text-[#00767D]"
+            }`}>
+              <div className="w-5 h-5">{getIcon(item.icon)}</div>
+            </div>
+            <div className="w-16 text-[#00767D] font-bold">{item.time}</div>
             <div className="flex-1">
-              <div className="font-semibold text-[#2D3A3C] text-lg">{item.title}</div>
+              <div className={`font-semibold ${item.highlight ? "text-[#00767D]" : "text-[#2D3A3C]"}`}>{item.title}</div>
               {item.speaker && (
                 <div className="text-[#546569] text-sm">{item.speaker}</div>
               )}
@@ -857,53 +956,65 @@ function Story3Slide() {
 }
 
 function TopRequestsSlide() {
-  const ranks = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
   const apiData = useApiData<{ top_requests?: TopRequest[]; analysis?: string }>("/api/top-requests", {});
 
   // Default data if API not available
   const defaultRequests: TopRequest[] = [
-    { rank: "🥇", text: "Ожидаем ваши запросы...", count: 0 },
+    { rank: "1", text: "Ожидаем ваши запросы...", count: 0 },
   ];
 
   const requests = apiData.top_requests || defaultRequests;
   const hasData = requests.length > 0 && requests[0].count > 0;
+
+  const getRankStyle = (index: number) => {
+    if (index === 0) return "bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] text-white shadow-lg shadow-[#F0BB1E]/30";
+    if (index === 1) return "bg-gradient-to-br from-[#94A3B8] to-[#64748B] text-white";
+    if (index === 2) return "bg-gradient-to-br from-[#CD7F32] to-[#B87333] text-white";
+    return "bg-[#00767D]/10 text-[#00767D]";
+  };
 
   return (
     <div className="max-w-3xl w-full">
       <h2 className="text-4xl md:text-5xl font-bold text-[#2D3A3C] mb-4 text-center">
         Ваши <span className="text-[#00767D]">запросы</span>
       </h2>
-      <p className="text-center text-[#546569] mb-8">
+      <p className="text-center text-[#546569] mb-6">
         {hasData ? "Что вы хотите узнать сегодня" : "Напишите боту @aihr_breakfast_bot"}
       </p>
 
       {/* Live indicator */}
       <div className="flex justify-center mb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 rounded-full">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-full">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-green-700 text-sm font-medium">Live</span>
+          <span className="text-green-700 text-sm font-medium">Обновляется в реальном времени</span>
         </div>
       </div>
 
-      <div className="space-y-4 max-h-[50vh] overflow-y-auto">
+      <div className="space-y-3 max-h-[50vh] overflow-y-auto">
         {requests.slice(0, 10).map((request, index) => (
           <div
             key={index}
-            className={`flex items-center gap-6 p-5 rounded-2xl transition-all ${
+            className={`flex items-center gap-4 p-4 rounded-xl transition-all ${
               index === 0
-                ? "bg-gradient-to-r from-[#F0BB1E]/20 to-[#F0BB1E]/5 border-2 border-[#F0BB1E]"
+                ? "bg-gradient-to-r from-[#F0BB1E]/10 to-transparent border-2 border-[#F0BB1E]/30"
                 : index < 3
-                ? "bg-white border-2 border-[#00767D]/20"
+                ? "bg-white border border-[#00767D]/20 shadow-sm"
                 : "bg-white border border-[#00767D]/10"
             }`}
           >
-            <div className="text-3xl">{ranks[index] || `${index + 1}`}</div>
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold ${getRankStyle(index)}`}>
+              {index + 1}
+            </div>
             <div className="flex-1">
-              <div className="text-lg font-semibold text-[#2D3A3C]">{request.text}</div>
+              <div className="font-semibold text-[#2D3A3C]">{request.text}</div>
             </div>
             {request.count > 0 && (
-              <div className="text-[#00767D] font-bold text-lg">
-                {request.count} чел.
+              <div className="flex items-center gap-1 text-[#00767D] font-bold">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                </svg>
+                {request.count}
               </div>
             )}
           </div>
@@ -911,9 +1022,17 @@ function TopRequestsSlide() {
       </div>
 
       {hasData && (
-        <p className="text-center mt-8 text-[#00767D] font-semibold text-lg">
-          Спикеры, держите это в голове →
-        </p>
+        <div className="flex items-center justify-center gap-2 mt-8">
+          <p className="text-[#00767D] font-semibold">Спикеры, держите это в голове</p>
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <svg className="w-5 h-5 text-[#00767D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </motion.div>
+        </div>
       )}
     </div>
   );
@@ -1231,35 +1350,57 @@ function IbiraiFeaturesSlide() {
 function BigNumberCompletionSlide() {
   return (
     <div className="text-center max-w-4xl">
-      <p className="text-xl text-[#546569] mb-6">
+      <h2 className="text-3xl md:text-4xl font-bold text-[#2D3A3C] mb-2">
         Завершаемость онлайн-курсов
+      </h2>
+      <p className="text-lg text-[#546569] mb-10">
+        Сколько сотрудников доходят до конца обучения?
       </p>
 
-      <div className="flex items-end justify-center gap-12 mb-12">
-        {/* Traditional */}
-        <div className="text-center">
-          <div className="text-6xl md:text-7xl font-bold text-[#94A3B8] mb-2">
-            20-30%
+      <div className="grid md:grid-cols-2 gap-8 mb-10">
+        {/* Traditional courses */}
+        <div className="p-6 bg-white rounded-2xl border border-[#E5E7EB] shadow-sm">
+          <p className="text-sm text-[#546569] mb-3 uppercase tracking-wide">Традиционные LMS</p>
+          <div className="relative h-6 bg-[#E5E7EB] rounded-full overflow-hidden mb-4">
+            <motion.div
+              className="absolute left-0 top-0 h-full bg-[#94A3B8] rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: "25%" }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            />
           </div>
-          <p className="text-lg text-[#546569]">Традиционные<br />онлайн-курсы</p>
+          <div className="text-5xl font-bold text-[#94A3B8]">20-30%</div>
+          <p className="text-sm text-[#94A3B8] mt-2">завершают курс</p>
         </div>
 
-        {/* Arrow */}
-        <div className="text-4xl text-[#F0BB1E] pb-8">→</div>
-
         {/* ibirAi */}
-        <div className="text-center">
-          <div className="text-7xl md:text-8xl font-bold text-[#00767D] mb-2">
-            87%
+        <div className="p-6 bg-gradient-to-br from-[#00767D]/5 to-[#00767D]/10 rounded-2xl border-2 border-[#00767D]/20 shadow-md relative overflow-hidden">
+          <div className="absolute top-3 right-3 px-2 py-1 bg-[#F0BB1E] rounded-full text-xs font-bold text-white">
+            ×3-4
           </div>
-          <p className="text-lg text-[#00767D] font-semibold">ibir<span className="text-[#00767D]">Ai</span></p>
+          <p className="text-sm text-[#00767D] mb-3 uppercase tracking-wide font-medium">ibirAi</p>
+          <div className="relative h-6 bg-[#00767D]/20 rounded-full overflow-hidden mb-4">
+            <motion.div
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-[#00767D] to-[#006D77] rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: "87%" }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+            />
+          </div>
+          <div className="text-5xl font-bold text-[#00767D]">87%</div>
+          <p className="text-sm text-[#00767D] mt-2">завершают курс</p>
         </div>
       </div>
 
-      <div className="inline-block p-6 bg-gradient-to-r from-[#00767D]/10 to-[#00767D]/5 rounded-2xl border border-[#00767D]/20">
-        <p className="text-xl text-[#2D3A3C]">
-          <span className="font-bold text-[#00767D]">В 3-4 раза выше</span> благодаря микроформату<br />
-          и персональному AI-коучу
+      <div className="inline-flex items-center gap-4 p-5 bg-gradient-to-r from-[#F0BB1E]/10 to-transparent rounded-2xl border border-[#F0BB1E]/20">
+        <div className="w-10 h-10 rounded-full bg-[#F0BB1E]/20 flex items-center justify-center">
+          <svg className="w-5 h-5 text-[#F0BB1E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+        </div>
+        <p className="text-lg text-[#2D3A3C] text-left">
+          <span className="font-bold text-[#00767D]">Микроформат + AI-коуч</span><br />
+          <span className="text-[#546569]">5-минутные уроки в Telegram каждый день</span>
         </p>
       </div>
     </div>
