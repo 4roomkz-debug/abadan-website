@@ -1509,7 +1509,7 @@ function NextStepsSlide() {
             </svg>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Telegram-группа</h3>
+            <h3 className="text-xl font-bold text-[#2D3A3C] mb-1">Telegram-бот</h3>
             <p className="text-[#546569]">Материалы, запись, контакты спикеров</p>
           </div>
         </div>
