@@ -174,6 +174,7 @@ const slides = [
   { id: "section-speakers", type: "section-speakers" },
   { id: "dias-intro", type: "dias-intro" },
   { id: "daniel-intro", type: "daniel-intro" },
+  { id: "coffee-break", type: "coffee-break" },
   { id: "section-ibirai", type: "section-ibirai" },
   { id: "ibirai-intro", type: "ibirai-intro" },
   { id: "ibirai-features", type: "ibirai-features" },
@@ -334,6 +335,8 @@ export default function BreakfastPresentation() {
         return <DiasIntroSlide />;
       case "daniel-intro":
         return <DanielIntroSlide />;
+      case "coffee-break":
+        return <CoffeeBreakSlide />;
       case "section-ibirai":
         return <SectionIbiraiSlide />;
       case "ibirai-intro":
@@ -1043,6 +1046,65 @@ function DanielIntroSlide() {
           <p className="font-semibold text-[#2D3A3C]">
             → Когда и как убрать человека из процесса
           </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Coffee Break slide
+function CoffeeBreakSlide() {
+  return (
+    <div className="text-center max-w-3xl relative">
+      {/* Decorative steam lines */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 pointer-events-none">
+        <motion.div
+          className="absolute left-1/3 top-0 w-0.5 h-16 bg-gradient-to-t from-[#F0BB1E]/30 to-transparent rounded-full"
+          animate={{ y: [-10, -20, -10], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute left-1/2 top-0 w-0.5 h-20 bg-gradient-to-t from-[#F0BB1E]/30 to-transparent rounded-full"
+          animate={{ y: [-10, -25, -10], opacity: [0.3, 0.7, 0.3] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+        />
+        <motion.div
+          className="absolute left-2/3 top-0 w-0.5 h-16 bg-gradient-to-t from-[#F0BB1E]/30 to-transparent rounded-full"
+          animate={{ y: [-10, -20, -10], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        />
+      </div>
+
+      <div className="relative">
+        <div className="w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-br from-[#F0BB1E] to-[#E5A91A] flex items-center justify-center shadow-xl shadow-[#F0BB1E]/30">
+          <svg className="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+            <line x1="6" x2="6" y1="2" y2="4" />
+            <line x1="10" x2="10" y1="2" y2="4" />
+            <line x1="14" x2="14" y1="2" y2="4" />
+          </svg>
+        </div>
+
+        <h2 className="text-5xl md:text-7xl font-bold text-[#2D3A3C] mb-6 tracking-tight">
+          Кофе-брейк
+        </h2>
+
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#F0BB1E]" />
+          <div className="w-2 h-2 rounded-full bg-[#F0BB1E]" />
+          <div className="w-2 h-2 rounded-full bg-[#00767D]" />
+          <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#00767D]" />
+        </div>
+
+        <p className="text-2xl text-[#546569] font-light mb-8">
+          30 минут на общение и нетворкинг
+        </p>
+
+        <div className="inline-flex items-center gap-4 px-8 py-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-[#F0BB1E]/20">
+          <span className="text-4xl font-bold text-[#00767D]">10:30</span>
+          <span className="text-xl text-[#546569]">—</span>
+          <span className="text-4xl font-bold text-[#00767D]">11:00</span>
         </div>
       </div>
     </div>
