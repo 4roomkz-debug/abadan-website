@@ -175,17 +175,16 @@ const speakers = [
 ];
 
 const program = [
-  { time: "08:30", title: "Кофе и нетворкинг", speaker: null, duration: "30 мин", icon: "☕" },
+  { time: "08:30", title: "Сбор участников, кофе", speaker: null, duration: "30 мин", icon: "☕" },
   { time: "09:00", title: "Открытие: AI меняет HR — факты и цифры", speaker: "Гани Абадан", duration: "10 мин", icon: "🎤" },
-  { time: "09:10", title: "Революция найма с помощью ИИ: кейсы и метрики", speaker: "Диас Жумагалиев", duration: "20 мин", icon: "🤖" },
-  { time: "09:30", title: "Q&A по рекрутингу", speaker: "Диас + аудитория", duration: "10 мин", icon: "❓" },
-  { time: "09:40", title: "ИИ-агенты для HR: когда убрать человека", speaker: "Даниэль Алисов", duration: "20 мин", icon: "⚡" },
-  { time: "10:00", title: "Q&A по автоматизации", speaker: "Даниэль + аудитория", duration: "10 мин", icon: "❓" },
-  { time: "10:10", title: "Перерыв", speaker: null, duration: "10 мин", icon: "☕" },
-  { time: "10:20", title: "Демо ibirAi: микрообучение в Telegram", speaker: "Гани Абадан", duration: "15 мин", icon: "📱" },
-  { time: "10:35", title: "Панельная дискуссия: будущее HR", speaker: "Все спикеры", duration: "20 мин", icon: "💬" },
-  { time: "10:55", title: "Закрытие + CTA", speaker: "Гани Абадан", duration: "5 мин", icon: "🎯" },
-  { time: "11:00", title: "Нетворкинг + follow-up", speaker: null, duration: "30 мин", icon: "🤝" },
+  { time: "09:10", title: "Революция найма с помощью ИИ: кейсы и метрики", speaker: "Диас Жумагалиев", duration: "30 мин", icon: "🤖" },
+  { time: "09:40", title: "Q&A по рекрутингу", speaker: "Диас + аудитория", duration: "10 мин", icon: "❓" },
+  { time: "09:50", title: "ИИ-агенты для HR: когда убрать человека", speaker: "Даниэль Алисов", duration: "30 мин", icon: "⚡" },
+  { time: "10:20", title: "Перерыв", speaker: null, duration: "10 мин", icon: "☕" },
+  { time: "10:30", title: "Демо ibirAi: микрообучение в Telegram", speaker: "Гани Абадан", duration: "20 мин", icon: "📱" },
+  { time: "10:50", title: "Панельная дискуссия: будущее HR", speaker: "Все спикеры", duration: "15 мин", icon: "💬" },
+  { time: "11:05", title: "Закрытие", speaker: "Гани Абадан", duration: "5 мин", icon: "🎯" },
+  { time: "11:10", title: "Нетворкинг", speaker: null, duration: "20 мин", icon: "🤝" },
 ];
 
 export default function BusinessBreakfastPage() {
