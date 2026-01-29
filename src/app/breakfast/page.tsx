@@ -1336,10 +1336,10 @@ function IbiraiDemoSlide() {
 
 function PanelSlide() {
   const moderatorQuestions = [
-    "AI заберёт работу у HR?",
-    "Главные ошибки при внедрении AI?",
-    "С чего начать — первый шаг?",
-    "Как изменится HR через 3 года?",
+    "Многие HR-специалисты боятся, что AI заменит их работу. Где грань — какие задачи AI точно заберёт, а где человек незаменим?",
+    "Если HR-директор завтра хочет начать внедрять AI — какой один первый шаг вы бы порекомендовали? Что даст быстрый результат?",
+    "Какую главную ошибку совершают компании при внедрении AI в HR? Что вы видели на практике?",
+    "Как изменится роль HR-директора через 2-3 года? Какие навыки станут критичными?",
   ];
 
   const apiData = useApiData<{ questions?: Question[] }>("/api/questions", {});
@@ -1355,14 +1355,14 @@ function PanelSlide() {
         {/* Moderator questions */}
         <div>
           <h3 className="text-lg font-semibold text-[#546569] mb-4">Вопросы модератора:</h3>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {moderatorQuestions.map((question, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 p-4 bg-white rounded-xl border border-[#00767D]/10"
+                className="flex items-start gap-3 p-3 bg-white rounded-xl border border-[#00767D]/10"
               >
-                <span className="text-xl text-[#F0BB1E]">❓</span>
-                <span className="text-[#2D3A3C]">{question}</span>
+                <span className="text-sm text-[#F0BB1E] mt-0.5">{index + 1}.</span>
+                <span className="text-sm text-[#2D3A3C] leading-snug">{question}</span>
               </div>
             ))}
           </div>
