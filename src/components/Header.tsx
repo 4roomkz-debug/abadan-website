@@ -8,14 +8,6 @@ export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { href: "/", label: "Главная" },
-    { href: "/about", label: "О компании" },
-    { href: "/projects", label: "Проекты" },
-    { href: "/schedule", label: "Расписание" },
-    { href: "/#contact", label: "Контакты" },
-  ];
-
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
     return pathname === href;
@@ -70,6 +62,16 @@ export default function Header() {
               }`}
             >
               Проекты
+            </Link>
+            <Link
+              href="/news"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/news") || pathname?.startsWith("/news/")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Новости
             </Link>
             <Link
               href="/schedule"
@@ -163,6 +165,17 @@ export default function Header() {
                 }`}
               >
                 Проекты
+              </Link>
+              <Link
+                href="/news"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/news") || pathname?.startsWith("/news/")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Новости
               </Link>
               <Link
                 href="/schedule"
