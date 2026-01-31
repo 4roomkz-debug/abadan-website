@@ -6,6 +6,7 @@ import {
   TRAININGS,
   PRICING_INFO,
   FAQ,
+  EVENTS,
 } from "@/data/ai-knowledge";
 
 const DEEPSEEK_API_KEY = "sk-3be6a5b6de184338bd61b8d5f625e2a6";
@@ -109,6 +110,18 @@ ${trainingsText}
 
 FAQ:
 ${faqText}
+
+БЛИЖАЙШЕЕ МЕРОПРИЯТИЕ — БИЗНЕС-ЗАВТРАК "AI В HR":
+- Дата: ${EVENTS.businessBreakfastAiHr.date}, ${EVENTS.businessBreakfastAiHr.time}
+- Место: ${EVENTS.businessBreakfastAiHr.location}
+- Как добраться: ${EVENTS.businessBreakfastAiHr.howToGet}
+- Стоимость: ${EVENTS.businessBreakfastAiHr.price}
+- Мест: ${EVENTS.businessBreakfastAiHr.seats}
+- Для кого: ${EVENTS.businessBreakfastAiHr.targetAudience.join(", ")}
+- Спикеры: ${EVENTS.businessBreakfastAiHr.speakers.map(s => `${s.name} (${s.topic})`).join("; ")}
+- Регистрация: ${EVENTS.businessBreakfastAiHr.registrationUrl}
+
+Если спрашивают про AI в HR, про мероприятия, про бизнес-завтрак — активно рассказывай про это событие и предлагай зарегистрироваться!
 
 ВАЖНО:
 - Не будь навязчивым с продажами

@@ -64,16 +64,6 @@ export default function Header() {
               Проекты
             </Link>
             <Link
-              href="/news"
-              className={`text-sm font-medium transition-colors ${
-                isActive("/news") || pathname?.startsWith("/news/")
-                  ? "text-[#00767D]"
-                  : "text-[#546569] hover:text-[#00767D]"
-              }`}
-            >
-              Новости
-            </Link>
-            <Link
               href="/schedule"
               className={`text-sm font-medium transition-colors ${
                 isActive("/schedule")
@@ -165,17 +155,6 @@ export default function Header() {
                 }`}
               >
                 Проекты
-              </Link>
-              <Link
-                href="/news"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 transition-colors ${
-                  isActive("/news") || pathname?.startsWith("/news/")
-                    ? "text-[#00767D]"
-                    : "text-[#546569] hover:text-[#00767D]"
-                }`}
-              >
-                Новости
               </Link>
               <Link
                 href="/schedule"

@@ -21,7 +21,7 @@ export function OrganizationJsonLd() {
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+7-XXX-XXX-XX-XX",
+      telephone: "+7-702-241-33-88",
       contactType: "customer service",
       availableLanguage: ["Russian", "Kazakh"],
     },
