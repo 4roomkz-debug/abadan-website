@@ -127,9 +127,18 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "business"
   },
   {
-    "date": "26-27 февраля",
+    "date": "23-24 февраля",
     "month": "Февраль",
     "name": "Управление и оптимизация в складской логистике",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "26-27 февраля",
+    "month": "Февраль",
+    "name": "Искусственный интеллект для работы: быстрый старт",
     "hours": 16,
     "priceOnline": 200000,
     "priceOffline": 250000,
@@ -169,6 +178,15 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "hours": 16,
     "priceOnline": 200000,
     "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "16-17 марта",
+    "month": "Март",
+    "name": "Медиация в социально-трудовых спорах и конфликтах",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 300000,
     "category": "business"
   },
   {
@@ -901,7 +919,7 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "technical"
   },
   {
-    "date": "2-3 марта",
+    "date": "12-13 марта",
     "month": "Март",
     "name": "Подсчет запасов по классификации PRMS",
     "hours": 16,
@@ -949,6 +967,15 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "date": "26-27 марта",
     "month": "Март",
     "name": "Основы бурения",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "technical"
+  },
+  {
+    "date": "26-27 марта",
+    "month": "Март",
+    "name": "Управление заводнением, водопритоками и водоотдачей при добыче нефти и газа",
     "hours": 16,
     "priceOnline": 250000,
     "priceOffline": 350000,
