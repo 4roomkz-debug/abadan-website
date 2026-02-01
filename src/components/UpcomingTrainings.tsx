@@ -4,29 +4,24 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { SCHEDULE_DATA, MONTHS, parseDateForSort, type ScheduleItem } from "@/data/schedule";
 
-// Функция для получения текущей даты как числа для сравнения
-function getCurrentDateValue(): number {
+// Check if event date has passed (same logic as schedule page)
+function isEventPassed(date: string, month: string): boolean {
   const now = new Date();
-  const currentMonth = now.getMonth(); // 0-11
-  const currentDay = now.getDate();
-  // Поскольку расписание на 2026 год, а сейчас 2025 - показываем все тренинги
-  // Когда наступит 2026, эта логика будет фильтровать прошедшие
   const currentYear = now.getFullYear();
+  const monthIndex = MONTHS.indexOf(month);
 
-  if (currentYear < 2026) {
-    // Показываем все тренинги, начиная с января
-    return 0;
-  }
+  // Extract the last day from date range (e.g., "8-9 января" -> 9)
+  const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
+  const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
 
-  return currentMonth * 100 + currentDay;
+  const eventDate = new Date(currentYear, monthIndex, endDay, 23, 59, 59);
+  return now > eventDate;
 }
 
 // Фильтрация только будущих тренингов
 function getUpcomingTrainings(count: number): ScheduleItem[] {
-  const currentDateValue = getCurrentDateValue();
-
   return SCHEDULE_DATA
-    .filter(item => parseDateForSort(item.date, item.month) >= currentDateValue)
+    .filter(item => !isEventPassed(item.date, item.month))
     .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month))
     .slice(0, count);
 }
