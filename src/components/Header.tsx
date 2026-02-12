@@ -35,6 +35,16 @@ export default function Header() {
               Главная
             </Link>
             <Link
+              href="/welcome"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/welcome")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Приветствие
+            </Link>
+            <Link
               href="/about"
               className={`text-sm font-medium transition-colors ${
                 isActive("/about")
@@ -123,6 +133,17 @@ export default function Header() {
                 }`}
               >
                 Главная
+              </Link>
+              <Link
+                href="/welcome"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/welcome")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Приветствие
               </Link>
               <Link
                 href="/about"

@@ -9,23 +9,60 @@ export default function ScrollAnimationProvider() {
       rootMargin: "0px 0px -50px 0px",
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
+          intersectionObserver.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Наблюдаем за всеми элементами с классами scroll-анимаций
-    const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-fade-in-left, .scroll-fade-in-right, .scroll-scale-in, .scroll-blur-in"
-    );
+    const animationClasses = [
+      "scroll-fade-in",
+      "scroll-fade-in-left",
+      "scroll-fade-in-right",
+      "scroll-scale-in",
+      "scroll-blur-in"
+    ];
 
-    animatedElements.forEach((el) => observer.observe(el));
+    const selector = animationClasses.map(c => `.${c}`).join(", ");
 
-    return () => observer.disconnect();
+    // Функция для наблюдения за элементом
+    const observeElement = (el: Element) => {
+      if (!el.classList.contains("visible")) {
+        intersectionObserver.observe(el);
+      }
+    };
+
+    // Наблюдаем за текущими элементами
+    document.querySelectorAll(selector).forEach(observeElement);
+
+    // MutationObserver для отслеживания новых элементов (решает race condition)
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof Element) {
+            // Проверяем сам элемент
+            if (animationClasses.some(c => node.classList.contains(c))) {
+              observeElement(node);
+            }
+            // Проверяем дочерние элементы
+            node.querySelectorAll(selector).forEach(observeElement);
+          }
+        });
+      });
+    });
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      intersectionObserver.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 
   return null;
