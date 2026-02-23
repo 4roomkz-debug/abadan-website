@@ -84,6 +84,16 @@ export default function Header() {
               Расписание
             </Link>
             <Link
+              href="/coaching"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/coaching")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Коучинг
+            </Link>
+            <Link
               href="/#contact"
               className="text-sm font-medium text-[#546569] hover:text-[#00767D] transition-colors"
             >
@@ -187,6 +197,17 @@ export default function Header() {
                 }`}
               >
                 Расписание
+              </Link>
+              <Link
+                href="/coaching"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/coaching")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Коучинг
               </Link>
               <Link
                 href="/#contact"
