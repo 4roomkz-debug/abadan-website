@@ -226,6 +226,15 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "business"
   },
   {
+    "date": "2-3 апреля",
+    "month": "Апрель",
+    "name": "Внедрение ИИ-инструментов в бизнес-процессы: от промптов до автоматизации",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
     "date": "1-2 апреля",
     "month": "Апрель",
     "name": "Управление изменениями",
