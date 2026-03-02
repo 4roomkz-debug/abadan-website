@@ -37,10 +37,11 @@ npm run lint     # Run ESLint (flat config)
 | `/welcome` | Founder's open letter to HR directors (not in footer, only header + direct link) |
 | `/schedule` | Training schedule with category filters, modal registration, auto-hides past events |
 | `/projects` | ibirAi platform showcase |
+| `/coaching` | Executive coaching landing page — StoryBrand/PAS framework, 7-session program |
 | `/events/business-breakfast-ai-hr` | Event detail page |
 | `/breakfast` | Horizontal slide presentation |
 
-Each route has a `layout.tsx` with SEO metadata (title, description, OpenGraph, canonical).
+Each route has a `layout.tsx` with SEO metadata (title, description, OpenGraph, canonical). When adding a new public route, also add it to `src/app/sitemap.ts`.
 
 ### API Routes
 
@@ -82,3 +83,29 @@ Defined in `globals.css` — use these instead of reinventing:
 - Gold (Mustard): `#F0BB1E` / dark `#EBB417`
 - Foreground: `#2D3A3C`, muted `#546569`, subtle `#7A8B8E`
 - Background: `#FFFFFF`, elevated `#F8FAFA`
+
+## UI & Design Principles
+
+<frontend_aesthetics>
+This site has a strong, established design identity. Preserve and extend it — do not drift toward generic "AI slop" aesthetics.
+
+**Typography:** Always use Manrope (already loaded, variable `--font-manrope`). Never introduce Inter, Roboto, Arial, or system fonts. Use weight extremes: 400 for body, 700–800 for headings. Size jumps of 3x+, not 1.5x.
+
+**Color discipline:** Commit to the teal + gold palette. Dominant dark backgrounds (`#1a2e30`, `#0d2628`) with teal and gold accents — not timid, evenly-distributed colors. Avoid purple gradients or blue-heavy schemes entirely.
+
+**Backgrounds:** Add atmosphere with layered gradients, ambient glow blurs (`bg-[color]/10 rounded-full blur-[120px]`), or subtle geometric patterns. Never default to a plain white or grey section without purpose.
+
+**Motion:** Use `scroll-fade-in` + `scroll-delay-*` classes for entrance animations. For interactive elements, CSS transitions (`transition-all`, `hover:gap-3`) over heavy JS animation. One well-orchestrated page-load sequence is better than scattered micro-interactions.
+
+**Component patterns to follow (not reinvent):**
+- Section alternation: `.section-white` / `bg-[#F8FAFA]` / dark gradient hero
+- Cards: `.glass-card`, `.premium-card`, `.dark-card` — pick by context
+- CTAs: `.gold-button` (primary), `.teal-button` / `.dark-button` (secondary)
+- Dark hero sections use `bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]`
+
+**Avoid:**
+- New color variables that aren't in the brand palette
+- Shadows that look "Material Design" or corporate-flat
+- Layouts that look like a Bootstrap template
+- Any font other than Manrope
+</frontend_aesthetics>

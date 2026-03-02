@@ -83,6 +83,33 @@ export default function AboutPage() {
     },
   ];
 
+  const advantages = [
+    {
+      title: "Решение в день обращения",
+      desc: "Коммерческое предложение с расчётом ROI — в день запроса. Без бюрократии и долгих согласований.",
+    },
+    {
+      title: "Экономия до 50%",
+      desc: "При рамочном договоре вы получаете существенную экономию на развитии команды.",
+    },
+    {
+      title: "Обучение от 2 участников",
+      desc: "Не нужно собирать большую группу. Каждый участник получает персональную обратную связь.",
+    },
+    {
+      title: "200+ экспертов под любую задачу",
+      desc: "Подберём тренера под вашу отрасль и специфику. Нефть, финансы, IT, HR — у нас есть все.",
+    },
+    {
+      title: "Документы в день завершения",
+      desc: "Все закрывающие документы — в день окончания обучения. Ваша бухгалтерия будет довольна.",
+    },
+    {
+      title: "Логистика на нас",
+      desc: "Организуем проживание и трансфер для участников из регионов — вам не нужно думать об этом.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -92,7 +119,6 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#00767D]/5 via-transparent to-[#F0BB1E]/5"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Breadcrumbs */}
             <nav className="flex items-center justify-center gap-2 text-sm text-[#7A8B8E] mb-6">
               <Link href="/" className="hover:text-[#00767D] transition-colors">Главная</Link>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +126,6 @@ export default function AboutPage() {
               </svg>
               <span className="text-[#2D3A3C] font-medium">О компании</span>
             </nav>
-
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00767D]/10 text-[#00767D] text-sm font-semibold mb-6">
               <span className="w-2 h-2 rounded-full bg-[#00767D] animate-pulse"></span>
               People Growth Technology
@@ -134,36 +159,158 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* History Section */}
+      {/* Founder Letter */}
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex justify-center mb-10 scroll-fade-in">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F0BB1E]/10 text-[#D4A017] text-sm font-semibold">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Слово основателя
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-5 gap-10 md:gap-14 items-start">
+              {/* Photo + name */}
+              <div className="md:col-span-2 scroll-fade-in">
+                <div className="relative">
+                  <div className="absolute -inset-3 bg-gradient-to-br from-[#00767D]/15 to-[#F0BB1E]/15 rounded-3xl blur-2xl"></div>
+                  <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-xl">
+                    <Image
+                      src="/images/founder.jpg"
+                      alt="Гани Абадан — основатель Abadan & Co."
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      priority
+                    />
+                  </div>
+                  <div className="mt-4 text-center">
+                    <p className="text-xl font-bold text-[#2D3A3C]">Гани Абадан</p>
+                    <p className="text-[#00767D] font-medium text-sm">Основатель и старший партнёр</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Letter */}
+              <div className="md:col-span-3 scroll-fade-in scroll-delay-1">
+                <div className="text-[#546569] text-lg leading-relaxed space-y-5">
+                  <p className="text-[#2D3A3C] text-xl sm:text-2xl font-semibold leading-snug">
+                    Уважаемые коллеги,
+                  </p>
+                  <p>
+                    Меня зовут Гани Абадан, я основатель и старший партнер компании Abadan & Company.
+                    За более чем 10 лет работы в корпоративном обучении мы прошли путь от небольшого
+                    тренингового центра до одной из ведущих компаний в Казахстане по развитию персонала.
+                  </p>
+                  <p>
+                    Я обращаюсь к вам лично, потому что знаю, с какими вызовами вы сталкиваетесь каждый день:
+                    поиск квалифицированных тренеров, обоснование бюджетов на обучение перед руководством,
+                    измерение реальной отдачи от инвестиций в людей. Я хочу рассказать, почему{" "}
+                    <strong className="text-[#2D3A3C]">359 компаний</strong> уже выбрали нас в качестве партнёра.
+                  </p>
+                  <p>
+                    Наш принцип прост:{" "}
+                    <strong className="text-[#2D3A3C]">мы не «проводим тренинги» — мы решаем бизнес-задачи
+                    через развитие команд</strong>. Каждая наша программа — это 80% практики на реальных кейсах
+                    вашей компании. Не абстрактные теории, а конкретные навыки, которые сотрудники применяют
+                    уже на следующий день.
+                  </p>
+                  <p>
+                    За годы работы мы собрали базу из{" "}
+                    <strong className="text-[#2D3A3C]">более 200 экспертов-практиков</strong> в самых разных
+                    областях — от нефтегазовой отрасли и промышленной безопасности до HR-менеджмента и
+                    искусственного интеллекта.
+                  </p>
+                  <p>
+                    Я лично гарантирую качество каждой программы. Если результат не оправдает ваших
+                    ожиданий — мы проведём повторное занятие за наш счёт. Буду рад обсудить, как мы можем
+                    помочь именно вашей компании.
+                  </p>
+
+                  {/* Signature */}
+                  <div className="pt-4">
+                    <p className="text-[#2D3A3C] text-base mb-4">С уважением и теплотой,</p>
+                    <div className="mb-3">
+                      <div className="w-48 h-20 relative">
+                        <svg viewBox="0 0 200 80" className="w-full h-full text-[#2D3A3C]/70">
+                          <path
+                            d="M10 55 Q25 15 45 40 T80 30 Q95 25 110 45 T140 35 Q155 30 170 50 L190 45"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M30 60 Q50 55 70 62 T110 58"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="text-lg font-bold text-[#2D3A3C]">Гани Абадан</p>
+                    <p className="text-[#7A8B8E] text-sm mb-3">Abadan & Company</p>
+                    <div className="flex flex-wrap gap-4 text-sm text-[#546569]">
+                      <a href="tel:+87019188838" className="flex items-center gap-1.5 hover:text-[#00767D] transition-colors">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        +7 701 918-88-38
+                      </a>
+                      <a href="mailto:gani@abadan.kz" className="flex items-center gap-1.5 hover:text-[#00767D] transition-colors">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        gani@abadan.kz
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Advantages Section */}
+      <section className="py-16 sm:py-20 bg-[#F8FAFA]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-8 text-center">
-              С 2015 года мы <span className="text-gradient-primary">меняем подход</span> к обучению
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#2D3A3C] mb-8 scroll-fade-in">
+              Вот что конкретно мы даём нашим партнёрам:
             </h2>
-            <div className="prose prose-lg max-w-none text-[#546569]">
-              <p className="text-lg leading-relaxed mb-6">
-                Мы начинали как классический тренинговый центр, но быстро поняли:
-                недостаточно просто «провести тренинг». Нужно решать бизнес-задачи.
-              </p>
-              <p className="text-lg leading-relaxed mb-6">
-                Сегодня Abadan & Co. — это IT-компания в сфере корпоративного обучения.
-                Мы разрабатываем собственные технологии, которые делают обучение
-                эффективнее, измеримее и доступнее.
-              </p>
-              <p className="text-lg leading-relaxed">
-                Наша миссия — помогать компаниям расти через развитие их главного
-                актива — людей.
-              </p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {advantages.map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex gap-4 p-5 rounded-xl bg-white border border-[#00767D]/8 scroll-fade-in scroll-delay-${(index % 3) + 1}`}
+                >
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center mt-0.5">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[#2D3A3C] text-base mb-1">{item.title}</p>
+                    <p className="text-[#546569] text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* PGT Section */}
-      <section className="py-16 sm:py-20 bg-[#F8FAFA]">
+      <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 scroll-fade-in">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-4">
               People Growth Technology
             </h2>
@@ -176,7 +323,7 @@ export default function AboutPage() {
             {pgtBlocks.map((block, index) => (
               <div
                 key={index}
-                className={`relative p-8 rounded-2xl ${
+                className={`relative p-8 rounded-2xl scroll-fade-in scroll-delay-${index + 1} ${
                   block.color === "gold"
                     ? "bg-gradient-to-br from-[#F0BB1E]/10 to-[#F0BB1E]/5 border border-[#F0BB1E]/20"
                     : "bg-white border border-[#00767D]/10 shadow-sm"
@@ -214,9 +361,9 @@ export default function AboutPage() {
       </section>
 
       {/* Hybrid Model Section */}
-      <section className="py-16 sm:py-20">
+      <section className="py-16 sm:py-20 bg-[#F8FAFA]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 scroll-fade-in">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-4">
               Гибридная модель <span className="text-gradient-gold">обучения</span>
             </h2>
@@ -229,7 +376,7 @@ export default function AboutPage() {
             {hybridFormats.map((format, index) => (
               <div
                 key={index}
-                className={`p-6 rounded-2xl ${
+                className={`p-6 rounded-2xl scroll-fade-in scroll-delay-${index + 1} ${
                   format.highlight
                     ? "bg-gradient-to-br from-[#00767D] to-[#006D77] text-white"
                     : "bg-white border border-[#00767D]/10 shadow-sm"
@@ -267,98 +414,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder Section */}
-      <section className="py-16 sm:py-20 bg-[#F8FAFA]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Photo */}
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-[#00767D]/20 to-[#F0BB1E]/20 rounded-3xl blur-2xl"></div>
-                <div className="relative rounded-2xl overflow-hidden aspect-[3/4]">
-                  <Image
-                    src="/images/founder.jpg"
-                    alt="Гани Абадан — основатель Abadan & Co."
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-              </div>
-
-              {/* Info */}
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F0BB1E]/10 text-[#D4A017] text-sm font-semibold mb-4">
-                  Основатель
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-4">
-                  Гани Абадан
-                </h2>
-                <p className="text-[#00767D] font-medium mb-6">
-                  Старший партнер Abadan & Company
-                </p>
-
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-[#00767D]/10 flex items-center justify-center text-[#00767D]">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <span className="text-[#546569]">15+ лет тренерского опыта</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-[#00767D]/10 flex items-center justify-center text-[#00767D]">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <span className="text-[#546569]">50,000+ обученных специалистов</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-[#00767D]/10 flex items-center justify-center text-[#00767D]">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
-                      </svg>
-                    </div>
-                    <span className="text-[#546569]">359 корпоративных клиентов</span>
-                  </div>
-                </div>
-
-                <blockquote className="border-l-4 border-[#F0BB1E] pl-4 py-2 mb-8">
-                  <p className="text-[#2D3A3C] italic text-lg">
-                    «Мы не "проводим тренинги" — мы решаем бизнес-задачи через развитие команд»
-                  </p>
-                </blockquote>
-
-                <a
-                  href="https://abadangani.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#2D3A3C] text-white font-semibold rounded-xl hover:bg-[#1a2426] transition-colors"
-                >
-                  Персональный сайт
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center scroll-fade-in">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-6">
               Готовы развивать свою команду?
             </h2>
             <p className="text-xl text-[#546569] mb-8">
               Получите бесплатную консультацию и коммерческое предложение
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Link
                 href="/#contact"
                 className="px-8 py-4 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-bold rounded-xl hover:shadow-lg hover:shadow-[#F0BB1E]/20 transition-all text-center"
