@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useAnimationFrame } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -295,8 +296,11 @@ function OilPumpJack() {
             <rect x="330" y="225" width="50" height="33" rx={5} fill="url(#darkMetal)" />
             <rect x="333" y="228" width="44" height="27" rx={3} fill="#2D3A3C" />
 
+            {/* Crank shaft bearing ring */}
+            <circle cx="355" cy="222" r="14" fill="none" stroke="#5CB8BD" strokeWidth={2} opacity={0.4} />
+            <circle cx="355" cy="222" r="18" fill="none" stroke="#00767D" strokeWidth={1} opacity={0.2} />
             {/* Crank shaft center */}
-            <circle cx="355" cy="222" r="8" fill="#0d2628" stroke="#00767D" strokeWidth={2} />
+            <circle cx="355" cy="222" r="8" fill="#0d2628" stroke="#F0BB1E" strokeWidth={2.5} />
 
             {/* Rotating crank arm + counterweight */}
             <motion.g
@@ -312,10 +316,17 @@ function OilPumpJack() {
               <circle cx="355" cy="182" r="5" fill="#F0BB1E" />
             </motion.g>
 
+            {/* Gearbox support legs */}
+            <rect x="335" y="258" width="8" height="10" rx={1} fill="url(#metalGrad)" opacity={0.6} />
+            <rect x="367" y="258" width="8" height="10" rx={1} fill="url(#metalGrad)" opacity={0.6} />
+
             {/* Motor */}
             <rect x="390" y="238" width="30" height="20" rx={3} fill="url(#metalGrad)" opacity={0.7} />
+            {/* Motor flywheel */}
+            <circle cx="390" cy="248" r="6" fill="none" stroke="#009BA3" strokeWidth={1.5} opacity={0.5} />
             {/* Belt/drive line */}
-            <line x1="380" y1="240" x2="405" y2="248" stroke="#009BA3" strokeWidth={1} opacity={0.4} />
+            <line x1="384" y1="248" x2="380" y2="240" stroke="#009BA3" strokeWidth={1.5} opacity={0.4} />
+            <line x1="380" y1="240" x2="355" y2="234" stroke="#009BA3" strokeWidth={1} opacity={0.3} strokeDasharray="3,2" />
 
             {/* ── Pitman arm — connects crank pin to beam ── */}
             <PitmanArm
@@ -343,13 +354,13 @@ function OilPumpJack() {
           {programAreas.map((area, index) => (
             <div
               key={index}
-              className={`p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm scroll-fade-in scroll-delay-${(index % 3) + 1} hover:bg-white/10 transition-colors`}
+              className={`p-6 rounded-2xl bg-white/[0.12] border border-white/20 backdrop-blur-sm scroll-fade-in scroll-delay-${(index % 3) + 1} hover:bg-white/[0.18] transition-colors`}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mb-4">
                 {area.icon}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">{area.title}</h3>
-              <p className="text-white/80 text-sm leading-relaxed">{area.desc}</p>
+              <p className="text-white/90 text-sm leading-relaxed">{area.desc}</p>
             </div>
           ))}
         </div>
@@ -491,11 +502,17 @@ function StickyCTA() {
   );
 }
 
-/* ── Client logos ── */
+/* ── Client logos — oil & gas companies with real images ── */
 
-const CLIENT_LOGOS = [
-  "КазМунайГаз", "Тенгизшевройл", "CNPC", "Карачаганак",
-  "КазТрансОйл", "PetroKazakhstan", "Мангистаумунайгаз", "Актобемунайгаз",
+const OG_CLIENT_LOGOS = [
+  { name: "КазМунайГаз", logo: "/images/clients/kmg.png" },
+  { name: "КазРосГаз", logo: "/images/clients/kazrosgaz.png" },
+  { name: "ПетроКазахстан", logo: "/images/clients/petro.png" },
+  { name: "Кашаган", logo: "/images/clients/kashagan.png" },
+  { name: "ММГ", logo: "/images/clients/mmg.png" },
+  { name: "КБМ", logo: "/images/clients/kbm.png" },
+  { name: "Самрук-Казына", logo: "/images/clients/samruk.png" },
+  { name: "Kazminerals", logo: "/images/clients/kazminerals.png" },
 ];
 
 /* ── Main Page ── */
@@ -623,15 +640,30 @@ export default function NeftegazPage() {
               ))}
             </div>
 
-            {/* Client logos — social proof */}
+            {/* Client logos — scrolling marquee with real images */}
             <div className="mt-14 scroll-fade-in scroll-delay-3">
-              <p className="text-white/50 text-xs uppercase tracking-widest mb-5 text-center">Нам доверяют</p>
-              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
-                {CLIENT_LOGOS.map((name) => (
-                  <span key={name} className="text-white/30 text-sm font-semibold hover:text-white/60 transition-colors">
-                    {name}
-                  </span>
-                ))}
+              <p className="text-white/80 text-xs uppercase tracking-widest mb-6 text-center font-semibold">Нам доверяют</p>
+              <div className="overflow-hidden">
+                <motion.div
+                  className="flex items-center gap-5"
+                  animate={{ x: [0, -148 * OG_CLIENT_LOGOS.length] }}
+                  transition={{ x: { repeat: Infinity, repeatType: "loop", duration: 25, ease: "linear" } }}
+                >
+                  {[...OG_CLIENT_LOGOS, ...OG_CLIENT_LOGOS].map((client, i) => (
+                    <div
+                      key={`${client.name}-${i}`}
+                      className="flex-shrink-0 flex items-center justify-center px-4 py-3 bg-white/10 backdrop-blur-sm rounded-xl min-w-[120px] h-[56px] border border-white/10"
+                    >
+                      <Image
+                        src={client.logo}
+                        alt={client.name}
+                        width={90}
+                        height={40}
+                        className="object-contain max-h-8 brightness-0 invert opacity-80"
+                      />
+                    </div>
+                  ))}
+                </motion.div>
               </div>
             </div>
           </div>
