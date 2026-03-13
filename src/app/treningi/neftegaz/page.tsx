@@ -92,6 +92,34 @@ const programAreas = [
   },
 ];
 
+/* ── Pitman arm — imperatively updates SVG line attributes from motion values ── */
+
+import type { MotionValue } from "framer-motion";
+
+function PitmanArm({ x1, y1, y2 }: { x1: MotionValue<number>; y1: MotionValue<number>; y2: MotionValue<number> }) {
+  const lineRef = useRef<SVGLineElement>(null);
+
+  useEffect(() => {
+    const unsubs = [
+      x1.on("change", (v) => lineRef.current?.setAttribute("x1", String(v))),
+      y1.on("change", (v) => lineRef.current?.setAttribute("y1", String(v))),
+      y2.on("change", (v) => lineRef.current?.setAttribute("y2", String(v))),
+    ];
+    return () => unsubs.forEach((u) => u());
+  }, [x1, y1, y2]);
+
+  return (
+    <line
+      ref={lineRef}
+      x1={355} y1={182} x2={300} y2={137}
+      stroke="#5CB8BD"
+      strokeWidth={5}
+      strokeLinecap="round"
+      opacity={0.9}
+    />
+  );
+}
+
 /* ── Oil Pump Jack Animation — continuous mechanical motion ── */
 
 function OilPumpJack() {
@@ -111,40 +139,64 @@ function OilPumpJack() {
     return () => obs.disconnect();
   }, []);
 
-  // Continuous crank rotation — 5 seconds per full revolution (realistic speed)
+  // Continuous crank rotation — 6 seconds per revolution (realistic 10 strokes/min)
   useAnimationFrame((t) => {
     if (!isVisible) return;
-    crankAngle.set((t / 5000) * 360 % 360);
+    crankAngle.set((t / 6000) * 360 % 360);
   });
 
-  // Derive walking beam angle from crank rotation
+  // Crank geometry: center (355, 222), radius 40
+  const CRANK_CX = 355, CRANK_CY = 222, CRANK_R = 40;
+  const PIVOT_X = 205, PIVOT_Y = 137;
+  const BEAM_RIGHT = 300; // pitman attaches here on the beam
+  const HORSEHEAD_X = 62; // where the rod hangs
+
+  // Walking beam angle from crank — direct geometry
   const beamAngle = useTransform(crankAngle, (angle) => {
     const rad = (angle * Math.PI) / 180;
-    const crankTipY = Math.sin(rad) * 35; // crank radius
-    return Math.atan2(crankTipY, 130) * (180 / Math.PI); // 130 = lever arm distance
+    const crankTipY = Math.sin(rad) * CRANK_R;
+    return Math.atan2(crankTipY, BEAM_RIGHT - PIVOT_X) * (180 / Math.PI);
   });
 
-  // Sucker rod vertical displacement (horsehead end, amplified)
-  const rodY = useTransform(beamAngle, (angle) => {
-    return Math.sin((angle * Math.PI) / 180) * 120;
+  // Sucker rod: leverage ratio amplifies horsehead movement
+  // Lever = (PIVOT_X - HORSEHEAD_X) / (BEAM_RIGHT - PIVOT_X) ≈ 1.5
+  const rodY = useTransform(crankAngle, (angle) => {
+    const rad = (angle * Math.PI) / 180;
+    const crankTipY = Math.sin(rad) * CRANK_R;
+    return -crankTipY * 1.5; // negative = opposite direction, amplified by lever
   });
 
-  // Oil drop cycle tied to crank
+  // Pitman arm: connects crank pin to beam attachment
+  const pitmanX1 = useTransform(crankAngle, (a) => {
+    return CRANK_CX + CRANK_R * Math.sin((a * Math.PI) / 180);
+  });
+  const pitmanY1 = useTransform(crankAngle, (a) => {
+    return CRANK_CY - CRANK_R * Math.cos((a * Math.PI) / 180);
+  });
+  const pitmanY2 = useTransform(beamAngle, (a) => {
+    return PIVOT_Y + (BEAM_RIGHT - PIVOT_X) * Math.sin((a * Math.PI) / 180);
+  });
+
+  // Oil drop cycle tied to crank (drops appear on upstroke)
   const dropOpacity1 = useTransform(crankAngle, (a) => {
-    const cycle = (a % 360) / 360;
-    return cycle > 0.1 && cycle < 0.35 ? Math.sin((cycle - 0.1) / 0.25 * Math.PI) : 0;
+    const rad = (a * Math.PI) / 180;
+    const upstroke = Math.sin(rad);
+    return upstroke > 0.3 ? (upstroke - 0.3) / 0.7 : 0;
   });
   const dropOpacity2 = useTransform(crankAngle, (a) => {
-    const cycle = (a % 360) / 360;
-    return cycle > 0.4 && cycle < 0.65 ? Math.sin((cycle - 0.4) / 0.25 * Math.PI) : 0;
+    const rad = (a * Math.PI) / 180;
+    const upstroke = Math.sin(rad);
+    return upstroke > 0.6 ? (upstroke - 0.6) / 0.4 * 0.7 : 0;
   });
   const dropY1 = useTransform(crankAngle, (a) => {
-    const cycle = (a % 360) / 360;
-    return 248 + cycle * 15;
+    const rad = (a * Math.PI) / 180;
+    const phase = (Math.sin(rad) + 1) / 2;
+    return 260 + phase * 12;
   });
   const dropY2 = useTransform(crankAngle, (a) => {
-    const cycle = (a % 360) / 360;
-    return 250 + cycle * 12;
+    const rad = (a * Math.PI) / 180;
+    const phase = (Math.sin(rad - 1) + 1) / 2;
+    return 262 + phase * 10;
   });
 
   return (
@@ -168,7 +220,7 @@ function OilPumpJack() {
         </div>
 
         {/* Pump Jack SVG — realistic proportions */}
-        <div className="max-w-md mx-auto mb-16">
+        <div className="max-w-lg mx-auto mb-16">
           <svg viewBox="0 0 500 300" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
             <defs>
               <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -252,18 +304,23 @@ function OilPumpJack() {
               transformTemplate={({ rotate }) => `rotate(${rotate} 355 222)`}
             >
               {/* Crank arm */}
-              <rect x="350" y="182" width="10" height="80" rx={3} fill="url(#metalGrad)" />
+              <rect x="350" y="178" width="10" height="88" rx={3} fill="url(#metalGrad)" />
               {/* Counterweight (heavy block at bottom) */}
-              <rect x="338" y="250" width="34" height="16" rx={4} fill="#546569" />
-              <rect x="341" y="253" width="28" height="10" rx={3} fill="#3d5153" />
-              {/* Crank pin (top) */}
-              <circle cx="355" cy="185" r="4" fill="#F0BB1E" />
+              <rect x="336" y="254" width="38" height="18" rx={4} fill="#546569" />
+              <rect x="339" y="257" width="32" height="12" rx={3} fill="#3d5153" />
+              {/* Crank pin (top — where pitman connects) */}
+              <circle cx="355" cy="182" r="5" fill="#F0BB1E" />
             </motion.g>
 
             {/* Motor */}
             <rect x="390" y="238" width="30" height="20" rx={3} fill="url(#metalGrad)" opacity={0.7} />
             {/* Belt/drive line */}
             <line x1="380" y1="240" x2="405" y2="248" stroke="#009BA3" strokeWidth={1} opacity={0.4} />
+
+            {/* ── Pitman arm — connects crank pin to beam ── */}
+            <PitmanArm
+              x1={pitmanX1} y1={pitmanY1} y2={pitmanY2}
+            />
 
             {/* ── Oil drops from wellhead ── */}
             <motion.circle
@@ -292,7 +349,7 @@ function OilPumpJack() {
                 {area.icon}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">{area.title}</h3>
-              <p className="text-white/70 text-sm leading-relaxed">{area.desc}</p>
+              <p className="text-white/80 text-sm leading-relaxed">{area.desc}</p>
             </div>
           ))}
         </div>
@@ -463,7 +520,7 @@ export default function NeftegazPage() {
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-2 text-sm text-white/70 mb-8 scroll-fade-in">
-              <Link href="/" className="hover:text-white/70 transition-colors">
+              <Link href="/" className="hover:text-white transition-colors">
                 Главная
               </Link>
               <span>/</span>
@@ -486,7 +543,7 @@ export default function NeftegazPage() {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/70 mb-10 max-w-2xl scroll-fade-in scroll-delay-2">
+            <p className="text-lg sm:text-xl text-white/90 mb-10 max-w-2xl scroll-fade-in scroll-delay-2">
               От бурения до переработки — практические курсы от экспертов с опытом
               работы на крупнейших месторождениях Казахстана
             </p>
@@ -512,7 +569,7 @@ export default function NeftegazPage() {
                   <div className="text-2xl sm:text-3xl font-extrabold text-[#F0BB1E]">
                     {stat.value}
                   </div>
-                  <div className="text-white/70 text-sm">{stat.label}</div>
+                  <div className="text-white/80 text-sm">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -592,7 +649,7 @@ export default function NeftegazPage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-4">
                 Результат, который <span className="text-gradient-gold">измерим</span>
               </h2>
-              <p className="text-lg text-[#546569]">
+              <p className="text-lg text-[#3d5153]">
                 Рост компетенций = рост производственных показателей
               </p>
             </div>
@@ -610,7 +667,7 @@ export default function NeftegazPage() {
                     {item.value}
                   </div>
                   <p className="text-[#2D3A3C] font-semibold mb-1">{item.label}</p>
-                  <p className="text-[#546569] text-sm">{item.desc}</p>
+                  <p className="text-[#3d5153] text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -629,7 +686,7 @@ export default function NeftegazPage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-4">
                 Расписание <span className="text-gradient-primary">курсов</span>
               </h2>
-              <p className="text-lg text-[#546569]">
+              <p className="text-lg text-[#3d5153]">
                 {neftegazTrainings.length} курсов по нефтегазовой тематике
               </p>
             </div>
@@ -644,7 +701,7 @@ export default function NeftegazPage() {
                     <h3 className="font-semibold text-[#2D3A3C] text-sm sm:text-base">
                       {training.name}
                     </h3>
-                    <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-[#7A8B8E]">
+                    <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-[#546569]">
                       <span>{training.date}</span>
                       <span>{training.hours} ч.</span>
                     </div>
@@ -654,7 +711,7 @@ export default function NeftegazPage() {
                       <div className="text-sm font-bold text-[#2D3A3C]">
                         {training.priceOffline.toLocaleString("ru-RU")} ₸
                       </div>
-                      <div className="text-xs text-[#7A8B8E]">офлайн</div>
+                      <div className="text-xs text-[#546569]">офлайн</div>
                     </div>
                     <Link
                       href="/schedule"
@@ -697,7 +754,7 @@ export default function NeftegazPage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
                 Закажите обучение для вашей команды
               </h2>
-              <p className="text-lg text-white/70">
+              <p className="text-lg text-white/80">
                 Подберём программу под вашу специфику — от разведки до переработки
               </p>
             </div>
@@ -710,7 +767,7 @@ export default function NeftegazPage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-2">Заявка отправлена</h3>
-                <p className="text-white/70">Мы свяжемся с вами в ближайшее время</p>
+                <p className="text-white/80">Мы свяжемся с вами в ближайшее время</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 scroll-fade-in scroll-delay-1">
