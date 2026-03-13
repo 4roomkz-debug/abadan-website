@@ -22,7 +22,7 @@ export const metadata: Metadata = {
       "Бесплатный бизнес-завтрак для HR-директоров. Узнайте, как AI меняет найм и обучение. 3 спикера, живые кейсы, демо ibirAi.",
     type: "website",
     locale: "ru_RU",
-    url: "https://www.abadan.kz/events/business-breakfast-ai-hr",
+    url: "https://abadan.kz/events/business-breakfast-ai-hr",
     siteName: "Abadan & Co.",
     images: [
       {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://www.abadan.kz/events/business-breakfast-ai-hr",
+    canonical: "https://abadan.kz/events/business-breakfast-ai-hr",
   },
 };
 
@@ -69,7 +69,7 @@ function EventJsonLd() {
     organizer: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://www.abadan.kz",
+      url: "https://abadan.kz",
     },
     performer: [
       { "@type": "Person", name: "Диас Жумагалиев", jobTitle: "AI и рекрутинг эксперт" },
@@ -81,10 +81,10 @@ function EventJsonLd() {
       price: "0",
       priceCurrency: "KZT",
       availability: "https://schema.org/InStock",
-      url: "https://www.abadan.kz/events/business-breakfast-ai-hr",
+      url: "https://abadan.kz/events/business-breakfast-ai-hr",
     },
-    image: "https://www.abadan.kz/og-image.png",
-    url: "https://www.abadan.kz/events/business-breakfast-ai-hr",
+    image: "https://abadan.kz/og-image.png",
+    url: "https://abadan.kz/events/business-breakfast-ai-hr",
   };
 
   return (

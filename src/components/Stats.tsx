@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function useCountUp(end: number, duration: number = 2000, start: boolean = false) {
   const [count, setCount] = useState(0);
@@ -42,14 +42,12 @@ function formatNumber(num: number, format: string): string {
 
 function AnimatedStat({
   targetNumber,
-  label,
   suffix,
   format,
   isVisible,
   delay
 }: {
   targetNumber: number;
-  label: string;
   suffix: string;
   format: string;
   isVisible: boolean;
@@ -84,27 +82,24 @@ export default function Stats() {
     { number: 2015, label: "год первого результата", suffix: "", format: "plain" }
   ];
 
-  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    const [entry] = entries;
-    if (entry.isIntersecting) {
-      setIsVisible(true);
-    }
-  }, []);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(observerCallback, { threshold: 0.3 });
     const currentRef = sectionRef.current;
+    if (!currentRef) return;
 
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(currentRef);
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [observerCallback]);
+    observer.observe(currentRef);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section ref={sectionRef} className="relative py-24 sm:py-32 section-subtle">
@@ -145,7 +140,6 @@ export default function Stats() {
               >
                 <AnimatedStat
                   targetNumber={stat.number}
-                  label={stat.label}
                   suffix={stat.suffix}
                   format={stat.format}
                   isVisible={isVisible}

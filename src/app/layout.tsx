@@ -14,7 +14,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.abadan.kz"),
+  metadataBase: new URL("https://abadan.kz"),
   title: {
     default: "Abadan & Co. — Корпоративное обучение и бизнес-тренинги в Казахстане",
     template: "%s | Abadan & Co."
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     description: "Обучение, которое меняет показатели. 80% практики на ваших кейсах. 200+ экспертов, 359 компаний, 10+ лет на рынке.",
     type: "website",
     locale: "ru_RU",
-    url: "https://www.abadan.kz",
+    url: "https://abadan.kz",
     siteName: "Abadan & Co.",
     images: [
       {
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://www.abadan.kz",
+    canonical: "https://abadan.kz",
   },
   verification: {
     // Добавьте сюда коды верификации после регистрации в поисковиках

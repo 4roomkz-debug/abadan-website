@@ -565,7 +565,7 @@ export const EVENTS = {
     howToGet: "Угол Абая и Байтурсынова, парковка на территории БЦ",
     price: "Бесплатно",
     seats: "25-30 мест",
-    registrationUrl: "https://www.abadan.kz/events/business-breakfast-ai-hr",
+    registrationUrl: "https://abadan.kz/events/business-breakfast-ai-hr",
 
     targetAudience: [
       "HR-директора",

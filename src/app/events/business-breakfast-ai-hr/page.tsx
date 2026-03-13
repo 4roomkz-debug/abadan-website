@@ -76,7 +76,7 @@ function generateGoogleCalendarUrl() {
     "• ИИ-агенты для HR: когда убрать человека\n" +
     "• Демо ibirAi: микрообучение в Telegram\n\n" +
     "Спикеры: Диас Жумагалиев, Даниэль Алисов, Гани Абадан\n\n" +
-    "Регистрация: https://www.abadan.kz/events/business-breakfast-ai-hr"
+    "Регистрация: https://abadan.kz/events/business-breakfast-ai-hr"
   );
   const location = encodeURIComponent("г. Алматы, ул. Абая 44а, Променад бизнес-парк, конференц-зал «Орда»");
   // Local time format (without Z) + timezone parameter for Almaty
@@ -89,7 +89,7 @@ function generateGoogleCalendarUrl() {
 
 // LinkedIn Share URL generator
 function generateLinkedInShareUrl() {
-  const url = encodeURIComponent("https://www.abadan.kz/events/business-breakfast-ai-hr");
+  const url = encodeURIComponent("https://abadan.kz/events/business-breakfast-ai-hr");
   return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
 }
 
