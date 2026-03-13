@@ -461,6 +461,45 @@ function OilFlask() {
 
 /* ── Main Page ── */
 
+/* ── Sticky CTA — appears after hero ── */
+
+function StickyCTA() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
+        show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+      }`}
+    >
+      <a
+        href="#form"
+        className="gold-button shadow-2xl shadow-[#F0BB1E]/20 flex items-center gap-2 text-sm sm:text-base"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        Заказать обучение
+      </a>
+    </div>
+  );
+}
+
+/* ── Client logos ── */
+
+const CLIENT_LOGOS = [
+  "КазМунайГаз", "Тенгизшевройл", "CNPC", "Карачаганак",
+  "КазТрансОйл", "PetroKazakhstan", "Мангистаумунайгаз", "Актобемунайгаз",
+];
+
+/* ── Main Page ── */
+
 export default function NeftegazPage() {
   const [showAll, setShowAll] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -503,15 +542,25 @@ export default function NeftegazPage() {
         ref={heroRef}
         className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]"
       >
-        {/* Parallax ambient glows */}
-        <motion.div
-          className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00767D]/10 rounded-full blur-[120px]"
-          style={{ y: heroY }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F0BB1E]/5 rounded-full blur-[100px]"
-          style={{ y: useTransform(heroScroll, [0, 1], [0, 80]) }}
-        />
+        {/* Animated gradient mesh — Stripe-style living background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-[#00767D]/15 rounded-full blur-[150px]"
+            style={{ y: heroY }}
+            animate={{ x: [0, 30, -20, 0], y: [0, -40, 20, 0] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-[#F0BB1E]/8 rounded-full blur-[130px]"
+            animate={{ x: [0, -30, 40, 0], y: [0, 30, -20, 0] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#009BA3]/8 rounded-full blur-[120px]"
+            animate={{ scale: [1, 1.2, 0.9, 1], rotate: [0, 90, 180, 360] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
 
         <motion.div
           className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
@@ -573,69 +622,80 @@ export default function NeftegazPage() {
                 </div>
               ))}
             </div>
+
+            {/* Client logos — social proof */}
+            <div className="mt-14 scroll-fade-in scroll-delay-3">
+              <p className="text-white/50 text-xs uppercase tracking-widest mb-5 text-center">Нам доверяют</p>
+              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+                {CLIENT_LOGOS.map((name) => (
+                  <span key={name} className="text-white/30 text-sm font-semibold hover:text-white/60 transition-colors">
+                    {name}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.div>
       </section>
 
-      {/* ═══ PAIN POINTS ═══ */}
-      <section className="py-16 sm:py-24 section-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-4">
-                Знакомые <span className="text-gradient-primary">проблемы?</span>
+      {/* ═══ PAIN POINTS — Split Screen ═══ */}
+      <section className="py-0 overflow-hidden">
+        <div className="grid lg:grid-cols-2">
+          {/* Left — Problems (dark) */}
+          <div className="bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] p-10 sm:p-16 lg:p-20">
+            <div className="max-w-lg ml-auto">
+              <p className="text-red-400/80 text-xs uppercase tracking-widest font-semibold mb-4 scroll-fade-in">Знакомые проблемы?</p>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-10 scroll-fade-in scroll-delay-1">
+                Без системного обучения <span className="text-red-400">теряете</span>
               </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  problem: "Сотрудники учатся по устаревшим методичкам",
-                  solution: "Актуальные технологии и стандарты отрасли",
-                },
-                {
-                  problem: "Тренер — теоретик без опыта на производстве",
-                  solution: "200+ экспертов-практиков с месторождений",
-                },
-                {
-                  problem: "После обучения ничего не меняется",
-                  solution: "80% практики на реальных кейсах вашей компании",
-                },
-                {
-                  problem: "Сложно организовать обучение для вахтовиков",
-                  solution: "Гибкие форматы: офлайн, онлайн, модульное",
-                },
-                {
-                  problem: "Нет документов для аудита и сертификации",
-                  solution: "Сертификаты и акты — в день завершения",
-                },
-                {
-                  problem: "Один курс не покрывает все специальности",
-                  solution: "65+ курсов: от бурения до переработки",
-                },
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className={`glass-card p-6 scroll-fade-in scroll-delay-${(index % 3) + 1}`}
-                >
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-3 h-3 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+              <div className="space-y-6">
+                {[
+                  "Сотрудники учатся по устаревшим методичкам",
+                  "Тренер — теоретик без опыта на производстве",
+                  "После обучения ничего не меняется",
+                  "Сложно организовать обучение для вахтовиков",
+                  "Нет документов для аудита и сертификации",
+                  "Один курс не покрывает все специальности",
+                ].map((problem, i) => (
+                  <div key={i} className={`flex items-start gap-4 scroll-fade-in-left scroll-delay-${(i % 3) + 1}`}>
+                    <div className="w-7 h-7 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <p className="text-[#2D3A3C] font-medium text-sm">{item.problem}</p>
+                    <p className="text-white/80 font-medium">{problem}</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[#00767D]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-3 h-3 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right — Solutions (light) */}
+          <div className="bg-[#F8FAFA] p-10 sm:p-16 lg:p-20">
+            <div className="max-w-lg">
+              <p className="text-[#00767D] text-xs uppercase tracking-widest font-semibold mb-4 scroll-fade-in">Наш подход</p>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-10 scroll-fade-in scroll-delay-1">
+                С нами вы <span className="text-gradient-primary">получаете</span>
+              </h2>
+              <div className="space-y-6">
+                {[
+                  "Актуальные технологии и стандарты отрасли",
+                  "200+ экспертов-практиков с месторождений",
+                  "80% практики на реальных кейсах вашей компании",
+                  "Гибкие форматы: офлайн, онлайн, модульное",
+                  "Сертификаты и акты — в день завершения",
+                  "65+ курсов: от бурения до переработки",
+                ].map((solution, i) => (
+                  <div key={i} className={`flex items-start gap-4 scroll-fade-in-right scroll-delay-${(i % 3) + 1}`}>
+                    <div className="w-7 h-7 rounded-full bg-[#00767D]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3.5 h-3.5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <p className="text-[#00767D] font-medium text-sm">{item.solution}</p>
+                    <p className="text-[#2D3A3C] font-medium">{solution}</p>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -675,7 +735,32 @@ export default function NeftegazPage() {
         </div>
       </section>
 
-      {/* ═══ PIPELINE ANIMATION + PROGRAM AREAS ═══ */}
+      {/* ═══ TESTIMONIAL ═══ */}
+      <section className="py-16 sm:py-24 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[#00767D]/5 rounded-full blur-[120px]" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-4xl mx-auto text-center scroll-fade-in">
+            {/* Giant quote mark */}
+            <svg className="w-16 h-16 mx-auto mb-8 text-[#F0BB1E]/20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <blockquote className="text-xl sm:text-2xl lg:text-3xl text-white font-medium leading-relaxed mb-8">
+              После внедрения программы обучения от Abadan аварийность на наших объектах снизилась на 40%, а время адаптации новых специалистов сократилось вдвое
+            </blockquote>
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white font-bold text-lg">
+                М
+              </div>
+              <div className="text-left">
+                <p className="text-white font-semibold">Марат Кенжебаев</p>
+                <p className="text-white/60 text-sm">Начальник отдела обучения, нефтесервисная компания</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PUMP JACK + PROGRAM AREAS ═══ */}
       <OilPumpJack />
 
       {/* ═══ SCHEDULE ═══ */}
@@ -807,6 +892,9 @@ export default function NeftegazPage() {
       </section>
 
       <Footer />
+
+      {/* Sticky CTA */}
+      <StickyCTA />
     </div>
   );
 }
