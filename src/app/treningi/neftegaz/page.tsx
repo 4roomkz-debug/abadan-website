@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useAnimationFrame } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SCHEDULE_DATA } from "@/data/schedule";
@@ -92,21 +92,60 @@ const programAreas = [
   },
 ];
 
-/* ── Oil Pump Jack Animation ── */
+/* ── Oil Pump Jack Animation — continuous mechanical motion ── */
 
 function OilPumpJack() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
+  const [isVisible, setIsVisible] = useState(false);
+  const crankAngle = useMotionValue(0);
+
+  // Start animation when section enters viewport
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Continuous crank rotation — 5 seconds per full revolution (realistic speed)
+  useAnimationFrame((t) => {
+    if (!isVisible) return;
+    crankAngle.set((t / 5000) * 360 % 360);
   });
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 40,
-    damping: 15,
+
+  // Derive walking beam angle from crank rotation
+  const beamAngle = useTransform(crankAngle, (angle) => {
+    const rad = (angle * Math.PI) / 180;
+    const crankTipY = Math.sin(rad) * 35; // crank radius
+    return Math.atan2(crankTipY, 130) * (180 / Math.PI); // 130 = lever arm distance
   });
-  // Rocking angle: oscillates as user scrolls
-  const rockAngle = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -18, 5, -18, 5, -10]);
-  const glowOpacity = useTransform(smoothProgress, [0, 0.3, 1], [0, 0.6, 1]);
+
+  // Sucker rod vertical displacement (horsehead end, amplified)
+  const rodY = useTransform(beamAngle, (angle) => {
+    return Math.sin((angle * Math.PI) / 180) * 120;
+  });
+
+  // Oil drop cycle tied to crank
+  const dropOpacity1 = useTransform(crankAngle, (a) => {
+    const cycle = (a % 360) / 360;
+    return cycle > 0.1 && cycle < 0.35 ? Math.sin((cycle - 0.1) / 0.25 * Math.PI) : 0;
+  });
+  const dropOpacity2 = useTransform(crankAngle, (a) => {
+    const cycle = (a % 360) / 360;
+    return cycle > 0.4 && cycle < 0.65 ? Math.sin((cycle - 0.4) / 0.25 * Math.PI) : 0;
+  });
+  const dropY1 = useTransform(crankAngle, (a) => {
+    const cycle = (a % 360) / 360;
+    return 248 + cycle * 15;
+  });
+  const dropY2 = useTransform(crankAngle, (a) => {
+    const cycle = (a % 360) / 360;
+    return 250 + cycle * 12;
+  });
 
   return (
     <div ref={ref} className="relative py-20 sm:py-28 overflow-hidden">
@@ -114,14 +153,8 @@ function OilPumpJack() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0d2628] via-[#1a2e30] to-[#0a1f21]"></div>
 
       {/* Ambient glows */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00767D]/10 rounded-full blur-[150px]"
-        style={{ opacity: glowOpacity }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#F0BB1E]/5 rounded-full blur-[120px]"
-        style={{ opacity: glowOpacity }}
-      />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00767D]/10 rounded-full blur-[150px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#F0BB1E]/5 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
@@ -129,89 +162,122 @@ function OilPumpJack() {
             От <span className="bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] bg-clip-text text-transparent">скважины</span> до{" "}
             <span className="bg-gradient-to-r from-[#00767D] to-[#009BA3] bg-clip-text text-transparent">переработки</span>
           </h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
             Полный цикл обучения для специалистов нефтегазовой отрасли
           </p>
         </div>
 
-        {/* Pump Jack SVG */}
-        <div className="max-w-lg mx-auto mb-16">
-          <svg viewBox="0 0 400 280" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+        {/* Pump Jack SVG — realistic proportions */}
+        <div className="max-w-md mx-auto mb-16">
+          <svg viewBox="0 0 500 300" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
             <defs>
               <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#4A9BA0" />
+                <stop offset="0%" stopColor="#5CB8BD" />
                 <stop offset="100%" stopColor="#00767D" />
               </linearGradient>
-              <linearGradient id="oilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#F0BB1E" />
-                <stop offset="100%" stopColor="#EBB417" />
+              <linearGradient id="darkMetal" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#3d5153" />
+                <stop offset="100%" stopColor="#2D3A3C" />
               </linearGradient>
             </defs>
 
-            {/* Ground line */}
-            <line x1="40" y1="240" x2="360" y2="240" stroke="#00767D" strokeWidth={1} opacity={0.3} />
-            <rect x="40" y="240" width="320" height="30" fill="#00767D" opacity={0.05} rx={2} />
+            {/* Ground */}
+            <rect x="30" y="258" width="440" height="2" fill="#00767D" opacity={0.2} rx={1} />
+            <rect x="30" y="260" width="440" height="35" fill="#00767D" opacity={0.04} rx={4} />
 
-            {/* Base / A-frame support */}
-            <polygon points="180,240 220,240 210,160 190,160" fill="url(#metalGrad)" opacity={0.9} />
-            {/* Cross beam on A-frame */}
-            <rect x="188" y="190" width="24" height="3" fill="#009BA3" rx={1} />
+            {/* ── Fixed elements ── */}
 
-            {/* Pivot point */}
-            <circle cx="200" cy="155" r="6" fill="#1a2e30" stroke="#F0BB1E" strokeWidth={2} />
+            {/* Base platform */}
+            <rect x="170" y="248" width="70" height="10" rx={2} fill="url(#darkMetal)" />
 
-            {/* Rocking beam (the walking beam) — pivots at (200, 155) */}
-            <motion.g style={{ rotate: rockAngle, x: 0, y: 0 }} transformTemplate={({ rotate }) => `rotate(${rotate} 200 155)`}>
+            {/* Samson Post (A-frame) */}
+            <polygon points="185,248 225,248 215,140 195,140" fill="url(#metalGrad)" />
+            {/* Cross braces */}
+            <rect x="193" y="180" width="24" height="3" rx={1} fill="#009BA3" opacity={0.8} />
+            <rect x="196" y="210" width="18" height="2" rx={1} fill="#009BA3" opacity={0.5} />
+
+            {/* Pivot bearing at top of Samson Post */}
+            <circle cx="205" cy="137" r="7" fill="#0d2628" stroke="#F0BB1E" strokeWidth={2.5} />
+
+            {/* ── Walking beam — pivots at (205, 137) ── */}
+            <motion.g
+              style={{ rotate: beamAngle }}
+              transformTemplate={({ rotate }) => `rotate(${rotate} 205 137)`}
+            >
               {/* Main beam */}
-              <rect x="105" y="149" width="200" height="12" rx={3} fill="url(#metalGrad)" />
+              <rect x="65" y="130" width="260" height="14" rx={4} fill="url(#metalGrad)" />
+              {/* Top highlight */}
+              <rect x="65" y="130" width="260" height="4" rx={2} fill="#5CB8BD" opacity={0.3} />
 
-              {/* Horse head (left end) */}
-              <path d="M 105 149 Q 95 149, 92 158 L 92 180 Q 92 185, 97 185 L 103 185 Q 108 185, 108 180 L 108 161" fill="url(#metalGrad)" />
+              {/* Horsehead (left end — curved profile) */}
+              <path
+                d="M 72 130 Q 55 128, 50 140 L 48 170 Q 47 178, 55 180 L 68 180 Q 76 180, 76 172 L 76 144"
+                fill="url(#metalGrad)"
+              />
+              {/* Horsehead arc detail */}
+              <path
+                d="M 55 180 L 55 188 Q 55 192, 60 192 L 65 192 Q 70 192, 70 188 L 70 180"
+                fill="#009BA3"
+              />
 
-              {/* Polished rod (hanging from horse head) */}
-              <rect x="96" y="185" width="4" height="55" fill="#009BA3" opacity={0.8} />
-
-              {/* Counterweight (right end) */}
-              <rect x="280" y="145" width="30" height="20" rx={3} fill="#546569" />
-              <rect x="283" y="148" width="24" height="14" rx={2} fill="#3d5153" />
+              {/* Pitman arm attachment point (right side of beam) */}
+              <circle cx="300" cy="137" r="4" fill="#0d2628" stroke="#009BA3" strokeWidth={1.5} />
             </motion.g>
 
-            {/* Motor housing (right side, fixed) */}
-            <rect x="240" y="210" width="40" height="30" rx={4} fill="url(#metalGrad)" opacity={0.7} />
-            <circle cx="260" cy="225" r="8" fill="#1a2e30" stroke="#00767D" strokeWidth={1.5} />
-            <circle cx="260" cy="225" r="3" fill="#F0BB1E" />
+            {/* ── Sucker rod — moves up/down with horsehead ── */}
+            <motion.g style={{ y: rodY }}>
+              <rect x="59" y="192" width="5" height="66" rx={1} fill="#009BA3" opacity={0.8} />
+              {/* Rod clamp */}
+              <rect x="56" y="195" width="11" height="4" rx={1} fill="#546569" />
+            </motion.g>
 
-            {/* Wellhead (left side, fixed) */}
-            <rect x="90" y="230" width="20" height="10" rx={2} fill="url(#metalGrad)" />
-            <rect x="95" y="225" width="10" height="5" rx={1} fill="#009BA3" />
+            {/* Wellhead (fixed) */}
+            <rect x="52" y="243" width="20" height="15" rx={2} fill="url(#metalGrad)" />
+            <rect x="56" y="238" width="12" height="5" rx={1} fill="#009BA3" />
+            {/* Wellhead valve */}
+            <circle cx="62" cy="240" r="2.5" fill="#F0BB1E" />
 
-            {/* Oil drops — animated */}
+            {/* ── Crank mechanism (right side) ── */}
+
+            {/* Gear box */}
+            <rect x="330" y="225" width="50" height="33" rx={5} fill="url(#darkMetal)" />
+            <rect x="333" y="228" width="44" height="27" rx={3} fill="#2D3A3C" />
+
+            {/* Crank shaft center */}
+            <circle cx="355" cy="222" r="8" fill="#0d2628" stroke="#00767D" strokeWidth={2} />
+
+            {/* Rotating crank arm + counterweight */}
+            <motion.g
+              style={{ rotate: crankAngle }}
+              transformTemplate={({ rotate }) => `rotate(${rotate} 355 222)`}
+            >
+              {/* Crank arm */}
+              <rect x="350" y="182" width="10" height="80" rx={3} fill="url(#metalGrad)" />
+              {/* Counterweight (heavy block at bottom) */}
+              <rect x="338" y="250" width="34" height="16" rx={4} fill="#546569" />
+              <rect x="341" y="253" width="28" height="10" rx={3} fill="#3d5153" />
+              {/* Crank pin (top) */}
+              <circle cx="355" cy="185" r="4" fill="#F0BB1E" />
+            </motion.g>
+
+            {/* Motor */}
+            <rect x="390" y="238" width="30" height="20" rx={3} fill="url(#metalGrad)" opacity={0.7} />
+            {/* Belt/drive line */}
+            <line x1="380" y1="240" x2="405" y2="248" stroke="#009BA3" strokeWidth={1} opacity={0.4} />
+
+            {/* ── Oil drops from wellhead ── */}
             <motion.circle
-              cx="100"
-              cy="248"
+              cx="62"
               r="3"
               fill="#F0BB1E"
-              style={{ opacity: useTransform(smoothProgress, [0.2, 0.35, 0.5], [0, 1, 0]) }}
+              style={{ cy: dropY1, opacity: dropOpacity1 }}
             />
             <motion.circle
-              cx="100"
-              cy="256"
+              cx="58"
               r="2"
               fill="#EBB417"
-              style={{ opacity: useTransform(smoothProgress, [0.4, 0.55, 0.7], [0, 1, 0]) }}
+              style={{ cy: dropY2, opacity: dropOpacity2 }}
             />
-            <motion.circle
-              cx="97"
-              cy="252"
-              r="2.5"
-              fill="#F0BB1E"
-              style={{ opacity: useTransform(smoothProgress, [0.6, 0.75, 0.9], [0, 1, 0]) }}
-            />
-
-            {/* Labels */}
-            <text x="200" y="270" textAnchor="middle" fill="#00767D" fontSize="10" fontFamily="Manrope, sans-serif" opacity={0.5}>
-              качалка · добыча · обучение
-            </text>
           </svg>
         </div>
 
@@ -226,7 +292,7 @@ function OilPumpJack() {
                 {area.icon}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">{area.title}</h3>
-              <p className="text-white/60 text-sm leading-relaxed">{area.desc}</p>
+              <p className="text-white/70 text-sm leading-relaxed">{area.desc}</p>
             </div>
           ))}
         </div>
@@ -257,7 +323,7 @@ function OilFlask() {
   const bubbleY3 = useTransform(smoothProgress, [0.55, 0.85], [230, 165]);
 
   return (
-    <div ref={ref} className="max-w-xs mx-auto">
+    <div ref={ref} className="max-w-[180px] mx-auto">
       <svg viewBox="0 0 200 300" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="oilFill" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -396,7 +462,7 @@ export default function NeftegazPage() {
         >
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumbs */}
-            <nav className="flex items-center gap-2 text-sm text-white/60 mb-8 scroll-fade-in">
+            <nav className="flex items-center gap-2 text-sm text-white/70 mb-8 scroll-fade-in">
               <Link href="/" className="hover:text-white/70 transition-colors">
                 Главная
               </Link>
@@ -446,7 +512,7 @@ export default function NeftegazPage() {
                   <div className="text-2xl sm:text-3xl font-extrabold text-[#F0BB1E]">
                     {stat.value}
                   </div>
-                  <div className="text-white/60 text-sm">{stat.label}</div>
+                  <div className="text-white/70 text-sm">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -631,7 +697,7 @@ export default function NeftegazPage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
                 Закажите обучение для вашей команды
               </h2>
-              <p className="text-lg text-white/60">
+              <p className="text-lg text-white/70">
                 Подберём программу под вашу специфику — от разведки до переработки
               </p>
             </div>
@@ -644,7 +710,7 @@ export default function NeftegazPage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-2">Заявка отправлена</h3>
-                <p className="text-white/60">Мы свяжемся с вами в ближайшее время</p>
+                <p className="text-white/70">Мы свяжемся с вами в ближайшее время</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 scroll-fade-in scroll-delay-1">
