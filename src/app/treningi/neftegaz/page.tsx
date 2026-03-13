@@ -92,20 +92,21 @@ const programAreas = [
   },
 ];
 
-/* ── Pipeline SVG component ── */
+/* ── Oil Pump Jack Animation ── */
 
-function PipelineAnimation() {
+function OilPumpJack() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end center"],
+    offset: ["start end", "end start"],
   });
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 50,
-    damping: 20,
+    stiffness: 40,
+    damping: 15,
   });
-  const pathLength = useTransform(smoothProgress, [0, 1], [0, 1]);
-  const glowOpacity = useTransform(smoothProgress, [0, 0.5, 1], [0, 0.5, 1]);
+  // Rocking angle: oscillates as user scrolls
+  const rockAngle = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -18, 5, -18, 5, -10]);
+  const glowOpacity = useTransform(smoothProgress, [0, 0.3, 1], [0, 0.6, 1]);
 
   return (
     <div ref={ref} className="relative py-20 sm:py-28 overflow-hidden">
@@ -128,68 +129,90 @@ function PipelineAnimation() {
             От <span className="bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] bg-clip-text text-transparent">скважины</span> до{" "}
             <span className="bg-gradient-to-r from-[#00767D] to-[#009BA3] bg-clip-text text-transparent">переработки</span>
           </h2>
-          <p className="text-lg text-white/50 max-w-2xl mx-auto">
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Полный цикл обучения для специалистов нефтегазовой отрасли
           </p>
         </div>
 
-        {/* Pipeline SVG */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <svg viewBox="0 0 800 120" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
-            {/* Background pipe */}
-            <path
-              d="M 20 60 C 120 60, 160 20, 260 20 S 400 60, 540 60 S 640 100, 780 60"
-              fill="none"
-              stroke="#546569"
-              strokeWidth={6}
-              strokeLinecap="round"
-              opacity={0.3}
-            />
-            {/* Animated fill */}
-            <motion.path
-              d="M 20 60 C 120 60, 160 20, 260 20 S 400 60, 540 60 S 640 100, 780 60"
-              fill="none"
-              stroke="url(#pipeGradient)"
-              strokeWidth={6}
-              strokeLinecap="round"
-              style={{ pathLength }}
-            />
-            {/* Gradient */}
+        {/* Pump Jack SVG */}
+        <div className="max-w-lg mx-auto mb-16">
+          <svg viewBox="0 0 400 280" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
             <defs>
-              <linearGradient id="pipeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#00767D" />
-                <stop offset="50%" stopColor="#009BA3" />
-                <stop offset="100%" stopColor="#F0BB1E" />
+              <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#4A9BA0" />
+                <stop offset="100%" stopColor="#00767D" />
+              </linearGradient>
+              <linearGradient id="oilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#F0BB1E" />
+                <stop offset="100%" stopColor="#EBB417" />
               </linearGradient>
             </defs>
-            {/* Station dots */}
-            {[20, 260, 540, 780].map((x, i) => (
-              <motion.circle
-                key={i}
-                cx={x}
-                cy={i === 1 ? 20 : i === 3 ? 60 : 60}
-                r={8}
-                fill="#1a2e30"
-                stroke="#00767D"
-                strokeWidth={2}
-                initial={{ scale: 0 }}
-                style={{
-                  opacity: useTransform(smoothProgress, [i * 0.25, i * 0.25 + 0.15], [0, 1]),
-                }}
-              />
-            ))}
-          </svg>
 
-          {/* Labels */}
-          <div className="grid grid-cols-4 gap-4 mt-6">
-            {["Разведка", "Бурение", "Добыча", "Переработка"].map(
-              (label, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-white/60 text-sm font-medium">{label}</p>
-                </div>
-              )
-            )}
-          </div>
+            {/* Ground line */}
+            <line x1="40" y1="240" x2="360" y2="240" stroke="#00767D" strokeWidth={1} opacity={0.3} />
+            <rect x="40" y="240" width="320" height="30" fill="#00767D" opacity={0.05} rx={2} />
+
+            {/* Base / A-frame support */}
+            <polygon points="180,240 220,240 210,160 190,160" fill="url(#metalGrad)" opacity={0.9} />
+            {/* Cross beam on A-frame */}
+            <rect x="188" y="190" width="24" height="3" fill="#009BA3" rx={1} />
+
+            {/* Pivot point */}
+            <circle cx="200" cy="155" r="6" fill="#1a2e30" stroke="#F0BB1E" strokeWidth={2} />
+
+            {/* Rocking beam (the walking beam) — pivots at (200, 155) */}
+            <motion.g style={{ rotate: rockAngle, x: 0, y: 0 }} transformTemplate={({ rotate }) => `rotate(${rotate} 200 155)`}>
+              {/* Main beam */}
+              <rect x="105" y="149" width="200" height="12" rx={3} fill="url(#metalGrad)" />
+
+              {/* Horse head (left end) */}
+              <path d="M 105 149 Q 95 149, 92 158 L 92 180 Q 92 185, 97 185 L 103 185 Q 108 185, 108 180 L 108 161" fill="url(#metalGrad)" />
+
+              {/* Polished rod (hanging from horse head) */}
+              <rect x="96" y="185" width="4" height="55" fill="#009BA3" opacity={0.8} />
+
+              {/* Counterweight (right end) */}
+              <rect x="280" y="145" width="30" height="20" rx={3} fill="#546569" />
+              <rect x="283" y="148" width="24" height="14" rx={2} fill="#3d5153" />
+            </motion.g>
+
+            {/* Motor housing (right side, fixed) */}
+            <rect x="240" y="210" width="40" height="30" rx={4} fill="url(#metalGrad)" opacity={0.7} />
+            <circle cx="260" cy="225" r="8" fill="#1a2e30" stroke="#00767D" strokeWidth={1.5} />
+            <circle cx="260" cy="225" r="3" fill="#F0BB1E" />
+
+            {/* Wellhead (left side, fixed) */}
+            <rect x="90" y="230" width="20" height="10" rx={2} fill="url(#metalGrad)" />
+            <rect x="95" y="225" width="10" height="5" rx={1} fill="#009BA3" />
+
+            {/* Oil drops — animated */}
+            <motion.circle
+              cx="100"
+              cy="248"
+              r="3"
+              fill="#F0BB1E"
+              style={{ opacity: useTransform(smoothProgress, [0.2, 0.35, 0.5], [0, 1, 0]) }}
+            />
+            <motion.circle
+              cx="100"
+              cy="256"
+              r="2"
+              fill="#EBB417"
+              style={{ opacity: useTransform(smoothProgress, [0.4, 0.55, 0.7], [0, 1, 0]) }}
+            />
+            <motion.circle
+              cx="97"
+              cy="252"
+              r="2.5"
+              fill="#F0BB1E"
+              style={{ opacity: useTransform(smoothProgress, [0.6, 0.75, 0.9], [0, 1, 0]) }}
+            />
+
+            {/* Labels */}
+            <text x="200" y="270" textAnchor="middle" fill="#00767D" fontSize="10" fontFamily="Manrope, sans-serif" opacity={0.5}>
+              качалка · добыча · обучение
+            </text>
+          </svg>
         </div>
 
         {/* Program areas grid */}
@@ -203,7 +226,7 @@ function PipelineAnimation() {
                 {area.icon}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">{area.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{area.desc}</p>
+              <p className="text-white/60 text-sm leading-relaxed">{area.desc}</p>
             </div>
           ))}
         </div>
@@ -212,69 +235,102 @@ function PipelineAnimation() {
   );
 }
 
-/* ── Growth Chart SVG ── */
+/* ── Oil Flask Animation ── */
 
-function GrowthChart() {
+function OilFlask() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end center"],
   });
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 60,
-    damping: 25,
+    stiffness: 50,
+    damping: 20,
   });
-  const pathLength = useTransform(smoothProgress, [0, 1], [0, 1]);
+  // Oil level rises from bottom of flask: y goes from 260 (empty) to 130 (full)
+  const oilLevel = useTransform(smoothProgress, [0, 1], [260, 130]);
+  const bubbleOpacity1 = useTransform(smoothProgress, [0.2, 0.35, 0.5], [0, 1, 0]);
+  const bubbleOpacity2 = useTransform(smoothProgress, [0.4, 0.55, 0.7], [0, 1, 0]);
+  const bubbleOpacity3 = useTransform(smoothProgress, [0.55, 0.7, 0.85], [0, 1, 0]);
+  const bubbleY1 = useTransform(smoothProgress, [0.2, 0.5], [240, 180]);
+  const bubbleY2 = useTransform(smoothProgress, [0.4, 0.7], [235, 170]);
+  const bubbleY3 = useTransform(smoothProgress, [0.55, 0.85], [230, 165]);
 
   return (
-    <div ref={ref} className="max-w-3xl mx-auto">
-      <svg viewBox="0 0 600 200" className="w-full h-auto">
-        {/* Grid lines */}
-        {[50, 100, 150].map((y) => (
-          <line
-            key={y}
-            x1="40"
-            y1={y}
-            x2="580"
-            y2={y}
-            stroke="#00767D"
-            strokeWidth={0.5}
-            opacity={0.15}
-          />
-        ))}
-        {/* Background path */}
+    <div ref={ref} className="max-w-xs mx-auto">
+      <svg viewBox="0 0 200 300" className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="oilFill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#F0BB1E" stopOpacity={0.9} />
+            <stop offset="40%" stopColor="#EBB417" stopOpacity={0.8} />
+            <stop offset="100%" stopColor="#1a2e30" stopOpacity={0.7} />
+          </linearGradient>
+          {/* Clip path for flask shape — Erlenmeyer style */}
+          <clipPath id="flaskClip">
+            <path d="M 75 60 L 75 120 L 35 260 Q 32 270, 42 270 L 158 270 Q 168 270, 165 260 L 125 120 L 125 60 Z" />
+          </clipPath>
+          <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00767D" stopOpacity={0.3} />
+            <stop offset="50%" stopColor="#009BA3" stopOpacity={0.1} />
+            <stop offset="100%" stopColor="#00767D" stopOpacity={0.3} />
+          </linearGradient>
+        </defs>
+
+        {/* Flask outline */}
         <path
-          d="M 40 180 C 100 175, 150 160, 200 140 S 300 100, 380 80 S 480 40, 580 20"
+          d="M 75 60 L 75 120 L 35 260 Q 32 270, 42 270 L 158 270 Q 168 270, 165 260 L 125 120 L 125 60"
           fill="none"
           stroke="#00767D"
           strokeWidth={2}
-          opacity={0.15}
+          opacity={0.5}
         />
-        {/* Animated growth line */}
-        <motion.path
-          d="M 40 180 C 100 175, 150 160, 200 140 S 300 100, 380 80 S 480 40, 580 20"
-          fill="none"
-          stroke="url(#growthGradient)"
-          strokeWidth={3}
-          strokeLinecap="round"
-          style={{ pathLength }}
+        {/* Glass sheen */}
+        <path
+          d="M 75 60 L 75 120 L 35 260 Q 32 270, 42 270 L 158 270 Q 168 270, 165 260 L 125 120 L 125 60 Z"
+          fill="url(#glassGrad)"
         />
-        {/* Area fill */}
-        <motion.path
-          d="M 40 180 C 100 175, 150 160, 200 140 S 300 100, 380 80 S 480 40, 580 20 L 580 200 L 40 200 Z"
-          fill="url(#areaFill)"
-          style={{ opacity: useTransform(smoothProgress, [0, 0.5], [0, 0.3]) }}
-        />
-        <defs>
-          <linearGradient id="growthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#00767D" />
-            <stop offset="100%" stopColor="#F0BB1E" />
-          </linearGradient>
-          <linearGradient id="areaFill" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#00767D" stopOpacity={0.2} />
-            <stop offset="100%" stopColor="#00767D" stopOpacity={0} />
-          </linearGradient>
-        </defs>
+        {/* Neck */}
+        <rect x="73" y="40" width="54" height="20" rx={2} fill="none" stroke="#00767D" strokeWidth={2} opacity={0.5} />
+        {/* Cork / stopper */}
+        <rect x="78" y="32" width="44" height="10" rx={3} fill="#546569" opacity={0.6} />
+
+        {/* Oil liquid — clipped to flask, level rises */}
+        <g clipPath="url(#flaskClip)">
+          <motion.rect
+            x="30"
+            width="140"
+            height="240"
+            fill="url(#oilFill)"
+            style={{ y: oilLevel }}
+          />
+          {/* Oil surface wave */}
+          <motion.path
+            d="M 30 0 Q 65 -6, 100 0 Q 135 6, 170 0 L 170 10 L 30 10 Z"
+            fill="#F0BB1E"
+            opacity={0.6}
+            style={{ y: oilLevel }}
+          />
+        </g>
+
+        {/* Bubbles inside flask */}
+        <g clipPath="url(#flaskClip)">
+          <motion.circle cx="85" r="4" fill="#F0BB1E" opacity={0.4}
+            style={{ cy: bubbleY1, opacity: bubbleOpacity1 }} />
+          <motion.circle cx="110" r="3" fill="#EBB417" opacity={0.3}
+            style={{ cy: bubbleY2, opacity: bubbleOpacity2 }} />
+          <motion.circle cx="95" r="2.5" fill="#F0BB1E" opacity={0.35}
+            style={{ cy: bubbleY3, opacity: bubbleOpacity3 }} />
+        </g>
+
+        {/* Measurement marks on flask */}
+        {[160, 190, 220, 250].map((y, i) => (
+          <g key={i}>
+            <line x1="130" y1={y} x2="140" y2={y} stroke="#00767D" strokeWidth={1} opacity={0.3} />
+            <text x="144" y={y + 3} fill="#00767D" fontSize="7" opacity={0.3} fontFamily="Manrope, sans-serif">
+              {(4 - i) * 25}%
+            </text>
+          </g>
+        ))}
       </svg>
     </div>
   );
@@ -340,7 +396,7 @@ export default function NeftegazPage() {
         >
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumbs */}
-            <nav className="flex items-center gap-2 text-sm text-white/40 mb-8 scroll-fade-in">
+            <nav className="flex items-center gap-2 text-sm text-white/60 mb-8 scroll-fade-in">
               <Link href="/" className="hover:text-white/70 transition-colors">
                 Главная
               </Link>
@@ -364,7 +420,7 @@ export default function NeftegazPage() {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/60 mb-10 max-w-2xl scroll-fade-in scroll-delay-2">
+            <p className="text-lg sm:text-xl text-white/70 mb-10 max-w-2xl scroll-fade-in scroll-delay-2">
               От бурения до переработки — практические курсы от экспертов с опытом
               работы на крупнейших месторождениях Казахстана
             </p>
@@ -390,7 +446,7 @@ export default function NeftegazPage() {
                   <div className="text-2xl sm:text-3xl font-extrabold text-[#F0BB1E]">
                     {stat.value}
                   </div>
-                  <div className="text-white/40 text-sm">{stat.label}</div>
+                  <div className="text-white/60 text-sm">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -475,7 +531,7 @@ export default function NeftegazPage() {
               </p>
             </div>
 
-            <GrowthChart />
+            <OilFlask />
 
             <div className="grid sm:grid-cols-3 gap-6 mt-12">
               {[
@@ -497,7 +553,7 @@ export default function NeftegazPage() {
       </section>
 
       {/* ═══ PIPELINE ANIMATION + PROGRAM AREAS ═══ */}
-      <PipelineAnimation />
+      <OilPumpJack />
 
       {/* ═══ SCHEDULE ═══ */}
       <section id="schedule" className="py-16 sm:py-24 section-white">
@@ -598,21 +654,21 @@ export default function NeftegazPage() {
                     type="text"
                     placeholder="Ваше имя"
                     required
-                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
                   />
                   <input
                     name="phone"
                     type="tel"
                     placeholder="Телефон"
                     required
-                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
                   />
                 </div>
                 <input
                   name="company"
                   type="text"
                   placeholder="Компания"
-                  className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                  className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
                 />
                 <button
                   type="submit"
