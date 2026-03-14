@@ -876,6 +876,115 @@ export default function NeftegazPage() {
         </div>
       </section>
 
+      {/* ═══ TRAINING GALLERY ═══ */}
+      <section className="py-16 sm:py-24 bg-[#F8FAFA]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12 scroll-fade-in">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-4">
+                Как проходит <span className="text-gradient-primary">обучение</span>
+              </h2>
+              <p className="text-lg text-[#3d5153]">
+                80% практики на реальных кейсах и оборудовании
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {trainingPhotos.map((photo, i) => (
+                <div
+                  key={i}
+                  className={`relative rounded-2xl overflow-hidden aspect-[4/3] group scroll-fade-in scroll-delay-${i + 1}`}
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.caption}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <p className="text-white text-sm font-medium">{photo.caption}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ METRICS + TESTIMONIALS ═══ */}
+      <section className="py-16 sm:py-24 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[#00767D]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-[#F0BB1E]/5 rounded-full blur-[100px]" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-6xl mx-auto">
+            {/* Metrics */}
+            <div className="text-center mb-12 scroll-fade-in">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+                Результат, который <span className="bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] bg-clip-text text-transparent">измерим</span>
+              </h2>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-6 mb-20">
+              {[
+                {
+                  value: "↓ 40%",
+                  label: "снижение аварийности",
+                  desc: "после курсов промышленной безопасности",
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  ),
+                },
+                {
+                  value: "↑ 25%",
+                  label: "рост производительности",
+                  desc: "через 3 месяца после обучения",
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  ),
+                },
+                {
+                  value: "↓ 60%",
+                  label: "время адаптации",
+                  desc: "новых специалистов на объекте",
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ),
+                },
+              ].map((item, i) => (
+                <div key={i} className={`text-center p-8 rounded-2xl bg-white/[0.06] border border-white/10 scroll-fade-in scroll-delay-${i + 1}`}>
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
+                    {item.icon}
+                  </div>
+                  <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2">{item.value}</div>
+                  <p className="text-white font-semibold mb-1">{item.label}</p>
+                  <p className="text-white/60 text-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Testimonials */}
+            <div className="text-center mb-12 scroll-fade-in">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+                Отзывы <span className="bg-gradient-to-r from-[#00767D] to-[#009BA3] bg-clip-text text-transparent">клиентов</span>
+              </h2>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6">
+              {testimonials.map((t, i) => (
+                <TestimonialCard key={i} testimonial={t} index={i} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ PAIN POINTS — Split Screen ═══ */}
       <section className="py-0 overflow-hidden">
         <div className="grid lg:grid-cols-2">
