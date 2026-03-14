@@ -182,7 +182,7 @@ function PitmanArm({ x1, y1, y2 }: { x1: MotionValue<number>; y1: MotionValue<nu
 
 /* ── Oil Pump Jack Animation — continuous mechanical motion ── */
 
-function OilPumpJack() {
+function OilPumpJack({ onCategoryClick }: { onCategoryClick: (category: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const crankAngle = useMotionValue(0);
@@ -410,16 +410,23 @@ function OilPumpJack() {
         {/* Program areas grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
           {programAreas.map((area, index) => (
-            <div
+            <button
               key={index}
-              className={`p-6 rounded-2xl bg-white/[0.12] border border-white/20 backdrop-blur-sm scroll-fade-in scroll-delay-${(index % 3) + 1} hover:bg-white/[0.18] transition-colors`}
+              onClick={() => onCategoryClick(area.category)}
+              className={`p-6 rounded-2xl bg-white/[0.12] border border-white/20 backdrop-blur-sm scroll-fade-in scroll-delay-${(index % 3) + 1} hover:bg-white/[0.18] transition-all text-left group cursor-pointer`}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mb-4">
                 {area.icon}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">{area.title}</h3>
-              <p className="text-white/90 text-sm leading-relaxed">{area.desc}</p>
-            </div>
+              <p className="text-white/90 text-sm leading-relaxed mb-3">{area.desc}</p>
+              <span className="text-[#F0BB1E] text-sm font-semibold group-hover:gap-2 inline-flex items-center gap-1 transition-all">
+                {getCourseCount(area.category)} курсов
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </button>
           ))}
         </div>
       </div>
@@ -780,7 +787,7 @@ export default function NeftegazPage() {
       </section>
 
       {/* ═══ PUMP JACK + PROGRAM AREAS ═══ */}
-      <OilPumpJack />
+      <OilPumpJack onCategoryClick={setActiveCategory} />
 
       {/* ═══ SCHEDULE ═══ */}
       <section id="schedule" ref={scheduleRef} className="py-16 sm:py-24 section-white">
@@ -791,20 +798,46 @@ export default function NeftegazPage() {
                 Расписание <span className="text-gradient-primary">курсов</span>
               </h2>
               <p className="text-lg text-[#3d5153]">
-                {neftegazTrainings.length} курсов по нефтегазовой тематике
+                {filteredTrainings.length} курсов {activeCategory ? "в выбранной категории" : "по нефтегазовой тематике"}
               </p>
             </div>
 
+            {/* Category filter bar */}
+            <div className="flex flex-wrap gap-2 mb-8 justify-center scroll-fade-in">
+              <button
+                onClick={() => setActiveCategory(null)}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                  activeCategory === null
+                    ? "bg-[#00767D] text-white"
+                    : "bg-[#00767D]/10 text-[#00767D] hover:bg-[#00767D]/20"
+                }`}
+              >
+                Все ({neftegazTrainings.length})
+              </button>
+              {programAreas.map((area) => (
+                <button
+                  key={area.category}
+                  onClick={() => setActiveCategory(area.category)}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    activeCategory === area.category
+                      ? "bg-[#00767D] text-white"
+                      : "bg-[#00767D]/10 text-[#00767D] hover:bg-[#00767D]/20"
+                  }`}
+                >
+                  {area.title.split(" ")[0]} ({getCourseCount(area.category)})
+                </button>
+              ))}
+            </div>
+
+            {/* Training list */}
             <div className="space-y-3">
               {visibleTrainings.map((training, index) => (
                 <div
                   key={index}
-                  className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-xl bg-[#F8FAFA] border border-[#00767D]/8 hover:border-[#00767D]/20 transition-colors scroll-fade-in`}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-xl bg-[#F8FAFA] border border-[#00767D]/8 hover:border-[#00767D]/20 transition-colors scroll-fade-in"
                 >
                   <div className="flex-1">
-                    <h3 className="font-semibold text-[#2D3A3C] text-sm sm:text-base">
-                      {training.name}
-                    </h3>
+                    <h3 className="font-semibold text-[#2D3A3C] text-sm sm:text-base">{training.name}</h3>
                     <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-[#546569]">
                       <span>{training.date}</span>
                       <span>{training.hours} ч.</span>
@@ -817,12 +850,16 @@ export default function NeftegazPage() {
                       </div>
                       <div className="text-xs text-[#546569]">офлайн</div>
                     </div>
-                    <Link
-                      href="/schedule"
-                      className="px-4 py-2 text-xs font-semibold rounded-lg bg-[#00767D]/10 text-[#00767D] hover:bg-[#00767D] hover:text-white transition-colors"
+                    <button
+                      onClick={() => setEnrollTraining({
+                        name: training.name,
+                        date: training.date,
+                        priceOffline: training.priceOffline,
+                      })}
+                      className="px-4 py-2 text-xs font-semibold rounded-lg gold-button"
                     >
-                      Подробнее
-                    </Link>
+                      Записаться
+                    </button>
                   </div>
                 </div>
               ))}
@@ -830,13 +867,8 @@ export default function NeftegazPage() {
 
             {filteredTrainings.length > 12 && (
               <div className="text-center mt-8">
-                <button
-                  onClick={() => setShowAll(!showAll)}
-                  className="teal-button-outline"
-                >
-                  {showAll
-                    ? "Свернуть"
-                    : `Показать все ${filteredTrainings.length} курсов`}
+                <button onClick={() => setShowAll(!showAll)} className="teal-button-outline">
+                  {showAll ? "Свернуть" : `Показать все ${filteredTrainings.length} курсов`}
                 </button>
               </div>
             )}
