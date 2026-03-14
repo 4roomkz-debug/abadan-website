@@ -454,13 +454,13 @@ function StickyCTA() {
       }`}
     >
       <a
-        href="#form"
+        href="#schedule"
         className="gold-button shadow-2xl shadow-[#F0BB1E]/20 flex items-center gap-2 text-sm sm:text-base"
       >
+        Записаться на курс
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
-        Заказать обучение
       </a>
     </div>
   );
@@ -655,7 +655,7 @@ export default function NeftegazPage() {
         body: JSON.stringify({
           name: fd.get("name"),
           phone: fd.get("phone"),
-          message: `[Нефтегаз тренинги] Компания: ${fd.get("company") || "—"}`,
+          message: `[Нефтегаз тренинги] Компания: ${fd.get("company") || "—"}, Сотрудников: ${fd.get("employees") || "—"}`,
         }),
       });
     } catch { /* ok */ }
@@ -1101,6 +1101,12 @@ export default function NeftegazPage() {
                   placeholder="Компания"
                   className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
                 />
+                <input
+                  name="employees"
+                  type="number"
+                  placeholder="Количество сотрудников (~)"
+                  className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/50 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                />
                 <button
                   type="submit"
                   disabled={formStatus === "sending"}
@@ -1108,6 +1114,7 @@ export default function NeftegazPage() {
                 >
                   {formStatus === "sending" ? "Отправка..." : "Получить предложение"}
                 </button>
+                <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
           </div>
