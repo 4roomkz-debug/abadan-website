@@ -42,9 +42,17 @@ Changes:
 Changes:
 - Each card displays course count: e.g. "Бурение и строительство скважин — 12 курсов"
 - Click on card: smooth scroll to #schedule + set active filter to that category
-- Cards need a `category` field mapping to filter logic
 - PumpJack stays as background visual element (no changes to animation)
-- Category mapping: each `programArea` gets a `keywords: string[]` array matching `OG_KEYWORDS` subsets
+- **Data structure change:** `programAreas` array items get two new fields:
+  ```ts
+  type ProgramArea = {
+    title: string;
+    desc: string;
+    icon: JSX.Element;
+    category: string;      // e.g. "drilling", "extraction", "refining", etc.
+    keywords: string[];     // subset of OG_KEYWORDS for filtering
+  }
+  ```
 
 Category-to-keyword mapping:
 - Бурение: `["бурен", "скважин", "цементирован", "долот", "каротаж", "перфорац", "инклинометр", "горизонтальн", "Ротор"]`
@@ -55,6 +63,8 @@ Category-to-keyword mapping:
 - КИПиА: `["КИП", "автоматизац", "метрологи", "контрольно-измерит"]`
 
 Course count per category: computed dynamically from `SCHEDULE_DATA` using these keyword subsets.
+
+**Multi-category matching:** A course may match multiple categories (e.g. "Бурение и добыча нефти" matches both). It appears in ALL matching category filters. Course counts on cards reflect this (a course counted in multiple categories).
 
 ### 3. Schedule (full rebuild)
 
@@ -105,7 +115,7 @@ Content:
   2. Hands-on practice at facility/equipment
   3. Field training on site
   4. Certification/graduation moment
-- Photos: `/public/images/neftegaz/training-1.jpg` through `training-4.jpg`
+- Photos: `/public/images/neftegaz/training-1.webp` through `training-4.webp`
 - Each photo has a short caption overlay at bottom (semi-transparent dark strip)
 - Scroll fade-in with staggered delays
 
@@ -121,9 +131,10 @@ Changes:
   - ↑ 25% рост производительности
   - ↓ 60% время адаптации
   - Each card: icon + large number + label + one-line context
-- **Testimonials:** 2-3 testimonials in a horizontal carousel (Swiper) or grid
+- **Testimonials:** 3 testimonials in a responsive grid (1 col mobile, 3 cols desktop) — no carousel for 3 items
   - Each: quote, author photo (stock portrait), name, title, company/sector
-  - Photos: `/public/images/neftegaz/person-1.jpg`, `person-2.jpg`, `person-3.jpg`
+  - Photos: `/public/images/neftegaz/person-1.webp`, `person-2.webp`, `person-3.webp`
+  - **Fallback:** If photo fails to load, show initial-letter avatar (current behavior: gradient circle with first letter)
   - Testimonial data (extend existing):
     1. Марат Кенжебаев, Начальник отдела обучения, нефтесервисная компания (existing)
     2. Айгуль Нурланова, HR-директор, нефтеперерабатывающий завод (new)
@@ -164,6 +175,11 @@ Changes:
 - Placement: `/public/videos/neftegaz-hero.mp4`, `/public/videos/neftegaz-hero.webm`
 - Source: Pexels, Coverr, or Pixabay (free commercial use)
 
+### Hero Poster Image
+- Static frame from the video for instant display before video loads
+- Format: WebP, 1920x1080, ~100 KB
+- Placement: `/public/images/neftegaz/hero-poster.webp`
+
 ### Stock Photos — Training Gallery
 - 4 photos showing industrial training scenarios
 - Format: WebP, ~800x600, optimized
@@ -186,7 +202,7 @@ Changes:
 | `EnrollmentModal` | **New** | Modal form for individual course enrollment |
 | `CategoryFilter` | **New** | Horizontal filter bar for schedule |
 | `TrainingGallery` | **New** | Photo grid section |
-| `TestimonialCarousel` | **New** | Multi-testimonial section with photos |
+| `TestimonialGrid` | **New** | Multi-testimonial section with photos |
 | Hero section | Modify | Video background, simplified CTAs |
 | Schedule section | Modify | Add filters + enrollment buttons |
 | Corporate form | Modify | Add employee count field + guarantee text |
@@ -196,8 +212,10 @@ Changes:
 
 ## Technical Notes
 
-- Video lazy-loading: Use `preload="none"` or `preload="metadata"` + IntersectionObserver to load on viewport entry (hero is immediately visible, so `preload="auto"` is acceptable)
-- Modal: Use React portal (`createPortal`) or inline with `fixed inset-0 z-50`
+- **Video fallback:** If video files are not yet available, fall back to current CSS gradient background gracefully. Check for video source existence via `onError` handler on `<video>` element, hide video and show gradient.
+- Video loading: Hero is above the fold, so `preload="auto"` is acceptable. Add `poster` attribute with a static frame for instant display.
+- **Modal accessibility:** Focus trap inside modal (tab cycles through form fields + close button). `aria-modal="true"`, `role="dialog"`, `aria-labelledby` pointing to heading. Announce success state with `aria-live="polite"` region.
 - Category state: Lifted to page level via `useState<string | null>(null)`, passed to both directions cards and schedule filter
 - No new dependencies needed — Framer Motion and existing tools handle everything
-- Scroll-to with offset: `element.scrollIntoView({ behavior: 'smooth' })` with slight timeout after filter state change
+- Scroll-to: Set category state first, then in a `useEffect` triggered by category change, call `element.scrollIntoView({ behavior: 'smooth' })`. No manual timeout needed — React batches the state update and effect runs after render.
+- Category filter is local state only — no URL params. Keeps implementation simple.
