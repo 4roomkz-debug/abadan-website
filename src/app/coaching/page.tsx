@@ -149,10 +149,25 @@ export default function CoachingPage() {
       <Header />
 
       {/* ===== HERO ===== */}
-      <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]">
+      <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden">
+        {/* Background: video + gradient fallback */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover hidden sm:block"
+            onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
+          >
+            <source src="/videos/coaching-hero.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        </div>
         {/* Ambient glow */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00767D]/10 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F0BB1E]/5 rounded-full blur-[100px]"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00767D]/10 rounded-full blur-[120px] z-[1]"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F0BB1E]/5 rounded-full blur-[100px] z-[1]"></div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
