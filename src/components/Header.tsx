@@ -1,17 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+const trainingLinks = [
+  { href: "/treningi/hr", label: "HR и кадры" },
+  { href: "/treningi/finansy", label: "Финансы и учёт" },
+  { href: "/treningi/pravo", label: "Трудовое право" },
+  { href: "/treningi/liderstvo", label: "Лидерство" },
+  { href: "/treningi/neftegaz", label: "Нефтегаз" },
+];
 
 export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTrainingOpen, setIsTrainingOpen] = useState(false);
+  const [isMobileTrainingOpen, setIsMobileTrainingOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
     return pathname === href;
   };
+
+  const isTrainingActive = pathname.startsWith("/treningi");
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsTrainingOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setIsTrainingOpen(false), 150);
+  };
+
+  useEffect(() => {
+    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+  }, []);
 
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b border-[#00767D]/10 sticky top-0 z-50">
@@ -44,6 +71,50 @@ export default function Header() {
             >
               О компании
             </Link>
+            {/* Тренинги dropdown */}
+            <div
+              ref={dropdownRef}
+              className="relative"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  isTrainingActive
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Тренинги
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${isTrainingOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isTrainingOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
+                  <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
+                    {trainingLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`block px-4 py-2.5 text-sm transition-colors ${
+                          isActive(link.href)
+                            ? "text-[#00767D] bg-[#f0f9f9] font-medium"
+                            : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             <Link
               href="https://ibirai.com"
               target="_blank"
@@ -145,6 +216,43 @@ export default function Header() {
               >
                 О компании
               </Link>
+              {/* Mobile Тренинги accordion */}
+              <button
+                onClick={() => setIsMobileTrainingOpen(!isMobileTrainingOpen)}
+                className={`text-sm font-medium py-2 transition-colors flex items-center justify-between w-full ${
+                  isTrainingActive
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Тренинги
+                <svg
+                  className={`w-4 h-4 transition-transform ${isMobileTrainingOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isMobileTrainingOpen && (
+                <div className="pl-4 flex flex-col gap-1 border-l-2 border-[#00767D]/20 ml-2">
+                  {trainingLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileTrainingOpen(false); }}
+                      className={`text-sm py-1.5 transition-colors ${
+                        isActive(link.href)
+                          ? "text-[#00767D] font-medium"
+                          : "text-[#546569] hover:text-[#00767D]"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
               <Link
                 href="https://ibirai.com"
                 target="_blank"

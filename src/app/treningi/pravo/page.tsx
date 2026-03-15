@@ -647,6 +647,13 @@ export default function PravoPage() {
             className="object-cover"
             priority
           />
+          <video
+            autoPlay muted loop playsInline
+            className="absolute inset-0 w-full h-full object-cover hidden sm:block"
+            onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
+          >
+            <source src="/videos/pravo-hero.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
         </div>
 
