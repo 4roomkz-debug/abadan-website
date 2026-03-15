@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const trainingLinks = [
+const educationLinks = [
   { href: "/treningi/hr", label: "HR и кадры" },
   { href: "/treningi/finansy", label: "Финансы и учёт" },
   { href: "/treningi/pravo", label: "Трудовое право" },
@@ -13,32 +13,63 @@ const trainingLinks = [
   { href: "/treningi/ai", label: "ИИ для бизнеса" },
 ];
 
+const companyLinks = [
+  { href: "/about", label: "О компании" },
+  { href: "/kejsy", label: "Кейсы" },
+  { href: "/blog", label: "Блог" },
+  { href: "/projects", label: "Проекты" },
+];
+
 export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isTrainingOpen, setIsTrainingOpen] = useState(false);
-  const [isMobileTrainingOpen, setIsMobileTrainingOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isEducationOpen, setIsEducationOpen] = useState(false);
+  const [isCompanyOpen, setIsCompanyOpen] = useState(false);
+  const [isMobileEducationOpen, setIsMobileEducationOpen] = useState(false);
+  const [isMobileCompanyOpen, setIsMobileCompanyOpen] = useState(false);
+
+  const educationDropdownRef = useRef<HTMLDivElement>(null);
+  const companyDropdownRef = useRef<HTMLDivElement>(null);
+  const educationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const companyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
     return pathname === href;
   };
 
-  const isTrainingActive = pathname.startsWith("/treningi");
+  const isEducationActive =
+    pathname.startsWith("/treningi") || pathname === "/coaching";
 
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setIsTrainingOpen(true);
+  const isCompanyActive =
+    pathname === "/about" ||
+    pathname.startsWith("/kejsy") ||
+    pathname.startsWith("/blog") ||
+    pathname === "/projects";
+
+  const handleEducationEnter = () => {
+    if (educationTimeoutRef.current) clearTimeout(educationTimeoutRef.current);
+    setIsEducationOpen(true);
   };
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setIsTrainingOpen(false), 150);
+  const handleEducationLeave = () => {
+    educationTimeoutRef.current = setTimeout(() => setIsEducationOpen(false), 150);
+  };
+
+  const handleCompanyEnter = () => {
+    if (companyTimeoutRef.current) clearTimeout(companyTimeoutRef.current);
+    setIsCompanyOpen(true);
+  };
+
+  const handleCompanyLeave = () => {
+    companyTimeoutRef.current = setTimeout(() => setIsCompanyOpen(false), 150);
   };
 
   useEffect(() => {
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+    return () => {
+      if (educationTimeoutRef.current) clearTimeout(educationTimeoutRef.current);
+      if (companyTimeoutRef.current) clearTimeout(companyTimeoutRef.current);
+    };
   }, []);
 
   return (
@@ -62,33 +93,24 @@ export default function Header() {
             >
               Главная
             </Link>
-            <Link
-              href="/about"
-              className={`text-sm font-medium transition-colors ${
-                isActive("/about")
-                  ? "text-[#00767D]"
-                  : "text-[#546569] hover:text-[#00767D]"
-              }`}
-            >
-              О компании
-            </Link>
-            {/* Тренинги dropdown */}
+
+            {/* Обучение dropdown */}
             <div
-              ref={dropdownRef}
+              ref={educationDropdownRef}
               className="relative"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handleEducationEnter}
+              onMouseLeave={handleEducationLeave}
             >
               <button
                 className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  isTrainingActive
+                  isEducationActive
                     ? "text-[#00767D]"
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Тренинги
+                Обучение
                 <svg
-                  className={`w-3.5 h-3.5 transition-transform ${isTrainingOpen ? "rotate-180" : ""}`}
+                  className={`w-3.5 h-3.5 transition-transform ${isEducationOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -96,10 +118,81 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {isTrainingOpen && (
+              {isEducationOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
                   <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
-                    {trainingLinks.map((link) => (
+                    <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#7A8B8E]">
+                      Тренинги
+                    </div>
+                    {educationLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`block px-4 py-2.5 text-sm transition-colors ${
+                          isActive(link.href)
+                            ? "text-[#00767D] bg-[#f0f9f9] font-medium"
+                            : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                    <div className="border-t border-[#00767D]/10 my-1" />
+                    <Link
+                      href="/coaching"
+                      className={`block px-4 py-2.5 text-sm transition-colors ${
+                        isActive("/coaching")
+                          ? "text-[#00767D] bg-[#f0f9f9] font-medium"
+                          : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
+                      }`}
+                    >
+                      Коучинг
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Расписание standalone */}
+            <Link
+              href="/schedule"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/schedule")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Расписание
+            </Link>
+
+            {/* Компания dropdown */}
+            <div
+              ref={companyDropdownRef}
+              className="relative"
+              onMouseEnter={handleCompanyEnter}
+              onMouseLeave={handleCompanyLeave}
+            >
+              <button
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  isCompanyActive
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Компания
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${isCompanyOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isCompanyOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
+                  <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
+                    {companyLinks.map((link) => (
                       <Link
                         key={link.href}
                         href={link.href}
@@ -116,6 +209,8 @@ export default function Header() {
                 </div>
               )}
             </div>
+
+            {/* ibirAi button */}
             <Link
               href="https://ibirai.com"
               target="_blank"
@@ -124,52 +219,6 @@ export default function Header() {
             >
               <span>🤖</span>
               ibirAi
-            </Link>
-            <Link
-              href="/kejsy"
-              className={`text-sm font-medium transition-colors ${
-                isActive("/kejsy")
-                  ? "text-[#00767D]"
-                  : "text-[#546569] hover:text-[#00767D]"
-              }`}
-            >
-              Кейсы
-            </Link>
-            <Link
-              href="/projects"
-              className={`text-sm font-medium transition-colors ${
-                isActive("/projects")
-                  ? "text-[#00767D]"
-                  : "text-[#546569] hover:text-[#00767D]"
-              }`}
-            >
-              Проекты
-            </Link>
-            <Link
-              href="/schedule"
-              className={`text-sm font-medium transition-colors ${
-                isActive("/schedule")
-                  ? "text-[#00767D]"
-                  : "text-[#546569] hover:text-[#00767D]"
-              }`}
-            >
-              Расписание
-            </Link>
-            <Link
-              href="/coaching"
-              className={`text-sm font-medium transition-colors ${
-                isActive("/coaching")
-                  ? "text-[#00767D]"
-                  : "text-[#546569] hover:text-[#00767D]"
-              }`}
-            >
-              Коучинг
-            </Link>
-            <Link
-              href="/#contact"
-              className="text-sm font-medium text-[#546569] hover:text-[#00767D] transition-colors"
-            >
-              Контакты
             </Link>
           </nav>
 
@@ -216,29 +265,19 @@ export default function Header() {
               >
                 Главная
               </Link>
-              <Link
-                href="/about"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 transition-colors ${
-                  isActive("/about")
-                    ? "text-[#00767D]"
-                    : "text-[#546569] hover:text-[#00767D]"
-                }`}
-              >
-                О компании
-              </Link>
-              {/* Mobile Тренинги accordion */}
+
+              {/* Mobile Обучение accordion */}
               <button
-                onClick={() => setIsMobileTrainingOpen(!isMobileTrainingOpen)}
+                onClick={() => setIsMobileEducationOpen(!isMobileEducationOpen)}
                 className={`text-sm font-medium py-2 transition-colors flex items-center justify-between w-full ${
-                  isTrainingActive
+                  isEducationActive
                     ? "text-[#00767D]"
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Тренинги
+                Обучение
                 <svg
-                  className={`w-4 h-4 transition-transform ${isMobileTrainingOpen ? "rotate-180" : ""}`}
+                  className={`w-4 h-4 transition-transform ${isMobileEducationOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -246,13 +285,13 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {isMobileTrainingOpen && (
+              {isMobileEducationOpen && (
                 <div className="pl-4 flex flex-col gap-1 border-l-2 border-[#00767D]/20 ml-2">
-                  {trainingLinks.map((link) => (
+                  {educationLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileTrainingOpen(false); }}
+                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileEducationOpen(false); }}
                       className={`text-sm py-1.5 transition-colors ${
                         isActive(link.href)
                           ? "text-[#00767D] font-medium"
@@ -262,40 +301,22 @@ export default function Header() {
                       {link.label}
                     </Link>
                   ))}
+                  <div className="border-t border-[#00767D]/10 my-1" />
+                  <Link
+                    href="/coaching"
+                    onClick={() => { setIsMobileMenuOpen(false); setIsMobileEducationOpen(false); }}
+                    className={`text-sm py-1.5 transition-colors ${
+                      isActive("/coaching")
+                        ? "text-[#00767D] font-medium"
+                        : "text-[#546569] hover:text-[#00767D]"
+                    }`}
+                  >
+                    Коучинг
+                  </Link>
                 </div>
               )}
-              <Link
-                href="https://ibirai.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
-              >
-                <span>🤖</span>
-                ibirAi
-              </Link>
-              <Link
-                href="/kejsy"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 transition-colors ${
-                  isActive("/kejsy")
-                    ? "text-[#00767D]"
-                    : "text-[#546569] hover:text-[#00767D]"
-                }`}
-              >
-                Кейсы
-              </Link>
-              <Link
-                href="/projects"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 transition-colors ${
-                  isActive("/projects")
-                    ? "text-[#00767D]"
-                    : "text-[#546569] hover:text-[#00767D]"
-                }`}
-              >
-                Проекты
-              </Link>
+
+              {/* Расписание standalone */}
               <Link
                 href="/schedule"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -307,24 +328,57 @@ export default function Header() {
               >
                 Расписание
               </Link>
-              <Link
-                href="/coaching"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 transition-colors ${
-                  isActive("/coaching")
+
+              {/* Mobile Компания accordion */}
+              <button
+                onClick={() => setIsMobileCompanyOpen(!isMobileCompanyOpen)}
+                className={`text-sm font-medium py-2 transition-colors flex items-center justify-between w-full ${
+                  isCompanyActive
                     ? "text-[#00767D]"
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Коучинг
-              </Link>
+                Компания
+                <svg
+                  className={`w-4 h-4 transition-transform ${isMobileCompanyOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isMobileCompanyOpen && (
+                <div className="pl-4 flex flex-col gap-1 border-l-2 border-[#00767D]/20 ml-2">
+                  {companyLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => { setIsMobileMenuOpen(false); setIsMobileCompanyOpen(false); }}
+                      className={`text-sm py-1.5 transition-colors ${
+                        isActive(link.href)
+                          ? "text-[#00767D] font-medium"
+                          : "text-[#546569] hover:text-[#00767D]"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* ibirAi button */}
               <Link
-                href="/#contact"
+                href="https://ibirai.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-sm font-medium py-2 text-[#546569] hover:text-[#00767D] transition-colors"
+                className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
-                Контакты
+                <span>🤖</span>
+                ibirAi
               </Link>
+
               <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
