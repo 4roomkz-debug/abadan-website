@@ -138,21 +138,21 @@ const testimonials = [
     name: "Кайрат Жунусов",
     title: "Генеральный директор",
     company: "IT-компания",
-    initial: "К",
+    image: "/images/liderstvo/person-1.webp",
   },
   {
     quote: "Курс по переговорам окупился на первой же крупной сделке. Наши менеджеры научились вести переговоры системно, а не интуитивно",
     name: "Лаура Бекмуратова",
     title: "Коммерческий директор",
     company: "Дистрибьюторская компания",
-    initial: "Л",
+    image: "/images/liderstvo/person-2.webp",
   },
   {
     quote: "Программа управления изменениями помогла нам провести реструктуризацию без потери ключевых сотрудников. Вовлечённость даже выросла",
     name: "Дамир Искаков",
     title: "HR-директор",
     company: "Банковский сектор",
-    initial: "Д",
+    image: "/images/liderstvo/person-3.webp",
   },
 ];
 
@@ -370,9 +370,7 @@ function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof tes
       <blockquote className="text-[#546569] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <div className="w-full h-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
-            <span className="text-white font-bold text-sm">{t.initial}</span>
-          </div>
+          <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
         </div>
         <div>
           <p className="text-[#2D3A3C] font-semibold text-sm">{t.name}</p>
