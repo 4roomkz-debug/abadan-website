@@ -631,14 +631,24 @@ export default function AIPage() {
 
       {/* ═══ HERO ═══ */}
       <section ref={heroRef} className="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden">
-        {/* Background layer: image + overlay */}
+        {/* Background layer: video + image fallback + overlay */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover hidden sm:block"
+            onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
+          >
+            <source src="/videos/ai-hero.mp4" type="video/mp4" />
+          </video>
           <Image
             src="/images/ai/hero-poster.webp"
             alt=""
             fill
-            className="object-cover"
+            className="object-cover sm:hidden"
             priority
             onError={() => {}}
           />
