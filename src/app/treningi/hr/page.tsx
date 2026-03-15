@@ -137,7 +137,7 @@ const testimonials = [
     name: "Динара Сагиндыкова",
     title: "HR-директор",
     company: "Производственный холдинг",
-    photo: "/images/neftegaz/person-1.webp",
+    photo: "/images/hr/person-1.webp",
     initial: "Д",
   },
   {
@@ -145,7 +145,7 @@ const testimonials = [
     name: "Алия Мусаева",
     title: "Директор по персоналу",
     company: "Горнодобывающая компания",
-    photo: "/images/neftegaz/person-2.webp",
+    photo: "/images/hr/person-2.webp",
     initial: "А",
   },
   {
@@ -153,16 +153,16 @@ const testimonials = [
     name: "Бауржан Темирханов",
     title: "Руководитель отдела кадров",
     company: "Телекоммуникационная компания",
-    photo: "/images/neftegaz/person-3.webp",
+    photo: "/images/hr/person-3.webp",
     initial: "Б",
   },
 ];
 
 const trainingPhotos = [
-  { src: "/images/neftegaz/training-1.webp", caption: "Семинар по трудовому праву" },
-  { src: "/images/neftegaz/training-2.webp", caption: "Практикум по рекрутингу" },
-  { src: "/images/neftegaz/training-3.webp", caption: "Тренинг по оценке персонала" },
-  { src: "/images/neftegaz/training-4.webp", caption: "Вручение сертификатов" },
+  { src: "/images/hr/training-1.webp", caption: "Семинар по трудовому праву" },
+  { src: "/images/hr/training-2.webp", caption: "Практикум по рекрутингу" },
+  { src: "/images/hr/training-3.webp", caption: "Тренинг по оценке персонала" },
+  { src: "/images/hr/training-4.webp", caption: "Вручение сертификатов" },
 ];
 
 /* ── Program Areas — category cards ── */
@@ -648,7 +648,7 @@ export default function HRPage() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]" />
           <Image
-            src="/images/neftegaz/hero-poster.webp"
+            src="/images/hr/hero-poster.webp"
             alt=""
             fill
             className="object-cover sm:hidden"
@@ -656,7 +656,7 @@ export default function HRPage() {
           />
           <video
             autoPlay muted loop playsInline
-            poster="/images/neftegaz/hero-poster.webp"
+            poster="/images/hr/hero-poster.webp"
             className="absolute inset-0 w-full h-full object-cover hidden sm:block"
             onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
           >

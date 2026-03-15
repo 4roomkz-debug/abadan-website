@@ -157,10 +157,10 @@ const testimonials = [
 ];
 
 const trainingPhotos = [
-  { src: "/images/neftegaz/training-1.webp", caption: "Семинар по МСФО" },
-  { src: "/images/neftegaz/training-2.webp", caption: "Практикум по бюджетированию" },
-  { src: "/images/neftegaz/training-3.webp", caption: "Курс налогового планирования" },
-  { src: "/images/neftegaz/training-4.webp", caption: "Вручение сертификатов" },
+  { src: "/images/finansy/training-1.webp", caption: "Семинар по МСФО" },
+  { src: "/images/finansy/training-2.webp", caption: "Практикум по бюджетированию" },
+  { src: "/images/finansy/training-3.webp", caption: "Курс налогового планирования" },
+  { src: "/images/finansy/training-4.webp", caption: "Вручение сертификатов" },
 ];
 
 /* ── Program Areas — category cards ── */
@@ -640,7 +640,7 @@ export default function FinansyPage() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]" />
           <Image
-            src="/images/neftegaz/hero-poster.webp"
+            src="/images/finansy/hero-poster.webp"
             alt=""
             fill
             className="object-cover sm:hidden"
@@ -648,7 +648,7 @@ export default function FinansyPage() {
           />
           <video
             autoPlay muted loop playsInline
-            poster="/images/neftegaz/hero-poster.webp"
+            poster="/images/finansy/hero-poster.webp"
             className="absolute inset-0 w-full h-full object-cover hidden sm:block"
             onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
           >
