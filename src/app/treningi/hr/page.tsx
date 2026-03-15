@@ -171,19 +171,15 @@ function ProgramAreas({ onCategoryClick }: { onCategoryClick: (category: string)
   return (
     <div className="relative py-20 sm:py-28 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0d2628] via-[#1a2e30] to-[#0a1f21]"></div>
-
-      {/* Ambient glows */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00767D]/10 rounded-full blur-[150px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#F0BB1E]/5 rounded-full blur-[120px]" />
+      <div className="absolute inset-0 bg-[#f0f9f9]"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 text-[#2D3A3C]">
             От <span className="text-[#F0BB1E]">подбора</span> до{" "}
             <span className="text-[#00767D]">развития</span>
           </h2>
-          <p className="text-lg text-[#B8CDD0] max-w-2xl mx-auto">
+          <p className="text-lg text-[#546569] max-w-2xl mx-auto">
             Полный цикл HR-обучения для профессионалов
           </p>
         </div>
@@ -194,13 +190,13 @@ function ProgramAreas({ onCategoryClick }: { onCategoryClick: (category: string)
             <button
               key={index}
               onClick={() => onCategoryClick(area.category)}
-              className={`p-6 rounded-2xl bg-white/[0.12] border border-white/20 backdrop-blur-sm scroll-fade-in scroll-delay-${(index % 3) + 1} hover:bg-white/[0.18] transition-all text-left group cursor-pointer`}
+              className={`p-6 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${(index % 3) + 1} hover:bg-[#f0f9f9] hover:shadow-md transition-all text-left group cursor-pointer`}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mb-4">
                 {area.icon}
               </div>
-              <h3 className="text-lg font-bold mb-2" style={{ color: "#ffffff" }}>{area.title}</h3>
-              <p className="text-[#D4E4E7] text-sm leading-relaxed mb-3">{area.desc}</p>
+              <h3 className="text-lg font-bold mb-2 text-[#2D3A3C]">{area.title}</h3>
+              <p className="text-[#546569] text-sm leading-relaxed mb-3">{area.desc}</p>
               <span className="text-[#F0BB1E] text-sm font-semibold group-hover:gap-2 inline-flex items-center gap-1 transition-all">
                 {getCourseCount(area.category)} курсов
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -373,11 +369,11 @@ function EnrollmentModal({
 function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof testimonials[0]; index: number }) {
   const [photoFailed, setPhotoFailed] = useState(false);
   return (
-    <div className={`p-6 rounded-2xl bg-white/[0.06] border border-white/10 scroll-fade-in scroll-delay-${i + 1}`}>
+    <div className={`p-6 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${i + 1}`}>
       <svg className="w-8 h-8 text-[#F0BB1E]/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
       </svg>
-      <blockquote className="text-[#D4E4E7] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
+      <blockquote className="text-[#546569] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
           {photoFailed ? (
@@ -389,8 +385,8 @@ function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof tes
           )}
         </div>
         <div>
-          <p className="text-white font-semibold text-sm">{t.name}</p>
-          <p className="text-[#6B9196] text-xs">{t.title}, {t.company}</p>
+          <p className="text-[#2D3A3C] font-semibold text-sm">{t.name}</p>
+          <p className="text-[#7A8B8E] text-xs">{t.title}, {t.company}</p>
         </div>
       </div>
     </div>
@@ -404,17 +400,17 @@ function MetricCard({ item, index }: { item: { value: string; label: string; des
   return (
     <button
       onClick={() => setExpanded(!expanded)}
-      className={`text-center p-8 rounded-2xl bg-white/[0.06] border border-white/10 scroll-fade-in scroll-delay-${index + 1} hover:bg-white/[0.1] hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
+      className={`text-center p-8 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${index + 1} hover:bg-[#f0f9f9] hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
     >
       <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
         {item.icon}
       </div>
       <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2 text-center">{item.value}</div>
-      <p className="font-semibold mb-1 text-center" style={{ color: "#ffffff" }}>{item.label}</p>
-      <p className="text-[#7A9EA3] text-sm text-center">{item.desc}</p>
+      <p className="font-semibold mb-1 text-center text-[#2D3A3C]">{item.label}</p>
+      <p className="text-[#546569] text-sm text-center">{item.desc}</p>
       {expanded && (
-        <div className="mt-4 pt-4 border-t border-white/10">
-          <p className="text-[#B8CDD0] text-sm leading-relaxed">{item.caseStudy}</p>
+        <div className="mt-4 pt-4 border-t border-[#E0E8E9]">
+          <p className="text-[#546569] text-sm leading-relaxed">{item.caseStudy}</p>
         </div>
       )}
       <p className="text-[#00767D] text-xs mt-3 text-center font-medium">
@@ -534,7 +530,7 @@ function NeuralBackground({ particleCount = 50, connectionDistance = 150, opacit
 function HRClients() {
   const duplicated = [...HR_CLIENT_LOGOS, ...HR_CLIENT_LOGOS];
   return (
-    <section className="relative py-16 sm:py-24 bg-[#FAFAFA] overflow-hidden">
+    <section className="relative py-16 sm:py-24 bg-[#f0f9f9] overflow-hidden">
       <NeuralBackground particleCount={50} connectionDistance={150} opacity={0.35} />
       <div className="relative z-10">
         <div className="text-center mb-10 px-4">
@@ -651,18 +647,9 @@ export default function HRPage() {
             src="/images/hr/hero-poster.webp"
             alt=""
             fill
-            className="object-cover sm:hidden"
+            className="object-cover"
             priority
           />
-          <video
-            autoPlay muted loop playsInline
-            poster="/images/hr/hero-poster.webp"
-            className="absolute inset-0 w-full h-full object-cover hidden sm:block"
-            onError={(e) => { (e.target as HTMLVideoElement).style.display = "none"; }}
-          >
-            <source src="/videos/neftegaz-hero.webm" type="video/webm" />
-            <source src="/videos/neftegaz-hero.mp4" type="video/mp4" />
-          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
         </div>
 
@@ -741,7 +728,7 @@ export default function HRPage() {
       <ProgramAreas onCategoryClick={setActiveCategory} />
 
       {/* ═══ SCHEDULE ═══ */}
-      <section id="schedule" ref={scheduleRef} className="py-16 sm:py-24 section-white">
+      <section id="schedule" ref={scheduleRef} className="py-16 sm:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12 scroll-fade-in">
@@ -847,7 +834,7 @@ export default function HRPage() {
       </section>
 
       {/* ═══ TRAINING GALLERY ═══ */}
-      <section className="py-16 sm:py-24 bg-[#F8FAFA]">
+      <section className="py-16 sm:py-24 bg-[#f8f7f4]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12 scroll-fade-in">
@@ -883,15 +870,12 @@ export default function HRPage() {
       </section>
 
       {/* ═══ METRICS + TESTIMONIALS ═══ */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[#00767D]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-[#F0BB1E]/5 rounded-full blur-[100px]" />
-
+      <section className="py-16 sm:py-24 bg-[#f8f7f4] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-6xl mx-auto">
             {/* Metrics */}
             <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
+              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
                 Результат, который <span className="text-[#F0BB1E]">измерим</span>
               </h2>
             </div>
@@ -938,7 +922,7 @@ export default function HRPage() {
 
             {/* Testimonials */}
             <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
+              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
                 Отзывы <span className="text-[#00767D]">клиентов</span>
               </h2>
             </div>
@@ -952,59 +936,68 @@ export default function HRPage() {
         </div>
       </section>
 
-      {/* ═══ PAIN POINTS — Split Screen ═══ */}
-      <section className="py-0 overflow-hidden">
-        <div className="grid lg:grid-cols-2">
-          {/* Left — Problems (dark) */}
-          <div className="bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] p-10 sm:p-16 lg:p-20">
-            <div className="max-w-lg ml-auto">
-              <p className="text-red-400/80 text-xs uppercase tracking-widest font-semibold mb-4 scroll-fade-in">Знакомые проблемы?</p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 scroll-fade-in scroll-delay-1" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
-                Без системного обучения <span className="text-red-400">теряете</span>
+      {/* ═══ BEFORE / AFTER — Comparison ═══ */}
+      <section className="py-16 sm:py-24 bg-[#f0f9f9]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12 scroll-fade-in">
+              <span className="inline-block px-4 py-2 bg-[#00767D]/10 text-[#00767D] rounded-full text-sm font-medium mb-4">
+                Сравните результаты
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C]">
+                Что меняется после <span className="text-[#00767D]">обучения</span>
               </h2>
-              <div className="space-y-6">
-                {[
-                  "HR-процессы основаны на интуиции, а не на данных",
-                  "Сотрудники уходят в первые 3 месяца",
-                  "Трудовые споры заканчиваются не в вашу пользу",
-                  "Оценка персонала — формальность ради галочки",
-                ].map((problem, i) => (
-                  <div key={i} className={`flex items-start gap-4 scroll-fade-in-left scroll-delay-${(i % 3) + 1}`}>
-                    <div className="w-7 h-7 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <p className="text-[#B8CDD0] font-medium">{problem}</p>
-                  </div>
-                ))}
-              </div>
             </div>
-          </div>
 
-          {/* Right — Solutions (light) */}
-          <div className="bg-[#EEF4F4] p-10 sm:p-16 lg:p-20">
-            <div className="max-w-lg">
-              <p className="text-[#00767D] text-xs uppercase tracking-widest font-semibold mb-4 scroll-fade-in">Системный HR на основе данных</p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-10 scroll-fade-in scroll-delay-1">
-                С нами вы <span className="text-gradient-primary">получаете</span>
-              </h2>
-              <div className="space-y-6">
-                {[
-                  "HR-аналитика и метрики эффективности",
-                  "Структурированный онбординг с чек-листами",
-                  "Правовая защита работодателя от рисков",
-                  "Оценка компетенций, которая развивает",
-                ].map((solution, i) => (
-                  <div key={i} className={`flex items-start gap-4 scroll-fade-in-right scroll-delay-${(i % 3) + 1}`}>
-                    <div className="w-7 h-7 rounded-full bg-[#00767D]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-3.5 h-3.5 text-[#00767D]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <p className="text-[#2D3A3C] font-medium">{solution}</p>
+            <div className="grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-lg scroll-fade-in scroll-delay-1">
+              {/* Before */}
+              <div className="bg-white p-8 sm:p-10 lg:p-12">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </div>
-                ))}
+                  <h3 className="text-lg font-bold text-[#2D3A3C] uppercase tracking-wider">До обучения</h3>
+                </div>
+                <div className="space-y-5">
+                  {[
+                    "HR-процессы основаны на интуиции, а не на данных",
+                    "Сотрудники уходят в первые 3 месяца",
+                    "Трудовые споры заканчиваются не в вашу пользу",
+                    "Оценка персонала — формальность ради галочки",
+                  ].map((problem, i) => (
+                    <div key={i} className={`flex items-start gap-3 scroll-fade-in-left scroll-delay-${(i % 3) + 1}`}>
+                      <div className="w-1.5 h-1.5 rounded-full bg-red-300 flex-shrink-0 mt-2.5" />
+                      <p className="text-[#546569] leading-relaxed">{problem}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* After */}
+              <div className="bg-[#00767D] p-8 sm:p-10 lg:p-12">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-white uppercase tracking-wider">После обучения</h3>
+                </div>
+                <div className="space-y-5">
+                  {[
+                    "HR-аналитика и метрики эффективности",
+                    "Структурированный онбординг с чек-листами",
+                    "Правовая защита работодателя от рисков",
+                    "Оценка компетенций, которая развивает",
+                  ].map((solution, i) => (
+                    <div key={i} className={`flex items-start gap-3 scroll-fade-in-right scroll-delay-${(i % 3) + 1}`}>
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#F0BB1E] flex-shrink-0 mt-2.5" />
+                      <p className="text-white/90 leading-relaxed">{solution}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -1014,18 +1007,18 @@ export default function HRPage() {
       {/* ═══ CTA + FORM ═══ */}
       <section
         id="form"
-        className="py-16 sm:py-24 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden"
+        className="py-16 sm:py-24 bg-[#00767D] relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00767D]/10 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#F0BB1E]/5 rounded-full blur-[100px]"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#F0BB1E]/10 rounded-full blur-[100px]"></div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
+              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-white">
                 Закажите HR-обучение для вашей команды
               </h2>
-              <p className="text-lg text-[#B8CDD0]">
+              <p className="text-lg text-white/80">
                 Подберём программу под ваши задачи — от рекрутинга до HR-аналитики
               </p>
             </div>
@@ -1037,8 +1030,8 @@ export default function HRPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold mb-2" style={{ color: "#ffffff" }}>Заявка отправлена</h3>
-                <p className="text-[#B8CDD0]">Мы свяжемся с вами в ближайшее время</p>
+                <h3 className="text-2xl font-bold mb-2 text-white">Заявка отправлена</h3>
+                <p className="text-white/80">Мы свяжемся с вами в ближайшее время</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 scroll-fade-in scroll-delay-1">
@@ -1048,32 +1041,32 @@ export default function HRPage() {
                     type="text"
                     placeholder="Ваше имя"
                     required
-                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
                   />
                   <input
                     name="phone"
                     type="tel"
                     placeholder="Телефон"
                     required
-                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
                   />
                 </div>
                 <input
                   name="company"
                   type="text"
                   placeholder="Компания"
-                  className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                  className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
                 />
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input
                     name="employees"
                     type="number"
                     placeholder="Количество сотрудников (~)"
-                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
                   />
                   <select
                     name="direction"
-                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all appearance-none"
+                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all appearance-none"
                     defaultValue=""
                   >
                     <option value="" disabled>Направление обучения</option>
@@ -1092,7 +1085,7 @@ export default function HRPage() {
                 >
                   {formStatus === "sending" ? "Отправка..." : "Получить предложение"}
                 </button>
-                <p className="text-center text-[#7A9EA3] text-sm mt-3">Подготовим предложение за 24 часа</p>
+                <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
           </div>
