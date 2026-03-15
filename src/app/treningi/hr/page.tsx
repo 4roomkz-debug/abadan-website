@@ -350,9 +350,9 @@ function EnrollmentModal({
               <span>{training.priceOffline.toLocaleString("ru-RU")} ₸</span>
             </div>
             <form onSubmit={handleSubmit} className="space-y-3">
-              <input name="name" type="text" placeholder="Ваше имя" required className="w-full px-4 py-3 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all text-sm" />
-              <input name="phone" type="tel" placeholder="Телефон" required className="w-full px-4 py-3 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all text-sm" />
-              <input name="company" type="text" placeholder="Компания (необязательно)" className="w-full px-4 py-3 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all text-sm" />
+              <input name="name" type="text" placeholder="Ваше имя" required className="w-full px-4 py-3 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all text-sm" />
+              <input name="phone" type="tel" placeholder="Телефон" required className="w-full px-4 py-3 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all text-sm" />
+              <input name="company" type="text" placeholder="Компания (необязательно)" className="w-full px-4 py-3 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all text-sm" />
               <button type="submit" disabled={status === "sending"} className="w-full gold-button text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                 {status === "sending" ? "Отправка..." : "Отправить заявку"}
               </button>
@@ -1048,32 +1048,32 @@ export default function HRPage() {
                     type="text"
                     placeholder="Ваше имя"
                     required
-                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
+                    className="w-full px-5 py-4 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all"
                   />
                   <input
                     name="phone"
                     type="tel"
                     placeholder="Телефон"
                     required
-                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
+                    className="w-full px-5 py-4 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all"
                   />
                 </div>
                 <input
                   name="company"
                   type="text"
                   placeholder="Компания"
-                  className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
+                  className="w-full px-5 py-4 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all"
                 />
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input
                     name="employees"
                     type="number"
                     placeholder="Количество сотрудников (~)"
-                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white placeholder:text-[#6B9196] focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
+                    className="w-full px-5 py-4 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] placeholder:text-[#546569] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all"
                   />
                   <select
                     name="direction"
-                    className="w-full px-5 py-4 bg-white/15 border border-white/20 rounded-xl text-white focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all appearance-none"
+                    className="w-full px-5 py-4 bg-white/90 border border-white/60 rounded-xl text-[#2D3A3C] focus:outline-none focus:border-[#00767D] focus:bg-white transition-all appearance-none"
                     defaultValue=""
                   >
                     <option value="" disabled>Направление обучения</option>
