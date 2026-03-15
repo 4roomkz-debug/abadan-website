@@ -210,12 +210,12 @@ export default function Header() {
               )}
             </div>
 
-            {/* ibirAi button */}
+            {/* ibirAi button — visually separated with extra horizontal margin */}
             <Link
               href="https://ibirai.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-1.5"
+              className="mx-4 px-3 py-1.5 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-1.5"
             >
               <span>🤖</span>
               ibirAi
