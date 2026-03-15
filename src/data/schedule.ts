@@ -235,6 +235,60 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "business"
   },
   {
+    "date": "9-10 апреля",
+    "month": "Апрель",
+    "name": "Промпт-инжиниринг для корпоративных задач",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "16-17 апреля",
+    "month": "Апрель",
+    "name": "ИИ для автоматизации документооборота",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "14-15 мая",
+    "month": "Май",
+    "name": "ИИ в HR-процессах: от подбора до аналитики",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "21-22 мая",
+    "month": "Май",
+    "name": "ИИ для работы с данными и аналитики",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "4-5 июня",
+    "month": "Июнь",
+    "name": "Создание прикладных ИИ-агентов для бизнеса",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "18-19 июня",
+    "month": "Июнь",
+    "name": "Отраслевые AI-программы: ИИ для нефтегаза и энергетики",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 300000,
+    "category": "business"
+  },
+  {
     "date": "1-2 апреля",
     "month": "Апрель",
     "name": "Управление изменениями",

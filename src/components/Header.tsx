@@ -10,6 +10,7 @@ const trainingLinks = [
   { href: "/treningi/pravo", label: "Трудовое право" },
   { href: "/treningi/liderstvo", label: "Лидерство" },
   { href: "/treningi/neftegaz", label: "Нефтегаз" },
+  { href: "/treningi/ai", label: "ИИ для бизнеса" },
 ];
 
 export default function Header() {
