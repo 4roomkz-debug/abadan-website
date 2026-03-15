@@ -7,10 +7,10 @@ import Footer from "@/components/Footer";
 
 export default function AboutPage() {
   const stats = [
-    { value: "10+", label: "лет на рынке" },
-    { value: "359", label: "компаний-клиентов" },
-    { value: "50K+", label: "выпускников" },
-    { value: "200+", label: "экспертов" },
+    { value: "10+", label: "лет на рынке", detail: "с 2014 года" },
+    { value: "359", label: "компаний-клиентов", detail: "по всему Казахстану" },
+    { value: "50K+", label: "выпускников", detail: "обученных специалистов" },
+    { value: "200+", label: "экспертов", detail: "под любую задачу" },
   ];
 
   const pgtBlocks = [
@@ -87,26 +87,32 @@ export default function AboutPage() {
     {
       title: "Решение в день обращения",
       desc: "Коммерческое предложение с расчётом ROI — в день запроса. Без бюрократии и долгих согласований.",
+      num: "01",
     },
     {
       title: "Экономия до 50%",
       desc: "При рамочном договоре вы получаете существенную экономию на развитии команды.",
+      num: "02",
     },
     {
       title: "Обучение от 2 участников",
       desc: "Не нужно собирать большую группу. Каждый участник получает персональную обратную связь.",
+      num: "03",
     },
     {
       title: "200+ экспертов под любую задачу",
       desc: "Подберём тренера под вашу отрасль и специфику. Нефть, финансы, IT, HR — у нас есть все.",
+      num: "04",
     },
     {
       title: "Документы в день завершения",
       desc: "Все закрывающие документы — в день окончания обучения. Ваша бухгалтерия будет довольна.",
+      num: "05",
     },
     {
       title: "Логистика на нас",
       desc: "Организуем проживание и трансфер для участников из регионов — вам не нужно думать об этом.",
+      num: "06",
     },
   ];
 
@@ -114,56 +120,84 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Hero Section */}
-      <section className="relative py-20 sm:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#00767D]/5 via-transparent to-[#F0BB1E]/5"></div>
+      {/* ================================================
+          HERO — dark gradient with ambient glows
+          ================================================ */}
+      <section className="relative min-h-[85vh] flex items-center py-24 sm:py-32 overflow-hidden bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]">
+        {/* Ambient glow blobs */}
+        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-[#00767D]/20 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] bg-[#F0BB1E]/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-[#00767D]/8 rounded-full blur-[140px] pointer-events-none" />
+
+        {/* Subtle grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <nav className="flex items-center justify-center gap-2 text-sm text-[#7A8B8E] mb-6">
-              <Link href="/" className="hover:text-[#00767D] transition-colors">Главная</Link>
+          <div className="max-w-5xl mx-auto">
+            {/* Breadcrumb */}
+            <nav className="flex items-center gap-2 text-sm text-white/40 mb-8 scroll-fade-in">
+              <Link href="/" className="hover:text-white/70 transition-colors">Главная</Link>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              <span className="text-[#2D3A3C] font-medium">О компании</span>
+              <span className="text-white/60 font-medium">О компании</span>
             </nav>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00767D]/10 text-[#00767D] text-sm font-semibold mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#00767D] animate-pulse"></span>
+
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00767D]/40 bg-[#00767D]/15 text-[#009BA3] text-sm font-semibold mb-8 scroll-fade-in scroll-delay-1">
+              <span className="w-2 h-2 rounded-full bg-[#009BA3] animate-pulse" />
               People Growth Technology
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C] mb-6">
+
+            {/* Headline */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] mb-6 scroll-fade-in scroll-delay-2">
               Развиваем людей.<br />
-              <span className="text-gradient-primary">Растим показатели.</span><br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00767D] to-[#009BA3]">Растим показатели.</span><br />
               Через технологии.
             </h1>
-            <p className="text-xl text-[#546569] max-w-2xl mx-auto">
+
+            <p className="text-xl text-white/60 max-w-2xl mb-14 scroll-fade-in scroll-delay-3">
               Abadan & Co. — это не просто тренинговый центр. Это компания нового типа,
               которая объединяет классическое обучение с современными технологиями.
             </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-[#F8FAFA]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl sm:text-5xl font-extrabold text-[#00767D] mb-2">
-                  {stat.value}
+            {/* Hero stats row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 scroll-fade-in scroll-delay-4">
+              {stats.map((stat, i) => (
+                <div
+                  key={i}
+                  className="relative p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-[#00767D]/40 hover:bg-[#00767D]/10 transition-all duration-300"
+                >
+                  <div className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#F0BB1E] to-[#F5CA3B] leading-none mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-white/80 font-semibold text-sm leading-tight">{stat.label}</div>
+                  <div className="text-white/35 text-xs mt-1">{stat.detail}</div>
                 </div>
-                <div className="text-[#546569] font-medium">{stat.label}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Founder Letter */}
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ================================================
+          FOUNDER SECTION — light bg, prominent photo + quote
+          ================================================ */}
+      <section className="py-20 sm:py-28 bg-white relative overflow-hidden">
+        {/* Subtle decorative teal wash top-right */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#00767D]/4 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-5xl mx-auto">
-            <div className="flex justify-center mb-10 scroll-fade-in">
+            {/* Section label */}
+            <div className="flex justify-center mb-12 scroll-fade-in">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F0BB1E]/10 text-[#D4A017] text-sm font-semibold">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -172,12 +206,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-5 gap-10 md:gap-14 items-start">
-              {/* Photo + name */}
-              <div className="md:col-span-2 scroll-fade-in">
+            <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
+              {/* Photo column */}
+              <div className="md:col-span-2 scroll-fade-in-left">
                 <div className="relative">
-                  <div className="absolute -inset-3 bg-gradient-to-br from-[#00767D]/15 to-[#F0BB1E]/15 rounded-3xl blur-2xl"></div>
-                  <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-xl">
+                  {/* Glow halo */}
+                  <div className="absolute -inset-4 bg-gradient-to-br from-[#00767D]/20 to-[#F0BB1E]/15 rounded-3xl blur-2xl" />
+                  {/* Photo frame */}
+                  <div className="relative rounded-2xl overflow-hidden aspect-[3/4] shadow-2xl ring-1 ring-white/10">
                     <Image
                       src="/images/founder.jpg"
                       alt="Гани Абадан — основатель Abadan & Co."
@@ -186,20 +222,56 @@ export default function AboutPage() {
                       sizes="(max-width: 768px) 100vw, 40vw"
                       priority
                     />
+                    {/* Bottom gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d2628]/60 via-transparent to-transparent" />
+                    {/* Name badge inside photo */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <p className="text-white text-xl font-extrabold leading-tight">Гани Абадан</p>
+                      <p className="text-[#009BA3] font-semibold text-sm mt-0.5">Основатель и старший партнёр</p>
+                    </div>
                   </div>
-                  <div className="mt-4 text-center">
-                    <p className="text-xl font-bold text-[#2D3A3C]">Гани Абадан</p>
-                    <p className="text-[#00767D] font-medium text-sm">Основатель и старший партнёр</p>
+
+                  {/* Credential pills */}
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {["10+ лет опыта", "359 клиентов", "Казахстан"].map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1.5 rounded-full bg-[#F8FAFA] border border-[#00767D]/15 text-[#546569] text-xs font-semibold"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Contact links */}
+                  <div className="flex flex-col gap-2 mt-4">
+                    <a href="tel:+87019188838" className="flex items-center gap-2 text-sm text-[#546569] hover:text-[#00767D] transition-colors font-medium">
+                      <svg className="w-4 h-4 text-[#00767D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      +7 701 918-88-38
+                    </a>
+                    <a href="mailto:gani@abadan.kz" className="flex items-center gap-2 text-sm text-[#546569] hover:text-[#00767D] transition-colors font-medium">
+                      <svg className="w-4 h-4 text-[#00767D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      gani@abadan.kz
+                    </a>
                   </div>
                 </div>
               </div>
 
-              {/* Letter */}
-              <div className="md:col-span-3 scroll-fade-in scroll-delay-1">
-                <div className="text-[#546569] text-lg leading-relaxed space-y-5">
-                  <p className="text-[#2D3A3C] text-xl sm:text-2xl font-semibold leading-snug">
-                    Уважаемые коллеги,
+              {/* Letter column */}
+              <div className="md:col-span-3 scroll-fade-in-right scroll-delay-1">
+                {/* Pull quote */}
+                <blockquote className="relative pl-6 mb-8 border-l-4 border-[#F0BB1E]">
+                  <p className="text-2xl sm:text-3xl font-bold text-[#2D3A3C] leading-snug">
+                    «Мы не&nbsp;«проводим тренинги» — мы решаем бизнес-задачи через развитие команд»
                   </p>
+                </blockquote>
+
+                <div className="text-[#546569] text-lg leading-relaxed space-y-5">
+                  <p className="text-[#2D3A3C] text-xl font-semibold">Уважаемые коллеги,</p>
                   <p>
                     Меня зовут Гани Абадан, я основатель и старший партнер компании Abadan & Company.
                     За более чем 10 лет работы в корпоративном обучении мы прошли путь от небольшого
@@ -212,9 +284,7 @@ export default function AboutPage() {
                     <strong className="text-[#2D3A3C]">359 компаний</strong> уже выбрали нас в качестве партнёра.
                   </p>
                   <p>
-                    Наш принцип прост:{" "}
-                    <strong className="text-[#2D3A3C]">мы не «проводим тренинги» — мы решаем бизнес-задачи
-                    через развитие команд</strong>. Каждая наша программа — это 80% практики на реальных кейсах
+                    Каждая наша программа — это 80% практики на реальных кейсах
                     вашей компании. Не абстрактные теории, а конкретные навыки, которые сотрудники применяют
                     уже на следующий день.
                   </p>
@@ -226,50 +296,33 @@ export default function AboutPage() {
                   </p>
                   <p>
                     Я лично гарантирую качество каждой программы. Если результат не оправдает ваших
-                    ожиданий — мы проведём повторное занятие за наш счёт. Буду рад обсудить, как мы можем
-                    помочь именно вашей компании.
+                    ожиданий — мы проведём повторное занятие за наш счёт.
                   </p>
 
                   {/* Signature */}
-                  <div className="pt-4">
-                    <p className="text-[#2D3A3C] text-base mb-4">С уважением и теплотой,</p>
-                    <div className="mb-3">
-                      <div className="w-48 h-20 relative">
-                        <svg viewBox="0 0 200 80" className="w-full h-full text-[#2D3A3C]/70">
-                          <path
-                            d="M10 55 Q25 15 45 40 T80 30 Q95 25 110 45 T140 35 Q155 30 170 50 L190 45"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M30 60 Q50 55 70 62 T110 58"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </div>
+                  <div className="pt-2">
+                    <p className="text-[#2D3A3C] text-base mb-3">С уважением и теплотой,</p>
+                    <div className="mb-2 w-48 h-16 relative">
+                      <svg viewBox="0 0 200 80" className="w-full h-full text-[#2D3A3C]/60">
+                        <path
+                          d="M10 55 Q25 15 45 40 T80 30 Q95 25 110 45 T140 35 Q155 30 170 50 L190 45"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M30 60 Q50 55 70 62 T110 58"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
                     </div>
                     <p className="text-lg font-bold text-[#2D3A3C]">Гани Абадан</p>
-                    <p className="text-[#7A8B8E] text-sm mb-3">Abadan & Company</p>
-                    <div className="flex flex-wrap gap-4 text-sm text-[#546569]">
-                      <a href="tel:+87019188838" className="flex items-center gap-1.5 hover:text-[#00767D] transition-colors">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        +7 701 918-88-38
-                      </a>
-                      <a href="mailto:gani@abadan.kz" className="flex items-center gap-1.5 hover:text-[#00767D] transition-colors">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        gani@abadan.kz
-                      </a>
-                    </div>
+                    <p className="text-[#7A8B8E] text-sm">Abadan & Company</p>
                   </div>
                 </div>
               </div>
@@ -278,28 +331,45 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Advantages Section */}
-      <section className="py-16 sm:py-20 bg-[#F8FAFA]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#2D3A3C] mb-8 scroll-fade-in">
-              Вот что конкретно мы даём нашим партнёрам:
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+      {/* ================================================
+          ADVANTAGES — dark card grid
+          ================================================ */}
+      <section className="py-20 sm:py-28 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F0BB1E]/8 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#00767D]/15 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-14 scroll-fade-in">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F0BB1E]/30 bg-[#F0BB1E]/10 text-[#F0BB1E] text-sm font-semibold mb-6">
+                Наши преимущества
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                Вот что конкретно мы даём<br className="hidden sm:block" /> нашим партнёрам:
+              </h2>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {advantages.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex gap-4 p-5 rounded-xl bg-white border border-[#00767D]/8 scroll-fade-in scroll-delay-${(index % 3) + 1}`}
+                  className={`group relative p-7 rounded-2xl border border-white/8 bg-white/5 backdrop-blur-sm hover:border-[#00767D]/40 hover:bg-[#00767D]/10 transition-all duration-300 scroll-fade-in scroll-delay-${(index % 3) + 1}`}
                 >
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center mt-0.5">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* Number watermark */}
+                  <div className="absolute top-5 right-6 text-5xl font-extrabold text-white/5 select-none leading-none group-hover:text-[#00767D]/15 transition-colors">
+                    {item.num}
+                  </div>
+
+                  {/* Check icon */}
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center mb-5">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <div>
-                    <p className="font-semibold text-[#2D3A3C] text-base mb-1">{item.title}</p>
-                    <p className="text-[#546569] text-sm leading-relaxed">{item.desc}</p>
-                  </div>
+
+                  <p className="font-bold text-white text-base mb-2 leading-snug pr-8">{item.title}</p>
+                  <p className="text-white/55 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -307,15 +377,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* PGT Section */}
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 scroll-fade-in">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-4">
-              People Growth Technology
+      {/* ================================================
+          PGT — light bg with bold cards
+          ================================================ */}
+      <section className="py-20 sm:py-28 bg-white relative overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-[#00767D]/5 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16 scroll-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00767D]/8 text-[#00767D] text-sm font-semibold mb-6">
+              Наш фреймворк
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#2D3A3C] mb-4 leading-tight">
+              People <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00767D] to-[#009BA3]">·</span> Growth <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00767D] to-[#009BA3]">·</span> Technology
             </h2>
-            <p className="text-xl text-[#546569]">
-              Три столпа нашего подхода
+            <p className="text-xl text-[#546569] max-w-xl mx-auto">
+              Три столпа нашего подхода к корпоративному обучению
             </p>
           </div>
 
@@ -323,49 +400,67 @@ export default function AboutPage() {
             {pgtBlocks.map((block, index) => (
               <div
                 key={index}
-                className={`relative p-8 rounded-2xl scroll-fade-in scroll-delay-${index + 1} ${
+                className={`relative p-8 pt-14 rounded-2xl scroll-fade-in scroll-delay-${index + 1} overflow-hidden group transition-all duration-300 ${
                   block.color === "gold"
-                    ? "bg-gradient-to-br from-[#F0BB1E]/10 to-[#F0BB1E]/5 border border-[#F0BB1E]/20"
-                    : "bg-white border border-[#00767D]/10 shadow-sm"
+                    ? "bg-gradient-to-br from-[#1a2e30] to-[#0d2628] border border-[#F0BB1E]/25 hover:border-[#F0BB1E]/50"
+                    : "bg-gradient-to-br from-[#F8FAFA] to-white border border-[#00767D]/12 hover:border-[#00767D]/30 hover:shadow-lg hover:shadow-[#00767D]/8"
                 }`}
               >
-                <div className={`absolute -top-4 -left-4 w-16 h-16 rounded-xl flex items-center justify-center text-3xl font-extrabold ${
-                  block.color === "gold"
-                    ? "bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C]"
-                    : "bg-gradient-to-br from-[#00767D] to-[#006D77] text-white"
+                {/* Glow in corner */}
+                {block.color === "gold" && (
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#F0BB1E]/10 rounded-full blur-2xl pointer-events-none" />
+                )}
+
+                {/* Big letter badge */}
+                <div className={`absolute top-5 left-8 text-7xl font-extrabold leading-none select-none ${
+                  block.color === "gold" ? "text-[#F0BB1E]/20" : "text-[#00767D]/10"
                 }`}>
                   {block.letter}
                 </div>
-                <div className="pt-8">
-                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${
-                    block.color === "gold"
-                      ? "bg-[#F0BB1E]/20 text-[#D4A017]"
-                      : "bg-[#00767D]/10 text-[#00767D]"
-                  }`}>
-                    {block.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#2D3A3C] mb-1">{block.title}</h3>
-                  <p className={`text-sm font-medium mb-4 ${
-                    block.color === "gold" ? "text-[#D4A017]" : "text-[#00767D]"
-                  }`}>
-                    {block.subtitle}
-                  </p>
-                  <p className="text-[#546569] leading-relaxed">
-                    {block.description}
-                  </p>
+
+                {/* Icon */}
+                <div className={`relative z-10 w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${
+                  block.color === "gold"
+                    ? "bg-[#F0BB1E]/15 text-[#F0BB1E]"
+                    : "bg-[#00767D]/10 text-[#00767D]"
+                }`}>
+                  {block.icon}
                 </div>
+
+                <h3 className={`relative z-10 text-2xl font-extrabold mb-1 ${
+                  block.color === "gold" ? "text-white" : "text-[#2D3A3C]"
+                }`}>
+                  {block.title}
+                </h3>
+                <p className={`relative z-10 text-sm font-bold mb-4 uppercase tracking-wider ${
+                  block.color === "gold" ? "text-[#F0BB1E]" : "text-[#00767D]"
+                }`}>
+                  {block.subtitle}
+                </p>
+                <p className={`relative z-10 leading-relaxed ${
+                  block.color === "gold" ? "text-white/65" : "text-[#546569]"
+                }`}>
+                  {block.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Hybrid Model Section */}
-      <section className="py-16 sm:py-20 bg-[#F8FAFA]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 scroll-fade-in">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-4">
-              Гибридная модель <span className="text-gradient-gold">обучения</span>
+      {/* ================================================
+          HYBRID MODEL — subtle bg
+          ================================================ */}
+      <section className="py-20 sm:py-28 bg-[#F8FAFA] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-[350px] h-[350px] bg-[#00767D]/5 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-14 scroll-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00767D]/8 text-[#00767D] text-sm font-semibold mb-6">
+              Форматы обучения
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2D3A3C] mb-4">
+              Гибридная модель <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EBB417] to-[#F0BB1E]">обучения</span>
             </h2>
             <p className="text-xl text-[#546569] max-w-2xl mx-auto">
               Мы комбинируем разные форматы для максимального результата
@@ -376,33 +471,41 @@ export default function AboutPage() {
             {hybridFormats.map((format, index) => (
               <div
                 key={index}
-                className={`p-6 rounded-2xl scroll-fade-in scroll-delay-${index + 1} ${
+                className={`relative p-7 rounded-2xl scroll-fade-in scroll-delay-${index + 1} transition-all duration-300 group ${
                   format.highlight
-                    ? "bg-gradient-to-br from-[#00767D] to-[#006D77] text-white"
-                    : "bg-white border border-[#00767D]/10 shadow-sm"
+                    ? "bg-gradient-to-br from-[#00767D] to-[#006D77] text-white shadow-xl shadow-[#00767D]/25"
+                    : "bg-white border border-[#00767D]/10 shadow-sm hover:shadow-md hover:border-[#00767D]/25"
                 }`}
               >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                {format.highlight && (
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+                )}
+
+                <div className={`w-13 h-13 w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${
                   format.highlight
-                    ? "bg-white/20 text-white"
-                    : "bg-[#00767D]/10 text-[#00767D]"
+                    ? "bg-white/15 text-white"
+                    : "bg-[#00767D]/10 text-[#00767D] group-hover:bg-[#00767D]/20 transition-colors"
                 }`}>
                   {format.icon}
                 </div>
-                <h3 className={`text-xl font-bold mb-2 ${
+
+                <h3 className={`text-xl font-extrabold mb-3 ${
                   format.highlight ? "text-white" : "text-[#2D3A3C]"
                 }`}>
                   {format.title}
                 </h3>
-                <p className={format.highlight ? "text-white/80" : "text-[#546569]"}>
+                <p className={`text-sm leading-relaxed ${
+                  format.highlight ? "text-white/75" : "text-[#546569]"
+                }`}>
                   {format.description}
                 </p>
+
                 {format.highlight && (
                   <Link
                     href="/projects"
-                    className="inline-flex items-center gap-2 mt-4 text-[#F0BB1E] font-semibold hover:gap-3 transition-all"
+                    className="inline-flex items-center gap-2 mt-5 text-[#F0BB1E] font-bold text-sm hover:gap-3 transition-all"
                   >
-                    Подробнее
+                    Подробнее об ibirAi
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -414,26 +517,35 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center scroll-fade-in">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#2D3A3C] mb-6">
-              Готовы развивать свою команду?
+      {/* ================================================
+          CTA — dark with gold button
+          ================================================ */}
+      <section className="py-20 sm:py-28 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#00767D]/20 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#F0BB1E]/8 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl mx-auto text-center scroll-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F0BB1E]/30 bg-[#F0BB1E]/10 text-[#F0BB1E] text-sm font-semibold mb-8">
+              Начнём сотрудничество
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6 leading-tight">
+              Готовы развивать<br />свою команду?
             </h2>
-            <p className="text-xl text-[#546569] mb-8">
-              Получите бесплатную консультацию и коммерческое предложение
+            <p className="text-xl text-white/60 mb-10 max-w-xl mx-auto">
+              Получите бесплатную консультацию и коммерческое предложение с расчётом ROI в день обращения
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/#contact"
-                className="px-8 py-4 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-bold rounded-xl hover:shadow-lg hover:shadow-[#F0BB1E]/20 transition-all text-center"
+                className="gold-button px-10 py-4 text-base font-bold rounded-xl text-center"
               >
                 Оставить заявку
               </Link>
               <Link
                 href="/schedule"
-                className="px-8 py-4 border-2 border-[#00767D] text-[#00767D] font-bold rounded-xl hover:bg-[#00767D] hover:text-white transition-all text-center"
+                className="px-10 py-4 border-2 border-white/20 text-white font-bold rounded-xl hover:border-[#00767D]/60 hover:bg-[#00767D]/15 transition-all text-center text-base"
               >
                 Смотреть расписание
               </Link>
