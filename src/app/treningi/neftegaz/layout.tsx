@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SCHEDULE_DATA } from "@/data/schedule";
 
 export const metadata: Metadata = {
   title: "Технические курсы для нефтегазовой отрасли — Abadan & Co.",
@@ -28,10 +29,79 @@ export const metadata: Metadata = {
   },
 };
 
+const OG_KEYWORDS = [
+  "нефт", "газ", "скважин", "бурен", "добыч", "переработк",
+  "трубопровод", "месторожден", "геолог", "промыслов", "пласт",
+  "КРС", "ГРП", "НГДУ", "коррози", "насос", "компрессор",
+  "резервуар", "нефтебаз", "ГСМ", "эксплуатац", "интенсификац",
+  "сероводород", "КИП", "автоматизац", "метрологи", "крекинг",
+  "ректификац", "нефтехим", "битум", "мазут", "цементирован",
+];
+
+function isNeftegazTraining(name: string): boolean {
+  const lower = name.toLowerCase();
+  return OG_KEYWORDS.some((kw) => lower.includes(kw.toLowerCase()));
+}
+
+function buildCourseJsonLd() {
+  const neftegazCourses = SCHEDULE_DATA.filter((item) => isNeftegazTraining(item.name));
+  return neftegazCourses.slice(0, 20).map((course) => ({
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: course.name,
+    description: `Технический курс: ${course.name}. ${course.hours} часов, очный и онлайн формат.`,
+    provider: {
+      "@type": "Organization",
+      name: "Abadan & Co.",
+      url: "https://abadan.kz",
+    },
+    offers: [
+      {
+        "@type": "Offer",
+        price: course.priceOffline,
+        priceCurrency: "KZT",
+        name: "Очный формат",
+        availability: "https://schema.org/InStock",
+      },
+      {
+        "@type": "Offer",
+        price: course.priceOnline,
+        priceCurrency: "KZT",
+        name: "Онлайн формат",
+        availability: "https://schema.org/InStock",
+      },
+    ],
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: ["onsite", "online"],
+      duration: `PT${course.hours}H`,
+      inLanguage: "ru",
+      location: {
+        "@type": "Place",
+        name: "Алматы, Казахстан",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Алматы",
+          addressCountry: "KZ",
+        },
+      },
+    },
+  }));
+}
+
 export default function NeftegazLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  const coursesJsonLd = buildCourseJsonLd();
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesJsonLd) }}
+      />
+      {children}
+    </>
+  );
 }
