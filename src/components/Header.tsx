@@ -126,6 +126,16 @@ export default function Header() {
               ibirAi
             </Link>
             <Link
+              href="/kejsy"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/kejsy")
+                  ? "text-[#00767D]"
+                  : "text-[#546569] hover:text-[#00767D]"
+              }`}
+            >
+              Кейсы
+            </Link>
+            <Link
               href="/projects"
               className={`text-sm font-medium transition-colors ${
                 isActive("/projects")
@@ -263,6 +273,17 @@ export default function Header() {
               >
                 <span>🤖</span>
                 ibirAi
+              </Link>
+              <Link
+                href="/kejsy"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`text-sm font-medium py-2 transition-colors ${
+                  isActive("/kejsy")
+                    ? "text-[#00767D]"
+                    : "text-[#546569] hover:text-[#00767D]"
+                }`}
+              >
+                Кейсы
               </Link>
               <Link
                 href="/projects"
