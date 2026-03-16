@@ -88,17 +88,51 @@ function buildCourseJsonLd() {
   }));
 }
 
+const LIDERSTVO_FAQ = [
+  { question: "Какие тренинги для руководителей вы предлагаете?", answer: "Более 12 тренингов: лидерство и управление командой, деловые переговоры, управление конфликтами, тайм-менеджмент, эмоциональный интеллект, публичные выступления, коучинг, стратегическое мышление." },
+  { question: "Сколько стоят тренинги для руководителей?", answer: "Стоимость тренингов от 120 000 до 200 000 тенге. Корпоративный формат с адаптацией под компанию — по запросу. Онлайн-формат дешевле очного." },
+  { question: "Подходят ли тренинги для линейных менеджеров?", answer: "Да, у нас есть программы для разных уровней: от линейных руководителей до топ-менеджмента. Тренер адаптирует кейсы и упражнения под уровень участников." },
+  { question: "Как проходят тренинги по лидерству?", answer: "Формат: 20% теории, 80% практики. Деловые игры, кейсы из реального бизнеса, групповые упражнения, индивидуальная обратная связь от тренера." },
+  { question: "Можно ли заказать корпоративный тренинг по лидерству?", answer: "Да, мы проводим корпоративные тренинги с адаптацией программы под задачи вашей компании. Предварительно проводим диагностику для точной настройки содержания." },
+  { question: "Есть ли программы по переговорам?", answer: "Да, мы предлагаем несколько форматов: базовый курс деловых переговоров, жёсткие переговоры, переговоры в закупках, международные переговоры. Всё с практической отработкой." },
+];
+
 export default function LiderstvoLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const coursesJsonLd = buildCourseJsonLd();
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: LIDERSTVO_FAQ.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Лидерство", item: "https://abadan.kz/treningi/liderstvo" },
+          ],
+        }) }}
       />
       {children}
     </>

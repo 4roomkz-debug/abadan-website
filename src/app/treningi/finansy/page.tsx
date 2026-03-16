@@ -577,6 +577,17 @@ function FinanceClients() {
   );
 }
 
+/* ── FAQ ── */
+
+const FAQ_ITEMS = [
+  { question: "Какие финансовые курсы доступны для бизнеса?", answer: "Более 18 курсов: МСФО/IFRS, налогообложение в РК, бюджетирование и планирование, казначейство, финансовый анализ, аудит, управленческий учёт, трансфертное ценообразование." },
+  { question: "Сколько стоят курсы по финансам?", answer: "Стоимость финансовых курсов от 100 000 до 200 000 тенге в зависимости от программы и формата. Для корпоративных клиентов — специальные условия." },
+  { question: "Есть ли курсы по МСФО в Казахстане?", answer: "Да, у нас есть несколько программ по МСФО: от базового курса до продвинутых тем (финансовые инструменты, консолидация, обесценение). Все курсы адаптированы под казахстанскую практику." },
+  { question: "Кто проводит финансовые тренинги?", answer: "Тренеры — практикующие финансисты, аудиторы и консультанты с опытом работы в Big4, международных и казахстанских компаниях. Более 200 экспертов в нашем пуле." },
+  { question: "Можно ли пройти финансовый курс онлайн?", answer: "Да, все финансовые курсы доступны в онлайн-формате через Zoom. Практические задания, кейсы и материалы те же, что и на очных занятиях." },
+  { question: "Подходят ли курсы для финансистов нефтегазовых компаний?", answer: "Да, у нас есть специализированные программы с учётом специфики нефтегазовой отрасли: учёт в добывающих компаниях, налогообложение недропользователей, PRMS." },
+];
+
 /* ── Main Page ── */
 
 export default function FinansyPage() {
@@ -1087,6 +1098,30 @@ export default function FinansyPage() {
                 <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-[#F8FAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12 scroll-fade-in">
+            Часто задаваемые вопросы
+          </h2>
+          <div className="space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={i} className="group bg-white rounded-2xl shadow-sm border border-[#e8eded] scroll-fade-in scroll-delay-1">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-semibold text-[#2D3A3C] pr-4">{item.question}</span>
+                  <svg className="w-5 h-5 text-[#00767D] shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#546569] leading-relaxed">
+                  {item.answer}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

@@ -212,9 +212,7 @@ export default function Header() {
 
             {/* ibirAi button — visually separated with extra horizontal margin */}
             <Link
-              href="https://ibirai.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/ibirai"
               className="mx-4 px-3 py-1.5 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-1.5"
             >
               <span>🤖</span>
@@ -369,9 +367,7 @@ export default function Header() {
 
               {/* ibirAi button */}
               <Link
-                href="https://ibirai.com"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/ibirai"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >

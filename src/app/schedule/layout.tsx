@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SCHEDULE_DATA } from "@/data/schedule";
 
 export const metadata: Metadata = {
   title: "Расписание открытых тренингов 2026",
@@ -24,10 +25,62 @@ export const metadata: Metadata = {
   },
 };
 
+function buildCourseListJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Открытые тренинги Abadan & Co.",
+    description: "Расписание бизнес-тренингов и технических семинаров на 2026 год",
+    url: "https://abadan.kz/schedule",
+    numberOfItems: SCHEDULE_DATA.length,
+    itemListElement: SCHEDULE_DATA.slice(0, 30).map((course, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Course",
+        name: course.name,
+        description: `${course.name}. ${course.hours} часов, очный и онлайн формат.`,
+        provider: {
+          "@type": "Organization",
+          name: "Abadan & Co.",
+          url: "https://abadan.kz",
+        },
+        offers: {
+          "@type": "Offer",
+          price: course.priceOffline,
+          priceCurrency: "KZT",
+          availability: "https://schema.org/InStock",
+        },
+      },
+    })),
+  };
+}
+
 export default function ScheduleLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  const courseListJsonLd = buildCourseListJsonLd();
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Расписание", item: "https://abadan.kz/schedule" },
+    ],
+  };
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseListJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {children}
+    </>
+  );
 }

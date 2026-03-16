@@ -27,6 +27,15 @@ const leadershipTrainings = SCHEDULE_DATA.filter((item) =>
   isLeadershipTraining(item.name)
 );
 
+const FAQ_ITEMS = [
+  { question: "Какие тренинги для руководителей вы предлагаете?", answer: "Более 12 тренингов: лидерство и управление командой, деловые переговоры, управление конфликтами, тайм-менеджмент, эмоциональный интеллект, публичные выступления, коучинг, стратегическое мышление." },
+  { question: "Сколько стоят тренинги для руководителей?", answer: "Стоимость тренингов от 120 000 до 200 000 тенге. Корпоративный формат с адаптацией под компанию — по запросу. Онлайн-формат дешевле очного." },
+  { question: "Подходят ли тренинги для линейных менеджеров?", answer: "Да, у нас есть программы для разных уровней: от линейных руководителей до топ-менеджмента. Тренер адаптирует кейсы и упражнения под уровень участников." },
+  { question: "Как проходят тренинги по лидерству?", answer: "Формат: 20% теории, 80% практики. Деловые игры, кейсы из реального бизнеса, групповые упражнения, индивидуальная обратная связь от тренера." },
+  { question: "Можно ли заказать корпоративный тренинг по лидерству?", answer: "Да, мы проводим корпоративные тренинги с адаптацией программы под задачи вашей компании. Предварительно проводим диагностику для точной настройки содержания." },
+  { question: "Есть ли программы по переговорам?", answer: "Да, мы предлагаем несколько форматов: базовый курс деловых переговоров, жёсткие переговоры, переговоры в закупках, международные переговоры. Всё с практической отработкой." },
+];
+
 const programAreas = [
   {
     title: "Лидерство и управление",
@@ -1085,6 +1094,30 @@ export default function LiderstvoPage() {
                 <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-[#F8FAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12 scroll-fade-in">
+            Часто задаваемые вопросы
+          </h2>
+          <div className="space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={i} className="group bg-white rounded-2xl shadow-sm border border-[#e8eded] scroll-fade-in scroll-delay-1">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-semibold text-[#2D3A3C] pr-4">{item.question}</span>
+                  <svg className="w-5 h-5 text-[#00767D] shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#546569] leading-relaxed">
+                  {item.answer}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

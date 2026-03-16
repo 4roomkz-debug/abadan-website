@@ -87,17 +87,51 @@ function buildCourseJsonLd() {
   }));
 }
 
+const HR_FAQ = [
+  { question: "Какие HR-курсы доступны в Казахстане?", answer: "Abadan & Co. предлагает более 20 HR-курсов: трудовое право РК, рекрутинг, оценка персонала, KPI и грейдирование, кадровое делопроизводство, HR-аналитика. Курсы проводятся очно в Алматы и онлайн." },
+  { question: "Сколько стоят HR-тренинги?", answer: "Стоимость HR-курсов от 100 000 до 180 000 тенге в зависимости от продолжительности и формата. Онлайн-формат дешевле очного. Корпоративным клиентам предоставляются скидки." },
+  { question: "Какой сертификат выдаётся после обучения?", answer: "По окончании каждого курса выдаётся именной сертификат Abadan & Co., подтверждающий повышение квалификации. Сертификат признаётся работодателями Казахстана." },
+  { question: "Можно ли пройти HR-курс онлайн?", answer: "Да, все HR-курсы доступны в онлайн-формате через Zoom. Вы получаете те же материалы, сертификат и доступ к записи занятий." },
+  { question: "Какая продолжительность HR-курсов?", answer: "Курсы длятся от 16 до 40 академических часов (2-5 дней). Есть интенсивные форматы на выходных и вечерние программы." },
+  { question: "Проводите ли вы корпоративное HR-обучение?", answer: "Да, мы проводим корпоративные тренинги с адаптацией под специфику компании. Выезжаем в регионы Казахстана. Более 9 000 специалистов обучено за 15 лет." },
+];
+
 export default function HRLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const coursesJsonLd = buildCourseJsonLd();
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: HR_FAQ.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "HR и кадры", item: "https://abadan.kz/treningi/hr" },
+          ],
+        }) }}
       />
       {children}
     </>

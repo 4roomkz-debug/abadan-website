@@ -25,6 +25,15 @@ const aiTrainings = SCHEDULE_DATA.filter((item) =>
   isAITraining(item.name)
 );
 
+const FAQ_ITEMS = [
+  { question: "Какие курсы по искусственному интеллекту вы предлагаете?", answer: "8+ курсов: промпт-инжиниринг для бизнеса, ИИ для HR, автоматизация документооборота с ИИ, ИИ-агенты, работа с данными и аналитика, нейросети для маркетинга, ChatGPT и Claude для руководителей." },
+  { question: "Нужен ли технический опыт для курсов по ИИ?", answer: "Нет, наши курсы разработаны для бизнес-пользователей без технического бэкграунда. Фокус на практическое применение ИИ в повседневных рабочих задачах." },
+  { question: "Сколько стоят курсы по ИИ?", answer: "Стоимость от 90 000 до 160 000 тенге. Корпоративный формат с адаптацией под отрасль и задачи компании — по запросу." },
+  { question: "Что такое промпт-инжиниринг?", answer: "Промпт-инжиниринг — это навык эффективного взаимодействия с ИИ-инструментами. На курсе вы научитесь писать точные запросы для ChatGPT, Claude и других нейросетей для решения бизнес-задач." },
+  { question: "Как ИИ может помочь HR-отделу?", answer: "ИИ автоматизирует рутину HR: скрининг резюме, составление описаний вакансий, анализ вовлечённости, создание учебных материалов, ответы на типовые вопросы сотрудников." },
+  { question: "Есть ли практика на курсах?", answer: "Да, 70% времени — практика на реальных задачах. Каждый участник работает с ИИ-инструментами и уходит с готовыми промптами и шаблонами для своей работы." },
+];
+
 const programAreas = [
   {
     title: "Быстрый старт в ИИ",
@@ -1101,6 +1110,30 @@ export default function AIPage() {
                 <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-[#F8FAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12 scroll-fade-in">
+            Часто задаваемые вопросы
+          </h2>
+          <div className="space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={i} className="group bg-white rounded-2xl shadow-sm border border-[#e8eded] scroll-fade-in scroll-delay-1">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-semibold text-[#2D3A3C] pr-4">{item.question}</span>
+                  <svg className="w-5 h-5 text-[#00767D] shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#546569] leading-relaxed">
+                  {item.answer}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

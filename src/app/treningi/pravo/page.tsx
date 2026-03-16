@@ -585,6 +585,17 @@ function PravoClients() {
   );
 }
 
+/* ── FAQ ── */
+
+const FAQ_ITEMS = [
+  { question: "Какие юридические курсы вы предлагаете в Казахстане?", answer: "Более 25 курсов: трудовое право РК, договорная работа, госзакупки, налоговое право, комплаенс, корпоративное право, недропользование, таможенное регулирование, арбитражная практика." },
+  { question: "Сколько стоят юридические семинары?", answer: "Стоимость юридических курсов от 110 000 до 190 000 тенге. Онлайн-формат дешевле. Корпоративным клиентам предоставляются специальные условия." },
+  { question: "Актуальны ли программы с учётом последних изменений законодательства?", answer: "Да, все программы обновляются с учётом последних изменений в законодательстве РК. Тренеры — практикующие юристы, которые отслеживают все поправки в реальном времени." },
+  { question: "Есть ли курсы по трудовому праву Казахстана?", answer: "Да, это одно из ключевых направлений. Курсы покрывают Трудовой кодекс РК, трудовые споры, медиацию, оформление документации, особенности для нефтегазовой отрасли." },
+  { question: "Подходят ли курсы для юристов без опыта?", answer: "У нас есть программы разного уровня — от базовых для специалистов смежных профессий до продвинутых для практикующих юристов. Тренер адаптирует материал под уровень группы." },
+  { question: "Выдаётся ли сертификат по юридическим курсам?", answer: "Да, каждый участник получает сертификат Abadan & Co. о повышении квалификации с указанием темы и количества часов обучения." },
+];
+
 /* ── Main Page ── */
 
 export default function PravoPage() {
@@ -1095,6 +1106,30 @@ export default function PravoPage() {
                 <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-[#F8FAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12 scroll-fade-in">
+            Часто задаваемые вопросы
+          </h2>
+          <div className="space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={i} className="group bg-white rounded-2xl shadow-sm border border-[#e8eded] scroll-fade-in scroll-delay-1">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-semibold text-[#2D3A3C] pr-4">{item.question}</span>
+                  <svg className="w-5 h-5 text-[#00767D] shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#546569] leading-relaxed">
+                  {item.answer}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

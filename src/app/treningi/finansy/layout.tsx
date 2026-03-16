@@ -88,17 +88,51 @@ function buildCourseJsonLd() {
   }));
 }
 
+const FINANSY_FAQ = [
+  { question: "Какие финансовые курсы доступны для бизнеса?", answer: "Более 18 курсов: МСФО/IFRS, налогообложение в РК, бюджетирование и планирование, казначейство, финансовый анализ, аудит, управленческий учёт, трансфертное ценообразование." },
+  { question: "Сколько стоят курсы по финансам?", answer: "Стоимость финансовых курсов от 100 000 до 200 000 тенге в зависимости от программы и формата. Для корпоративных клиентов — специальные условия." },
+  { question: "Есть ли курсы по МСФО в Казахстане?", answer: "Да, у нас есть несколько программ по МСФО: от базового курса до продвинутых тем (финансовые инструменты, консолидация, обесценение). Все курсы адаптированы под казахстанскую практику." },
+  { question: "Кто проводит финансовые тренинги?", answer: "Тренеры — практикующие финансисты, аудиторы и консультанты с опытом работы в Big4, международных и казахстанских компаниях. Более 200 экспертов в нашем пуле." },
+  { question: "Можно ли пройти финансовый курс онлайн?", answer: "Да, все финансовые курсы доступны в онлайн-формате через Zoom. Практические задания, кейсы и материалы те же, что и на очных занятиях." },
+  { question: "Подходят ли курсы для финансистов нефтегазовых компаний?", answer: "Да, у нас есть специализированные программы с учётом специфики нефтегазовой отрасли: учёт в добывающих компаниях, налогообложение недропользователей, PRMS." },
+];
+
 export default function FinansyLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const coursesJsonLd = buildCourseJsonLd();
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FINANSY_FAQ.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Финансы", item: "https://abadan.kz/treningi/finansy" },
+          ],
+        }) }}
       />
       {children}
     </>

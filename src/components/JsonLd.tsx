@@ -148,6 +148,70 @@ export function CourseListJsonLd() {
   );
 }
 
+export function FAQPageJsonLd({ faqs }: { faqs: { question: string; answer: string }[] }) {
+  const faqData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
+    />
+  );
+}
+
+export function ArticleJsonLd({
+  headline,
+  datePublished,
+  dateModified,
+  author,
+  image,
+  description,
+  url,
+}: {
+  headline: string;
+  datePublished: string;
+  dateModified?: string;
+  author: string;
+  image: string;
+  description: string;
+  url: string;
+}) {
+  const articleData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    datePublished,
+    dateModified: dateModified || datePublished,
+    author: { "@type": "Person", name: author },
+    publisher: {
+      "@type": "Organization",
+      name: "Abadan & Co.",
+      logo: { "@type": "ImageObject", url: "https://abadan.kz/images/logo.png" },
+    },
+    image: image.startsWith("/") ? `https://abadan.kz${image}` : image,
+    description,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleData) }}
+    />
+  );
+}
+
 export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string }[] }) {
   const breadcrumbData = {
     "@context": "https://schema.org",

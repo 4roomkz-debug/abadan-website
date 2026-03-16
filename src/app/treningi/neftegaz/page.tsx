@@ -449,6 +449,15 @@ const OG_CLIENT_LOGOS = [
   { name: "Kazminerals", logo: "/images/clients/kazminerals.png" },
 ];
 
+const FAQ_ITEMS = [
+  { question: "Какие технические курсы для нефтегазовой отрасли вы предлагаете?", answer: "Более 65 курсов: бурение и капитальный ремонт скважин, добыча нефти и газа, переработка и нефтехимия, трубопроводный транспорт, промышленная безопасность, КИПиА и автоматизация, геология и геофизика." },
+  { question: "Сколько стоит обучение для нефтяников?", answer: "Стоимость технических курсов от 120 000 до 220 000 тенге. Очный формат включает практические занятия. Для компаний с группой от 5 человек действуют корпоративные тарифы." },
+  { question: "Есть ли у вас курсы по промышленной безопасности?", answer: "Да, у нас есть курсы по промбезопасности в нефтегазовой отрасли, работе с сероводородом, охране труда, HSE-менеджменту. Программы соответствуют требованиям законодательства РК." },
+  { question: "Выезжаете ли вы на месторождения для обучения?", answer: "Да, мы проводим корпоративное обучение с выездом на объекты в Атырау, Актау, Мангистау, Кызылорду и другие нефтегазовые регионы Казахстана." },
+  { question: "Кто проводит технические семинары?", answer: "Все тренеры — эксперты-практики с опытом работы в нефтегазовой отрасли от 10 лет. Среди наших экспертов — специалисты, работавшие в ТШО, НКОК, КПО, КазМунайГаз." },
+  { question: "Какой сертификат выдаётся после технического курса?", answer: "По окончании выдаётся сертификат Abadan & Co. о повышении квалификации. Для отдельных курсов возможна сертификация по международным стандартам." },
+];
+
 /* ── Neural Background — particle network animation ── */
 
 interface Particle {
@@ -1112,6 +1121,30 @@ export default function NeftegazPage() {
                 <p className="text-center text-[#7A9EA3] text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-[#F8FAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12 scroll-fade-in">
+            Часто задаваемые вопросы
+          </h2>
+          <div className="space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={i} className="group bg-white rounded-2xl shadow-sm border border-[#e8eded] scroll-fade-in scroll-delay-1">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-semibold text-[#2D3A3C] pr-4">{item.question}</span>
+                  <svg className="w-5 h-5 text-[#00767D] shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#546569] leading-relaxed">
+                  {item.answer}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

@@ -88,17 +88,51 @@ function buildCourseJsonLd() {
   }));
 }
 
+const PRAVO_FAQ = [
+  { question: "Какие юридические курсы вы предлагаете в Казахстане?", answer: "Более 25 курсов: трудовое право РК, договорная работа, госзакупки, налоговое право, комплаенс, корпоративное право, недропользование, таможенное регулирование, арбитражная практика." },
+  { question: "Сколько стоят юридические семинары?", answer: "Стоимость юридических курсов от 110 000 до 190 000 тенге. Онлайн-формат дешевле. Корпоративным клиентам предоставляются специальные условия." },
+  { question: "Актуальны ли программы с учётом последних изменений законодательства?", answer: "Да, все программы обновляются с учётом последних изменений в законодательстве РК. Тренеры — практикующие юристы, которые отслеживают все поправки в реальном времени." },
+  { question: "Есть ли курсы по трудовому праву Казахстана?", answer: "Да, это одно из ключевых направлений. Курсы покрывают Трудовой кодекс РК, трудовые споры, медиацию, оформление документации, особенности для нефтегазовой отрасли." },
+  { question: "Подходят ли курсы для юристов без опыта?", answer: "У нас есть программы разного уровня — от базовых для специалистов смежных профессий до продвинутых для практикующих юристов. Тренер адаптирует материал под уровень группы." },
+  { question: "Выдаётся ли сертификат по юридическим курсам?", answer: "Да, каждый участник получает сертификат Abadan & Co. о повышении квалификации с указанием темы и количества часов обучения." },
+];
+
 export default function PravoLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const coursesJsonLd = buildCourseJsonLd();
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: PRAVO_FAQ.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Право", item: "https://abadan.kz/treningi/pravo" },
+          ],
+        }) }}
       />
       {children}
     </>

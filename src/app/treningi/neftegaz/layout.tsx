@@ -89,17 +89,51 @@ function buildCourseJsonLd() {
   }));
 }
 
+const NEFTEGAZ_FAQ = [
+  { question: "Какие технические курсы для нефтегазовой отрасли вы предлагаете?", answer: "Более 65 курсов: бурение и капитальный ремонт скважин, добыча нефти и газа, переработка и нефтехимия, трубопроводный транспорт, промышленная безопасность, КИПиА и автоматизация, геология и геофизика." },
+  { question: "Сколько стоит обучение для нефтяников?", answer: "Стоимость технических курсов от 120 000 до 220 000 тенге. Очный формат включает практические занятия. Для компаний с группой от 5 человек действуют корпоративные тарифы." },
+  { question: "Есть ли у вас курсы по промышленной безопасности?", answer: "Да, у нас есть курсы по промбезопасности в нефтегазовой отрасли, работе с сероводородом, охране труда, HSE-менеджменту. Программы соответствуют требованиям законодательства РК." },
+  { question: "Выезжаете ли вы на месторождения для обучения?", answer: "Да, мы проводим корпоративное обучение с выездом на объекты в Атырау, Актау, Мангистау, Кызылорду и другие нефтегазовые регионы Казахстана." },
+  { question: "Кто проводит технические семинары?", answer: "Все тренеры — эксперты-практики с опытом работы в нефтегазовой отрасли от 10 лет. Среди наших экспертов — специалисты, работавшие в ТШО, НКОК, КПО, КазМунайГаз." },
+  { question: "Какой сертификат выдаётся после технического курса?", answer: "По окончании выдаётся сертификат Abadan & Co. о повышении квалификации. Для отдельных курсов возможна сертификация по международным стандартам." },
+];
+
 export default function NeftegazLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const coursesJsonLd = buildCourseJsonLd();
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: NEFTEGAZ_FAQ.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
+          ],
+        }) }}
       />
       {children}
     </>

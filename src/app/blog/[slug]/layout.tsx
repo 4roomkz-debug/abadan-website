@@ -4,9 +4,10 @@ import { ARTICLES } from "@/data/blog";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const article = ARTICLES.find((a) => a.slug === params.slug);
+  const { slug } = await params;
+  const article = ARTICLES.find((a) => a.slug === slug);
 
   if (!article) {
     return {
@@ -57,10 +58,61 @@ export async function generateMetadata({
   };
 }
 
-export default function ArticleLayout({
+export default async function ArticleLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ slug: string }>;
 }) {
-  return <>{children}</>;
+  const { slug } = await params;
+  const article = ARTICLES.find((a) => a.slug === slug);
+
+  if (!article) return <>{children}</>;
+
+  const url = `https://abadan.kz/blog/${article.slug}`;
+  const ogImage = article.image.startsWith("/")
+    ? `https://abadan.kz${article.image}`
+    : article.image;
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    datePublished: article.date,
+    dateModified: article.date,
+    author: { "@type": "Person", name: article.author },
+    publisher: {
+      "@type": "Organization",
+      name: "Abadan & Co.",
+      logo: { "@type": "ImageObject", url: "https://abadan.kz/images/logo.png" },
+    },
+    image: ogImage,
+    description: article.excerpt,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Блог", item: "https://abadan.kz/blog" },
+      { "@type": "ListItem", position: 3, name: article.title, item: url },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -587,6 +587,17 @@ function HRClients() {
   );
 }
 
+/* ── FAQ Data ── */
+
+const FAQ_ITEMS = [
+  { question: "Какие HR-курсы доступны в Казахстане?", answer: "Abadan & Co. предлагает более 20 HR-курсов: трудовое право РК, рекрутинг, оценка персонала, KPI и грейдирование, кадровое делопроизводство, HR-аналитика. Курсы проводятся очно в Алматы и онлайн." },
+  { question: "Сколько стоят HR-тренинги?", answer: "Стоимость HR-курсов от 100 000 до 180 000 тенге в зависимости от продолжительности и формата. Онлайн-формат дешевле очного. Корпоративным клиентам предоставляются скидки." },
+  { question: "Какой сертификат выдаётся после обучения?", answer: "По окончании каждого курса выдаётся именной сертификат Abadan & Co., подтверждающий повышение квалификации. Сертификат признаётся работодателями Казахстана." },
+  { question: "Можно ли пройти HR-курс онлайн?", answer: "Да, все HR-курсы доступны в онлайн-формате через Zoom. Вы получаете те же материалы, сертификат и доступ к записи занятий." },
+  { question: "Какая продолжительность HR-курсов?", answer: "Курсы длятся от 16 до 40 академических часов (2-5 дней). Есть интенсивные форматы на выходных и вечерние программы." },
+  { question: "Проводите ли вы корпоративное HR-обучение?", answer: "Да, мы проводим корпоративные тренинги с адаптацией под специфику компании. Выезжаем в регионы Казахстана. Более 9 000 специалистов обучено за 15 лет." },
+];
+
 /* ── Main Page ── */
 
 export default function HRPage() {
@@ -1095,6 +1106,30 @@ export default function HRPage() {
                 <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-[#F8FAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#2D3A3C] mb-12 scroll-fade-in">
+            Часто задаваемые вопросы
+          </h2>
+          <div className="space-y-4">
+            {FAQ_ITEMS.map((item, i) => (
+              <details key={i} className="group bg-white rounded-2xl shadow-sm border border-[#e8eded] scroll-fade-in scroll-delay-1">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <span className="text-lg font-semibold text-[#2D3A3C] pr-4">{item.question}</span>
+                  <svg className="w-5 h-5 text-[#00767D] shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 text-[#546569] leading-relaxed">
+                  {item.answer}
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
