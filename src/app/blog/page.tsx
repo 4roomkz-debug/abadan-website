@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ARTICLES, CATEGORIES, CATEGORY_COLORS, type Category, type Article } from "@/data/blog";
@@ -85,18 +86,16 @@ function FeaturedArticleCard({ article }: { article: Article }) {
         </div>
       </div>
 
-      {/* Right decorative panel */}
-      <div className="hidden lg:flex lg:w-72 xl:w-80 bg-gradient-to-br from-[#f0f9f9] to-[#e6f4f5] items-center justify-center p-10 shrink-0">
-        <div className="text-center">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#009BA3] flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-          </div>
-          <p className="text-[#2D3A3C] font-700 text-sm leading-snug">ИИ + HR<br />в Казахстане</p>
-          <p className="text-[#7A8B8E] text-xs mt-2">{article.readingTime} минут чтения</p>
-        </div>
+      {/* Right image panel */}
+      <div className="hidden lg:block lg:w-72 xl:w-80 shrink-0 relative">
+        <Image
+          src={article.image}
+          alt={article.title}
+          fill
+          className="object-cover"
+          sizes="320px"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/80 to-transparent" />
       </div>
     </article>
   );
@@ -107,8 +106,17 @@ function ArticleCard({ article, index }: { article: Article; index: number }) {
 
   return (
     <article className={`scroll-fade-in ${delay} group bg-white border border-[#E0E8E9] rounded-2xl shadow-sm flex flex-col overflow-hidden hover:shadow-md hover:border-[#b3dde0] transition-all duration-200`}>
-      {/* Top accent bar */}
-      <div className="h-1 bg-gradient-to-r from-[#00767D] to-[#F0BB1E]" />
+      {/* Article image */}
+      <div className="relative w-full h-44 overflow-hidden">
+        <Image
+          src={article.image}
+          alt={article.title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+      </div>
 
       <div className="flex flex-col flex-1 p-6">
         {/* Category + reading time */}
@@ -233,8 +241,8 @@ export default function BlogPage() {
             {/* Stats */}
             <div className="scroll-fade-in scroll-delay-2 mt-12 flex flex-wrap gap-8">
               {[
-                { value: "8", label: "статей" },
-                { value: "6", label: "тем" },
+                { value: "16", label: "статей" },
+                { value: "7", label: "тем" },
                 { value: "Раз в неделю", label: "обновление" },
               ].map((stat) => (
                 <div key={stat.label}>

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ARTICLES, CATEGORY_COLORS } from "@/data/blog";
@@ -114,8 +115,21 @@ export default async function ArticlePage({
           </div>
         </section>
 
+        {/* ── Hero image ── */}
+        <div className="relative w-full h-64 sm:h-80 lg:h-96 -mt-1">
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+        </div>
+
         {/* ── Article body + sidebar ── */}
-        <section className="bg-white py-12 lg:py-16">
+        <section className="bg-white py-12 lg:py-16 -mt-16 relative z-10">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col lg:flex-row gap-12 xl:gap-16">
 
