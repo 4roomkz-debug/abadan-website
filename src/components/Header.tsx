@@ -118,39 +118,45 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {isEducationOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                  <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
-                    <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#7A8B8E]">
-                      Тренинги
-                    </div>
-                    {educationLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className={`block px-4 py-2.5 text-sm transition-colors ${
-                          isActive(link.href)
-                            ? "text-[#00767D] bg-[#f0f9f9] font-medium"
-                            : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                    <div className="border-t border-[#00767D]/10 my-1" />
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-150 ${
+                  isEducationOpen
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 -translate-y-1 pointer-events-none"
+                }`}
+              >
+                <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
+                  <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#7A8B8E]">
+                    Тренинги
+                  </div>
+                  {educationLinks.map((link) => (
                     <Link
-                      href="/coaching"
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsEducationOpen(false)}
                       className={`block px-4 py-2.5 text-sm transition-colors ${
-                        isActive("/coaching")
+                        isActive(link.href)
                           ? "text-[#00767D] bg-[#f0f9f9] font-medium"
                           : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
                       }`}
                     >
-                      Коучинг
+                      {link.label}
                     </Link>
-                  </div>
+                  ))}
+                  <div className="border-t border-[#00767D]/10 my-1" />
+                  <Link
+                    href="/coaching"
+                    onClick={() => setIsEducationOpen(false)}
+                    className={`block px-4 py-2.5 text-sm transition-colors ${
+                      isActive("/coaching")
+                        ? "text-[#00767D] bg-[#f0f9f9] font-medium"
+                        : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
+                    }`}
+                  >
+                    Коучинг
+                  </Link>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Расписание standalone */}
@@ -189,25 +195,30 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {isCompanyOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                  <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
-                    {companyLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className={`block px-4 py-2.5 text-sm transition-colors ${
-                          isActive(link.href)
-                            ? "text-[#00767D] bg-[#f0f9f9] font-medium"
-                            : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-150 ${
+                  isCompanyOpen
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 -translate-y-1 pointer-events-none"
+                }`}
+              >
+                <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
+                  {companyLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsCompanyOpen(false)}
+                      className={`block px-4 py-2.5 text-sm transition-colors ${
+                        isActive(link.href)
+                          ? "text-[#00767D] bg-[#f0f9f9] font-medium"
+                          : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
-              )}
+              </div>
             </div>
 
             {/* ibirAi button — visually separated with extra horizontal margin */}
