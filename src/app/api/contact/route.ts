@@ -46,21 +46,25 @@ export async function POST(request: Request) {
       throw new Error(data.description || "Failed to send message to Telegram");
     }
 
-    // Отправка в Nomad CRM (параллельно, не блокирует ответ)
+    // Отправка в Nomad CRM (await, чтобы Vercel serverless не убила запрос)
     const crmUrl = process.env.CRM_WEBHOOK_URL;
     const crmSecret = process.env.CRM_WEBHOOK_SECRET;
     if (crmUrl && crmSecret) {
-      fetch(crmUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          phone,
-          comment: message || undefined,
-          source: "website",
-          secret: crmSecret,
-        }),
-      }).catch((err) => console.error("CRM webhook error:", err));
+      try {
+        await fetch(crmUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            phone,
+            comment: message || undefined,
+            source: "website",
+            secret: crmSecret,
+          }),
+        });
+      } catch (err) {
+        console.error("CRM webhook error:", err);
+      }
     }
 
     return NextResponse.json({ success: true });

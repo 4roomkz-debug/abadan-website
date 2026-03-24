@@ -1,0 +1,41 @@
+<h2>Как пользователь должен записываться на курс?</h2>
+<p class="subtitle">Сейчас: список курсов → "Подробнее" → уход на /schedule. Форма только внизу, отдельно от курсов.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Модальная запись на курс</h3>
+      <p>У каждого курса кнопка "Записаться" → открывается модальное окно с формой (имя, телефон, компания). Название курса подставляется автоматически.</p>
+      <ul style="margin-top:8px;color:#94a3b8;font-size:13px">
+        <li>Минимальное трение — пользователь не уходит со страницы</li>
+        <li>Конкретная заявка: "хочу на курс X"</li>
+        <li>Форма внизу тоже остаётся — для корпоративных запросов</li>
+      </ul>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Inline-форма в раскрытии курса</h3>
+      <p>Клик по курсу раскрывает accordion с подробностями + форма записи прямо внутри. Без модалок.</p>
+      <ul style="margin-top:8px;color:#94a3b8;font-size:13px">
+        <li>Всё на одной странице, нативно</li>
+        <li>Больше контекста видно (описание + форма рядом)</li>
+        <li>Может удлинить страницу</li>
+      </ul>
+    </div>
+  </div>
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Общая форма с выбором курса</h3>
+      <p>Одна форма на странице, но с выпадающим списком/чекбоксами курсов. Кнопки "Записаться" у курсов скроллят к этой форме и предзаполняют выбор.</p>
+      <ul style="margin-top:8px;color:#94a3b8;font-size:13px">
+        <li>Проще в реализации</li>
+        <li>Одна точка конверсии</li>
+        <li>Менее прямолинейно для пользователя</li>
+      </ul>
+    </div>
+  </div>
+</div>

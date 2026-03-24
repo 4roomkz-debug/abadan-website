@@ -1,0 +1,45 @@
+<h2>Новый порядок секций</h2>
+<p class="subtitle">Текущий: Hero → Pain/Solution → Flask+Метрики → Отзыв → PumpJack+Направления → Расписание → Форма.<br>
+Предлагаю пересобрать воронку. Какой вариант ближе?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Воронка "Проблема → Доказательство → Действие"</h3>
+      <div style="font-size:13px;color:#cbd5e1;line-height:1.8;margin-top:8px;font-family:monospace">
+        1. Hero (с лого клиентов) <br>
+        2. Pain / Solution (split screen) <br>
+        3. Метрики + Отзывы (2-3 отзыва, без Flask) <br>
+        4. Направления (6 карточек, кликабельные → фильтр расписания) <br>
+        5. Расписание (с фильтрами + кнопка "Записаться" → модалка) <br>
+        6. Корпоративная форма (для заказа под компанию) <br>
+        — PumpJack: убрать или оставить декором в hero
+      </div>
+      <ul style="margin-top:10px;color:#94a3b8;font-size:13px">
+        <li>Классическая StoryBrand-воронка</li>
+        <li>Расписание ближе к середине — раньше видят курсы</li>
+        <li>Направления работают как навигация к расписанию</li>
+      </ul>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Воронка "Экспертиза → Каталог → Доверие"</h3>
+      <div style="font-size:13px;color:#cbd5e1;line-height:1.8;margin-top:8px;font-family:monospace">
+        1. Hero (с лого клиентов) <br>
+        2. Направления + PumpJack (экспертиза, масштаб) <br>
+        3. Расписание (с фильтрами + "Записаться") <br>
+        4. Метрики + Отзывы (после каталога — подкрепляют решение) <br>
+        5. Pain / Solution (для сомневающихся, дочитавших до конца) <br>
+        6. Корпоративная форма <br>
+      </div>
+      <ul style="margin-top:10px;color:#94a3b8;font-size:13px">
+        <li>Каталог сразу после hero — для тех, кто уже готов</li>
+        <li>Доверие подкрепляет после просмотра курсов</li>
+        <li>Pain/Solution внизу — ловит сомневающихся</li>
+      </ul>
+    </div>
+  </div>
+</div>
