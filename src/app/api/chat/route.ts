@@ -9,9 +9,9 @@ import {
   EVENTS,
 } from "@/data/ai-knowledge";
 
-const DEEPSEEK_API_KEY = "sk-3be6a5b6de184338bd61b8d5f625e2a6";
-const TELEGRAM_BOT_TOKEN = "8351809456:AAF8OsK251bpvwNl60NOZZ0Np9fXRr7yQPY";
-const TELEGRAM_CHAT_ID = "-5032889199"; // Группа "Заявки Абадан"
+const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY!;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
 
 // Отправка заявки в Telegram
 async function sendLeadToTelegram(leadInfo: string) {

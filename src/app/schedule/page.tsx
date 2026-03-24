@@ -40,15 +40,16 @@ export default function SchedulePage() {
     setIsSubmitting(true);
 
     try {
-      // Send to Telegram bot
-      const message = `🎓 Новая заявка на курс!\n\n📚 Курс: ${selectedCourse}\n👤 Имя: ${formData.name}\n📱 Телефон: ${formData.phone}\n📧 Email: ${formData.email || "не указан"}\n👥 Участников: ${formData.participants}`;
+      // Send to /api/contact → Telegram "Заявки Абадан"
+      const message = `🎓 Запись на курс: ${selectedCourse}\n📧 Email: ${formData.email || "не указан"}\n👥 Участников: ${formData.participants}`;
 
-      await fetch("https://api.telegram.org/bot8351809456:AAF8OsK251bpvwNl60NOZZ0Np9fXRr7yQPY/sendMessage", {
+      await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          chat_id: "127052678",
-          text: message
+          name: formData.name,
+          phone: formData.phone,
+          message,
         })
       });
 
