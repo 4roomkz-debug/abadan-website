@@ -47,8 +47,10 @@ export async function POST(request: Request) {
     }
 
     // Отправка в Nomad CRM (параллельно, не блокирует ответ)
-    if (CRM_WEBHOOK_URL && CRM_WEBHOOK_SECRET) {
-      fetch(CRM_WEBHOOK_URL, {
+    const crmUrl = process.env.CRM_WEBHOOK_URL;
+    const crmSecret = process.env.CRM_WEBHOOK_SECRET;
+    if (crmUrl && crmSecret) {
+      fetch(crmUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -56,7 +58,7 @@ export async function POST(request: Request) {
           phone,
           comment: message || undefined,
           source: "website",
-          secret: CRM_WEBHOOK_SECRET,
+          secret: crmSecret,
         }),
       }).catch((err) => console.error("CRM webhook error:", err));
     }
