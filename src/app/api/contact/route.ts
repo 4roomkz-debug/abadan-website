@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const CRM_WEBHOOK_URL = process.env.CRM_WEBHOOK_URL;
+const CRM_WEBHOOK_SECRET = process.env.CRM_WEBHOOK_SECRET;
 
 export async function POST(request: Request) {
   try {
@@ -42,6 +44,21 @@ export async function POST(request: Request) {
     if (!response.ok) {
       console.error("Telegram API error:", data);
       throw new Error(data.description || "Failed to send message to Telegram");
+    }
+
+    // Отправка в Nomad CRM (параллельно, не блокирует ответ)
+    if (CRM_WEBHOOK_URL && CRM_WEBHOOK_SECRET) {
+      fetch(CRM_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          comment: message || undefined,
+          source: "website",
+          secret: CRM_WEBHOOK_SECRET,
+        }),
+      }).catch((err) => console.error("CRM webhook error:", err));
     }
 
     return NextResponse.json({ success: true });
