@@ -17,8 +17,10 @@ export default function SchedulePage() {
     name: "",
     phone: "",
     email: "",
-    participants: "1"
+    participants: "1",
+    website: "",
   });
+  const [formLoadedAt] = useState(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -31,7 +33,7 @@ export default function SchedulePage() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedCourse("");
-    setFormData({ name: "", phone: "", email: "", participants: "1" });
+    setFormData({ name: "", phone: "", email: "", participants: "1", website: "" });
     setSubmitSuccess(false);
   };
 
@@ -51,6 +53,8 @@ export default function SchedulePage() {
           phone: formData.phone,
           email: formData.email,
           message,
+          website: formData.website,
+          _t: formLoadedAt,
         })
       });
 
@@ -398,6 +402,10 @@ export default function SchedulePage() {
                       ))}
                       <option value="10+">Более 10</option>
                     </select>
+                  </div>
+
+                  <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                    <input type="text" name="website" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} autoComplete="off" tabIndex={-1} />
                   </div>
 
                   <button

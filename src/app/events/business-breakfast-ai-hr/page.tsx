@@ -196,7 +196,9 @@ export default function BusinessBreakfastPage() {
     email: "",
     company: "",
     position: "",
+    website: "",
   });
+  const [formLoadedAt] = useState(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -215,6 +217,8 @@ export default function BusinessBreakfastPage() {
           phone: formData.phone,
           email: formData.email,
           message: `Регистрация на Бизнес-завтрак "AI в HR". Компания: ${formData.company || "не указана"}. Должность: ${formData.position || "не указана"}`,
+          website: formData.website,
+          _t: formLoadedAt,
         }),
       });
 
@@ -825,6 +829,10 @@ export default function BusinessBreakfastPage() {
                       placeholder="Ваша должность"
                     />
                   </div>
+                </div>
+
+                <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                  <input type="text" name="website" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} autoComplete="off" tabIndex={-1} />
                 </div>
 
                 <button

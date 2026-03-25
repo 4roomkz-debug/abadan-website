@@ -15,7 +15,35 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, phone, email, message } = await request.json();
+    const { name, phone, email, message, website: honeypot, _t: timestamp } = await request.json();
+
+    // Anti-spam: honeypot field (bots fill it, humans don't see it)
+    if (honeypot) {
+      // Silently accept but don't process — bot won't know it failed
+      return NextResponse.json({ success: true });
+    }
+
+    // Anti-spam: timestamp check — form must be open at least 3 seconds
+    if (timestamp && Date.now() - timestamp < 3000) {
+      return NextResponse.json({ success: true });
+    }
+
+    // Anti-spam: basic validation
+    const nameClean = (name || "").trim();
+    const phoneClean = (phone || "").trim();
+    const emailClean = (email || "").trim();
+
+    // Name must contain at least one space or Cyrillic letter (real names, not random strings)
+    const hasRealName = /[а-яёА-ЯЁ]/.test(nameClean) || /^[a-zA-Z]+ [a-zA-Z]+/.test(nameClean);
+    if (!hasRealName || nameClean.length < 2 || nameClean.length > 100) {
+      return NextResponse.json({ success: true }); // silent reject
+    }
+
+    // Phone must look like a real phone number (7+ digits)
+    const digitsOnly = phoneClean.replace(/\D/g, "");
+    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+      return NextResponse.json({ success: true }); // silent reject
+    }
 
     const text = `
 🔔 Новая заявка с сайта Abadan

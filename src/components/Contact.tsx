@@ -7,8 +7,10 @@ export default function Contact() {
     name: "",
     phone: "",
     email: "",
-    message: ""
+    message: "",
+    website: "", // honeypot
   });
+  const [formLoadedAt] = useState(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
@@ -23,12 +25,12 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, _t: formLoadedAt }),
       });
 
       if (response.ok) {
         setSubmitStatus("success");
-        setFormData({ name: "", phone: "", email: "", message: "" });
+        setFormData({ name: "", phone: "", email: "", message: "", website: "" });
       } else {
         setSubmitStatus("error");
       }
@@ -138,6 +140,18 @@ export default function Contact() {
                       className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all resize-none"
                       placeholder="Кратко опишите, что вас интересует..."
                     ></textarea>
+                  </div>
+
+                  {/* Honeypot — hidden from humans, bots fill it */}
+                  <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                    <input
+                      type="text"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      autoComplete="off"
+                      tabIndex={-1}
+                    />
                   </div>
 
                   <button

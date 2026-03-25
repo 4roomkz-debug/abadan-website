@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 export default function CoachingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [formLoadedAt] = useState(() => Date.now());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ export default function CoachingPage() {
     const email = formData.get("email") as string;
     const position = formData.get("position") as string;
     const company = formData.get("company") as string;
+    const honeypot = formData.get("website") as string;
 
     try {
       await fetch("/api/contact", {
@@ -30,6 +32,8 @@ export default function CoachingPage() {
           phone,
           email,
           message: `[Коучинг первых руководителей]\nДолжность: ${position}\nКомпания: ${company}`,
+          website: honeypot,
+          _t: formLoadedAt,
         }),
       });
       setFormStatus("success");
@@ -567,6 +571,9 @@ export default function CoachingPage() {
                     placeholder="Компания"
                     className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
                   />
+                </div>
+                <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                  <input type="text" name="website" autoComplete="off" tabIndex={-1} />
                 </div>
                 <button
                   type="submit"
