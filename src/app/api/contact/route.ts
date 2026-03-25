@@ -15,13 +15,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, phone, message } = await request.json();
+    const { name, phone, email, message } = await request.json();
 
     const text = `
 🔔 Новая заявка с сайта Abadan
 
 👤 Имя: ${name}
 📞 Телефон: ${phone}
+📧 Email: ${email || "Не указан"}
 💬 Комментарий: ${message || "Не указан"}
     `.trim();
 
@@ -57,6 +58,7 @@ export async function POST(request: Request) {
           body: JSON.stringify({
             name,
             phone,
+            email: email || undefined,
             comment: message || undefined,
             source: "website",
             secret: crmSecret,

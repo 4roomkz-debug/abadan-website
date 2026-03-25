@@ -213,7 +213,8 @@ export default function BusinessBreakfastPage() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          message: `Регистрация на Бизнес-завтрак "AI в HR". Email: ${formData.email || "не указан"}. Компания: ${formData.company || "не указана"}. Должность: ${formData.position || "не указана"}`,
+          email: formData.email,
+          message: `Регистрация на Бизнес-завтрак "AI в HR". Компания: ${formData.company || "не указана"}. Должность: ${formData.position || "не указана"}`,
         }),
       });
 
@@ -792,9 +793,10 @@ export default function BusinessBreakfastPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-[#546569] mb-1">Email</label>
+                    <label className="block text-sm font-medium text-[#546569] mb-1">Email *</label>
                     <input
                       type="email"
+                      required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#94A3B8] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"

@@ -6,6 +6,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    email: "",
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,7 +28,7 @@ export default function Contact() {
 
       if (response.ok) {
         setSubmitStatus("success");
-        setFormData({ name: "", phone: "", message: "" });
+        setFormData({ name: "", phone: "", email: "", message: "" });
       } else {
         setSubmitStatus("error");
       }
@@ -105,6 +106,22 @@ export default function Contact() {
                       required
                       className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
                       placeholder="+7 (___) ___-__-__"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
+                      placeholder="email@company.kz"
                     />
                   </div>
 

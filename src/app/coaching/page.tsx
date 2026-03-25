@@ -17,6 +17,7 @@ export default function CoachingPage() {
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
     const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
     const position = formData.get("position") as string;
     const company = formData.get("company") as string;
 
@@ -27,6 +28,7 @@ export default function CoachingPage() {
         body: JSON.stringify({
           name,
           phone,
+          email,
           message: `[Коучинг первых руководителей]\nДолжность: ${position}\nКомпания: ${company}`,
         }),
       });
@@ -539,6 +541,15 @@ export default function CoachingPage() {
                     name="phone"
                     type="tel"
                     placeholder="Телефон"
+                    required
+                    className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
+                  />
+                </div>
+                <div>
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder="Email *"
                     required
                     className="w-full px-5 py-4 bg-white/10 border border-white/15 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-[#00767D] focus:bg-white/15 transition-all"
                   />

@@ -41,7 +41,7 @@ export default function SchedulePage() {
 
     try {
       // Send to /api/contact → Telegram "Заявки Абадан"
-      const message = `🎓 Запись на курс: ${selectedCourse}\n📧 Email: ${formData.email || "не указан"}\n👥 Участников: ${formData.participants}`;
+      const message = `🎓 Запись на курс: ${selectedCourse}\n👥 Участников: ${formData.participants}`;
 
       await fetch("/api/contact", {
         method: "POST",
@@ -49,6 +49,7 @@ export default function SchedulePage() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          email: formData.email,
           message,
         })
       });
@@ -374,9 +375,10 @@ export default function SchedulePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm text-[#546569] mb-1">Email</label>
+                    <label className="block text-sm text-[#546569] mb-1">Email *</label>
                     <input
                       type="email"
+                      required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#94A3B8] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
