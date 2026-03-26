@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Финансовые курсы и семинары для бизнеса — Abadan & Co.",
     description:
       "18+ курсов для финансистов в Казахстане. МСФО, налоги, бюджетирование, казначейство, аудит. 200+ экспертов-практиков.",
-    url: "https://abadan.kz/treningi/finansy",
+    url: "https://www.abadan.kz/treningi/finansy",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/finansy",
+    canonical: "https://www.abadan.kz/treningi/finansy",
   },
 };
 
@@ -52,7 +52,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -128,9 +128,9 @@ export default function FinansyLayout({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-            { "@type": "ListItem", position: 3, name: "Финансы", item: "https://abadan.kz/treningi/finansy" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Финансы", item: "https://www.abadan.kz/treningi/finansy" },
           ],
         }) }}
       />

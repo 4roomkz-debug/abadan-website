@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Нефтегазовые тренинги в Актау — Abadan & Co.",
     description:
       "65+ технических курсов для специалистов нефтегазовой отрасли Мангистауской области. Выезд на объект, корпоративные программы для КПО, Озенмунайгаз и шельфовых операций.",
-    url: "https://abadan.kz/treningi/neftegaz/aktau",
+    url: "https://www.abadan.kz/treningi/neftegaz/aktau",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz/aktau",
+    canonical: "https://www.abadan.kz/treningi/neftegaz/aktau",
   },
 };
 
@@ -58,7 +58,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -151,25 +151,25 @@ export default function AktauLayout({
         "@type": "ListItem",
         position: 1,
         name: "Главная",
-        item: "https://abadan.kz",
+        item: "https://www.abadan.kz",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Тренинги",
-        item: "https://abadan.kz/treningi",
+        item: "https://www.abadan.kz/treningi",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Нефтегаз",
-        item: "https://abadan.kz/treningi/neftegaz",
+        item: "https://www.abadan.kz/treningi/neftegaz",
       },
       {
         "@type": "ListItem",
         position: 4,
         name: "Актау",
-        item: "https://abadan.kz/treningi/neftegaz/aktau",
+        item: "https://www.abadan.kz/treningi/neftegaz/aktau",
       },
     ],
   };

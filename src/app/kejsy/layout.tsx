@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     title: "Кейсы корпоративного обучения — Abadan & Co.",
     description:
       "Реальные результаты обучения в крупнейших компаниях Казахстана.",
-    url: "https://abadan.kz/kejsy",
+    url: "https://www.abadan.kz/kejsy",
     type: "website",
   },
-  alternates: { canonical: "https://abadan.kz/kejsy" },
+  alternates: { canonical: "https://www.abadan.kz/kejsy" },
 };
 
 export default function KejsyLayout({
@@ -30,8 +30,8 @@ export default function KejsyLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Кейсы", item: "https://abadan.kz/kejsy" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Кейсы", item: "https://www.abadan.kz/kejsy" },
     ],
   };
   return (

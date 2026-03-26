@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     title: "ibirAi для soft skills — AI-обучение мягким навыкам",
     description:
       "AI-диалоги и микро-сценарии для развития коммуникации, лидерства и эмоционального интеллекта в Telegram и WhatsApp.",
-    url: "https://abadan.kz/ibirai/soft-skills",
+    url: "https://www.abadan.kz/ibirai/soft-skills",
     type: "website",
     images: [
       {
-        url: "https://abadan.kz/og-ibirai.png",
+        url: "https://www.abadan.kz/og-ibirai.png",
         width: 1200,
         height: 630,
         alt: "ibirAi — AI-обучение soft skills",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description:
       "AI-диалоги и микро-сценарии для развития soft skills в Telegram и WhatsApp.",
   },
-  alternates: { canonical: "https://abadan.kz/ibirai/soft-skills" },
+  alternates: { canonical: "https://www.abadan.kz/ibirai/soft-skills" },
 };
 
 export default function SoftSkillsLayout({
@@ -63,7 +63,7 @@ export default function SoftSkillsLayout({
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
   };
 
@@ -75,19 +75,19 @@ export default function SoftSkillsLayout({
         "@type": "ListItem",
         position: 1,
         name: "Главная",
-        item: "https://abadan.kz",
+        item: "https://www.abadan.kz",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "ibirAi",
-        item: "https://abadan.kz/ibirai",
+        item: "https://www.abadan.kz/ibirai",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Soft Skills",
-        item: "https://abadan.kz/ibirai/soft-skills",
+        item: "https://www.abadan.kz/ibirai/soft-skills",
       },
     ],
   };

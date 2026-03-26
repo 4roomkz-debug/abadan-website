@@ -22,11 +22,11 @@ export const metadata: Metadata = {
     title: "ibirAi — AI-платформа микрообучения в мессенджерах",
     description:
       "3-минутные уроки в Telegram и WhatsApp с AI-аватаром. 87% доходимость. Геймификация и HR-аналитика.",
-    url: "https://abadan.kz/ibirai",
+    url: "https://www.abadan.kz/ibirai",
     type: "website",
     images: [
       {
-        url: "https://abadan.kz/og-ibirai.png",
+        url: "https://www.abadan.kz/og-ibirai.png",
         width: 1200,
         height: 630,
         alt: "ibirAi — платформа микрообучения",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description:
       "3-минутные уроки в Telegram и WhatsApp с AI-аватаром. 87% доходимость.",
   },
-  alternates: { canonical: "https://abadan.kz/ibirai" },
+  alternates: { canonical: "https://www.abadan.kz/ibirai" },
 };
 
 export default function IbiraiLayout({
@@ -64,7 +64,7 @@ export default function IbiraiLayout({
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     aggregateRating: {
       "@type": "AggregateRating",
@@ -128,13 +128,13 @@ export default function IbiraiLayout({
         "@type": "ListItem",
         position: 1,
         name: "Главная",
-        item: "https://abadan.kz",
+        item: "https://www.abadan.kz",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "ibirAi",
-        item: "https://abadan.kz/ibirai",
+        item: "https://www.abadan.kz/ibirai",
       },
     ],
   };

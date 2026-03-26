@@ -179,7 +179,7 @@ export default async function ArticlePage({
                     </p>
                     <div className="flex gap-3">
                       <a
-                        href={`https://t.me/share/url?url=https://abadan.kz/blog/${article.slug}&text=${encodeURIComponent(article.title)}`}
+                        href={`https://t.me/share/url?url=https://www.abadan.kz/blog/${article.slug}&text=${encodeURIComponent(article.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#0088cc]/10 text-[#0088cc] hover:bg-[#0088cc]/20 transition-colors"
@@ -190,7 +190,7 @@ export default async function ArticlePage({
                         </svg>
                       </a>
                       <a
-                        href={`https://wa.me/?text=${encodeURIComponent(article.title + ' — https://abadan.kz/blog/' + article.slug)}`}
+                        href={`https://wa.me/?text=${encodeURIComponent(article.title + ' — https://www.abadan.kz/blog/' + article.slug)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 transition-colors"

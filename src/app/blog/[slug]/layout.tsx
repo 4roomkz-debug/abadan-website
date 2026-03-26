@@ -15,9 +15,9 @@ export async function generateMetadata({
     };
   }
 
-  const url = `https://abadan.kz/blog/${article.slug}`;
+  const url = `https://www.abadan.kz/blog/${article.slug}`;
   const ogImage = article.image.startsWith("/")
-    ? `https://abadan.kz${article.image}`
+    ? `https://www.abadan.kz${article.image}`
     : article.image;
 
   return {
@@ -63,9 +63,9 @@ export default async function ArticleLayout({
 
   if (!article) return <>{children}</>;
 
-  const url = `https://abadan.kz/blog/${article.slug}`;
+  const url = `https://www.abadan.kz/blog/${article.slug}`;
   const ogImage = article.image.startsWith("/")
-    ? `https://abadan.kz${article.image}`
+    ? `https://www.abadan.kz${article.image}`
     : article.image;
 
   const articleJsonLd = {
@@ -78,7 +78,7 @@ export default async function ArticleLayout({
     publisher: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      logo: { "@type": "ImageObject", url: "https://abadan.kz/images/logo.png" },
+      logo: { "@type": "ImageObject", url: "https://www.abadan.kz/images/logo.png" },
     },
     image: ogImage,
     description: article.excerpt,
@@ -89,8 +89,8 @@ export default async function ArticleLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Блог", item: "https://abadan.kz/blog" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Блог", item: "https://www.abadan.kz/blog" },
       { "@type": "ListItem", position: 3, name: article.title, item: url },
     ],
   };

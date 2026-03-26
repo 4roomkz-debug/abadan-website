@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Юридические курсы и семинары для бизнеса — Abadan & Co.",
     description:
       "25+ юридических курсов в Казахстане. Трудовое право, договорная работа, налоги, госзакупки, комплаенс. 200+ экспертов.",
-    url: "https://abadan.kz/treningi/pravo",
+    url: "https://www.abadan.kz/treningi/pravo",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/pravo",
+    canonical: "https://www.abadan.kz/treningi/pravo",
   },
 };
 
@@ -52,7 +52,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -128,9 +128,9 @@ export default function PravoLayout({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-            { "@type": "ListItem", position: 3, name: "Право", item: "https://abadan.kz/treningi/pravo" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Право", item: "https://www.abadan.kz/treningi/pravo" },
           ],
         }) }}
       />

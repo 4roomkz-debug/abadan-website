@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Коучинг первых руководителей — Гани Абадан",
     description: "Вы построили компанию. Но кто построит вас? 7 сессий, которые меняют стиль управления, команду и результаты.",
-    url: "https://abadan.kz/coaching",
+    url: "https://www.abadan.kz/coaching",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/coaching",
+    canonical: "https://www.abadan.kz/coaching",
   },
 };
 

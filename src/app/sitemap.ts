@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { ARTICLES } from "@/data/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://abadan.kz";
+  const baseUrl = "https://www.abadan.kz";
 
   return [
     {

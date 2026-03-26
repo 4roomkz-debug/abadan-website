@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "HR-курсы и тренинги для кадровых специалистов — Abadan & Co.",
     description:
       "20+ курсов для HR-специалистов в Казахстане. Трудовое право, рекрутинг, оценка персонала, KPI, грейдирование. 200+ экспертов.",
-    url: "https://abadan.kz/treningi/hr",
+    url: "https://www.abadan.kz/treningi/hr",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/hr",
+    canonical: "https://www.abadan.kz/treningi/hr",
   },
 };
 
@@ -51,7 +51,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -127,9 +127,9 @@ export default function HRLayout({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-            { "@type": "ListItem", position: 3, name: "HR и кадры", item: "https://abadan.kz/treningi/hr" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "HR и кадры", item: "https://www.abadan.kz/treningi/hr" },
           ],
         }) }}
       />

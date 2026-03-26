@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     title: "Расписание тренингов 2026 — Abadan & Co.",
     description: "Более 170 курсов: бизнес-тренинги и технические семинары. Онлайн и очно в Алматы.",
     type: "website",
-    url: "https://abadan.kz/schedule",
+    url: "https://www.abadan.kz/schedule",
   },
   alternates: {
-    canonical: "https://abadan.kz/schedule",
+    canonical: "https://www.abadan.kz/schedule",
   },
 };
 
@@ -31,7 +31,7 @@ function buildCourseListJsonLd() {
     "@type": "ItemList",
     name: "Открытые тренинги Abadan & Co.",
     description: "Расписание бизнес-тренингов и технических семинаров на 2026 год",
-    url: "https://abadan.kz/schedule",
+    url: "https://www.abadan.kz/schedule",
     numberOfItems: SCHEDULE_DATA.length,
     itemListElement: SCHEDULE_DATA.slice(0, 30).map((course, i) => ({
       "@type": "ListItem",
@@ -43,7 +43,7 @@ function buildCourseListJsonLd() {
         provider: {
           "@type": "Organization",
           name: "Abadan & Co.",
-          url: "https://abadan.kz",
+          url: "https://www.abadan.kz",
         },
         offers: {
           "@type": "Offer",
@@ -66,8 +66,8 @@ export default function ScheduleLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Расписание", item: "https://abadan.kz/schedule" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Расписание", item: "https://www.abadan.kz/schedule" },
     ],
   };
   return (

@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Курсы по нефтепереработке и нефтехимии — Abadan & Co.",
     description:
       "Курсы по нефтепереработке: крекинг, ректификация, нефтехимия, контроль качества. Эксперты-практики, очный и онлайн форматы.",
-    url: "https://abadan.kz/treningi/neftegaz/pererabotka",
+    url: "https://www.abadan.kz/treningi/neftegaz/pererabotka",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz/pererabotka",
+    canonical: "https://www.abadan.kz/treningi/neftegaz/pererabotka",
   },
 };
 
@@ -50,7 +50,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -138,10 +138,10 @@ export default function PererabotkaLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
-      { "@type": "ListItem", position: 4, name: "Переработка", item: "https://abadan.kz/treningi/neftegaz/pererabotka" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://www.abadan.kz/treningi/neftegaz" },
+      { "@type": "ListItem", position: 4, name: "Переработка", item: "https://www.abadan.kz/treningi/neftegaz/pererabotka" },
     ],
   };
   return (

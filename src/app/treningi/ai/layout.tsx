@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Курсы по искусственному интеллекту для бизнеса — Abadan & Co.",
     description:
       "8+ корпоративных курсов по ИИ в Казахстане. Промпт-инжиниринг, автоматизация документооборота, ИИ-агенты, работа с данными.",
-    url: "https://abadan.kz/treningi/ai",
+    url: "https://www.abadan.kz/treningi/ai",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/ai",
+    canonical: "https://www.abadan.kz/treningi/ai",
   },
 };
 
@@ -50,7 +50,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -126,9 +126,9 @@ export default function AILayout({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-            { "@type": "ListItem", position: 3, name: "Искусственный интеллект", item: "https://abadan.kz/treningi/ai" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Искусственный интеллект", item: "https://www.abadan.kz/treningi/ai" },
           ],
         }) }}
       />

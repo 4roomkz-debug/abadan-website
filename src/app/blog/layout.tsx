@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     title: "Блог Abadan & Co. — HR, лидерство, ИИ в бизнесе",
     description:
       "Делимся экспертизой: HR-тренды в Казахстане, практика применения ИИ, изменения законодательства и кейсы из корпоративного обучения.",
-    url: "https://abadan.kz/blog",
+    url: "https://www.abadan.kz/blog",
     type: "website",
   },
-  alternates: { canonical: "https://abadan.kz/blog" },
+  alternates: { canonical: "https://www.abadan.kz/blog" },
 };
 
 export default function BlogLayout({

@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Курсы по бурению скважин — Abadan & Co.",
     description:
       "Курсы по бурению и строительству скважин: технология, цементирование, каротаж, горизонтальное бурение. 200+ экспертов-практиков из нефтегазовой отрасли.",
-    url: "https://abadan.kz/treningi/neftegaz/burenie",
+    url: "https://www.abadan.kz/treningi/neftegaz/burenie",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz/burenie",
+    canonical: "https://www.abadan.kz/treningi/neftegaz/burenie",
   },
 };
 
@@ -49,7 +49,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -137,10 +137,10 @@ export default function BurenieLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
-      { "@type": "ListItem", position: 4, name: "Бурение", item: "https://abadan.kz/treningi/neftegaz/burenie" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://www.abadan.kz/treningi/neftegaz" },
+      { "@type": "ListItem", position: 4, name: "Бурение", item: "https://www.abadan.kz/treningi/neftegaz/burenie" },
     ],
   };
 

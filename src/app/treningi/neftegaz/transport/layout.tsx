@@ -25,11 +25,11 @@ export const metadata: Metadata = {
     title: "Курсы по трубопроводному транспорту нефти и газа — Abadan & Co.",
     description:
       "Курсы по эксплуатации магистральных трубопроводов, резервуарных парков и нефтебаз. Диспетчеризация, телемеханика, коррозионная защита. 200+ экспертов-практиков.",
-    url: "https://abadan.kz/treningi/neftegaz/transport",
+    url: "https://www.abadan.kz/treningi/neftegaz/transport",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz/transport",
+    canonical: "https://www.abadan.kz/treningi/neftegaz/transport",
   },
 };
 
@@ -54,7 +54,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -142,10 +142,10 @@ export default function TransportLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
-      { "@type": "ListItem", position: 4, name: "Транспорт", item: "https://abadan.kz/treningi/neftegaz/transport" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://www.abadan.kz/treningi/neftegaz" },
+      { "@type": "ListItem", position: 4, name: "Транспорт", item: "https://www.abadan.kz/treningi/neftegaz/transport" },
     ],
   };
 

@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: "https://abadan.kz/sitemap.xml",
-    host: "https://abadan.kz",
+    sitemap: "https://www.abadan.kz/sitemap.xml",
+    host: "https://www.abadan.kz",
   };
 }

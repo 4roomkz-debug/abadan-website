@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Проекты Abadan & Co. — ibirAi",
     description: "Платформа микрообучения нового поколения. AI-аватары, геймификация, 87% доходимость.",
-    url: "https://abadan.kz/projects",
+    url: "https://www.abadan.kz/projects",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/projects",
+    canonical: "https://www.abadan.kz/projects",
   },
 };
 

@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Добро пожаловать — Гани Абадан, Abadan & Co.",
     description: "Личное обращение основателя. Почему 359 компаний доверяют нам развитие своих команд.",
-    url: "https://abadan.kz/welcome",
+    url: "https://www.abadan.kz/welcome",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/welcome",
+    canonical: "https://www.abadan.kz/welcome",
   },
 };
 

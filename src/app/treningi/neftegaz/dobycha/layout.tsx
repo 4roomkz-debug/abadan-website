@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Курсы по добыче нефти и газа — Abadan & Co.",
     description:
       "Курсы по добыче и эксплуатации скважин: КРС, ГРП, газлифт, АСПО, интенсификация. 200+ экспертов-практиков нефтегазовой отрасли Казахстана.",
-    url: "https://abadan.kz/treningi/neftegaz/dobycha",
+    url: "https://www.abadan.kz/treningi/neftegaz/dobycha",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz/dobycha",
+    canonical: "https://www.abadan.kz/treningi/neftegaz/dobycha",
   },
 };
 
@@ -50,7 +50,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -138,10 +138,10 @@ export default function DobychaLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
-      { "@type": "ListItem", position: 4, name: "Добыча", item: "https://abadan.kz/treningi/neftegaz/dobycha" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://www.abadan.kz/treningi/neftegaz" },
+      { "@type": "ListItem", position: 4, name: "Добыча", item: "https://www.abadan.kz/treningi/neftegaz/dobycha" },
     ],
   };
 

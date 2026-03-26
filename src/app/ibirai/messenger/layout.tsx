@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     title: "Обучение через Telegram и WhatsApp — ibirAi",
     description:
       "Корпоративное микрообучение в привычных мессенджерах. 87% открываемость, 3-минутные уроки, HR-аналитика.",
-    url: "https://abadan.kz/ibirai/messenger",
+    url: "https://www.abadan.kz/ibirai/messenger",
     type: "website",
     images: [
       {
-        url: "https://abadan.kz/og-ibirai.png",
+        url: "https://www.abadan.kz/og-ibirai.png",
         width: 1200,
         height: 630,
         alt: "ibirAi — обучение через Telegram и WhatsApp",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description:
       "Корпоративное микрообучение в привычных мессенджерах. 87% открываемость.",
   },
-  alternates: { canonical: "https://abadan.kz/ibirai/messenger" },
+  alternates: { canonical: "https://www.abadan.kz/ibirai/messenger" },
 };
 
 export default function MessengerLayout({
@@ -63,7 +63,7 @@ export default function MessengerLayout({
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
   };
 
@@ -75,19 +75,19 @@ export default function MessengerLayout({
         "@type": "ListItem",
         position: 1,
         name: "Главная",
-        item: "https://abadan.kz",
+        item: "https://www.abadan.kz",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "ibirAi",
-        item: "https://abadan.kz/ibirai",
+        item: "https://www.abadan.kz/ibirai",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Мессенджеры",
-        item: "https://abadan.kz/ibirai/messenger",
+        item: "https://www.abadan.kz/ibirai/messenger",
       },
     ],
   };

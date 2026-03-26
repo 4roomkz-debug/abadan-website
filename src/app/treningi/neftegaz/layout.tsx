@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Технические курсы для нефтегазовой отрасли — Abadan & Co.",
     description:
       "65+ курсов для специалистов нефтегазовой отрасли. Бурение, добыча, переработка, безопасность. 200+ экспертов.",
-    url: "https://abadan.kz/treningi/neftegaz",
+    url: "https://www.abadan.kz/treningi/neftegaz",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz",
+    canonical: "https://www.abadan.kz/treningi/neftegaz",
   },
 };
 
@@ -53,7 +53,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -129,9 +129,9 @@ export default function NeftegazLayout({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-            { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://www.abadan.kz/treningi/neftegaz" },
           ],
         }) }}
       />

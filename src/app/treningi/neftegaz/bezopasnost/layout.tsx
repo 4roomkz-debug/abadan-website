@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Курсы по промышленной безопасности в нефтегазе — Abadan & Co.",
     description:
       "Обучение промышленной безопасности, охране труда и HSE для нефтегазовых предприятий. Соответствует требованиям законодательства РК.",
-    url: "https://abadan.kz/treningi/neftegaz/bezopasnost",
+    url: "https://www.abadan.kz/treningi/neftegaz/bezopasnost",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/neftegaz/bezopasnost",
+    canonical: "https://www.abadan.kz/treningi/neftegaz/bezopasnost",
   },
 };
 
@@ -49,7 +49,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -137,10 +137,10 @@ export default function BezopasnostLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://abadan.kz/treningi/neftegaz" },
-      { "@type": "ListItem", position: 4, name: "Безопасность", item: "https://abadan.kz/treningi/neftegaz/bezopasnost" },
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+      { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+      { "@type": "ListItem", position: 3, name: "Нефтегаз", item: "https://www.abadan.kz/treningi/neftegaz" },
+      { "@type": "ListItem", position: 4, name: "Безопасность", item: "https://www.abadan.kz/treningi/neftegaz/bezopasnost" },
     ],
   };
   return (

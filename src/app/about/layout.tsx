@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "О компании Abadan & Co. — People Growth Technology",
     description: "Развиваем людей. Растим показатели. Через технологии. С 2015 года.",
-    url: "https://abadan.kz/about",
+    url: "https://www.abadan.kz/about",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/about",
+    canonical: "https://www.abadan.kz/about",
   },
 };
 

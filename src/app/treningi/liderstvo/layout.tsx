@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     title: "Тренинги для руководителей и лидеров — Abadan & Co.",
     description:
       "12+ тренингов для руководителей в Казахстане. Лидерство, переговоры, управление конфликтами, коучинг. 200+ экспертов.",
-    url: "https://abadan.kz/treningi/liderstvo",
+    url: "https://www.abadan.kz/treningi/liderstvo",
     type: "website",
   },
   alternates: {
-    canonical: "https://abadan.kz/treningi/liderstvo",
+    canonical: "https://www.abadan.kz/treningi/liderstvo",
   },
 };
 
@@ -52,7 +52,7 @@ function buildCourseJsonLd() {
     provider: {
       "@type": "Organization",
       name: "Abadan & Co.",
-      url: "https://abadan.kz",
+      url: "https://www.abadan.kz",
     },
     offers: [
       {
@@ -128,9 +128,9 @@ export default function LiderstvoLayout({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://abadan.kz" },
-            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://abadan.kz/treningi" },
-            { "@type": "ListItem", position: 3, name: "Лидерство", item: "https://abadan.kz/treningi/liderstvo" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz" },
+            { "@type": "ListItem", position: 2, name: "Тренинги", item: "https://www.abadan.kz/treningi" },
+            { "@type": "ListItem", position: 3, name: "Лидерство", item: "https://www.abadan.kz/treningi/liderstvo" },
           ],
         }) }}
       />
