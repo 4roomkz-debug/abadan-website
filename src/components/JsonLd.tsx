@@ -71,11 +71,6 @@ export function LocalBusinessJsonLd() {
       longitude: 76.945465,
     },
     priceRange: "$$",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "359",
-    },
   };
 
   return (
