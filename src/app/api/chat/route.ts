@@ -29,38 +29,44 @@ async function sendLeadToTelegram(leadInfo: string) {
   }
 }
 
-// Проверяем, есть ли в сообщении контактные данные
+// Проверяем, есть ли в сообщении контактные данные.
+// ВАЖНО: ищем ТОЛЬКО в сообщениях пользователя. Реплики ассистента содержат
+// имя бота («Я Асем…») и телефон компании из system prompt — раньше регэксы
+// цепляли их и слали ложные лиды с данными бота вместо данных собеседника.
 function extractContactInfo(messages: Array<{ role: string; content: string }>) {
-  const allText = messages.map((m) => m.content).join(" ");
+  const userMessages = messages.filter((m) => m.role === "user");
+  if (userMessages.length === 0) return { hasContact: false };
 
-  // Ищем телефон (казахстанский формат)
-  const phoneMatch = allText.match(/(\+?7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}/g);
+  // Телефон засчитываем только в ПОСЛЕДНЕМ сообщении пользователя — это момент,
+  // когда он действительно его поделился. Иначе лид перевыпускается на каждом
+  // следующем сообщении, пока номер где-то висит в истории.
+  const lastUserMessage = userMessages[userMessages.length - 1].content;
+  const phoneRegex = /(\+?7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}/g;
+  const phoneMatch = lastUserMessage.match(phoneRegex);
+  if (!phoneMatch) return { hasContact: false };
 
-  // Ищем имя (после "меня зовут", "я", "имя" и т.д.)
+  // Имя может быть в любом сообщении пользователя (часто представляется раньше).
+  const userText = userMessages.map((m) => m.content).join(" ");
   const namePatterns = [
     /меня зовут\s+([А-Яа-яЁёA-Za-z]+)/i,
     /я\s+([А-Яа-яЁё][а-яё]+)\s/i,
     /имя[:\s]+([А-Яа-яЁёA-Za-z]+)/i,
   ];
 
-  let name = null;
+  let name: string | null = null;
   for (const pattern of namePatterns) {
-    const match = allText.match(pattern);
+    const match = userText.match(pattern);
     if (match) {
       name = match[1];
       break;
     }
   }
 
-  if (phoneMatch) {
-    return {
-      hasContact: true,
-      phone: phoneMatch[phoneMatch.length - 1], // Берём последний найденный номер
-      name: name || "Не указано",
-    };
-  }
-
-  return { hasContact: false };
+  return {
+    hasContact: true,
+    phone: phoneMatch[phoneMatch.length - 1],
+    name: name || "Не указано",
+  };
 }
 
 // Генерируем промпт на основе базы знаний
