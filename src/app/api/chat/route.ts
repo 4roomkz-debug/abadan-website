@@ -9,9 +9,13 @@ import {
   EVENTS,
 } from "@/data/ai-knowledge";
 
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY!;
+// На Vercel переменная называется DEEPSEEK_API; локально/исторически встречается DEEPSEEK_API_KEY.
+const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API ?? process.env.DEEPSEEK_API_KEY ?? "";
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
+
+const digitsOnly = (s: string) => s.replace(/\D/g, "");
+const COMPANY_PHONE_DIGITS = digitsOnly(COMPANY_INFO.phone);
 
 // Отправка заявки в Telegram
 async function sendLeadToTelegram(leadInfo: string) {
@@ -45,6 +49,15 @@ function extractContactInfo(messages: Array<{ role: string; content: string }>) 
   const phoneMatch = lastUserMessage.match(phoneRegex);
   if (!phoneMatch) return { hasContact: false };
 
+  const phone = phoneMatch[phoneMatch.length - 1];
+  // Игнорируем телефон самой компании — пользователь не делится своим контактом,
+  // а цитирует наш номер (или вставил по ошибке). Сравниваем по последним 10 цифрам,
+  // чтобы не зависеть от пробелов/+7/8.
+  const phoneDigits = digitsOnly(phone);
+  if (phoneDigits.slice(-10) === COMPANY_PHONE_DIGITS.slice(-10)) {
+    return { hasContact: false };
+  }
+
   // Имя может быть в любом сообщении пользователя (часто представляется раньше).
   const userText = userMessages.map((m) => m.content).join(" ");
   const namePatterns = [
@@ -53,18 +66,20 @@ function extractContactInfo(messages: Array<{ role: string; content: string }>) 
     /имя[:\s]+([А-Яа-яЁёA-Za-z]+)/i,
   ];
 
+  const botName = AI_PERSONA.name.toLowerCase();
   let name: string | null = null;
   for (const pattern of namePatterns) {
     const match = userText.match(pattern);
-    if (match) {
-      name = match[1];
-      break;
-    }
+    if (!match) continue;
+    // Защита от имени бота: «я Асем», «меня зовут Асем» и т.п. — это явно не лид.
+    if (match[1].toLowerCase() === botName) continue;
+    name = match[1];
+    break;
   }
 
   return {
     hasContact: true,
-    phone: phoneMatch[phoneMatch.length - 1],
+    phone,
     name: name || "Не указано",
   };
 }

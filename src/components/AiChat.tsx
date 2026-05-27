@@ -39,12 +39,15 @@ export default function AiChat() {
     }
   }, [isOpen]);
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  const sendMessage = async (textOverride?: string) => {
+    // Принимаем явный текст из быстрых кнопок — иначе setInput+setTimeout
+    // ловит stale closure (input ещё пустой в момент клика → ранний return).
+    const content = (textOverride ?? input).trim();
+    if (!content || isLoading) return;
 
-    const userMessage: Message = { role: "user", content: input.trim() };
+    const userMessage: Message = { role: "user", content };
     setMessages(prev => [...prev, userMessage]);
-    setInput("");
+    if (textOverride === undefined) setInput("");
     setIsLoading(true);
 
     try {
@@ -177,10 +180,7 @@ export default function AiChat() {
             {["Какие тренинги есть?", "Сколько стоит?", "Оставить заявку"].map((text) => (
               <button
                 key={text}
-                onClick={() => {
-                  setInput(text);
-                  setTimeout(() => sendMessage(), 100);
-                }}
+                onClick={() => sendMessage(text)}
                 disabled={isLoading}
                 className="px-3 py-1.5 text-xs font-medium text-[#00767D] bg-[#00767D]/5 rounded-full hover:bg-[#00767D]/10 transition-colors whitespace-nowrap disabled:opacity-50"
               >
@@ -203,7 +203,7 @@ export default function AiChat() {
                 className="flex-1 px-4 py-3 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] text-sm focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all disabled:opacity-50"
               />
               <button
-                onClick={sendMessage}
+                onClick={() => sendMessage()}
                 disabled={isLoading || !input.trim()}
                 className="px-4 py-3 bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] rounded-xl text-[#2D3A3C] font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
