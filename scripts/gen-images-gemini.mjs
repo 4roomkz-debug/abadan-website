@@ -7,7 +7,11 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const API_KEY = process.env.GEMINI_API_KEY || "AIzaSyAmKhpGKdKAuIb_JPqNMvUCds27Wd5Jmwo";
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error("GEMINI_API_KEY not set. Run: node --env-file=.env.local scripts/gen-images-gemini.mjs");
+  process.exit(1);
+}
 const MODEL = "gemini-2.5-flash-image";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 

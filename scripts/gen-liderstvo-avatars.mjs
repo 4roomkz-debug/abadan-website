@@ -2,7 +2,11 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const API_KEY = "AIzaSyAmKhpGKdKAuIb_JPqNMvUCds27Wd5Jmwo";
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error("GEMINI_API_KEY not set. Run: node --env-file=.env.local scripts/gen-liderstvo-avatars.mjs");
+  process.exit(1);
+}
 const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent";
 const DIR = path.resolve(__dirname, "../public/images/liderstvo");
 

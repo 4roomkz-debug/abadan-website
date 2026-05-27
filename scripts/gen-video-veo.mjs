@@ -7,7 +7,11 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const API_KEY = process.env.GEMINI_API_KEY || "AIzaSyAmKhpGKdKAuIb_JPqNMvUCds27Wd5Jmwo";
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error("GEMINI_API_KEY not set. Run: node --env-file=.env.local scripts/gen-video-veo.mjs");
+  process.exit(1);
+}
 const BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 const MODEL = "veo-3.1-generate-preview";
 
