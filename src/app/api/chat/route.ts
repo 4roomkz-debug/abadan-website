@@ -17,6 +17,70 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
 const digitsOnly = (s: string) => s.replace(/\D/g, "");
 const COMPANY_PHONE_DIGITS = digitsOnly(COMPANY_INFO.phone);
 
+// Лимиты входа. Защищают от запросов вида «10 000 сообщений в одном POST»,
+// которые иначе сожгли бы баланс DeepSeek за один вызов.
+const MAX_MESSAGES = 30;
+const MAX_CONTENT_LEN = 2000;
+
+// Rate limit в памяти инстанса. На Vercel serverless инстансы независимые,
+// поэтому это best-effort. Для строгого лимита под нагрузкой — Upstash Redis.
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+const ipHits = new Map<string, number[]>();
+
+function rateLimit(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const hits = (ipHits.get(ip) ?? []).filter((t) => t > windowStart);
+  if (hits.length >= RATE_LIMIT_MAX) {
+    ipHits.set(ip, hits);
+    return false;
+  }
+  hits.push(now);
+  ipHits.set(ip, hits);
+  if (ipHits.size > 5000) {
+    for (const [k, v] of ipHits) {
+      if (v.every((t) => t < windowStart)) ipHits.delete(k);
+    }
+  }
+  return true;
+}
+
+function getClientIp(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
+// POST без Origin — почти всегда не-браузер (curl/бот). Принимаем только запросы
+// со своего же домена; localhost оставлен для dev.
+function isAllowedOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return false;
+  try {
+    const originHost = new URL(origin).host;
+    const host = request.headers.get("host") ?? "";
+    if (originHost === host) return true;
+    if (originHost.startsWith("localhost")) return true;
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+type ChatMessage = { role: "user" | "assistant"; content: string };
+
+function isValidMessages(input: unknown): input is ChatMessage[] {
+  if (!Array.isArray(input) || input.length === 0 || input.length > MAX_MESSAGES) return false;
+  for (const m of input) {
+    if (!m || typeof m !== "object") return false;
+    const { role, content } = m as { role?: unknown; content?: unknown };
+    if (role !== "user" && role !== "assistant") return false;
+    if (typeof content !== "string" || content.length === 0 || content.length > MAX_CONTENT_LEN) return false;
+  }
+  return true;
+}
+
 // Отправка заявки в Telegram
 async function sendLeadToTelegram(leadInfo: string) {
   try {
@@ -98,6 +162,7 @@ const generateSystemPrompt = () => {
 Ты ${AI_PERSONA.name} — ${AI_PERSONA.role} компании ${COMPANY_INFO.name}.
 
 ТВОЯ ЛИЧНОСТЬ:
+- Ты женщина. ВСЕГДА говори о себе в женском роде: «передала», «помогла», «рада», «готова», «уточнила», «думаю», «была» — никогда «передал/помог/рад/готов/уточнил/был».
 - Общайся максимально естественно, как живой человек
 - В начале диалога НЕ используй длинные сообщения
 - Добавляй юмор и аутентичность
@@ -152,7 +217,28 @@ ${faqText}
 
 export async function POST(request: Request) {
   try {
-    const { messages } = await request.json();
+    // 1. Принимаем только запросы с собственного домена (отсекает curl/боты с других сайтов).
+    if (!isAllowedOrigin(request)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // 2. Rate limit по IP — гасит флуд с одного источника.
+    const ip = getClientIp(request);
+    if (!rateLimit(ip)) {
+      return NextResponse.json(
+        { error: "Слишком много запросов. Попробуй через минуту 🙏" },
+        { status: 429 }
+      );
+    }
+
+    const body = await request.json();
+    const messages = body?.messages;
+
+    // 3. Валидация — ограничиваем размер диалога и каждого сообщения,
+    // чтобы один запрос не мог отправить в DeepSeek килобайты текста.
+    if (!isValidMessages(messages)) {
+      return NextResponse.json({ error: "Bad request" }, { status: 400 });
+    }
 
     // Проверяем, есть ли новые контактные данные
     const contactInfo = extractContactInfo(messages);

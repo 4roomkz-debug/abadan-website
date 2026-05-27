@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 interface Message {
@@ -128,8 +129,15 @@ export default function AiChat() {
         <div className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl border border-[#00767D]/10 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#00767D] to-[#006D77] px-5 py-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg">
-              👩‍💼
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20 ring-2 ring-white/30">
+              <Image
+                src="/asem-avatar.jpg"
+                alt="Асем"
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+                priority
+              />
             </div>
             <div>
               <h3 className="text-white font-bold">Асем</h3>
