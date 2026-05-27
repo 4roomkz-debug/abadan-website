@@ -110,10 +110,11 @@ export default function AiChat() {
             <Image
               src="/asem-avatar.jpg"
               alt="Асем — виртуальная помощница"
-              width={80}
-              height={80}
+              width={192}
+              height={192}
               className="absolute inset-0 w-full h-full rounded-full object-cover ring-2 ring-white/50"
               priority
+              unoptimized
             />
             <span
               className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-[#4ADE80] ring-2 ring-white"
@@ -139,10 +140,11 @@ export default function AiChat() {
               <Image
                 src="/asem-avatar.jpg"
                 alt="Асем"
-                width={80}
-                height={80}
+                width={192}
+                height={192}
                 className="w-full h-full object-cover"
                 priority
+                unoptimized
               />
             </div>
             <div>
