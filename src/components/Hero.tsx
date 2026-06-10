@@ -1,8 +1,38 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+function useCountUp(target: number, duration: number, delay: number) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    let start: number | null = null;
+
+    const tick = (timestamp: number) => {
+      if (start === null) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * target));
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    };
+
+    const timer = setTimeout(() => {
+      raf = requestAnimationFrame(tick);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(raf);
+    };
+  }, [target, duration, delay]);
+
+  return count;
+}
 
 export default function Hero() {
+  const trainedCount = useCountUp(50000, 2200, 600);
   return (
     <section className="relative min-h-screen flex items-center justify-center gradient-hero overflow-hidden">
       {/* Subtle ambient lighting - simplified */}
@@ -110,7 +140,9 @@ export default function Hero() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-[#2D3A3C]">50 000+</p>
+                    <p className="text-2xl font-bold text-[#2D3A3C] tabular-nums">
+                      {trainedCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}+
+                    </p>
                     <p className="text-sm text-[#546569]">обучено специалистов</p>
                   </div>
                 </div>

@@ -36,6 +36,10 @@ export default function TrainingDirections() {
 
   return (
     <section className="relative py-20 sm:py-32 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21]">
+      {/* Soft transitions from/to neighboring light sections */}
+      <div className="absolute top-0 inset-x-0 h-20 bg-gradient-to-b from-[#FAFAFA]/25 to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-b from-transparent to-[#F8FAFA]/30 pointer-events-none"></div>
+
       {/* Ambient glows */}
       <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-[#00767D]/15 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute -bottom-32 right-1/4 w-[400px] h-[400px] bg-[#F0BB1E]/[0.07] rounded-full blur-[120px] pointer-events-none"></div>
@@ -158,8 +162,6 @@ export default function TrainingDirections() {
         </div>
       </div>
 
-      {/* Bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
     </section>
   );
 }
