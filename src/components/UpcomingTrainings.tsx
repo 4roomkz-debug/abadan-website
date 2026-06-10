@@ -106,7 +106,7 @@ export default function UpcomingTrainings() {
                   </div>
                   <div>
                     <div className="text-[#2D3A3C] font-semibold">{training.date}</div>
-                    <div className="text-xs text-[#94A3B8]">{training.month} 2026</div>
+                    <div className="text-xs text-[#7A8B8E]">{training.month} 2026</div>
                   </div>
                 </div>
                 <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${

@@ -93,10 +93,10 @@ export default function Trainers() {
                 <div className="flex gap-2 pt-3 border-t border-[#00767D]/10">
                   {(trainer as { isAI?: boolean }).isAI ? (
                     <>
-                      <span className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#8B5CF6]/10 to-[#6366F1]/10 text-xs font-medium text-[#8B5CF6]">
+                      <span className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#00767D]/10 to-[#F0BB1E]/15 text-xs font-medium text-[#00767D]">
                         AI-эксперт
                       </span>
-                      <span className="px-3 py-1 rounded-lg bg-[#8B5CF6]/5 text-xs font-medium text-[#6366F1]">
+                      <span className="px-3 py-1 rounded-lg bg-[#F0BB1E]/15 text-xs font-medium text-[#946F0A]">
                         Практик
                       </span>
                     </>

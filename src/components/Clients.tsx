@@ -42,7 +42,7 @@ function NeuralBackground({
     // Brand colors (Abadan & Company) - slightly more visible for light background
     const colors = {
       teal: "#00767D",
-      tealLight: "#14B8A6",
+      tealLight: "#009BA3",
       gold: "#F0BB1E",
       goldLight: "#EBB417",
     };
