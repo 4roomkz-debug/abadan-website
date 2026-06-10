@@ -63,44 +63,61 @@ type Response =
 ### 4.3 Per-request flow
 
 ```
-1. Client POSTs { messages, meta? }.
-2. Origin / rate-limit / message-shape checks (shared with legacy). Failures
-   short-circuit with 400 / 429 before any LLM call.
-3. Validate meta (§4.5). On invalid stage or invalid state field → reset to
+1. Kill-switch check: if env CHAT_V2_DISABLED=1, return 410 immediately.
+   This runs before rate-limit so a disabled experiment never burns the
+   per-IP budget.
+2. Client POSTs { messages, meta? }.
+3. Origin / rate-limit / total-payload-size / message-shape checks
+   (shared with legacy via _shared.ts). The shared message validator
+   already enforces MAX_CONTENT_LEN=2000 per message and MAX_MESSAGES=30
+   total — no need to re-cap here. Additionally, reject any request whose
+   JSON-serialized meta exceeds 4096 bytes (defense against bloating
+   state.pain_point etc. across turns). Failures short-circuit with
+   400 / 429 before any LLM call.
+4. Validate meta (§4.5). On invalid stage or invalid state field → reset to
    { stage: "qualifying", state: {} } and log a warning. Never trust client.
-4. Server picks the agent by meta.stage:
+5. Server picks the agent by meta.stage:
        qualifying → Qualifier
        matching   → Value Matcher
        closing    → Closer
-       done       → Closer (post-handoff farewell behavior, no further handoff)
-5. Server builds the prompt for that one agent only:
+       done       → Closer (post-handoff farewell behavior; see §5.3)
+6. Server builds the prompt for that one agent only:
        - agent's focused system prompt as a role:"system" message
        - the user-visible conversation history mapped to OpenAI roles
        - the current state JSON appended as a SEPARATE role:"system" message
          tagged "[CURRENT PIPELINE STATE]" so the agent treats it as ground
          truth rather than user-provided content
-6. Server calls DeepSeek with response_format: json_object,
+7. Server calls DeepSeek with response_format: json_object,
    temperature 0.7, max_tokens 400.
-7. Server validates the returned JSON against the agent's Zod schema.
+8. Server validates the returned JSON against the agent's Zod schema.
        - On parse failure: one retry with appended instruction
          "Верни ответ строго по JSON-схеме. Без префиксов и пояснений."
        - On second failure: return a static fallback reply, leave stage/state unchanged.
-8. Server merges state_update into state with these rules:
+9. Server merges state_update into state with these rules:
        - keys with undefined values: ignored (no overwrite)
        - keys with defined values: overwrite previous value
        - arrays: replaced wholesale (not concatenated)
        - empty string or empty array on a previously-set field: ignored
          (treated as the LLM "forgetting" rather than clearing intent)
-9. If handoff !== null: stage transitions to handoff value.
-10. Telegram lead is fired iff:
+10. If handoff !== null: stage transitions to handoff value.
+11. Telegram lead is fired iff ALL of:
        - new stage === "done"
-       - state.phone present and not a company-phone match
-       - state.lead_sent !== true (server sets this flag after firing)
-    Server stores lead_sent on the state going back to the client; on every
-    subsequent request the server re-checks this flag, so a reload-and-replay
-    of the same meta cannot double-fire. Inside one serverless instance,
-    a request-scoped guard also prevents simultaneous double-fire.
-11. Server returns { message, meta: { stage, state } }.
+       - state.phone present and last-10-digits != COMPANY_INFO phone
+       - state.lead_sent !== true on the incoming meta (client-round-trip check)
+       - phone-hash not in the in-memory dedupe set (cross-tampering check)
+
+    The in-memory dedupe is a `Set<string>` of `sha256(digitsOnly(phone))`
+    with a 1-hour rolling TTL, scoped to one serverless instance. Same
+    best-effort caveat as the rate-limit: across instances a duplicate is
+    possible but bounded to one per cold instance. On a real production
+    rollout we would promote both to Upstash Redis (§10).
+
+    After firing, server sets state.lead_sent = true and adds the hash to
+    the dedupe set. state.lead_sent travels back to the client and is
+    re-asserted server-side on every subsequent request — a tampered
+    client that flips it back to false still fails the phone-hash check.
+
+12. Server returns { message, meta: { stage, state } }.
 ```
 
 ### 4.4 Kill-switch
@@ -109,19 +126,33 @@ If env `CHAT_V2_DISABLED=1`, step 2 returns HTTP 410 with body `{ error: "experi
 
 ### 4.5 Server-side `meta` validation
 
-A Zod schema gates every incoming `meta`:
+A Zod schema gates every incoming `meta`. The length caps from §4.6 are enforced as `.max()` on every string and `.max(5)` on `programs_suggested`:
 
 ```ts
 const StageSchema = z.enum(["qualifying", "matching", "closing", "done"]);
 const PipelineStateSchema = z.object({
   role: z.enum(["hr","owner","manager","employee","other"]).optional(),
   industry: z.string().max(120).optional(),
-  // ... mirrors the type in §4.6 exactly
-  lead_sent: z.boolean().optional(),  // server-only; client may not set
+  company_size: z.enum(["solo","small","medium","large"]).optional(),
+  pain_point: z.string().max(500).optional(),
+  training_area: z.enum(["soft-skills","leadership","ai-hr","oil-gas","other"]).optional(),
+  format_preference: z.enum(["online","offline","corporate","open","any"]).optional(),
+  timeline: z.string().max(120).optional(),
+  programs_suggested: z.array(z.string().max(200)).max(5).optional(),
+  interest_confirmed: z.boolean().optional(),
+  name: z.string().max(80).optional(),
+  phone: z.string().max(30).optional(),
+  callback_preference: z.string().max(120).optional(),
+  ready_to_handoff: z.boolean().optional(),
+  // lead_sent is intentionally NOT listed here — see strip step below.
 }).strict();  // unknown keys are rejected, not silently passed
 ```
 
-Unknown keys, wrong types, oversize strings, or an unknown stage all collapse to a default fresh meta with a log line `meta_reset_reason: "..."`. The `lead_sent` flag, if present in client input, is stripped before validation (clients cannot suppress lead delivery by spoofing).
+**Order of operations on every request:**
+1. Read raw `meta` from request body.
+2. If `meta.state` exists, delete `meta.state.lead_sent` BEFORE validation. `lead_sent` is a server-only field; this strip means a client cannot smuggle it past `.strict()`.
+3. Run Zod validation on the (now-stripped) meta. On any failure → reset to `{ stage: "qualifying", state: {} }` with a log line `meta_reset_reason: <Zod issue path>`.
+4. Server then re-loads `state.lead_sent` from its own dedupe knowledge: if the request's phone-hash is in the in-memory dedupe set, `state.lead_sent` is forced to `true`.
 
 ### 4.6 State schema
 
@@ -131,7 +162,7 @@ type Stage = "qualifying" | "matching" | "closing" | "done";
 type PipelineState = {
   // Filled by Qualifier
   role?: "hr" | "owner" | "manager" | "employee" | "other";
-  industry?: string;       // free text, max 120 chars; documented limitation §11
+  industry?: string;       // free text, max 120 chars. v1 keeps free-text; Matcher does its own categorization. See §11.
   company_size?: "solo" | "small" | "medium" | "large";
   pain_point?: string;     // max 500 chars
 
@@ -159,7 +190,7 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 
 ### 5.1 Qualifier
 
-- **Purpose:** Warm intro, identify `role`, optionally `industry` and `company_size`, capture `pain_point`. Does not discuss programs, prices, or contacts.
+- **Purpose:** Warm intro, identify `role`, optionally `industry` and `company_size`, capture `pain_point`. Does not discuss programs, prices, or contacts. **If the user volunteers a phone number, the agent does NOT acknowledge or echo it** — the prompt explicitly says "ignore contact details if the user shares them early; Closer will handle that later."
 - **Context loaded into prompt:** persona, conversation style rules (feminine grammatical gender, short replies). **No catalog, no FAQ.**
 - **Handoff condition (to `matching`):** (`state.role` set AND `state.pain_point` set) OR (`state.pain_point` set AND user-turn count in this stage ≥ 3). The OR-clause prevents stalling when a user is willing to describe their pain but won't categorize their role.
 - **Output schema:**
@@ -179,7 +210,7 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 
 ### 5.2 Value Matcher
 
-- **Purpose:** Given `role` + `pain_point`, recommend 1–3 specific programs from the catalog. Clarify format / timeline. Does not collect contacts.
+- **Purpose:** Given `role` + `pain_point`, recommend 1–3 specific programs from the catalog. Clarify format / timeline. Does not collect contacts. **Same phone-ignore rule as Qualifier** (§5.1) — if user shares a phone, the agent stays in role and lets Closer handle it.
 - **Context loaded into prompt:** persona + style rules + `TRAININGS` + `TRAINING_FORMATS` + concise `PRICING_INFO`. No FAQ.
 - **Handoff condition (to `closing`):** `state.training_area` set, `state.programs_suggested.length >= 1`, **and** `state.interest_confirmed === true`. The agent is responsible for setting `interest_confirmed` when it observes an explicit signal ("да, интересно", "как записаться", "расскажите подробнее про X", Kazakh/English equivalents). Gating on a boolean state field rather than re-parsing the user message makes the handoff condition testable from the spec alone.
 - **Output schema:**
@@ -201,8 +232,8 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 
 - **Purpose:** Capture `name` and `phone`, optionally `callback_preference`. References accumulated state in its reply ("чтобы Индира уже знала контекст"). Hands off to `done`.
 - **Context loaded into prompt:** persona + style rules + state JSON dump (so the reply can reference what was discussed). **No catalog, no FAQ.**
-- **Handoff condition (to `done`):** `state.phone` set, and the phone's last 10 digits do **not** match `COMPANY_INFO.phone` (reuses the defensive filter from the current code).
-- **Side effect on entering `done`:** server calls `sendLeadToTelegram(...)` with role, pain_point, programs_suggested, name, phone, callback_preference. Idempotency is enforced by the server-only `state.lead_sent` flag (§4.3 step 10, §4.6) — a tampered or replayed `meta` cannot trigger a second send.
+- **Handoff condition (to `done`):** `state.phone` set, and the phone's last 10 digits do **not** match `COMPANY_INFO.phone` (reuses the defensive filter from the current code). `state.name` is NOT a precondition — if Closer hands off without ever extracting a name, the Telegram message uses `"Не указано"` (matching legacy behavior).
+- **Side effect on entering `done`:** server calls `sendLeadToTelegram(...)` with role, pain_point, programs_suggested, name, phone, callback_preference. Idempotency is enforced by two layers: the server-only `state.lead_sent` flag round-tripping in `meta`, and the in-memory `Set<phoneHash>` server-side (§4.3 step 11). Within one serverless instance both layers catch replays; across instances the dedupe set is empty, so the same phone reaching a cold instance within the 1-hour window via tampered meta could in theory fire once more — bounded, documented, and acceptable for an experiment.
 - **In `done` stage:** Closer's prompt is told the lead is already submitted; it just thanks and answers brief follow-ups without changing stage.
 - **Output schema:**
   ```json
@@ -230,9 +261,9 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 
 ### 6.1 Activation
 
-- Frontend reads `chat_pipeline` cookie on `AiChat` mount.
-- If URL contains `?agents=1`, set cookie `chat_pipeline=v2`, max-age 30 days, same-site Lax.
-- If URL contains `?agents=0`, delete the cookie.
+- All cookie I/O happens **client-side via `document.cookie`** inside a `useEffect` that runs after mount. SSR is irrelevant — `AiChat` is a `"use client"` component and the widget is rendered closed until the user clicks. First-render value defaults to legacy ("no badge, no v2 endpoint"); the `[v2]` badge only mounts on the second render after `useEffect` reads the cookie. This avoids hydration mismatch.
+- If URL contains `?agents=1`, the same `useEffect` writes `document.cookie = "chat_pipeline=v2; max-age=2592000; path=/; SameSite=Lax"` and (cosmetically) strips the param via `history.replaceState`.
+- If URL contains `?agents=0`, the same flow writes the cookie with `max-age=0`.
 - If cookie value is `v2`, the widget posts to `/api/chat/v2`; otherwise to `/api/chat`.
 - A small `[v2]` badge appears in the chat header when in experimental mode, to avoid confusing screenshot sessions with real production.
 
@@ -246,6 +277,13 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 
 - Legacy `/api/chat` keeps its existing `{ messages } → { message }` shape. v2 augments with `meta`.
 - Client stores `meta` separately from `messages`. If a user toggles `?agents=0` mid-conversation, `messages` still flows correctly to legacy, `meta` is just dropped.
+
+### 6.4 Replay-script access
+
+v2 inherits `isAllowedOrigin` from `_shared.ts`, which rejects POSTs with no Origin header. The replay script needs a deterministic way through:
+
+- **Local dev (`npm run dev`):** script sends `Origin: http://localhost:3000` header. Already passes the existing localhost allow-clause in `isAllowedOrigin`.
+- **Against deployed Vercel:** script sends `X-Replay-Token: <token>` header whose value matches an env var `CHAT_V2_REPLAY_TOKEN`. When present and matching, `_shared.ts` skips the origin check for that single request. When the env var is unset (production default), the header is ignored — fail-closed.
 
 ## 7. Observability
 
@@ -262,7 +300,7 @@ Per-request structured log line written to `console.log` (Vercel Logs captures s
   "state_after_keys": ["role", "industry", "pain_point"],
   "state_after_redacted": {
     "role": "hr",
-    "industry": "ритейл",
+    "industry": "<…>",
     "pain_point": "<…>",
     "name": "<REDACTED>",
     "phone": "<REDACTED:+7***34>",
@@ -284,8 +322,6 @@ Per-request structured log line written to `console.log` (Vercel Logs captures s
 ## 8. Replay script — `scripts/v2-replay.mjs`
 
 A Node script that:
-
-**Origin-check bypass.** v2 inherits `isAllowedOrigin` from `_shared.ts`, which rejects POSTs with no Origin header (i.e. non-browser clients). The replay script either (a) sets `Origin: http://localhost:3000` to look like a dev browser, or (b) is run with an env `CHAT_V2_REPLAY_TOKEN` whose value matches a server-side `REPLAY_TOKEN`, in which case the origin check is bypassed for that request only. The token bypass is what we use against deployed Vercel; the Origin spoof is fine for `npm run dev`.
 
 1. Reads a list of 5 hard-coded scenarios. Each scenario is an array of user turns:
    ```js
@@ -334,5 +370,5 @@ Cost: ~30–50 DeepSeek calls per full run, well under $0.15.
 
 ## 11. Open questions for review
 
-- The `industry` field uses free text instead of an enum. Matcher must do its own free-text→category mapping. Resolution choice for v1: **keep as free text**, accept the looseness. If Matcher routing turns out to depend hard on this field during replay, promote to an enum in v2's v2.
+- The `industry` field uses free text instead of an enum (resolution noted inline in §4.6 too). Matcher must do its own free-text→category mapping. Resolution choice for v1: **keep as free text**, accept the looseness. If Matcher routing turns out to depend hard on this field during replay, promote to an enum in a future iteration.
 - State length caps in §4.6 should keep the Closer prompt bounded; if a Matcher run accidentally fills `programs_suggested` with five long-named technical programs and `pain_point` is also near its cap, the Closer prompt can still hit a few hundred tokens of state alone. We rely on `max_tokens: 400` upstream as the hard backstop; revisit if any DeepSeek call truncates `reply` mid-sentence in the replay logs.
