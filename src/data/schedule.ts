@@ -469,6 +469,42 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "business"
   },
   {
+    "date": "25-26 июня",
+    "month": "Июнь",
+    "name": "Корпоративное обучение по внедрению инструментов искусственного интеллекта",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "29-30 июня",
+    "month": "Июнь",
+    "name": "Согласительная комиссия",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "1-2 июля",
+    "month": "Июль",
+    "name": "Искусственный интеллект для HR. Продвинутые нейросетевые инструменты для автоматизации HR-процессов",
+    "hours": 16,
+    "priceOnline": 200000,
+    "priceOffline": 250000,
+    "category": "business"
+  },
+  {
+    "date": "2-4 июля",
+    "month": "Июль",
+    "name": "Нейросети и ИИ: стратегические решения для руководителей",
+    "hours": 24,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "business"
+  },
+  {
     "date": "1-2 июля",
     "month": "Июль",
     "name": "Социальная ответственность и устойчивое развитие компании",
@@ -1270,6 +1306,24 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "technical"
   },
   {
+    "date": "18-19 июня",
+    "month": "Июнь",
+    "name": "Управление надежностью оборудования",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "technical"
+  },
+  {
+    "date": "22-23 июня",
+    "month": "Июнь",
+    "name": "Техническое обслуживание и ремонт нефтегазопромыслового оборудования",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "technical"
+  },
+  {
     "date": "23-24 июня",
     "month": "Июнь",
     "name": "Особенности сервисного обслуживания и технического контроля автомобильного транспорта",
@@ -1279,9 +1333,36 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
     "category": "technical"
   },
   {
+    "date": "24-25 июня",
+    "month": "Июнь",
+    "name": "Безопасная эксплуатация, техническое обслуживание и ремонт насосов",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "technical"
+  },
+  {
     "date": "29-30 июня",
     "month": "Июнь",
     "name": "Эксплуатация высоковольтных линий",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "technical"
+  },
+  {
+    "date": "29-30 июня",
+    "month": "Июнь",
+    "name": "Системы винтовых насосов. Системы сепарации нефти и газа",
+    "hours": 16,
+    "priceOnline": 250000,
+    "priceOffline": 350000,
+    "category": "technical"
+  },
+  {
+    "date": "2-3 июля",
+    "month": "Июль",
+    "name": "Контроль скважины. Управление скважиной при газонефтеводопроявлениях",
     "hours": 16,
     "priceOnline": 250000,
     "priceOffline": 350000,
