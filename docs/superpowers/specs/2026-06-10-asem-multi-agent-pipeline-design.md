@@ -83,10 +83,16 @@ type Response =
        done       → Closer (post-handoff farewell behavior; see §5.3)
 6. Server builds the prompt for that one agent only:
        - agent's focused system prompt as a role:"system" message
-       - the user-visible conversation history mapped to OpenAI roles
-       - the current state JSON appended as a SEPARATE role:"system" message
-         tagged "[CURRENT PIPELINE STATE]" so the agent treats it as ground
-         truth rather than user-provided content
+       - the user-visible conversation history mapped to OpenAI roles.
+         Critical: assistant turns in `messages` contain ONLY the prior
+         `reply` strings — the JSON envelopes {reply, state_update, handoff}
+         are NEVER re-fed to the model. The client appends `response.message`
+         (which is `reply`) to its local `messages`; the envelope is
+         discarded after the server merges its state_update.
+       - the current state JSON (post-merge from previous turns) appended as
+         a SEPARATE role:"system" message tagged "[CURRENT PIPELINE STATE]"
+         so the agent treats it as ground truth rather than user-provided
+         content
 7. Server calls DeepSeek with response_format: json_object,
    temperature 0.7, max_tokens 400.
 8. Server validates the returned JSON against the agent's Zod schema.
@@ -101,28 +107,36 @@ type Response =
          (treated as the LLM "forgetting" rather than clearing intent)
 10. If handoff !== null: stage transitions to handoff value.
 11. Telegram lead is fired iff ALL of:
-       - new stage === "done"
+       - stage_in !== "done" AND stage_out === "done" (TRANSITION only —
+         a request that arrives already in `done` and stays in `done` is a
+         follow-up turn and must not re-fire)
        - state.phone present and last-10-digits != COMPANY_INFO phone
        - state.lead_sent !== true on the incoming meta (client-round-trip check)
-       - phone-hash not in the in-memory dedupe set (cross-tampering check)
+       - phone-hash not in the in-memory dedupe map (cross-tampering check)
 
-    The in-memory dedupe is a `Set<string>` of `sha256(digitsOnly(phone))`
-    with a 1-hour rolling TTL, scoped to one serverless instance. Same
-    best-effort caveat as the rate-limit: across instances a duplicate is
-    possible but bounded to one per cold instance. On a real production
-    rollout we would promote both to Upstash Redis (§10).
+    The in-memory dedupe is `Map<phoneHash, expiresAtMs>`, where
+    `phoneHash = sha256(digitsOnly(state.phone).slice(-10))` — the same
+    last-10-digit normalization the legacy COMPANY_PHONE comparison uses.
+    `expiresAtMs = Date.now() + 3_600_000` (1h TTL). Eviction is
+    opportunistic, modeled on the `ipHits` GC in `_shared.ts`: on each
+    insert, if `map.size > 5000`, walk the map and delete entries with
+    `expiresAt < Date.now()`. Scoped to one serverless instance — across
+    instances a duplicate is possible but bounded to one per cold instance.
+    Future production rollout would promote both this map and the rate
+    limit to Upstash Redis (§10).
 
-    After firing, server sets state.lead_sent = true and adds the hash to
-    the dedupe set. state.lead_sent travels back to the client and is
-    re-asserted server-side on every subsequent request — a tampered
-    client that flips it back to false still fails the phone-hash check.
+    After firing, server sets state.lead_sent = true and inserts
+    (phoneHash, expiresAtMs) into the dedupe map. state.lead_sent travels
+    back to the client and is re-asserted server-side on every subsequent
+    request (§4.5 step 4) — a tampered client that flips it back to false
+    still fails the phone-hash check.
 
 12. Server returns { message, meta: { stage, state } }.
 ```
 
 ### 4.4 Kill-switch
 
-If env `CHAT_V2_DISABLED=1`, step 2 returns HTTP 410 with body `{ error: "experiment_disabled" }`. The client clears its cookie and shows a one-line notice asking the user to refresh.
+If env `CHAT_V2_DISABLED=1`, step 1 of §4.3 returns HTTP 410 with body `{ error: "experiment_disabled" }` before any other work. The client clears its cookie and shows a one-line notice asking the user to refresh.
 
 ### 4.5 Server-side `meta` validation
 
@@ -231,7 +245,7 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 ### 5.3 Closer
 
 - **Purpose:** Capture `name` and `phone`, optionally `callback_preference`. References accumulated state in its reply ("чтобы Индира уже знала контекст"). Hands off to `done`.
-- **Context loaded into prompt:** persona + style rules + state JSON dump (so the reply can reference what was discussed). **No catalog, no FAQ.**
+- **Context loaded into prompt:** persona + style rules + state JSON dump (the post-merge state from §4.3 step 6, i.e. what the server believes after applying any prior state_updates — not the raw incoming `meta.state`). **No catalog, no FAQ.**
 - **Handoff condition (to `done`):** `state.phone` set, and the phone's last 10 digits do **not** match `COMPANY_INFO.phone` (reuses the defensive filter from the current code). `state.name` is NOT a precondition — if Closer hands off without ever extracting a name, the Telegram message uses `"Не указано"` (matching legacy behavior).
 - **Side effect on entering `done`:** server calls `sendLeadToTelegram(...)` with role, pain_point, programs_suggested, name, phone, callback_preference. Idempotency is enforced by two layers: the server-only `state.lead_sent` flag round-tripping in `meta`, and the in-memory `Set<phoneHash>` server-side (§4.3 step 11). Within one serverless instance both layers catch replays; across instances the dedupe set is empty, so the same phone reaching a cold instance within the 1-hour window via tampered meta could in theory fire once more — bounded, documented, and acceptable for an experiment.
 - **In `done` stage:** Closer's prompt is told the lead is already submitted; it just thanks and answers brief follow-ups without changing stage.
@@ -283,7 +297,7 @@ All fields optional. Stages move forward only. Length caps exist to bound prompt
 v2 inherits `isAllowedOrigin` from `_shared.ts`, which rejects POSTs with no Origin header. The replay script needs a deterministic way through:
 
 - **Local dev (`npm run dev`):** script sends `Origin: http://localhost:3000` header. Already passes the existing localhost allow-clause in `isAllowedOrigin`.
-- **Against deployed Vercel:** script sends `X-Replay-Token: <token>` header whose value matches an env var `CHAT_V2_REPLAY_TOKEN`. When present and matching, `_shared.ts` skips the origin check for that single request. When the env var is unset (production default), the header is ignored — fail-closed.
+- **Against deployed Vercel:** script sends `X-Replay-Token: <token>` header whose value is compared to env var `CHAT_V2_REPLAY_TOKEN` using `crypto.timingSafeEqual` over equal-length buffers (unequal lengths short-circuit to false before the constant-time compare to avoid leaking length). When the env var is unset (production default), the header is ignored — fail-closed.
 
 ## 7. Observability
 
