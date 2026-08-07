@@ -13,6 +13,7 @@ import Gallery from "@/components/Gallery";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Trainers from "@/components/Trainers";
 import Contact from "@/components/Contact";
+import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -33,6 +34,11 @@ export default function Home() {
       <WhyChooseUs />
       <Trainers />
       <Contact />
+      {/* Лид-магнит идёт ПОСЛЕ формы заявки: заявка на обучение — главная
+          конверсия сайта, и бесплатный гайд рядом с ней оттягивал бы часть
+          готовых оставить контакт. Внизу он подбирает тех, кто до заявки
+          не дошёл. */}
+      <Newsletter />
       <Footer />
     </>
   );
