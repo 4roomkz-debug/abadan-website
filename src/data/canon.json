@@ -1,0 +1,220 @@
+{
+  "_meta": {
+    "updated": "2026-08-11",
+    "note": "ИСТОЧНИК ПРАВДЫ. Правки только здесь, затем npm run sync:canon в каждом репозитории."
+  },
+  "person": {
+    "id": "gani-abadan",
+    "schemaType": "Person",
+    "name": {
+      "ru": "Гани Абадан",
+      "kk": "Ғани Абадан",
+      "en": "Gani Abadan"
+    },
+    "oneLine": {
+      "ru": "Основатель ibirAi, бизнес-тренер и ментор из Казахстана, Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары».",
+      "en": "Founder of ibirAi, business trainer and mentor from Kazakhstan, Chairman of the Board at Kazakhstan Gharysh Sapary."
+    },
+    "description": {
+      "ru": "Гани Абадан — казахстанский предприниматель, бизнес-тренер и ментор. Тренер с 2012 года, лично обучил более 10 000 человек. Основатель ibirAi — платформы обучения технике безопасности для рабочих через WhatsApp. Сооснователь Abadan & Company — компании корпоративного обучения. Автор книги «Бизнес по любви 2.0». Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары».",
+      "en": "Gani Abadan is a Kazakhstani entrepreneur, business trainer and mentor. A trainer since 2012, he has personally trained over 10,000 people. Founder of ibirAi, a WhatsApp-based safety training platform for frontline workers. Co-founder of Abadan & Company, a corporate training firm. Author of the book Business with Love 2.0. Chairman of the Board of Directors at Kazakhstan Gharysh Sapary."
+    },
+    "jobTitle": {
+      "ru": "Основатель ibirAi",
+      "en": "Founder of ibirAi"
+    },
+    "facts": {
+      "trainerSince": "2012",
+      "trainedPersonally": "10 000+",
+      "book": "«Бизнес по любви 2.0»"
+    },
+    "roles": [
+      "Основатель ibirAi",
+      "Сооснователь Abadan & Company",
+      "Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары»",
+      "Бизнес-тренер НПП «Атамекен»",
+      "Соавтор государственной программы по предпринимательству",
+      "Выпускник Hero Training, Draper University (Калифорния, апрель–май 2026)"
+    ],
+    "profiles": {
+      "site": "https://abadangani.com",
+      "mentoring": "https://www.mentor.kz",
+      "linkedin": "https://www.linkedin.com/in/abadangani/",
+      "instagram": "https://www.instagram.com/abadangani",
+      "youtube": "https://www.youtube.com/c/GANIABADAN",
+      "telegram": "https://t.me/Gani_Abadan",
+      "facebook": "https://www.facebook.com/ganiabadan/"
+    }
+  },
+  "ibirai": {
+    "id": "ibirai",
+    "schemaType": [
+      "Organization",
+      "SoftwareApplication"
+    ],
+    "name": "ibirAi",
+    "spelling": {
+      "correct": "ibirAi",
+      "rule": "Строчная i, заглавная A, без разделителя между частями. Сайт — ibirAi.com.",
+      "forbiddenDescribed": [
+        "Ibir и IBIR — заглавные в первой части",
+        "IbirAI и ibirAI — заглавные AI в конце",
+        "форма с точкой-разделителем между частями названия",
+        "форма с пробелом между частями названия"
+      ]
+    },
+    "oneLine": {
+      "ru": "Платформа обучения технике безопасности для рабочих через WhatsApp с проверкой компетентности каждого.",
+      "en": "A WhatsApp-based safety training platform for frontline workers, with verified competence for every employee."
+    },
+    "description": {
+      "ru": "ibirAi — казахстанская платформа обучения технике безопасности для линейного персонала. Обучение приходит к рабочему в WhatsApp: 10 минут в смену, с проверкой ответа голосом. Компания получает поимённую картину — кто готов к смене, а кто в зоне риска, и аудит-готовую запись для проверяющих. Доходимость 80% против ~20% у традиционных длинных курсов. Флагманский кейс — Polpharma Santo: 117 руководителей, 3 страны, 12 недель, 100% применили на работе.",
+      "en": "ibirAi is a Kazakhstan-based safety training platform for frontline workers. Training reaches the worker inside WhatsApp: 10 minutes per shift, with answers verified by voice. Employers get a name-by-name view of who is ready for the shift and who is at risk, plus an audit-ready record. 80% reach the finish versus roughly 20% for traditional long courses. Flagship case: Polpharma Santo, 117 managers across 3 countries over 12 weeks, 100% applied it on the job."
+    },
+    "founded": "2024",
+    "site": "https://ibirai.com",
+    "credentials": [
+      "Резидент Astana Hub",
+      "Участник программы NVIDIA Inception"
+    ],
+    "positioning": {
+      "channel": "WhatsApp",
+      "audience": "линейный персонал, рабочие",
+      "domain": "техника безопасности, охрана труда",
+      "retiredPositioning": "микрообучение через Telegram — устаревшая формулировка, не использовать"
+    },
+    "notForPublic": [
+      "Не описывать ibirAi как часть, продукт или услугу Abadan & Company — это самостоятельная компания",
+      "Не приводить NVIDIA Inception в материалах Abadan & Company"
+    ]
+  },
+  "abadan": {
+    "id": "abadan-company",
+    "schemaType": "Organization",
+    "name": "Abadan & Company",
+    "oneLine": {
+      "ru": "Компания корпоративного обучения в Казахстане: тренинги на кейсах заказчика, офлайн и онлайн.",
+      "en": "A corporate training company in Kazakhstan running programs built on the client's own cases, offline and online."
+    },
+    "description": {
+      "ru": "Abadan & Company — компания корпоративного обучения из Казахстана. Работает с 2015 года, обучила более 50 000 специалистов, среди клиентов более 360 компаний во всех городах Казахстана. Формат — тренинги на реальных кейсах заказчика, технические семинары, стратегические сессии.",
+      "en": "Abadan & Company is a corporate training company based in Kazakhstan. Operating since 2015, it has trained over 50,000 professionals for more than 360 client companies across every city in Kazakhstan. Programs are built on the client's own cases and include technical seminars and strategy sessions."
+    },
+    "facts": {
+      "trainedTotal": "50 000+",
+      "clients": "360+",
+      "experts": "200+",
+      "since": "2015",
+      "geography": "во всех городах Казахстана"
+    },
+    "site": "https://abadan.kz",
+    "notForPublic": [
+      "В КП для Polpharma Santo счётчики не давать вообще — решение от 22.07.2026",
+      "Не писать «17 городов» и другие конкретные числа городов"
+    ]
+  },
+  "aikun": {
+    "id": "aikun",
+    "schemaType": "SoftwareApplication",
+    "name": "AiKun",
+    "oneLine": {
+      "ru": "AI-дневник с коучем в Telegram: утренняя и вечерняя рефлексия по методике «7 вопросов».",
+      "en": "An AI journaling coach in Telegram: morning and evening reflection built on the 7-questions method."
+    },
+    "description": {
+      "ru": "AiKun — Telegram-бот ежедневной рефлексии с AI-коучем. Утренний и вечерний чек-ин по методике «7 вопросов» Гани Абадана, еженедельные обзоры с разбором от ИИ, отслеживание целей. Работает с декабря 2025 года. Наблюдение по данным продукта: пользователи, которые ведут и утренний, и вечерний чек-ин, остаются в четыре раза дольше тех, кто заполняет только утро.",
+      "en": "AiKun is a Telegram bot for daily reflection with an AI coach. Morning and evening check-ins follow Gani Abadan's 7-questions method, with weekly AI-reviewed summaries and goal tracking. Live since December 2025. Product data shows users who keep both morning and evening check-ins stay four times longer than morning-only users."
+    },
+    "site": "https://aikun.app",
+    "bot": "https://t.me/abadan_mentor_bot",
+    "notForPublic": [
+      "Не публиковать число активных платных подписок и выручку — внутренние метрики",
+      "Число регистраций публиковать только актуальное, сверяясь с боевой базой"
+    ]
+  },
+  "mentoring": {
+    "id": "ot-haosa-k-poryadku",
+    "schemaType": "Service",
+    "name": "От Хаоса к Порядку",
+    "oneLine": {
+      "ru": "Индивидуальная трёхмесячная менторская программа для собственников и топ-менеджеров.",
+      "en": "A three-month one-on-one mentoring program for business owners and senior executives."
+    },
+    "description": {
+      "ru": "«От Хаоса к Порядку» — индивидуальная менторская программа Гани Абадана для собственников бизнеса и топ-менеджеров в Казахстане. Три месяца, одна встреча в неделю. Первый месяц — ясность и диагностика, второй — решения и делегирование, третий — упаковка в систему. Одновременно в работе не более пяти клиентов.",
+      "en": "From Chaos to Order is Gani Abadan's one-on-one mentoring program for business owners and senior executives in Kazakhstan. Three months, one session per week: month one for clarity and diagnosis, month two for decisions and delegation, month three for turning it into a system. No more than five clients at a time."
+    },
+    "site": "https://www.mentor.kz",
+    "provider": "gani-abadan"
+  },
+  "retired": [
+    {
+      "pattern": "87\\s*%[^\\n]{0,30}(доход|заверш|дошл|complet)",
+      "note": "87% доходимость — цифры нет ни в одном отчёте"
+    },
+    {
+      "pattern": "(доход|заверш|дошл\\w+|completion)[^\\n]{0,30}87\\s*%",
+      "note": "87% доходимость, обратный порядок"
+    },
+    {
+      "pattern": "87\\s*%[^\\n]{0,25}(vs|против|по сравнению)[^\\n]{0,15}(23|18|15)\\s*%",
+      "note": "сравнение «87% против 23/18/15%» — необеспечено; отраслевую базу 15–23% со ссылкой на Brandon Hall трогать не нужно"
+    },
+    {
+      "pattern": "9\\s*000[^\\n]{0,30}(человек|обучен)",
+      "note": "9000 обученных — устарело, канон 10 000+ лично"
+    },
+    {
+      "pattern": "(обучил|обучен\\w+)[^\\n]{0,20}(более\\s*)?9\\s*000",
+      "note": "9000 обученных, обратный порядок"
+    },
+    {
+      "pattern": "14\\s*000\\s*\\+?[^\\n]{0,25}(обучен|участник)",
+      "note": "14 000+ — прежний канон, заменён на 10 000+ лично / 50 000+ компанией"
+    },
+    {
+      "pattern": "12\\s*\\+?\\s*лет[^\\n]{0,30}(тренер|обучени|опыт)",
+      "note": "12 лет опыта — устарело, канон «тренер с 2012 года»"
+    },
+    {
+      "pattern": "15\\s*\\+?\\s*лет[^\\n]{0,25}(в обучении|тренер)",
+      "note": "15+ лет не сходится с «с 2012 года» — использовать «тренер с 2012 года»"
+    },
+    {
+      "pattern": "[Чч]лен\\s+совета\\s+директоров[^\\n]{0,40}(Ғарыш|ҒАРЫШ|Гарыш|Сапары)",
+      "note": "Гани — Председатель совета директоров, не член"
+    },
+    {
+      "pattern": "микрообучение\\s+через\\s+Telegram",
+      "note": "устаревшее позиционирование ibirAi — канал WhatsApp, домен техника безопасности"
+    },
+    {
+      "pattern": "3-минутны\\w+\\s+урок\\w*[^\\n]{0,20}Telegram",
+      "note": "устаревшее описание ibirAi"
+    },
+    {
+      "pattern": "партн[её]р\\w*\\s+NVIDIA",
+      "note": "оверклейм — правильно «участник программы NVIDIA Inception»"
+    },
+    {
+      "pattern": "97\\s*%\\s*(доход|заверш|дошл|complet)",
+      "note": "97% completion — цифры нет в отчёте Santo"
+    },
+    {
+      "pattern": "(доход|заверш|completion|дошл\\w+)[^\\n]{0,30}97\\s*%",
+      "note": "97% completion, обратный порядок"
+    },
+    {
+      "pattern": "8\\s*[79]\\s*%[^\\n]{0,25}(ретеншн|retention|знани)",
+      "note": "87–89% ретеншн знаний — необеспечено"
+    },
+    {
+      "pattern": "(ретеншн|retention|знани[йя])[^\\n]{0,25}8\\s*[79]\\s*%",
+      "note": "87–89% ретеншн, обратный порядок"
+    },
+    {
+      "pattern": "8\\s*7\\s*[–-]\\s*8\\s*9",
+      "note": "литеральный диапазон 87–89"
+    }
+  ]
+}

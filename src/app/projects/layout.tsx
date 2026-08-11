@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Проекты — ibirAi и технологии обучения",
-  description: "ibirAi — платформа микрообучения с AI-аватарами. 3-минутные уроки в Telegram/WhatsApp. 87% доходимость vs 23% у традиционных LMS.",
+  description: "ibirAi — платформа обучения в мессенджерах. Короткие уроки в WhatsApp и Telegram с проверкой усвоения. Флагманский кейс — Polpharma Santo: 117 руководителей, 80%+ дошли до финала.",
   keywords: [
     "ibirAi",
     "микрообучение",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Проекты Abadan & Co. — ibirAi",
-    description: "Платформа микрообучения нового поколения. AI-аватары, геймификация, 87% доходимость.",
+    description: "Платформа обучения в мессенджерах. AI-диалог, геймификация, проверка усвоения по каждому сотруднику.",
     url: "https://www.abadan.kz/projects",
     type: "website",
   },

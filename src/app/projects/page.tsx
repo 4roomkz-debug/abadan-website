@@ -63,7 +63,7 @@ export default function ProjectsPage() {
   ];
 
   const stats = [
-    { value: "87%", label: "доходимость", sublabel: "vs 23% у LMS" },
+    { value: "80%+", label: "дошли до финала", sublabel: "кейс Santo, 117 руководителей" },
     { value: "3", label: "минуты", sublabel: "на урок" },
     { value: "2-3", label: "недели", sublabel: "до запуска" },
   ];
@@ -164,7 +164,7 @@ export default function ProjectsPage() {
                 <ul className="space-y-3 text-white/90">
                   <li className="flex items-start gap-2">
                     <span className="text-[#F0BB1E] mt-1">✓</span>
-                    87% доходимость до конца программы
+                    80%+ дошли до финала программы
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#F0BB1E] mt-1">✓</span>

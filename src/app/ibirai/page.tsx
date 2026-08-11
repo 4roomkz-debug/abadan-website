@@ -7,7 +7,8 @@ import Footer from "@/components/Footer";
 // ─── ROI Calculator helper ───────────────────────────────────────────────────
 function calcROI(employees: number, budget: number, currentCompletion: number) {
   const savings = Math.round(budget * 0.35);
-  const newCompletion = Math.min(87, Math.round(currentCompletion * 3.5));
+  // Потолок — 80%: канонический показатель «дошли до финала» из кейса Santo.
+  const newCompletion = Math.min(80, Math.round(currentCompletion * 3.5));
   const roi = budget > 0 ? Math.round(((savings * 12) / (budget * 0.65)) * 100) : 0;
   return { savings, newCompletion, roi };
 }
@@ -53,8 +54,8 @@ export default function IbiraiPage() {
 
   // ── Comparison table data ──
   const comparisonRows = [
-    { param: "Доходимость", lms: "23%", ibirai: "87%" },
-    { param: "Время на урок", lms: "45–90 мин", ibirai: "3 мин" },
+    { param: "Доходят до финала", lms: "~20%", ibirai: "80%+ (кейс Santo)" },
+    { param: "Время на урок", lms: "45–90 мин", ibirai: "3–10 мин" },
     { param: "Установка приложений", lms: "Требуется", ibirai: "Не нужна" },
     { param: "Запуск", lms: "2–6 месяцев", ibirai: "2–3 недели" },
     { param: "Вовлечённость", lms: "Низкая", ibirai: "Высокая (геймификация)" },
@@ -112,11 +113,11 @@ export default function IbiraiPage() {
   const faqs = [
     {
       q: "Что такое ibirAi?",
-      a: "ibirAi — это AI-платформа микрообучения, которая доставляет 3-минутные уроки прямо в Telegram и WhatsApp. Вместо традиционных LMS, сотрудники учатся там, где уже проводят время — в привычных мессенджерах, без установки дополнительных приложений.",
+      a: "ibirAi — самостоятельная казахстанская платформа обучения, которая доставляет короткие уроки прямо в WhatsApp и Telegram. Вместо традиционных LMS сотрудники учатся там, где уже проводят время — в привычных мессенджерах, без установки дополнительных приложений. Abadan & Co. использует ibirAi в своих корпоративных программах.",
     },
     {
-      q: "Чем ibirAi лучше традиционной LMS?",
-      a: "87% доходимость у ibirAi vs 23% у традиционных LMS. Не нужна установка приложений, обучение идёт в привычных мессенджерах, 3-минутные уроки не отрывают от работы. AI-аватар адаптирует темп и сложность под каждого сотрудника, а геймификация делает процесс вовлекающим.",
+      q: "Чем ibirAi отличается от традиционной LMS?",
+      a: "Не нужна установка приложений, обучение идёт в привычных мессенджерах, короткие уроки не отрывают от работы. Главное отличие — усвоение проверяется, а не фиксируется факт открытия урока: компания видит поимённо, кто готов, а кто в зоне риска. AI адаптирует темп и сложность под каждого сотрудника.",
     },
     {
       q: "Как быстро можно запустить ibirAi?",
@@ -150,7 +151,7 @@ export default function IbiraiPage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-[#009BA3] font-600 mb-8 scroll-fade-in">
               <span className="w-2 h-2 rounded-full bg-[#F0BB1E] animate-pulse" />
-              AI-платформа микрообучения нового поколения
+              Обучение в мессенджерах с проверкой усвоения
             </div>
 
             {/* Logo / Brand mark */}
@@ -160,13 +161,13 @@ export default function IbiraiPage() {
 
             {/* Headline */}
             <h1 className="text-3xl md:text-5xl font-800 text-white mb-6 leading-tight scroll-fade-in scroll-delay-2">
-              Микрообучение нового поколения<br className="hidden md:block" />
-              <span className="text-gradient-mixed"> в мессенджерах</span>
+              Обучение, которое доходит до каждого<br className="hidden md:block" />
+              <span className="text-gradient-mixed"> прямо в мессенджере</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed scroll-fade-in scroll-delay-3">
-              3-минутные уроки в Telegram и WhatsApp с AI-аватаром. Сотрудники учатся там, где уже проводят время — без установки приложений и отрыва от работы.
+              Короткие уроки в WhatsApp и Telegram с проверкой усвоения. Сотрудники учатся там, где уже проводят время, а вы видите поимённо, кто прошёл и что запомнил.
             </p>
 
             {/* CTAs */}
@@ -189,8 +190,8 @@ export default function IbiraiPage() {
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto scroll-fade-in scroll-delay-5">
               {[
-                { value: "87%", label: "доходимость" },
-                { value: "3 мин", label: "на урок" },
+                { value: "80%+", label: "дошли до финала" },
+                { value: "3–10 мин", label: "на урок" },
                 { value: "2–3 нед", label: "до запуска" },
               ].map((s) => (
                 <div key={s.value} className="bg-white/5 border border-white/10 rounded-2xl px-6 py-5">
@@ -254,10 +255,10 @@ export default function IbiraiPage() {
                   </div>
                   <ul className="space-y-4">
                     {[
-                      "87% доходимость — сотрудники учатся в мессенджерах",
-                      "3-минутные уроки встраиваются в рабочий день",
-                      "Real-time HR-аналитика по каждому сотруднику",
-                      "Геймификация и AI-аватар делают обучение вовлекающим",
+                      "Обучение приходит в мессенджер, где сотрудник уже есть",
+                      "Короткие уроки встраиваются в рабочий день",
+                      "Проверка усвоения и поимённая аналитика по каждому",
+                      "Геймификация и AI делают обучение вовлекающим",
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-3 text-white/80">
                         <span className="mt-0.5 text-[#F0BB1E] flex-shrink-0">
@@ -341,15 +342,19 @@ export default function IbiraiPage() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-14 scroll-fade-in">
               <p className="text-sm font-700 text-[#00767D] uppercase tracking-widest mb-3">Результаты</p>
-              <h2 className="text-4xl md:text-5xl font-800 text-[#2D3A3C]">Цифры говорят сами за себя</h2>
+              <h2 className="text-4xl md:text-5xl font-800 text-[#2D3A3C]">Результаты флагманской программы</h2>
+              <p className="mt-4 text-[#546569] max-w-2xl mx-auto">
+                «Лидер открытого диалога» для Polpharma Santo: 117 руководителей, 3 страны,
+                12 недель. Данные — итоговый отчёт декабря 2025 года.
+              </p>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { value: "87%", label: "доходимость", note: "vs 23% у LMS", color: "teal" },
-                { value: "4.8×", label: "вовлечённость выше", note: "по сравнению с e-learning", color: "gold" },
-                { value: "92%", label: "удовлетворённость", note: "сотрудников обучением", color: "teal" },
-                { value: "3×", label: "ROI за 6 месяцев", note: "возврат инвестиций", color: "gold" },
+                { value: "80%+", label: "дошли до финала", note: "против ~20% у длинных курсов", color: "teal" },
+                { value: "95,8%", label: "вовлечённость на старте", note: "117 руководителей", color: "gold" },
+                { value: "100%", label: "применили на работе", note: "по итогам программы", color: "teal" },
+                { value: "8,38", label: "оценка наставника", note: "из 10 баллов", color: "gold" },
               ].map((m, i) => (
                 <div key={m.label} className={`scroll-fade-in scroll-delay-${i + 1} premium-card p-8 text-center`}>
                   <div
@@ -432,18 +437,18 @@ export default function IbiraiPage() {
                   <div className="absolute top-0 right-0 w-48 h-48 bg-[#00767D]/20 rounded-full blur-[80px] pointer-events-none" />
                   <div className="relative z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs text-white/60 mb-6">
-                      Нефтегазовая компания
+                      Фармацевтика
                     </div>
-                    <h3 className="text-2xl font-800 text-white mb-2">2 000+ сотрудников</h3>
-                    <p className="text-white/50 text-sm mb-8">Казахстан, внедрение ibirAi в корпоративное обучение</p>
+                    <h3 className="text-2xl font-800 text-white mb-2">117 руководителей</h3>
+                    <p className="text-white/50 text-sm mb-8">Polpharma Santo · 3 страны · 12 недель · отчёт декабря 2025</p>
 
                     <blockquote className="border-l-2 border-[#F0BB1E] pl-5">
                       <p className="text-white/80 italic leading-relaxed mb-4">
-                        "За три недели мы запустили онбординг-курс для 800 новых сотрудников. Доходимость поразила — 89%. Раньше мы думали, что 30% — это норма."
+                        "Впервые у нас такая высокая дисциплина в обучении. Сотрудники стабильно проходят уроки, и мы видим реальные изменения в поведении."
                       </p>
                       <footer className="text-sm">
-                        <span className="text-[#F0BB1E] font-700">Айгерим Сейткали</span>
-                        <span className="text-white/40">, HRD нефтегазовой компании</span>
+                        <span className="text-[#F0BB1E] font-700">L&amp;D-менеджер</span>
+                        <span className="text-white/40">, Polpharma Santo</span>
                       </footer>
                     </blockquote>
                   </div>
@@ -454,9 +459,9 @@ export default function IbiraiPage() {
                   <h4 className="text-sm font-700 text-[#546569] uppercase tracking-widest mb-8">До и после ibirAi</h4>
                   <div className="space-y-7">
                     {[
-                      { label: "Доходимость курсов", before: "18%", after: "89%", good: true },
-                      { label: "Время онбординга", before: "3 месяца", after: "3 недели", good: true },
-                      { label: "Стоимость обучения", before: "100%", after: "–60%", good: true },
+                      { label: "Дошли до финала", before: "~20%", after: "80%+", good: true },
+                      { label: "Применили на работе", before: "не измерялось", after: "100%", good: true },
+                      { label: "Изменения в поведении", before: "не измерялось", after: "60%+", good: true },
                     ].map((m) => (
                       <div key={m.label}>
                         <p className="text-xs font-600 text-[#7A8B8E] uppercase tracking-wider mb-2">{m.label}</p>

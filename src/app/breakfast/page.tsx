@@ -1307,7 +1307,7 @@ function IbiraiFeaturesSlide() {
     { icon: "📱", title: "3-5 минут в день", desc: "Микроуроки прямо в Telegram — не нужно учить новые системы" },
     { icon: "🤖", title: "AI-аватар тренера", desc: "Персональная обратная связь 24/7 на основе вашего контента" },
     { icon: "📊", title: "HR-аналитика", desc: "ROI, прогресс и профиль компетенций каждого сотрудника" },
-    { icon: "🎯", title: "87% завершаемость", desc: "vs 20-30% у обычных онлайн-курсов" },
+    { icon: "🎯", title: "80%+ дошли до финала", desc: "кейс Polpharma Santo, 117 руководителей" },
   ];
 
   return (
@@ -1383,11 +1383,11 @@ function BigNumberCompletionSlide() {
             <motion.div
               className="absolute left-0 top-0 h-full bg-gradient-to-r from-[#00767D] to-[#006D77] rounded-full"
               initial={{ width: 0 }}
-              animate={{ width: "87%" }}
+              animate={{ width: "80%" }}
               transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
             />
           </div>
-          <div className="text-5xl font-bold text-[#00767D]">87%</div>
+          <div className="text-5xl font-bold text-[#00767D]">80%+</div>
           <p className="text-sm text-[#00767D] mt-2">завершают курс</p>
         </div>
       </div>

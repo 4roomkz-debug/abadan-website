@@ -73,7 +73,7 @@ export default function AboutPage() {
     },
     {
       title: "ibirAi микрообучение",
-      description: "3-минутные уроки в Telegram/WhatsApp с AI-аватаром. 87% доходимость vs 23% у традиционных LMS.",
+      description: "Короткие уроки в WhatsApp и Telegram с проверкой усвоения. Флагманский кейс — Polpharma Santo: 117 руководителей, 80%+ дошли до финала.",
       icon: (
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />

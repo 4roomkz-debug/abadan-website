@@ -286,14 +286,14 @@ export default function KejsyPage() {
                 <span className="text-gradient-gold">клиентов</span>
               </h1>
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-                За 15 лет мы обучили более 9 000 специалистов в 359 компаниях Казахстана
+                С 2015 года мы обучили более 50 000 специалистов в 360+ компаниях Казахстана
               </p>
             </div>
 
             {/* Stats bar */}
             <div className="scroll-fade-in scroll-delay-2 mt-12 grid grid-cols-3 gap-4 sm:gap-6 max-w-xl">
               {[
-                { value: "9 000+", label: "обученных" },
+                { value: "50 000+", label: "обученных" },
                 { value: "359", label: "клиентов" },
                 { value: "15 лет", label: "опыта" },
               ].map((stat) => (

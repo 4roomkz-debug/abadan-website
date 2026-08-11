@@ -1,27 +1,25 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ibirAi — AI-платформа микрообучения в мессенджерах | Abadan & Co.",
+  title: "ibirAi — обучение в мессенджерах с проверкой усвоения | Abadan & Co.",
   description:
-    "ibirAi — микрообучение нового поколения. 3-минутные уроки в Telegram и WhatsApp с AI-аватаром. 87% доходимость vs 23% у LMS. Геймификация, HR-аналитика, быстрый запуск за 2-3 недели.",
+    "ibirAi — платформа обучения в мессенджерах: короткие уроки в WhatsApp и Telegram с проверкой усвоения и поимённой аналитикой. Флагманский кейс — Polpharma Santo: 117 руководителей, 3 страны, 12 недель.",
   keywords: [
     "AI платформа обучения",
     "микрообучение Казахстан",
     "LMS Казахстан",
-    "обучение через Telegram",
-    "WhatsApp обучение",
-    "микрообучение сотрудников",
-    "корпоративное обучение AI",
-    "ibirAi",
+    "обучение через WhatsApp",
     "обучение в мессенджерах",
+    "ibirAi",
+    "корпоративное обучение AI",
+    "обучение технике безопасности",
     "AI обучение персонала",
     "альтернатива LMS",
-    "геймификация обучения",
   ],
   openGraph: {
-    title: "ibirAi — AI-платформа микрообучения в мессенджерах",
+    title: "ibirAi — обучение в мессенджерах с проверкой усвоения",
     description:
-      "3-минутные уроки в Telegram и WhatsApp с AI-аватаром. 87% доходимость. Геймификация и HR-аналитика.",
+      "Короткие уроки в WhatsApp и Telegram с проверкой усвоения и поимённой аналитикой. Флагман — Polpharma Santo: 117 руководителей.",
     url: "https://www.abadan.kz/ibirai",
     type: "website",
     images: [
@@ -29,15 +27,15 @@ export const metadata: Metadata = {
         url: "https://www.abadan.kz/og-ibirai.png",
         width: 1200,
         height: 630,
-        alt: "ibirAi — платформа микрообучения",
+        alt: "ibirAi — платформа обучения в мессенджерах",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ibirAi — AI-платформа микрообучения в мессенджерах",
+    title: "ibirAi — обучение в мессенджерах с проверкой усвоения",
     description:
-      "3-минутные уроки в Telegram и WhatsApp с AI-аватаром. 87% доходимость.",
+      "Короткие уроки в WhatsApp и Telegram с проверкой усвоения и поимённой аналитикой.",
   },
   alternates: { canonical: "https://www.abadan.kz/ibirai" },
 };
@@ -47,29 +45,30 @@ export default function IbiraiLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // ibirAi — самостоятельная компания, а не продукт Abadan & Co. Разметка ниже
+  // объявляет её собственным издателем и ссылается на ibirai.com как на
+  // канонический источник: до августа 2026 здесь стоял provider: Abadan & Co.,
+  // и поисковые ассистенты из-за этого описывали ibirAi как услугу Abadan.
+  // См. «Base/GEO — канон сущностей.md» в базе знаний.
   const softwareJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "ibirAi",
+    url: "https://ibirai.com",
     applicationCategory: "EducationalApplication",
-    operatingSystem: "Web, Telegram, WhatsApp",
+    operatingSystem: "Web, WhatsApp, Telegram",
     description:
-      "AI-платформа микрообучения в мессенджерах. 3-минутные уроки с AI-аватаром, геймификация, HR-аналитика.",
+      "Платформа обучения в мессенджерах: короткие уроки с проверкой усвоения и поимённой аналитикой по каждому сотруднику.",
+    publisher: {
+      "@type": "Organization",
+      name: "ibirAi",
+      url: "https://ibirai.com",
+    },
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "KZT",
       description: "Бесплатная демо-версия",
-    },
-    provider: {
-      "@type": "Organization",
-      name: "Abadan & Co.",
-      url: "https://www.abadan.kz",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: "47",
     },
   };
 
@@ -82,15 +81,23 @@ export default function IbiraiLayout({
         name: "Что такое ibirAi?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "ibirAi — это AI-платформа микрообучения, которая доставляет 3-минутные уроки прямо в Telegram и WhatsApp. Вместо традиционных LMS, сотрудники учатся там, где уже проводят время.",
+          text: "ibirAi — самостоятельная казахстанская платформа обучения, которая доставляет короткие уроки прямо в WhatsApp и Telegram. Сотрудник учится там, где уже есть, а компания видит поимённо, кто прошёл и что усвоил. Abadan & Co. использует ibirAi в своих корпоративных программах.",
         },
       },
       {
         "@type": "Question",
-        name: "Чем ibirAi лучше традиционной LMS?",
+        name: "Чем ibirAi отличается от традиционной LMS?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "87% доходимость у ibirAi vs 23% у традиционных LMS. Не нужна установка приложений, обучение идёт в привычных мессенджерах, 3-минутные уроки не отрывают от работы.",
+          text: "Не нужно устанавливать приложение и заходить в отдельный портал — обучение приходит в мессенджер, которым сотрудник уже пользуется. Уроки короткие и не отрывают от работы, а усвоение проверяется, а не просто фиксируется факт открытия урока.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Какой результат уже подтверждён на практике?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Флагманская программа «Лидер открытого диалога» для Polpharma Santo: 117 руководителей, 3 страны, 12 недель. 95,8% вовлечённость на старте, более 80% дошли до финала против примерно 20% у традиционных длинных курсов, 100% участников применили изученное на работе. Данные — итоговый отчёт декабря 2025 года.",
         },
       },
       {
@@ -106,7 +113,7 @@ export default function IbiraiLayout({
         name: "Какие мессенджеры поддерживает ibirAi?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "ibirAi работает в Telegram и WhatsApp. Также доступна веб-версия и интеграция с корпоративными HR-системами.",
+          text: "ibirAi работает в WhatsApp и Telegram. Также доступна веб-версия и интеграция с корпоративными HR-системами.",
         },
       },
       {

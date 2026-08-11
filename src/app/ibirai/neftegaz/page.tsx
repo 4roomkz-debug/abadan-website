@@ -160,7 +160,7 @@ export default function IbiraiNeftegazPage() {
               <div className="scroll-fade-in scroll-delay-4 grid grid-cols-3 gap-4 max-w-2xl">
                 {[
                   { value: "65+", label: "курсов для нефтегаза", sub: "в каталоге Abadan" },
-                  { value: "87%", label: "доходимость", sub: "vs 18% у LMS" },
+                  { value: "80%+", label: "дошли до финала", sub: "кейс Santo, 117 руководителей" },
                   { value: "2 нед", label: "онбординг", sub: "вместо 2 месяцев" },
                 ].map((s) => (
                   <div key={s.label} className="bg-white/5 border border-white/10 rounded-2xl p-5">
@@ -250,7 +250,7 @@ export default function IbiraiNeftegazPage() {
                   },
                   {
                     title: "Онбординг за 2 недели",
-                    desc: "Структурированный трек для новичков: от первого дня до допуска к работе. Доходимость 87% vs 18% у классических программ адаптации.",
+                    desc: "Структурированный трек для новичков: от первого дня до допуска к работе. Виден поимённый прогресс — кто готов к смене, а кто ещё нет.",
                   },
                 ].map((item, i) => (
                   <div
@@ -325,7 +325,7 @@ export default function IbiraiNeftegazPage() {
               {[
                 { value: "−60%", label: "стоимость обучения", note: "по сравнению с очными тренингами" },
                 { value: "2 нед", label: "онбординг новичков", note: "вместо стандартных 2–3 месяцев" },
-                { value: "89%", label: "доходимость HSE", note: "у персонала на объектах" },
+                { value: "100%", label: "применили на работе", note: "кейс Santo, отчёт декабря 2025" },
                 { value: "100%", label: "соответствие документации", note: "для аудиторских проверок" },
               ].map((m, i) => (
                 <div
