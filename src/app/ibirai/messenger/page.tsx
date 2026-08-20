@@ -138,7 +138,7 @@ export default function MessengerPage() {
               <div className="scroll-fade-in-right grid grid-cols-2 gap-4">
                 {[
                   { value: "80%+", label: "дошли до финала", sub: "кейс Santo, 117 руководителей" },
-                  { value: "~20%", label: "доходят до финала", sub: "у традиционных длинных курсов" },
+                  { value: "95,8%", label: "вовлечённость на старте", sub: "флагманская программа, отчёт декабря 2025" },
                   { value: "95%+", label: "охват", sub: "Telegram/WA в Казахстане" },
                   { value: "0", label: "новых приложений", sub: "для сотрудников" },
                 ].map((s, i) => (
