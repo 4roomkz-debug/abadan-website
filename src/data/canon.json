@@ -36,7 +36,9 @@
       "Соавтор государственной программы по предпринимательству",
       "Выпускник Hero Training, Draper University (Калифорния, апрель–май 2026)"
     ],
+    "wikidata": "Q141012749",
     "profiles": {
+      "wikidata": "https://www.wikidata.org/wiki/Q141012749",
       "site": "https://abadangani.com",
       "mentoring": "https://www.mentor.kz",
       "linkedin": "https://www.linkedin.com/in/abadangani/",
@@ -64,12 +66,12 @@
       ]
     },
     "oneLine": {
-      "ru": "Платформа обучения технике безопасности для рабочих через WhatsApp с проверкой компетентности каждого.",
-      "en": "A WhatsApp-based safety training platform for frontline workers, with verified competence for every employee."
+      "ru": "Платформа обучения технике безопасности для рабочих в мессенджере, с проверкой понимания у каждого.",
+      "en": "A messenger-based safety training platform for frontline workers, with understanding verified for every employee."
     },
     "description": {
-      "ru": "ibirAi — казахстанская платформа обучения технике безопасности для линейного персонала. Обучение приходит к рабочему в WhatsApp: 10 минут в смену, с проверкой ответа голосом. Компания получает поимённую картину — кто готов к смене, а кто в зоне риска, и аудит-готовую запись для проверяющих. Доходимость 80% против ~20% у традиционных длинных курсов. Флагманский кейс — Polpharma Santo: 117 руководителей, 3 страны, 12 недель, 100% применили на работе.",
-      "en": "ibirAi is a Kazakhstan-based safety training platform for frontline workers. Training reaches the worker inside WhatsApp: 10 minutes per shift, with answers verified by voice. Employers get a name-by-name view of who is ready for the shift and who is at risk, plus an audit-ready record. 80% reach the finish versus roughly 20% for traditional long courses. Flagship case: Polpharma Santo, 117 managers across 3 countries over 12 weeks, 100% applied it on the job."
+      "ru": "ibirAi — казахстанская платформа обучения технике безопасности для линейного персонала. Обучение приходит к рабочему в телефон: 10 минут в смену, с проверкой ответа голосом. Урок открывается в Telegram без установки приложения, напоминание дублируется в WhatsApp. Компания получает поимённую картину — кто понял материал, а кто в зоне риска, и запись по каждому работнику. Не заменяет обязательный инструктаж и аттестацию — добавляет к ним доказательство понимания. Флагманский кейс — Polpharma Santo, программа для руководителей 2025 года: 117 человек, 3 страны, 12 недель, 80%+ дошли до финала, 100% применили на работе.",
+      "en": "ibirAi is a Kazakhstan-based safety training platform for frontline workers. Training reaches the worker on their phone: 10 minutes per shift, with answers verified by voice. The lesson opens in Telegram with no app to install; the reminder is mirrored to WhatsApp. Employers get a name-by-name view of who understood the material and who is at risk, plus a record for every worker. It does not replace mandatory briefings or certification — it adds proof of understanding on top. Flagship case: Polpharma Santo, a 2025 leadership program: 117 people across 3 countries over 12 weeks, 80%+ reached the finish, 100% applied it on the job."
     },
     "founded": "2024",
     "site": "https://ibirai.com",
@@ -78,10 +80,10 @@
       "Участник программы NVIDIA Inception"
     ],
     "positioning": {
-      "channel": "WhatsApp",
+      "channel": "мессенджер: уроки и голосовые ответы — Telegram Mini App (@ibirai_learning_bot), напоминания — WhatsApp через GreenAPI",
       "audience": "линейный персонал, рабочие",
       "domain": "техника безопасности, охрана труда",
-      "retiredPositioning": "микрообучение через Telegram — устаревшая формулировка, не использовать"
+      "retiredPositioning": "«микрообучение через Telegram» и «3-минутные уроки» — устаревшие формулировки. Корректно: 10-минутный урок в мессенджере с оценкой ответа голосом. Канал называть по факту сборки: уроки в Telegram, напоминания в WhatsApp — не заявлять доставку уроков в WhatsApp, входящего WhatsApp-контура в продукте нет"
     },
     "notForPublic": [
       "Не описывать ibirAi как часть, продукт или услугу Abadan & Company — это самостоятельная компания",
@@ -153,7 +155,7 @@
       "note": "87% доходимость — цифры нет ни в одном отчёте"
     },
     {
-      "pattern": "(доход|заверш|дошл\\w+|completion)[^\\n]{0,30}87\\s*%",
+      "pattern": "(доход|заверш|дошл[a-zа-яёәғқңөұүһі0-9_]+|completion)[^\\n]{0,30}87\\s*%",
       "note": "87% доходимость, обратный порядок"
     },
     {
@@ -165,7 +167,7 @@
       "note": "9000 обученных — устарело, канон 10 000+ лично"
     },
     {
-      "pattern": "(обучил|обучен\\w+)[^\\n]{0,20}(более\\s*)?9\\s*000",
+      "pattern": "(обучил|обучен[a-zа-яёәғқңөұүһі0-9_]+)[^\\n]{0,20}(более\\s*)?9\\s*000",
       "note": "9000 обученных, обратный порядок"
     },
     {
@@ -186,14 +188,14 @@
     },
     {
       "pattern": "микрообучение\\s+через\\s+Telegram",
-      "note": "устаревшее позиционирование ibirAi — канал WhatsApp, домен техника безопасности"
+      "note": "устаревшая формулировка ibirAi; домен — техника безопасности, формат — 10-минутный урок в мессенджере"
     },
     {
-      "pattern": "3-минутны\\w+\\s+урок\\w*[^\\n]{0,20}Telegram",
+      "pattern": "3-минутны[a-zа-яёәғқңөұүһі0-9_]+\\s+урок[a-zа-яёәғқңөұүһі0-9_]*[^\\n]{0,20}Telegram",
       "note": "устаревшее описание ibirAi"
     },
     {
-      "pattern": "партн[её]р\\w*\\s+NVIDIA",
+      "pattern": "партн[её]р[a-zа-яёәғқңөұүһі0-9_]*\\s+NVIDIA",
       "note": "оверклейм — правильно «участник программы NVIDIA Inception»"
     },
     {
@@ -201,7 +203,7 @@
       "note": "97% completion — цифры нет в отчёте Santo"
     },
     {
-      "pattern": "(доход|заверш|completion|дошл\\w+)[^\\n]{0,30}97\\s*%",
+      "pattern": "(доход|заверш|completion|дошл[a-zа-яёәғқңөұүһі0-9_]+)[^\\n]{0,30}97\\s*%",
       "note": "97% completion, обратный порядок"
     },
     {
@@ -215,6 +217,38 @@
     {
       "pattern": "8\\s*7\\s*[–-]\\s*8\\s*9",
       "note": "литеральный диапазон 87–89"
+    },
+    {
+      "pattern": "(?<![\\d–—-])23\\s*%[^\\n]{0,25}(дойд|дошл|доход|заверш|complet|жет)",
+      "note": "«23% дойдут» у курсов на ПК — необеспеченное сравнение. Лукбихайнд обязателен: отраслевую базу «15–23% со ссылкой на Brandon Hall» трогать не нужно, и посторонние 23% (например, снижение остановок оборудования у НКОК) тоже"
+    },
+    {
+      "pattern": "(дойд|дошл|доход|заверш|completion)[a-zа-яёәғқңөұүһі0-9_]*[^\\n]{0,20}(?<![\\d–—-])23\\s*%",
+      "note": "то же, обратный порядок"
+    },
+    {
+      "pattern": "~\\s*20\\s*%",
+      "note": "«против ~20% по рынку» — сравнимой публичной базы по Казахстану не существует; см. Продажи/Датчик — Кривая внимания (26.07.2026)"
+    },
+    {
+      "pattern": "(доходимост|дойд[a-zа-яёәғқңөұүһі0-9_]+|дошл[a-zа-яёәғқңөұүһі0-9_]+|заверш[a-zа-яёәғқңөұүһі0-9_]+|completion|reach[a-zа-яёәғқңөұүһі0-9_]*\\s+the\\s+finish)[^\\n]{0,45}(против|vs\\.?|versus)[^\\n]{0,20}~?\\s*20\\s*%",
+      "note": "сравнение ДОХОДИМОСТИ с «20% у обычного инструктажа» — источник не назван. Контекст обязателен: сравнения по другим метрикам (удержание знаний) под этот паттерн не подпадают"
+    },
+    {
+      "pattern": "(?<![\\d–—-])20\\s*%[-–—][a-zа-яёәғқңөұүһі0-9_]+\\s*қарсы",
+      "note": "то же сравнение, kk (падежное окончание обязательно, иначе ловится «қарсы алу»)"
+    },
+    {
+      "pattern": "закрыва[a-zа-яёәғқңөұүһі0-9_]+\\s+требовани",
+      "note": "«закрываем требование закона» — юридическое обещание без заключения; корректно «не заменяем обязательное обучение, добавляем доказательство понимания»"
+    },
+    {
+      "pattern": "satisf[a-zа-яёәғқңөұүһі0-9_]+\\s+the\\s+requirement",
+      "note": "то же юридическое обещание (en)"
+    },
+    {
+      "pattern": "талапты[^\\n]{0,25}жабамыз",
+      "note": "то же юридическое обещание (kk)"
     }
   ]
 }

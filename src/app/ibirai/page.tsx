@@ -54,7 +54,7 @@ export default function IbiraiPage() {
 
   // ── Comparison table data ──
   const comparisonRows = [
-    { param: "Доходят до финала", lms: "~20%", ibirai: "80%+ (кейс Santo)" },
+    { param: "Доходят до финала", lms: "не измеряется", ibirai: "80%+ (кейс Santo)" },
     { param: "Время на урок", lms: "45–90 мин", ibirai: "3–10 мин" },
     { param: "Установка приложений", lms: "Требуется", ibirai: "Не нужна" },
     { param: "Запуск", lms: "2–6 месяцев", ibirai: "2–3 недели" },
@@ -351,7 +351,7 @@ export default function IbiraiPage() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { value: "80%+", label: "дошли до финала", note: "против ~20% у длинных курсов", color: "teal" },
+                { value: "80%+", label: "дошли до финала", note: "программа для руководителей, 2025", color: "teal" },
                 { value: "95,8%", label: "вовлечённость на старте", note: "117 руководителей", color: "gold" },
                 { value: "100%", label: "применили на работе", note: "по итогам программы", color: "teal" },
                 { value: "8,38", label: "оценка наставника", note: "из 10 баллов", color: "gold" },
@@ -459,7 +459,7 @@ export default function IbiraiPage() {
                   <h4 className="text-sm font-700 text-[#546569] uppercase tracking-widest mb-8">До и после ibirAi</h4>
                   <div className="space-y-7">
                     {[
-                      { label: "Дошли до финала", before: "~20%", after: "80%+", good: true },
+                      { label: "Дошли до финала", before: "не измеряется", after: "80%+", good: true },
                       { label: "Применили на работе", before: "не измерялось", after: "100%", good: true },
                       { label: "Изменения в поведении", before: "не измерялось", after: "60%+", good: true },
                     ].map((m) => (

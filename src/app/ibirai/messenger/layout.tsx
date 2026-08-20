@@ -53,7 +53,7 @@ export default function MessengerLayout({
     applicationSubCategory: "Messenger-Based Learning",
     operatingSystem: "Telegram, WhatsApp, Web",
     description:
-      "Платформа корпоративного микрообучения в мессенджерах. 3-минутные уроки в Telegram и WhatsApp без установки приложений.",
+      "Платформа корпоративного микрообучения в мессенджере. Урок на 10 минут открывается в Telegram без установки приложения, напоминание дублируется в WhatsApp.",
     offers: {
       "@type": "Offer",
       price: "0",
