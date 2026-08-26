@@ -33,7 +33,7 @@ export default function CoachingPage() {
           email,
           message: `[Коучинг первых руководителей]\nДолжность: ${position}\nКомпания: ${company}`,
           website: honeypot,
-          _t: formLoadedAt,
+          _elapsed: Date.now() - formLoadedAt,
         }),
       });
       setFormStatus("success");

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const SUBSCRIBE_API = 'https://tracking-server-livid.vercel.app/api/subscribe';
 const GUIDE_TITLE = 'От хаоса к порядку';
@@ -21,12 +21,6 @@ export default function Newsletter({ source = 'abadan-kz-footer' }: NewsletterPr
   const [email, setEmail] = useState('');
   const [state, setState] = useState<SubmitState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    if (state !== 'success' && state !== 'already') return;
-    const timer = setTimeout(() => setState('idle'), 5000);
-    return () => clearTimeout(timer);
-  }, [state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,12 +79,24 @@ export default function Newsletter({ source = 'abadan-kz-footer' }: NewsletterPr
             </div>
 
             <div>
-              {state === 'success' ? (
-                <p className="text-teal-700 font-semibold">
-                  Гайд уже в пути — проверьте почту.
-                </p>
-              ) : state === 'already' ? (
-                <p className="text-teal-700 font-semibold">Вы уже подписаны.</p>
+              {state === 'success' || state === 'already' ? (
+                <div className="flex items-start gap-4" role="status" aria-live="polite">
+                  <span className="shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p className="text-lg font-bold text-[#2D3A3C]">
+                      {state === 'already' ? 'Вы уже подписаны' : 'Готово'}
+                    </p>
+                    <p className="text-[#546569]">
+                      {state === 'already'
+                        ? 'Гайд мы уже отправляли — проверьте почту, в том числе «Промоакции» и «Спам».'
+                        : 'Гайд уже в пути — проверьте почту, в том числе «Промоакции» и «Спам».'}
+                    </p>
+                  </div>
+                </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-3">
                   {/* Имя необязательное: письма серии обращаются по имени,

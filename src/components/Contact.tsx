@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,14 @@ export default function Contact() {
   const [formLoadedAt] = useState(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Форма заменяется карточкой подтверждения и карточка становится ниже —
+  // на мобильном подтверждение иначе оказывается за краем экрана.
+  useEffect(() => {
+    if (submitStatus !== "success") return;
+    cardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [submitStatus]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +33,7 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, _t: formLoadedAt }),
+        body: JSON.stringify({ ...formData, _elapsed: Date.now() - formLoadedAt }),
       });
 
       if (response.ok) {
@@ -73,111 +81,136 @@ export default function Contact() {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-[#00767D]/5 to-transparent rounded-3xl blur-2xl"></div>
 
-              <div className="premium-card p-10 sm:p-12 relative">
-                <h3 className="text-2xl font-bold text-[#2D3A3C] mb-8">
-                  Запросить программу
-                </h3>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                      Ваше имя *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
-                      placeholder="Введите ваше имя"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                      Телефон *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
-                      placeholder="+7 (___) ___-__-__"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
-                      placeholder="email@company.kz"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                      Комментарий
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={3}
-                      className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all resize-none"
-                      placeholder="Кратко опишите, что вас интересует..."
-                    ></textarea>
-                  </div>
-
-                  {/* Honeypot — hidden from humans, bots fill it */}
-                  <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
-                    <input
-                      type="text"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleChange}
-                      autoComplete="off"
-                      tabIndex={-1}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full gold-button text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? "Отправка..." : "Отправить запрос"}
-                  </button>
-
-                  {submitStatus === "success" && (
-                    <p className="text-sm text-[#00767D] text-center font-medium">
-                      Спасибо! Мы свяжемся с вами в ближайшее время.
+              <div ref={cardRef} className="premium-card p-10 sm:p-12 relative">
+                {submitStatus === "success" ? (
+                  <div className="py-8 text-center" role="status" aria-live="polite">
+                    <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center shadow-[0_0_30px_rgba(0,118,125,0.25)]">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-3xl font-extrabold text-[#2D3A3C] mb-3">
+                      Заявка принята
+                    </h3>
+                    <p className="text-[#546569] text-lg leading-relaxed max-w-sm mx-auto">
+                      Мы свяжемся с вами в ближайшее время — как правило, в течение рабочего дня.
                     </p>
-                  )}
-
-                  {submitStatus === "error" && (
-                    <p className="text-sm text-[#EF4444] text-center font-medium">
-                      Произошла ошибка. Попробуйте ещё раз или позвоните нам.
+                    <p className="text-sm text-[#7A8B8E] mt-6">
+                      Нужно срочно?{" "}
+                      <a href="tel:+77022413388" className="font-bold text-[#00767D] hover:text-[#009BA3] transition-colors">
+                        +7 702 241 33 88
+                      </a>
                     </p>
-                  )}
+                    <button
+                      type="button"
+                      onClick={() => setSubmitStatus("idle")}
+                      className="teal-button-outline mt-8 cursor-pointer"
+                    >
+                      Отправить ещё одну заявку
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <h3 className="text-2xl font-bold text-[#2D3A3C] mb-8">
+                      Запросить программу
+                    </h3>
 
-                  <p className="text-xs text-[#7A8B8E] text-center">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                  </p>
-                </form>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
+                          Ваше имя *
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
+                          placeholder="Введите ваше имя"
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
+                          Телефон *
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
+                          placeholder="+7 (___) ___-__-__"
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
+                          placeholder="email@company.kz"
+                        />
+                      </div>
+
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
+                          Комментарий
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          rows={3}
+                          className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all resize-none"
+                          placeholder="Кратко опишите, что вас интересует..."
+                        ></textarea>
+                      </div>
+
+                      {/* Honeypot — hidden from humans, bots fill it */}
+                      <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                        <input
+                          type="text"
+                          name="website"
+                          value={formData.website}
+                          onChange={handleChange}
+                          autoComplete="off"
+                          tabIndex={-1}
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full gold-button text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isSubmitting ? "Отправка..." : "Отправить запрос"}
+                      </button>
+
+                      {submitStatus === "error" && (
+                        <p role="alert" className="text-sm text-[#EF4444] text-center font-medium">
+                          Произошла ошибка. Попробуйте ещё раз или позвоните нам.
+                        </p>
+                      )}
+
+                      <p className="text-xs text-[#7A8B8E] text-center">
+                        Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                      </p>
+                    </form>
+                  </>
+                )}
               </div>
             </div>
 

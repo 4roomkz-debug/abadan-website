@@ -218,7 +218,7 @@ export default function BusinessBreakfastPage() {
           email: formData.email,
           message: `Регистрация на Бизнес-завтрак "AI в HR". Компания: ${formData.company || "не указана"}. Должность: ${formData.position || "не указана"}`,
           website: formData.website,
-          _t: formLoadedAt,
+          _elapsed: Date.now() - formLoadedAt,
         }),
       });
 

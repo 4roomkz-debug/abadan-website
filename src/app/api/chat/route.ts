@@ -11,6 +11,9 @@ import {
 
 // На Vercel переменная называется DEEPSEEK_API; локально/исторически встречается DEEPSEEK_API_KEY.
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API ?? process.env.DEEPSEEK_API_KEY ?? "";
+// Единственный источник имени модели. 24.07.2026 провайдер снял алиас
+// `deepseek-chat`, поддерживаются только `deepseek-v4-flash` и `deepseek-v4-pro`.
+const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL ?? "deepseek-v4-flash";
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
 
@@ -261,11 +264,14 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "deepseek-chat",
+        model: DEEPSEEK_MODEL,
         messages: [{ role: "system", content: generateSystemPrompt() }, ...messages],
         stream: false,
         max_tokens: 250,
         temperature: 0.9,
+        // У v4 рассуждение включено по умолчанию и съело бы весь бюджет
+        // 250 токенов — ответ вернулся бы пустым.
+        thinking: { type: "disabled" },
       }),
     });
 

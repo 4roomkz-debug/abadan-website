@@ -54,7 +54,7 @@ export default function SchedulePage() {
           email: formData.email,
           message,
           website: formData.website,
-          _t: formLoadedAt,
+          _elapsed: Date.now() - formLoadedAt,
         })
       });
 
