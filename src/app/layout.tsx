@@ -5,6 +5,7 @@ import ScrollAnimationProvider from "@/components/ScrollAnimationProvider";
 import AiChat from "@/components/AiChat";
 import { OrganizationJsonLd, LocalBusinessJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -122,6 +123,7 @@ export default function RootLayout({
         {children}
         <AiChat />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
