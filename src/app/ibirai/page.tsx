@@ -82,11 +82,11 @@ export default function IbiraiPage() {
       sub: "до 500 сотрудников",
       features: [
         "Неограниченные курсы",
-        "Telegram + WhatsApp",
+        "Уроки в Telegram, напоминания в WhatsApp",
         "Расширенная HR-аналитика",
         "AI-генерация контента",
         "Геймификация и бейджи",
-        "Интеграция с 1C / Bitrix24",
+        "Проверка ответа голосом с AI-оценкой",
         "Приоритетная поддержка",
       ],
       cta: "Выбрать тариф",
@@ -101,7 +101,7 @@ export default function IbiraiPage() {
         "SLA 99.9%",
         "Кастомный AI-аватар",
         "On-premise / частное облако",
-        "Интеграция с SAP / HCM",
+        "Итоговый отчёт по программе для руководства",
         "Обучение команды HR",
       ],
       cta: "Связаться",
@@ -113,7 +113,7 @@ export default function IbiraiPage() {
   const faqs = [
     {
       q: "Что такое ibirAi?",
-      a: "ibirAi — самостоятельная казахстанская платформа обучения, которая доставляет короткие уроки прямо в WhatsApp и Telegram. Вместо традиционных LMS сотрудники учатся там, где уже проводят время — в привычных мессенджерах, без установки дополнительных приложений. Abadan & Co. использует ibirAi в своих корпоративных программах.",
+      a: "ibirAi — самостоятельная казахстанская платформа обучения, которая доставляет короткие уроки в Telegram. Вместо традиционных LMS сотрудник учится там, где уже проводит время — в мессенджере, без установки отдельного приложения. Abadan & Co. использует ibirAi в своих корпоративных программах.",
     },
     {
       q: "Чем ibirAi отличается от традиционной LMS?",
@@ -125,7 +125,7 @@ export default function IbiraiPage() {
     },
     {
       q: "Какие мессенджеры поддерживает ibirAi?",
-      a: "ibirAi работает в Telegram и WhatsApp. Также доступна веб-версия и интеграция с корпоративными HR-системами (1C, Bitrix24, SAP). Для Энтерпрайз-тарифа возможна интеграция с любой внутренней системой через API.",
+      a: "Урок открывается в Telegram — в мини-приложении, скачивать ничего не нужно. Напоминание о занятии дублируется в WhatsApp и ведёт обратно в Telegram. Для HR есть веб-дашборд с результатами по каждому сотруднику.",
     },
     {
       q: "Сколько стоит ibirAi?",
@@ -167,7 +167,7 @@ export default function IbiraiPage() {
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed scroll-fade-in scroll-delay-3">
-              Короткие уроки в WhatsApp и Telegram с проверкой усвоения. Сотрудники учатся там, где уже проводят время, а вы видите поимённо, кто прошёл и что запомнил.
+              Короткие уроки в Telegram с проверкой усвоения — напоминание придёт и в WhatsApp. Сотрудник учится там, где уже проводит время, а вы видите поимённо, кто прошёл и что запомнил.
             </p>
 
             {/* CTAs */}
@@ -292,7 +292,7 @@ export default function IbiraiPage() {
                 {
                   num: "01",
                   title: "Загружаем контент",
-                  desc: "Передаём существующие материалы или создаём новый контент с помощью AI. Адаптируем под формат 3-минутных уроков.",
+                  desc: "Передаём существующие материалы или создаём новый контент с помощью AI. Адаптируем под формат 10-минутных уроков.",
                   icon: (
                     <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
@@ -302,7 +302,7 @@ export default function IbiraiPage() {
                 {
                   num: "02",
                   title: "Запускаем в мессенджерах",
-                  desc: "Ежедневные 3-минутные уроки приходят сотрудникам в Telegram или WhatsApp. AI-аватар адаптирует темп под каждого.",
+                  desc: "Ежедневные 10-минутные уроки приходят в Telegram, напоминание дублируется в WhatsApp. AI-аватар адаптирует темп под каждого.",
                   icon: (
                     <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -637,20 +637,18 @@ export default function IbiraiPage() {
 
             {/* Integrations */}
             <div className="text-center mb-12 scroll-fade-in">
-              <p className="text-sm font-700 text-[#00767D] uppercase tracking-widest mb-3">Интеграции</p>
-              <h2 className="text-4xl md:text-5xl font-800 text-[#2D3A3C] mb-4">Работает с вашими системами</h2>
+              <p className="text-sm font-700 text-[#00767D] uppercase tracking-widest mb-3">Каналы</p>
+              <h2 className="text-4xl md:text-5xl font-800 text-[#2D3A3C] mb-4">Работает там, где сотрудник уже есть</h2>
               <p className="text-[#546569] max-w-xl mx-auto">
-                ibirAi интегрируется с корпоративными мессенджерами и HR-системами без сложных настроек
+                Урок — в Telegram, напоминание — в WhatsApp, результаты — в веб-дашборде для HR. Сотруднику устанавливать нечего.
               </p>
             </div>
 
             <div className="scroll-fade-in flex flex-wrap items-center justify-center gap-4 mb-20">
               {[
-                { name: "Telegram", bg: "bg-[#2CA5E0]/10", text: "text-[#2CA5E0]" },
-                { name: "WhatsApp", bg: "bg-[#25D366]/10", text: "text-[#25D366]" },
-                { name: "1C", bg: "bg-[#F0BB1E]/10", text: "text-[#EBB417]" },
-                { name: "SAP", bg: "bg-[#0070F2]/10", text: "text-[#0070F2]" },
-                { name: "Bitrix24", bg: "bg-[#00A2E8]/10", text: "text-[#00A2E8]" },
+                { name: "Telegram — урок", bg: "bg-[#2CA5E0]/10", text: "text-[#2CA5E0]" },
+                { name: "WhatsApp — напоминание", bg: "bg-[#25D366]/10", text: "text-[#25D366]" },
+                { name: "Веб — дашборд для HR", bg: "bg-[#00767D]/10", text: "text-[#00767D]" },
               ].map((int) => (
                 <div
                   key={int.name}

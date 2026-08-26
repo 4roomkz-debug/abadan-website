@@ -51,7 +51,7 @@ export default function IbiraiNeftegazLayout({
     name: "ibirAi для нефтегаза",
     applicationCategory: "EducationalApplication",
     applicationSubCategory: "Oil & Gas Training",
-    operatingSystem: "Web, Telegram, WhatsApp",
+    operatingSystem: "Web, Telegram",
     description:
       "AI-платформа микрообучения для нефтегазовой отрасли: HSE, промышленная безопасность, технические компетенции, сертификация. Офлайн-режим и адаптация под сменный график.",
     offers: {

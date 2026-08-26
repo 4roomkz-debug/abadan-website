@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Проекты — ibirAi и технологии обучения",
-  description: "ibirAi — платформа обучения в мессенджерах. Короткие уроки в WhatsApp и Telegram с проверкой усвоения. Флагманский кейс — Polpharma Santo: 117 руководителей, 80%+ дошли до финала.",
+  description: "ibirAi — платформа обучения в мессенджере. Короткие уроки в Telegram с проверкой усвоения, напоминание — в WhatsApp. Флагманский кейс — Polpharma Santo: 117 руководителей, 80%+ дошли до финала.",
   keywords: [
     "ibirAi",
     "микрообучение",

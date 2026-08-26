@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Обучение через Telegram и WhatsApp — ibirAi | Abadan & Co.",
+  title: "Обучение в Telegram с напоминаниями в WhatsApp — ibirAi | Abadan & Co.",
   description:
-    "ibirAi доставляет корпоративное обучение прямо в WhatsApp и Telegram. Никаких новых приложений — короткие уроки приходят туда, где сотрудники уже общаются, и усвоение проверяется по каждому.",
+    "ibirAi доставляет корпоративное обучение в Telegram, а напоминание о занятии дублирует в WhatsApp. Никаких новых приложений — урок открывается в мессенджере, которым сотрудник уже пользуется, и усвоение проверяется по каждому.",
   keywords: [
     "обучение через Telegram",
-    "WhatsApp обучение",
+    "обучение в мессенджере",
     "микрообучение мессенджеры",
     "Telegram бот обучение",
     "корпоративное обучение мессенджер",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "микрообучение без приложений",
   ],
   openGraph: {
-    title: "Обучение через Telegram и WhatsApp — ibirAi",
+    title: "Обучение в Telegram с напоминаниями в WhatsApp — ibirAi",
     description:
       "Корпоративное обучение в привычных мессенджерах. Короткие уроки, проверка усвоения, поимённая HR-аналитика.",
     url: "https://www.abadan.kz/ibirai/messenger",
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
         url: "https://www.abadan.kz/og-ibirai.png",
         width: 1200,
         height: 630,
-        alt: "ibirAi — обучение через Telegram и WhatsApp",
+        alt: "ibirAi — обучение в Telegram с напоминаниями в WhatsApp",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Обучение через Telegram и WhatsApp — ibirAi",
+    title: "Обучение в Telegram с напоминаниями в WhatsApp — ibirAi",
     description:
       "Корпоративное обучение в привычных мессенджерах с проверкой усвоения.",
   },
@@ -51,7 +51,7 @@ export default function MessengerLayout({
     name: "ibirAi",
     applicationCategory: "EducationalApplication",
     applicationSubCategory: "Messenger-Based Learning",
-    operatingSystem: "Telegram, WhatsApp, Web",
+    operatingSystem: "Telegram, Web",
     description:
       "Платформа корпоративного микрообучения в мессенджере. Урок на 10 минут открывается в Telegram без установки приложения, напоминание дублируется в WhatsApp.",
     offers: {
@@ -109,7 +109,7 @@ export default function MessengerLayout({
         name: "Нужно ли сотрудникам устанавливать дополнительные приложения?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Нет. ibirAi работает через Telegram или WhatsApp — оба мессенджера уже установлены у большинства сотрудников. Достаточно подписаться на бот, и обучение начинается.",
+          text: "Нет. Урок открывается в Telegram — в мини-приложении внутри мессенджера, который уже установлен у большинства сотрудников. Достаточно запустить бот. Напоминание о занятии приходит ещё и в WhatsApp и ведёт обратно в Telegram.",
         },
       },
       {

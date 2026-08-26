@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 export default function ProjectsPage() {
   const ibiraiFeatures = [
     {
-      title: "Микроуроки 3 минуты",
+      title: "Микроуроки 10 минут",
       description: "Короткие уроки, которые легко вписываются в рабочий день. Без отрыва от работы.",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,7 +16,7 @@ export default function ProjectsPage() {
       ),
     },
     {
-      title: "Telegram & WhatsApp",
+      title: "Telegram + напоминания в WhatsApp",
       description: "Обучение там, где ваши сотрудники уже проводят время. Без установки новых приложений.",
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,7 +168,7 @@ export default function ProjectsPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#F0BB1E] mt-1">✓</span>
-                    3-минутные уроки в привычных мессенджерах
+                    10-минутные уроки в Telegram, напоминания в WhatsApp
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#F0BB1E] mt-1">✓</span>

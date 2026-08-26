@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ibirAi для soft skills — AI-обучение мягким навыкам | Abadan & Co.",
   description:
-    "ibirAi развивает soft skills через AI-диалоги и микро-сценарии в Telegram и WhatsApp. Коммуникация, лидерство, обратная связь, переговоры — 3-минутные уроки с персональным AI-коучем.",
+    "ibirAi развивает soft skills через AI-диалоги и микро-сценарии в Telegram. Коммуникация, лидерство, обратная связь, переговоры — 10-минутные уроки с персональным AI-коучем.",
   keywords: [
     "микрообучение soft skills",
     "AI коуч",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ibirAi для soft skills — AI-обучение мягким навыкам",
     description:
-      "AI-диалоги и микро-сценарии для развития коммуникации, лидерства и эмоционального интеллекта в Telegram и WhatsApp.",
+      "AI-диалоги и микро-сценарии для развития коммуникации, лидерства и эмоционального интеллекта в Telegram.",
     url: "https://www.abadan.kz/ibirai/soft-skills",
     type: "website",
     images: [
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ibirAi для soft skills — AI-обучение мягким навыкам",
     description:
-      "AI-диалоги и микро-сценарии для развития soft skills в Telegram и WhatsApp.",
+      "AI-диалоги и микро-сценарии для развития soft skills в Telegram.",
   },
   alternates: { canonical: "https://www.abadan.kz/ibirai/soft-skills" },
 };
@@ -51,7 +51,7 @@ export default function SoftSkillsLayout({
     name: "ibirAi",
     applicationCategory: "EducationalApplication",
     applicationSubCategory: "Soft Skills Training",
-    operatingSystem: "Web, Telegram, WhatsApp",
+    operatingSystem: "Web, Telegram",
     description:
       "AI-платформа для развития soft skills через микро-сценарии и диалоговые симуляции в мессенджерах.",
     offers: {
@@ -125,7 +125,7 @@ export default function SoftSkillsLayout({
         name: "Сколько времени нужно для развития soft skills через ibirAi?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Первые измеримые результаты появляются через 4–6 недель ежедневных 3-минутных практик. Полноценное закрепление навыка требует 90 дней — именно такой горизонт рекомендуется для программ командного развития.",
+          text: "Первые измеримые результаты появляются через 4–6 недель ежедневных 10-минутных практик. Полноценное закрепление навыка требует 90 дней — именно такой горизонт рекомендуется для программ командного развития.",
         },
       },
       {

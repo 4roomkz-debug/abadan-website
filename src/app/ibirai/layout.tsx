@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "ibirAi — обучение в мессенджерах с проверкой усвоения | Abadan & Co.",
   description:
-    "ibirAi — платформа обучения в мессенджерах: короткие уроки в WhatsApp и Telegram с проверкой усвоения и поимённой аналитикой. Флагманский кейс — Polpharma Santo: 117 руководителей, 3 страны, 12 недель.",
+    "ibirAi — платформа обучения в мессенджере: короткие уроки в Telegram с проверкой усвоения и поимённой аналитикой, напоминание дублируется в WhatsApp. Флагманский кейс — Polpharma Santo: 117 руководителей, 3 страны, 12 недель.",
   keywords: [
     "AI платформа обучения",
     "микрообучение Казахстан",
     "LMS Казахстан",
-    "обучение через WhatsApp",
+    "обучение через Telegram",
     "обучение в мессенджерах",
     "ibirAi",
     "корпоративное обучение AI",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ibirAi — обучение в мессенджерах с проверкой усвоения",
     description:
-      "Короткие уроки в WhatsApp и Telegram с проверкой усвоения и поимённой аналитикой. Флагман — Polpharma Santo: 117 руководителей.",
+      "Короткие уроки в Telegram с проверкой усвоения и поимённой аналитикой, напоминание — в WhatsApp. Флагман — Polpharma Santo: 117 руководителей.",
     url: "https://www.abadan.kz/ibirai",
     type: "website",
     images: [
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ibirAi — обучение в мессенджерах с проверкой усвоения",
     description:
-      "Короткие уроки в WhatsApp и Telegram с проверкой усвоения и поимённой аналитикой.",
+      "Короткие уроки в Telegram с проверкой усвоения и поимённой аналитикой, напоминание — в WhatsApp.",
   },
   alternates: { canonical: "https://www.abadan.kz/ibirai" },
 };
@@ -56,7 +56,7 @@ export default function IbiraiLayout({
     name: "ibirAi",
     url: "https://ibirai.com",
     applicationCategory: "EducationalApplication",
-    operatingSystem: "Web, WhatsApp, Telegram",
+    operatingSystem: "Web, Telegram",
     description:
       "Платформа обучения в мессенджерах: короткие уроки с проверкой усвоения и поимённой аналитикой по каждому сотруднику.",
     publisher: {
@@ -81,7 +81,7 @@ export default function IbiraiLayout({
         name: "Что такое ibirAi?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "ibirAi — самостоятельная казахстанская платформа обучения, которая доставляет короткие уроки прямо в WhatsApp и Telegram. Сотрудник учится там, где уже есть, а компания видит поимённо, кто прошёл и что усвоил. Abadan & Co. использует ibirAi в своих корпоративных программах.",
+          text: "ibirAi — самостоятельная казахстанская платформа обучения, которая доставляет короткие уроки в Telegram, а напоминание дублирует в WhatsApp. Сотрудник учится там, где уже есть, а компания видит поимённо, кто прошёл и что усвоил. Abadan & Co. использует ibirAi в своих корпоративных программах.",
         },
       },
       {
@@ -113,7 +113,7 @@ export default function IbiraiLayout({
         name: "Какие мессенджеры поддерживает ibirAi?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "ibirAi работает в WhatsApp и Telegram. Также доступна веб-версия и интеграция с корпоративными HR-системами.",
+          text: "Урок открывается в Telegram — в мини-приложении, устанавливать ничего не нужно. Напоминание о занятии дублируется в WhatsApp и ведёт обратно в Telegram. Для HR есть веб-дашборд с результатами.",
         },
       },
       {
