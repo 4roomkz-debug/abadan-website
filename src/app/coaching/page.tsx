@@ -402,9 +402,9 @@ export default function CoachingPage() {
                   {[
                     "В корпоративном обучении с 2012 года",
                     "10 000+ обученных лично",
-                    "CEO ibir.ai — платформа AI-микрообучения",
+                    "Основатель ibirAi — обучение технике безопасности в мессенджере",
                     "Автор книги «Бизнес по любви 2.0»",
-                    "Независимый директор АО «НК «Казахстан Ғарыш Сапары»",
+                    "Председатель совета директоров АО «НК «Қазақстан Ғарыш Сапары»",
                   ].map((fact, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-[#00767D]/10 flex items-center justify-center text-[#00767D] flex-shrink-0">

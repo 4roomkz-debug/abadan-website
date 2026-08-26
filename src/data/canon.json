@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "updated": "2026-08-11",
+    "updated": "2026-08-26",
     "note": "ИСТОЧНИК ПРАВДЫ. Правки только здесь, затем npm run sync:canon в каждом репозитории."
   },
   "person": {
@@ -16,8 +16,8 @@
       "en": "Founder of ibirAi, business trainer and mentor from Kazakhstan, Chairman of the Board at Kazakhstan Gharysh Sapary."
     },
     "description": {
-      "ru": "Гани Абадан — казахстанский предприниматель, бизнес-тренер и ментор. Тренер с 2012 года, лично обучил более 10 000 человек. Основатель ibirAi — платформы обучения технике безопасности для рабочих через WhatsApp. Сооснователь Abadan & Company — компании корпоративного обучения. Автор книги «Бизнес по любви 2.0». Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары».",
-      "en": "Gani Abadan is a Kazakhstani entrepreneur, business trainer and mentor. A trainer since 2012, he has personally trained over 10,000 people. Founder of ibirAi, a WhatsApp-based safety training platform for frontline workers. Co-founder of Abadan & Company, a corporate training firm. Author of the book Business with Love 2.0. Chairman of the Board of Directors at Kazakhstan Gharysh Sapary."
+      "ru": "Гани Абадан — казахстанский предприниматель, бизнес-тренер и ментор. Тренер с 2012 года, лично обучил более 10 000 человек. Основатель ibirAi — мобильной платформы обучения технике безопасности для рабочих. Сооснователь Abadan & Company — компании корпоративного обучения. Автор книги «Бизнес по любви 2.0». Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары».",
+      "en": "Gani Abadan is a Kazakhstani entrepreneur, business trainer and mentor. A trainer since 2012, he has personally trained over 10,000 people. Founder of ibirAi, a mobile safety training platform for frontline workers. Co-founder of Abadan & Company, a corporate training firm. Author of the book Business with Love 2.0. Chairman of the Board of Directors at Kazakhstan Gharysh Sapary."
     },
     "jobTitle": {
       "ru": "Основатель ibirAi",
