@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 import {
   AI_PERSONA,
   COMPANY_INFO,
-  TRAINING_FORMATS,
   TRAININGS,
-  PRICING_INFO,
   FAQ,
   EVENTS,
 } from "@/data/ai-knowledge";
+import {
+  isUnifiedLeadWebhookConfigured,
+  sendUnifiedLead,
+} from "@/lib/server/leadWebhook";
 
 // На Vercel переменная называется DEEPSEEK_API; локально/исторически встречается DEEPSEEK_API_KEY.
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API ?? process.env.DEEPSEEK_API_KEY ?? "";
@@ -84,27 +86,58 @@ function isValidMessages(input: unknown): input is ChatMessage[] {
   return true;
 }
 
-// Отправка заявки в Telegram
+// Резервная отправка в Telegram, если единый приёмник не настроен.
 async function sendLeadToTelegram(leadInfo: string) {
-  try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: `🤖 Заявка из чата с Асем\n\n${leadInfo}`,
-      }),
-    });
-  } catch (error) {
-    console.error("Failed to send lead to Telegram:", error);
+  const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: `🤖 Заявка из чата с Асем\n\n${leadInfo}`,
+    }),
+  });
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(`Telegram returned ${response.status}: ${detail.slice(0, 300)}`);
   }
+}
+
+async function sendChatLead(input: {
+  name: string;
+  phone: string;
+  context: string;
+}) {
+  if (isUnifiedLeadWebhookConfigured()) {
+    await sendUnifiedLead({
+      source: "abadan.kz — чат Асем",
+      name: input.name,
+      phone: input.phone,
+      message: input.context,
+      form_data: {
+        channel: "asem_chat",
+        raw_message: input.context,
+      },
+    });
+    return;
+  }
+
+  console.warn("[chat] Unified lead webhook is not configured; using Telegram fallback");
+  await sendLeadToTelegram(
+    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone}\n\n💬 Контекст диалога:\n${input.context}`
+  );
 }
 
 // Проверяем, есть ли в сообщении контактные данные.
 // ВАЖНО: ищем ТОЛЬКО в сообщениях пользователя. Реплики ассистента содержат
 // имя бота («Я Асем…») и телефон компании из system prompt — раньше регэксы
 // цепляли их и слали ложные лиды с данными бота вместо данных собеседника.
-function extractContactInfo(messages: Array<{ role: string; content: string }>) {
+type ExtractedContact =
+  | { hasContact: false }
+  | { hasContact: true; phone: string; name: string };
+
+function extractContactInfo(
+  messages: Array<{ role: string; content: string }>
+): ExtractedContact {
   const userMessages = messages.filter((m) => m.role === "user");
   if (userMessages.length === 0) return { hasContact: false };
 
@@ -252,9 +285,11 @@ export async function POST(request: Request) {
         .map((m: { content: string }) => m.content)
         .join("\n");
 
-      await sendLeadToTelegram(
-        `👤 Имя: ${contactInfo.name}\n📞 Телефон: ${contactInfo.phone}\n\n💬 Контекст диалога:\n${lastUserMessages}`
-      );
+      await sendChatLead({
+        name: contactInfo.name,
+        phone: contactInfo.phone,
+        context: lastUserMessages,
+      });
     }
 
     const response = await fetch("https://api.deepseek.com/chat/completions", {

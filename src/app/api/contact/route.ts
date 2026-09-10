@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import {
+  isUnifiedLeadWebhookConfigured,
+  sendUnifiedLead,
+} from "@/lib/server/leadWebhook";
 
 /** Подпись источника в общем чате заявок. */
 const SOURCE = "abadan.kz";
@@ -8,13 +12,8 @@ const SOURCE = "abadan.kz";
  * ботом заявок + синхронизация в nomad-crm. Если переменные не заданы,
  * работает прежний путь: прямой Telegram + прямой CRM-вебхук.
  */
-const LEADS_WEBHOOK_URL = process.env.LEADS_WEBHOOK_URL;
-const LEADS_WEBHOOK_SECRET = process.env.LEADS_WEBHOOK_SECRET;
-
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-const CRM_WEBHOOK_URL = process.env.CRM_WEBHOOK_URL;
-const CRM_WEBHOOK_SECRET = process.env.CRM_WEBHOOK_SECRET;
 
 export async function POST(request: Request) {
   try {
@@ -58,44 +57,32 @@ export async function POST(request: Request) {
       /^\p{L}[\p{L}\s'’.-]*$/u.test(nameClean) && /\p{L}{2}/u.test(nameClean);
     if (!looksLikeName || nameClean.length > 100) {
       console.warn(`Contact form rejected: name "${nameClean}"`);
-      return NextResponse.json({ success: true }); // silent reject
+      return NextResponse.json({ error: "Invalid name" }, { status: 422 });
     }
 
     // Phone must look like a real phone number (7+ digits)
     const digitsOnly = phoneClean.replace(/\D/g, "");
     if (digitsOnly.length < 7 || digitsOnly.length > 15) {
       console.warn(`Contact form rejected: phone "${phoneClean}"`);
-      return NextResponse.json({ success: true }); // silent reject
+      return NextResponse.json({ error: "Invalid phone" }, { status: 422 });
     }
 
     // --- Единый приёмник (если настроен) ---
-    if (LEADS_WEBHOOK_URL && LEADS_WEBHOOK_SECRET) {
+    if (isUnifiedLeadWebhookConfigured()) {
       try {
-        const wh = await fetch(`${LEADS_WEBHOOK_URL}/api/webhook/lead`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Webhook-Secret": LEADS_WEBHOOK_SECRET,
-          },
-          body: JSON.stringify({
-            source: SOURCE,
-            name: nameClean,
-            phone: phoneClean,
-            email: emailClean || undefined,
-            message: message || undefined,
-            form_data: { raw_message: message },
-          }),
+        await sendUnifiedLead({
+          source: SOURCE,
+          name: nameClean,
+          phone: phoneClean,
+          email: emailClean || undefined,
+          message: message || undefined,
+          form_data: { raw_message: message },
         });
-        if (!wh.ok) {
-          const detail = await wh.text().catch(() => "");
-          console.error("[contact] единый приёмник не принял заявку:", wh.status, detail.slice(0, 300));
-          return NextResponse.json({ error: "Failed to send message" }, { status: 502 });
-        }
         // Приёмник сам уведомляет чат и синхронизирует в CRM — локальные
         // отправки ниже не выполняем, иначе будут дубли.
         return NextResponse.json({ success: true });
       } catch (err) {
-        console.error("[contact] единый приёмник недоступен:", err);
+        console.error("[contact] единый приёмник не принял заявку:", err);
         return NextResponse.json({ error: "Failed to send message" }, { status: 502 });
       }
     }

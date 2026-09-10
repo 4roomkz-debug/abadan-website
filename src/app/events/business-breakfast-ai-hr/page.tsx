@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
+import { submitContactForm } from "@/lib/contactForm";
 
 // Countdown Timer Hook
 function useCountdown(targetDate: Date) {
@@ -201,30 +202,27 @@ export default function BusinessBreakfastPage() {
   const [formLoadedAt] = useState(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
 
     try {
-      const message = `🎯 Новая регистрация на Бизнес-завтрак "AI в HR"!\n\n👤 Имя: ${formData.name}\n📱 Телефон: ${formData.phone}\n📧 Email: ${formData.email || "не указан"}\n🏢 Компания: ${formData.company || "не указана"}\n💼 Должность: ${formData.position || "не указана"}`;
-
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          message: `Регистрация на Бизнес-завтрак "AI в HR". Компания: ${formData.company || "не указана"}. Должность: ${formData.position || "не указана"}`,
-          website: formData.website,
-          _elapsed: Date.now() - formLoadedAt,
-        }),
+      await submitContactForm({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: `Регистрация на Бизнес-завтрак "AI в HR". Компания: ${formData.company || "не указана"}. Должность: ${formData.position || "не указана"}`,
+        website: formData.website,
+        _elapsed: Date.now() - formLoadedAt,
       });
 
       setSubmitSuccess(true);
     } catch (error) {
       console.error("Error submitting form:", error);
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -842,6 +840,12 @@ export default function BusinessBreakfastPage() {
                 >
                   {isSubmitting ? "Отправка..." : "Зарегистрироваться бесплатно"}
                 </button>
+
+                {submitError && (
+                  <p className="mt-3 text-center text-sm text-red-600" role="alert">
+                    Регистрация не отправлена. Попробуйте ещё раз.
+                  </p>
+                )}
 
                 <p className="mt-4 text-center text-sm text-[#94A3B8]">
                   Нажимая кнопку, вы соглашаетесь с обработкой персональных данных

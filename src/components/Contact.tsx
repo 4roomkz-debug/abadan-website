@@ -35,8 +35,9 @@ export default function Contact() {
         },
         body: JSON.stringify({ ...formData, _elapsed: Date.now() - formLoadedAt }),
       });
+      const result = await response.json().catch(() => null);
 
-      if (response.ok) {
+      if (response.ok && result?.success === true) {
         setSubmitStatus("success");
         setFormData({ name: "", phone: "", email: "", message: "", website: "" });
       } else {

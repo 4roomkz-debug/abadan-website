@@ -5,10 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { submitContactForm } from "@/lib/contactForm";
 
 export default function CoachingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [formLoadedAt] = useState(() => Date.now());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,21 +25,17 @@ export default function CoachingPage() {
     const honeypot = formData.get("website") as string;
 
     try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          message: `[Коучинг первых руководителей]\nДолжность: ${position}\nКомпания: ${company}`,
-          website: honeypot,
-          _elapsed: Date.now() - formLoadedAt,
-        }),
+      await submitContactForm({
+        name,
+        phone,
+        email,
+        message: `[Коучинг первых руководителей]\nДолжность: ${position}\nКомпания: ${company}`,
+        website: honeypot,
+        _elapsed: Date.now() - formLoadedAt,
       });
       setFormStatus("success");
     } catch {
-      setFormStatus("success");
+      setFormStatus("error");
     }
   };
 
@@ -582,6 +579,11 @@ export default function CoachingPage() {
                 >
                   {formStatus === "sending" ? "Отправка..." : "Записаться на диагностику"}
                 </button>
+                {formStatus === "error" && (
+                  <p className="text-red-200 text-sm text-center" role="alert">
+                    Заявка не отправлена. Попробуйте ещё раз.
+                  </p>
+                )}
               </form>
             )}
 

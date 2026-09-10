@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SCHEDULE_DATA } from "@/data/schedule";
+import { submitContactForm } from "@/lib/contactForm";
 
 /* ── helpers ── */
 
@@ -250,7 +251,7 @@ function EnrollmentModal({
   training: { name: string; date: string; priceOffline: number } | null;
   onClose: () => void;
 }) {
-  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -297,17 +298,15 @@ function EnrollmentModal({
     setStatus("sending");
     const fd = new FormData(e.currentTarget);
     try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: fd.get("name"),
-          phone: fd.get("phone"),
-          message: `[HR: ${training.name}] Дата: ${training.date}, Компания: ${fd.get("company") || "—"}`,
-        }),
+      await submitContactForm({
+        name: fd.get("name"),
+        phone: fd.get("phone"),
+        message: `[HR: ${training.name}] Дата: ${training.date}, Компания: ${fd.get("company") || "—"}`,
       });
-    } catch { /* ok */ }
-    setStatus("success");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -356,6 +355,9 @@ function EnrollmentModal({
               <button type="submit" disabled={status === "sending"} className="w-full gold-button text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                 {status === "sending" ? "Отправка..." : "Отправить заявку"}
               </button>
+              {status === "error" && (
+                <p className="text-red-600 text-sm" role="alert">Не удалось отправить. Попробуйте ещё раз.</p>
+              )}
             </form>
           </>
         )}
@@ -612,23 +614,21 @@ export default function HRPage() {
   });
   const heroOpacity = useTransform(heroScroll, [0, 0.7], [1, 0]);
 
-  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("sending");
     const fd = new FormData(e.currentTarget);
     try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: fd.get("name"),
-          phone: fd.get("phone"),
-          message: `[HR тренинги] Компания: ${fd.get("company") || "—"}, Сотрудников: ${fd.get("employees") || "—"}, Направление: ${fd.get("direction") || "—"}`,
-        }),
+      await submitContactForm({
+        name: fd.get("name"),
+        phone: fd.get("phone"),
+        message: `[HR тренинги] Компания: ${fd.get("company") || "—"}, Сотрудников: ${fd.get("employees") || "—"}, Направление: ${fd.get("direction") || "—"}`,
       });
-    } catch { /* ok */ }
-    setFormStatus("success");
+      setFormStatus("success");
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   useEffect(() => {
@@ -1103,6 +1103,9 @@ export default function HRPage() {
                 >
                   {formStatus === "sending" ? "Отправка..." : "Получить предложение"}
                 </button>
+                {formStatus === "error" && (
+                  <p className="text-red-200 text-sm text-center" role="alert">Заявка не отправлена. Попробуйте ещё раз.</p>
+                )}
                 <p className="text-center text-white/60 text-sm mt-3">Подготовим предложение за 24 часа</p>
               </form>
             )}

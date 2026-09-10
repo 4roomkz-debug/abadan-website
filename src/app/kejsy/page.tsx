@@ -244,7 +244,8 @@ export default function KejsyPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, source: "Страница кейсов" }),
       });
-      if (res.ok) {
+      const result = await res.json().catch(() => null);
+      if (res.ok && result?.success === true) {
         setFormState("sent");
         setFormData({ name: "", phone: "", company: "", message: "" });
       } else {

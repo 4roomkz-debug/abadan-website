@@ -1,9 +1,23 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort } from "@/data/schedule";
+import { submitContactForm } from "@/lib/contactForm";
+
+const subscribeToHydration = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+function isEventPassed(date: string, month: string, currentDate: Date): boolean {
+  const currentYear = currentDate.getFullYear();
+  const monthIndex = MONTHS.indexOf(month);
+  const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
+  const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
+  const eventDate = new Date(currentYear, monthIndex, endDay, 23, 59, 59);
+  return currentDate > eventDate;
+}
 
 export default function SchedulePage() {
   const [categoryFilter, setCategoryFilter] = useState<"all" | "business" | "technical">("all");
@@ -23,11 +37,20 @@ export default function SchedulePage() {
   const [formLoadedAt] = useState(() => Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+  const [browserDate] = useState(() => new Date());
+  const currentDate = hydrated ? browserDate : null;
 
   const openModal = (courseName: string) => {
     setSelectedCourse(courseName);
     setIsModalOpen(true);
     setSubmitSuccess(false);
+    setSubmitError(false);
   };
 
   const closeModal = () => {
@@ -35,27 +58,25 @@ export default function SchedulePage() {
     setSelectedCourse("");
     setFormData({ name: "", phone: "", email: "", participants: "1", website: "" });
     setSubmitSuccess(false);
+    setSubmitError(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
 
     try {
       // Send to /api/contact → Telegram "Заявки Абадан"
       const message = `🎓 Запись на курс: ${selectedCourse}\n👥 Участников: ${formData.participants}`;
 
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          message,
-          website: formData.website,
-          _elapsed: Date.now() - formLoadedAt,
-        })
+      await submitContactForm({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message,
+        website: formData.website,
+        _elapsed: Date.now() - formLoadedAt,
       });
 
       setSubmitSuccess(true);
@@ -64,38 +85,27 @@ export default function SchedulePage() {
       }, 2000);
     } catch (error) {
       console.error("Error submitting form:", error);
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Check if event date has passed
-  const isEventPassed = (date: string, month: string): boolean => {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const monthIndex = MONTHS.indexOf(month);
-
-    // Extract the last day from date range (e.g., "8-9 января" -> 9)
-    const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
-    const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
-
-    const eventDate = new Date(currentYear, monthIndex, endDay, 23, 59, 59);
-    return now > eventDate;
-  };
-
   // Get unique months from data (only future events)
   const availableMonths = useMemo(() => {
-    const futureEvents = SCHEDULE_DATA.filter(item => !isEventPassed(item.date, item.month));
+    if (!currentDate) return [];
+    const futureEvents = SCHEDULE_DATA.filter(item => !isEventPassed(item.date, item.month, currentDate));
     const months = new Set(futureEvents.map(item => item.month));
     return MONTHS.filter(m => months.has(m));
-  }, []);
+  }, [currentDate]);
 
   // Filter and sort data by calendar date (hide past events)
   const filteredData = useMemo(() => {
+    if (!currentDate) return [];
     return SCHEDULE_DATA
       .filter(item => {
         // Hide past events
-        if (isEventPassed(item.date, item.month)) return false;
+        if (isEventPassed(item.date, item.month, currentDate)) return false;
 
         const matchesCategory = categoryFilter === "all" || item.category === categoryFilter;
         const matchesMonth = monthFilter === "all" || item.month === monthFilter;
@@ -104,7 +114,7 @@ export default function SchedulePage() {
         return matchesCategory && matchesMonth && matchesSearch;
       })
       .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month));
-  }, [categoryFilter, monthFilter, searchQuery]);
+  }, [categoryFilter, monthFilter, searchQuery, currentDate]);
 
   // Format price (without currency suffix - footnote explains it's in tenge)
   const formatPrice = (price: number) => {
@@ -415,6 +425,11 @@ export default function SchedulePage() {
                   >
                     {isSubmitting ? "Отправка..." : "Отправить заявку"}
                   </button>
+                  {submitError && (
+                    <p className="text-red-600 text-sm" role="alert">
+                      Заявка не отправлена. Попробуйте ещё раз.
+                    </p>
+                  )}
                 </form>
               </>
             )}

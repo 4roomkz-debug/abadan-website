@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SCHEDULE_DATA } from "@/data/schedule";
+import { submitContactForm } from "@/lib/contactForm";
 
 /* ── Filtering ── */
 
@@ -113,26 +114,22 @@ const TOPICS = [
 /* ── Contact Modal ── */
 
 function ContactModal({ onClose }: { onClose: () => void }) {
-  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
     const fd = new FormData(e.currentTarget);
     try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: fd.get("name"),
-          phone: fd.get("phone"),
-          message: `[Промышленная безопасность] Запрос на обучение. Компания: ${fd.get("company") || "—"}`,
-        }),
+      await submitContactForm({
+        name: fd.get("name"),
+        phone: fd.get("phone"),
+        message: `[Промышленная безопасность] Запрос на обучение. Компания: ${fd.get("company") || "—"}`,
       });
+      setStatus("success");
     } catch {
-      /* ok */
+      setStatus("error");
     }
-    setStatus("success");
   };
 
   return (
@@ -200,6 +197,9 @@ function ContactModal({ onClose }: { onClose: () => void }) {
               >
                 {status === "sending" ? "Отправка..." : "Отправить заявку"}
               </button>
+              {status === "error" && (
+                <p className="text-red-600 text-sm" role="alert">Не удалось отправить. Попробуйте ещё раз.</p>
+              )}
             </form>
           </>
         )}

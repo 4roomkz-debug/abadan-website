@@ -169,7 +169,7 @@ function ArticleCard({ article, index }: { article: Article; index: number }) {
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("Все");
   const [email, setEmail] = useState("");
-  const [subState, setSubState] = useState<"idle" | "sending" | "done">("idle");
+  const [subState, setSubState] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const featuredArticle = ARTICLES.find((a) => a.featured)!;
   const restArticles = ARTICLES.filter((a) => !a.featured);
@@ -186,20 +186,23 @@ export default function BlogPage() {
     e.preventDefault();
     setSubState("sending");
     try {
-      await fetch("/api/contact", {
+      const response = await fetch("https://tracking-server-livid.vercel.app/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: "Подписка на блог",
-          phone: email,
-          message: `[Подписка на блог Abadan] Email: ${email}`,
-          source: "Блог — подписка на рассылку",
+          email: email.trim().toLowerCase(),
+          name: "",
+          source: "abadan-kz-blog",
         }),
       });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || result?.success !== true) {
+        throw new Error(result?.error || `Subscribe API returned ${response.status}`);
+      }
       setSubState("done");
       setEmail("");
     } catch {
-      setSubState("done");
+      setSubState("error");
     }
   }
 
@@ -345,6 +348,11 @@ export default function BlogPage() {
                 >
                   {subState === "sending" ? "Отправляем..." : "Подписаться"}
                 </button>
+                {subState === "error" && (
+                  <p className="basis-full text-center text-red-200 text-sm" role="alert">
+                    Не удалось подписаться. Попробуйте ещё раз.
+                  </p>
+                )}
               </form>
             )}
 

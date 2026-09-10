@@ -1,12 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { SCHEDULE_DATA, MONTHS, parseDateForSort, type ScheduleItem } from "@/data/schedule";
 
+const subscribeToHydration = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 // Check if event date has passed (same logic as schedule page)
-function isEventPassed(date: string, month: string): boolean {
-  const now = new Date();
+function isEventPassed(date: string, month: string, now: Date): boolean {
   const currentYear = now.getFullYear();
   const monthIndex = MONTHS.indexOf(month);
 
@@ -19,21 +22,31 @@ function isEventPassed(date: string, month: string): boolean {
 }
 
 // Фильтрация только будущих тренингов
-function getUpcomingTrainings(count: number): ScheduleItem[] {
+function getUpcomingTrainings(count: number, now: Date): ScheduleItem[] {
   return SCHEDULE_DATA
-    .filter(item => !isEventPassed(item.date, item.month))
+    .filter(item => !isEventPassed(item.date, item.month, now))
     .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month))
     .slice(0, count);
 }
 
 export default function UpcomingTrainings() {
   const [activeCategory, setActiveCategory] = useState<"all" | "business" | "technical">("all");
+  // `new Date()` during render made static server HTML drift from the browser
+  // over time. Resolve the current date only after hydration instead.
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+  const [browserDate] = useState(() => new Date());
+  const currentDate = hydrated ? browserDate : null;
 
   const upcomingTrainings = useMemo(() => {
-    const all = getUpcomingTrainings(12);
+    if (!currentDate) return [];
+    const all = getUpcomingTrainings(12, currentDate);
     if (activeCategory === "all") return all.slice(0, 6);
     return all.filter(t => t.category === activeCategory).slice(0, 6);
-  }, [activeCategory]);
+  }, [activeCategory, currentDate]);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("ru-RU");
@@ -91,7 +104,15 @@ export default function UpcomingTrainings() {
 
         {/* Карточки курсов */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-          {upcomingTrainings.map((training, index) => (
+          {!currentDate
+            ? Array.from({ length: 6 }, (_, index) => (
+                <div
+                  key={`schedule-skeleton-${index}`}
+                  className="h-56 rounded-2xl bg-[#F8FAFB] border border-[#00767D]/10 animate-pulse"
+                  aria-hidden="true"
+                />
+              ))
+            : upcomingTrainings.map((training, index) => (
             <div
               key={index}
               className="bg-[#F8FAFB] rounded-2xl p-5 border border-[#00767D]/10 hover:border-[#00767D]/30 hover:shadow-lg transition-all group"
@@ -144,7 +165,7 @@ export default function UpcomingTrainings() {
                 Подробнее
               </Link>
             </div>
-          ))}
+            ))}
         </div>
 
         {/* Кнопка "Все расписание" */}
