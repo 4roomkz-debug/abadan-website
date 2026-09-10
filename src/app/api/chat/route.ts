@@ -145,7 +145,10 @@ function extractContactInfo(
   // когда он действительно его поделился. Иначе лид перевыпускается на каждом
   // следующем сообщении, пока номер где-то висит в истории.
   const lastUserMessage = userMessages[userMessages.length - 1].content;
-  const phoneRegex = /(\+?7|8)?[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}/g;
+  // Казахстанский номер: обязательный префикс +7/7/8 и ровно 10 цифр
+  // после него. Границы не дают принять дату, ID заказа или другую длинную
+  // цифровую последовательность за телефон.
+  const phoneRegex = /(?<!\d)(?:\+?7|8)[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}(?!\d)/g;
   const phoneMatch = lastUserMessage.match(phoneRegex);
   if (!phoneMatch) return { hasContact: false };
 
