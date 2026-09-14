@@ -41,3 +41,33 @@ export async function sendUnifiedLead(lead: UnifiedLead): Promise<void> {
     );
   }
 }
+
+/**
+ * Saves the whole Asem chat dialog (both sides) in the sales bot's
+ * chat_sessions. Called after every reply, with or without a phone number:
+ * before 14.09.2026 the dialog lived only in the visitor's browser tab.
+ */
+export async function saveChatSession(session: {
+  session_id: string;
+  source: string;
+  messages: Array<{ role: "user" | "assistant"; content: string }>;
+}): Promise<void> {
+  if (!LEADS_WEBHOOK_URL || !LEADS_WEBHOOK_SECRET) {
+    throw new Error("Unified lead webhook is not configured");
+  }
+
+  const response = await fetch(`${LEADS_WEBHOOK_URL}/api/webhook/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Webhook-Secret": LEADS_WEBHOOK_SECRET,
+    },
+    body: JSON.stringify(session),
+    signal: AbortSignal.timeout(8000),
+  });
+
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(`Chat session webhook returned ${response.status}: ${detail.slice(0, 300)}`);
+  }
+}

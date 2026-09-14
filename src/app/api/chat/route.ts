@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import {
   AI_PERSONA,
   COMPANY_INFO,
@@ -8,8 +8,16 @@ import {
 } from "@/data/ai-knowledge";
 import {
   isUnifiedLeadWebhookConfigured,
+  saveChatSession,
   sendUnifiedLead,
 } from "@/lib/server/leadWebhook";
+import {
+  SESSION_ID_RE,
+  clipMiddle,
+  extractContactInfo,
+  formatTranscript,
+  type ChatMessage,
+} from "@/lib/chat/transcript";
 
 // На Vercel переменная называется DEEPSEEK_API; локально/исторически встречается DEEPSEEK_API_KEY.
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API ?? process.env.DEEPSEEK_API_KEY ?? "";
@@ -19,8 +27,8 @@ const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL ?? "deepseek-v4-flash";
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
 
-const digitsOnly = (s: string) => s.replace(/\D/g, "");
-const COMPANY_PHONE_DIGITS = digitsOnly(COMPANY_INFO.phone);
+const CHAT_SOURCE = "abadan.kz — чат Асем";
+const COMPANY_PHONE_DIGITS = COMPANY_INFO.phone.replace(/\D/g, "");
 
 // Лимиты входа. Защищают от запросов вида «10 000 сообщений в одном POST»,
 // которые иначе сожгли бы баланс DeepSeek за один вызов.
@@ -73,8 +81,6 @@ function isAllowedOrigin(request: Request): boolean {
   }
 }
 
-type ChatMessage = { role: "user" | "assistant"; content: string };
-
 function isValidMessages(input: unknown): input is ChatMessage[] {
   if (!Array.isArray(input) || input.length === 0 || input.length > MAX_MESSAGES) return false;
   for (const m of input) {
@@ -86,14 +92,15 @@ function isValidMessages(input: unknown): input is ChatMessage[] {
   return true;
 }
 
-// Резервная отправка в Telegram, если единый приёмник не настроен.
+// Резервная отправка в Telegram, если единый приёмник не настроен или не ответил.
 async function sendLeadToTelegram(leadInfo: string) {
   const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       chat_id: TELEGRAM_CHAT_ID,
-      text: `🤖 Заявка из чата с Асем\n\n${leadInfo}`,
+      // Лимит Telegram — 4096 символов; весь диалог может быть длиннее.
+      text: clipMiddle(`🤖 Заявка из чата с Асем\n\n${leadInfo}`, 3900),
     }),
   });
   if (!response.ok) {
@@ -106,85 +113,34 @@ async function sendChatLead(input: {
   name: string;
   phone: string;
   context: string;
+  sessionId: string | null;
 }) {
   if (isUnifiedLeadWebhookConfigured()) {
-    await sendUnifiedLead({
-      source: "abadan.kz — чат Асем",
-      name: input.name,
-      phone: input.phone,
-      message: input.context,
-      form_data: {
-        channel: "asem_chat",
-        raw_message: input.context,
-      },
-    });
-    return;
+    try {
+      await sendUnifiedLead({
+        source: CHAT_SOURCE,
+        name: input.name,
+        phone: input.phone,
+        message: input.context,
+        form_data: {
+          channel: "asem_chat",
+          raw_message: input.context,
+          session_id: input.sessionId ?? undefined,
+        },
+      });
+      return;
+    } catch (err) {
+      // Приёмник на Railway бывает недоступен десятки секунд. Раньше исключение
+      // роняло весь ответ чата: клиент только что оставил номер и видел «Упс».
+      console.error("[chat] единый приёмник не принял лид, шлём напрямую в Telegram:", err);
+    }
+  } else {
+    console.warn("[chat] Unified lead webhook is not configured; using Telegram fallback");
   }
 
-  console.warn("[chat] Unified lead webhook is not configured; using Telegram fallback");
   await sendLeadToTelegram(
-    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone}\n\n💬 Контекст диалога:\n${input.context}`
+    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone}\n\n💬 Диалог:\n${input.context}`
   );
-}
-
-// Проверяем, есть ли в сообщении контактные данные.
-// ВАЖНО: ищем ТОЛЬКО в сообщениях пользователя. Реплики ассистента содержат
-// имя бота («Я Асем…») и телефон компании из system prompt — раньше регэксы
-// цепляли их и слали ложные лиды с данными бота вместо данных собеседника.
-type ExtractedContact =
-  | { hasContact: false }
-  | { hasContact: true; phone: string; name: string };
-
-function extractContactInfo(
-  messages: Array<{ role: string; content: string }>
-): ExtractedContact {
-  const userMessages = messages.filter((m) => m.role === "user");
-  if (userMessages.length === 0) return { hasContact: false };
-
-  // Телефон засчитываем только в ПОСЛЕДНЕМ сообщении пользователя — это момент,
-  // когда он действительно его поделился. Иначе лид перевыпускается на каждом
-  // следующем сообщении, пока номер где-то висит в истории.
-  const lastUserMessage = userMessages[userMessages.length - 1].content;
-  // Казахстанский номер: обязательный префикс +7/7/8 и ровно 10 цифр
-  // после него. Границы не дают принять дату, ID заказа или другую длинную
-  // цифровую последовательность за телефон.
-  const phoneRegex = /(?<!\d)(?:\+?7|8)[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}(?!\d)/g;
-  const phoneMatch = lastUserMessage.match(phoneRegex);
-  if (!phoneMatch) return { hasContact: false };
-
-  const phone = phoneMatch[phoneMatch.length - 1];
-  // Игнорируем телефон самой компании — пользователь не делится своим контактом,
-  // а цитирует наш номер (или вставил по ошибке). Сравниваем по последним 10 цифрам,
-  // чтобы не зависеть от пробелов/+7/8.
-  const phoneDigits = digitsOnly(phone);
-  if (phoneDigits.slice(-10) === COMPANY_PHONE_DIGITS.slice(-10)) {
-    return { hasContact: false };
-  }
-
-  // Имя может быть в любом сообщении пользователя (часто представляется раньше).
-  const userText = userMessages.map((m) => m.content).join(" ");
-  const namePatterns = [
-    /меня зовут\s+([А-Яа-яЁёA-Za-z]+)/i,
-    /я\s+([А-Яа-яЁё][а-яё]+)\s/i,
-    /имя[:\s]+([А-Яа-яЁёA-Za-z]+)/i,
-  ];
-
-  const botName = AI_PERSONA.name.toLowerCase();
-  let name: string | null = null;
-  for (const pattern of namePatterns) {
-    const match = userText.match(pattern);
-    if (!match) continue;
-    // Защита от имени бота: «я Асем», «меня зовут Асем» и т.п. — это явно не лид.
-    if (match[1].toLowerCase() === botName) continue;
-    name = match[1];
-    break;
-  }
-
-  return {
-    hasContact: true,
-    phone,
-    name: name || "Не указано",
-  };
 }
 
 // Генерируем промпт на основе базы знаний
@@ -271,28 +227,53 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const messages = body?.messages;
 
     // 3. Валидация — ограничиваем размер диалога и каждого сообщения,
     // чтобы один запрос не мог отправить в DeepSeek килобайты текста.
-    if (!isValidMessages(messages)) {
+    if (!isValidMessages(body?.messages)) {
       return NextResponse.json({ error: "Bad request" }, { status: 400 });
     }
+    const messages: ChatMessage[] = body.messages;
+    const sessionId =
+      typeof body?.sessionId === "string" && SESSION_ID_RE.test(body.sessionId)
+        ? body.sessionId
+        : null;
 
-    // Проверяем, есть ли новые контактные данные
-    const contactInfo = extractContactInfo(messages);
-    if (contactInfo.hasContact) {
-      const lastUserMessages = messages
-        .filter((m: { role: string }) => m.role === "user")
-        .slice(-3)
-        .map((m: { content: string }) => m.content)
-        .join("\n");
-
-      await sendChatLead({
-        name: contactInfo.name,
-        phone: contactInfo.phone,
-        context: lastUserMessages,
+    // 4. Весь диалог — в sales-бот, после того как ответ ушёл клиенту. Раньше
+    // разговор жил только во вкладке браузера. `after` читает reply в момент
+    // выполнения, поэтому в базу попадает и последняя реплика Асем.
+    let reply: string | null = null;
+    if (sessionId && isUnifiedLeadWebhookConfigured()) {
+      after(async () => {
+        const transcript: ChatMessage[] = reply
+          ? [...messages, { role: "assistant", content: reply }]
+          : messages;
+        try {
+          await saveChatSession({ session_id: sessionId, source: CHAT_SOURCE, messages: transcript });
+        } catch (err) {
+          console.error("[chat] диалог не сохранён:", err);
+        }
       });
+    }
+
+    // 5. Номер в последнем сообщении → лид со всем диалогом, а не с тремя
+    // последними репликами (лид #151: «От 20 / Очно атырау / номер»).
+    const contactInfo = extractContactInfo(messages, {
+      botName: AI_PERSONA.name,
+      companyPhoneDigits: COMPANY_PHONE_DIGITS,
+    });
+    if (contactInfo.hasContact) {
+      try {
+        await sendChatLead({
+          name: contactInfo.name ?? "Не указано",
+          phone: contactInfo.phone,
+          context: formatTranscript(messages, AI_PERSONA.name),
+          sessionId,
+        });
+      } catch (err) {
+        // Последний след лида, если не сработал ни один путь доставки.
+        console.error("[chat] лид не доставлен:", contactInfo.phone, err);
+      }
     }
 
     const response = await fetch("https://api.deepseek.com/chat/completions", {
@@ -320,9 +301,8 @@ export async function POST(request: Request) {
       throw new Error(data.error?.message || "Failed to get response from AI");
     }
 
-    return NextResponse.json({
-      message: data.choices[0].message.content,
-    });
+    reply = data.choices[0].message.content as string;
+    return NextResponse.json({ message: reply });
   } catch (error) {
     console.error("Error in chat API:", error);
     return NextResponse.json(

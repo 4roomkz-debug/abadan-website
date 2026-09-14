@@ -25,6 +25,18 @@ export default function AiChat() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // Id разговора: по нему сервер сохраняет весь диалог и связывает его с лидом.
+  // Живёт, пока открыта вкладка, — как и сама переписка.
+  const sessionIdRef = useRef<string | null>(null);
+  const getSessionId = () => {
+    if (!sessionIdRef.current) {
+      sessionIdRef.current =
+        typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+          ? crypto.randomUUID()
+          : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+    }
+    return sessionIdRef.current;
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -56,6 +68,7 @@ export default function AiChat() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          sessionId: getSessionId(),
           messages: [...messages, userMessage].map(m => ({
             role: m.role,
             content: m.content
