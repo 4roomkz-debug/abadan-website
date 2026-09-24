@@ -111,7 +111,8 @@ async function sendLeadToTelegram(leadInfo: string) {
 
 async function sendChatLead(input: {
   name: string;
-  phone: string;
+  phone: string | null;
+  email: string | null;
   context: string;
   sessionId: string | null;
 }) {
@@ -120,7 +121,8 @@ async function sendChatLead(input: {
       await sendUnifiedLead({
         source: CHAT_SOURCE,
         name: input.name,
-        phone: input.phone,
+        phone: input.phone ?? "",
+        email: input.email ?? undefined,
         message: input.context,
         form_data: {
           channel: "asem_chat",
@@ -139,7 +141,7 @@ async function sendChatLead(input: {
   }
 
   await sendLeadToTelegram(
-    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone}\n\n💬 Диалог:\n${input.context}`
+    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone ?? "—"}\n📧 Почта: ${input.email ?? "—"}\n\n💬 Диалог:\n${input.context}`
   );
 }
 
@@ -169,12 +171,13 @@ const generateSystemPrompt = () => {
 - В первых сообщениях — расслабленный small talk
 - Постепенно узнай, интересуется ли собеседник тренингами
 - Если интересуется — узнай подробнее о задачах
-- Если готов оставить контакт — попроси телефон, обещай что менеджер перезвонит
+- Если готов оставить контакт — попроси телефон и почту, обещай что менеджер перезвонит
 
 СБОР КОНТАКТОВ:
-- Когда человек готов — попроси номер телефона
-- Скажи что Индира перезвонит в течение дня
-- После получения номера поблагодари и скажи что передал заявку
+- Когда человек готов — попроси номер телефона и почту одним сообщением: номер — чтобы Индира перезвонила в течение дня, почту — чтобы прислать программу и анонсы открытых тренингов
+- Если дал только номер — один раз мягко попроси почту; не хочет — не настаивай
+- Если дал только почту — попроси и номер, но заявку всё равно считай принятой
+- После получения контакта поблагодари и скажи что передала заявку
 
 О КОМПАНИИ (используй если спросят):
 - ${COMPANY_INFO.name} — бизнес-обучение с ${COMPANY_INFO.foundedYear} года
@@ -267,12 +270,13 @@ export async function POST(request: Request) {
         await sendChatLead({
           name: contactInfo.name ?? "Не указано",
           phone: contactInfo.phone,
+          email: contactInfo.email,
           context: formatTranscript(messages, AI_PERSONA.name),
           sessionId,
         });
       } catch (err) {
         // Последний след лида, если не сработал ни один путь доставки.
-        console.error("[chat] лид не доставлен:", contactInfo.phone, err);
+        console.error("[chat] лид не доставлен:", contactInfo.phone ?? contactInfo.email, err);
       }
     }
 

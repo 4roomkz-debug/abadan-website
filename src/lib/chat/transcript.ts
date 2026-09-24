@@ -20,6 +20,9 @@ const digitsOnly = (s: string) => s.replace(/\D/g, "");
 const PHONE_RE =
   /(?<!\d)(?:\+?7|8)[\s-]?\(?[0-9]{3}\)?[\s-]?[0-9]{3}[\s-]?[0-9]{2}[\s-]?[0-9]{2}(?!\d)/g;
 
+// Почта: простая форма local@domain.tld — строгая валидация в рассылке.
+const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+
 // «я» — только отдельным словом и только перед словом с заглавной. Раньше
 // «для оптимизации процессов» давало имя «оптимизации» (лид #149).
 // Буквы перечислены явно (с казахскими) — так же, как в ibirai-landing,
@@ -33,13 +36,16 @@ const NAME_PATTERNS = [
 
 export type ExtractedContact =
   | { hasContact: false }
-  | { hasContact: true; phone: string; name: string | null };
+  | { hasContact: true; phone: string | null; email: string | null; name: string | null };
 
 /**
  * Контакт ищем ТОЛЬКО в репликах пользователя: реплики ассистента содержат
  * имя бота («Я Асем…») и телефон компании — раньше регэксы цепляли их и слали
- * ложные лиды. Телефон засчитывается только в ПОСЛЕДНЕЙ реплике — иначе лид
- * перевыпускался бы на каждом сообщении, пока номер висит в истории.
+ * ложные лиды. Лид выпускается, только когда телефон или почта есть в
+ * ПОСЛЕДНЕЙ реплике — иначе он перевыпускался бы на каждом сообщении, пока
+ * контакт висит в истории. В лид идут последние телефон и почта из всего
+ * диалога: клиент часто пишет номер и почту разными сообщениями, а sales-бот
+ * по session_id дописывает второй контакт в ту же заявку.
  */
 export function extractContactInfo(
   messages: ChatMessage[],
@@ -48,15 +54,21 @@ export function extractContactInfo(
   const userMessages = messages.filter((m) => m.role === "user");
   if (userMessages.length === 0) return { hasContact: false };
 
-  const last = userMessages[userMessages.length - 1].content;
-  const phoneMatch = last.match(PHONE_RE);
-  if (!phoneMatch) return { hasContact: false };
-
-  const phone = phoneMatch[phoneMatch.length - 1];
   // Номер самой компании — цитата нашего, а не контакт собеседника.
-  if (digitsOnly(phone).slice(-10) === opts.companyPhoneDigits.slice(-10)) {
+  const isOwnPhone = (p: string) =>
+    digitsOnly(p).slice(-10) === opts.companyPhoneDigits.slice(-10);
+  const phonesIn = (text: string) => (text.match(PHONE_RE) ?? []).filter((p) => !isOwnPhone(p));
+  const emailsIn = (text: string) => text.match(EMAIL_RE) ?? [];
+
+  const last = userMessages[userMessages.length - 1].content;
+  if (phonesIn(last).length === 0 && emailsIn(last).length === 0) {
     return { hasContact: false };
   }
+
+  const allPhones = userMessages.flatMap((m) => phonesIn(m.content));
+  const allEmails = userMessages.flatMap((m) => emailsIn(m.content));
+  const phone = allPhones.length ? allPhones[allPhones.length - 1] : null;
+  const email = allEmails.length ? allEmails[allEmails.length - 1].toLowerCase() : null;
 
   // Имя может быть в любом сообщении пользователя (часто представляется раньше).
   const userText = userMessages.map((m) => m.content).join(" ");
@@ -69,7 +81,7 @@ export function extractContactInfo(
     break;
   }
 
-  return { hasContact: true, phone, name };
+  return { hasContact: true, phone, email, name };
 }
 
 /**
