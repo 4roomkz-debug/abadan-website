@@ -147,6 +147,7 @@ async function sendChatLead(input: {
 
 // Генерируем промпт на основе базы знаний
 const generateSystemPrompt = () => {
+  const eventIsUpcoming = Date.parse(EVENTS.businessBreakfastAiHr.endsAt) > Date.now();
   const trainingsText = TRAININGS.map(
     (cat) =>
       `${cat.category}: ${cat.programs.map((p) => p.name).join(", ")}`
@@ -195,7 +196,7 @@ ${trainingsText}
 FAQ:
 ${faqText}
 
-БЛИЖАЙШЕЕ МЕРОПРИЯТИЕ — БИЗНЕС-ЗАВТРАК "AI В HR":
+${eventIsUpcoming ? 'БЛИЖАЙШЕЕ МЕРОПРИЯТИЕ' : 'АРХИВНОЕ МЕРОПРИЯТИЕ'} — БИЗНЕС-ЗАВТРАК "AI В HR":
 - Дата: ${EVENTS.businessBreakfastAiHr.date}, ${EVENTS.businessBreakfastAiHr.time}
 - Место: ${EVENTS.businessBreakfastAiHr.location}
 - Как добраться: ${EVENTS.businessBreakfastAiHr.howToGet}
@@ -203,9 +204,11 @@ ${faqText}
 - Мест: ${EVENTS.businessBreakfastAiHr.seats}
 - Для кого: ${EVENTS.businessBreakfastAiHr.targetAudience.join(", ")}
 - Спикеры: ${EVENTS.businessBreakfastAiHr.speakers.map(s => `${s.name} (${s.topic})`).join("; ")}
-- Регистрация: ${EVENTS.businessBreakfastAiHr.registrationUrl}
+${eventIsUpcoming ? `- Регистрация: ${EVENTS.businessBreakfastAiHr.registrationUrl}` : '- Статус: мероприятие уже прошло, регистрация закрыта.'}
 
-Если спрашивают про AI в HR, про мероприятия, про бизнес-завтрак — активно рассказывай про это событие и предлагай зарегистрироваться!
+${eventIsUpcoming
+  ? 'Если спрашивают про AI в HR, про мероприятия, про бизнес-завтрак — рассказывай про это событие и предлагай зарегистрироваться.'
+  : 'Не называй это событие ближайшим и не предлагай на него регистрацию. Если спрашивают о новых мероприятиях, предложи актуальное расписание https://www.abadan.kz/schedule или уточнение у менеджера. Не придумывай новую дату.'}
 
 ВАЖНО:
 - Не будь навязчивым с продажами
