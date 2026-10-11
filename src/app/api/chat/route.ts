@@ -3,6 +3,8 @@ import {
   AI_PERSONA,
   COMPANY_INFO,
   TRAININGS,
+  BUSINESS_TRAININGS,
+  TECHNICAL_SEMINARS,
   FAQ,
   EVENTS,
 } from "@/data/ai-knowledge";
@@ -153,6 +155,16 @@ const generateSystemPrompt = () => {
       `${cat.category}: ${cat.programs.map((p) => p.name).join(", ")}`
   ).join("\n");
 
+  const technicalText = TECHNICAL_SEMINARS.categories.map(
+    (cat) =>
+      `${cat.category}: ${cat.programs.map((p) => p.name).join(", ")}`
+  ).join("\n");
+
+  const authorText = (BUSINESS_TRAININGS.categories
+    .find((cat) => cat.category === "Авторские программы Гани Абадана")?.programs ?? [])
+    .map((p) => `${p.name} — ${p.description}`)
+    .join("\n");
+
   const faqText = FAQ.map((f) => `В: ${f.question}\nО: ${f.answer}`).join("\n\n");
 
   return `Отвечай на таком же языке на котором к тебе обратились.
@@ -188,6 +200,17 @@ const generateSystemPrompt = () => {
 
 ТРЕНИНГИ (кратко):
 ${trainingsText}
+
+ТЕХНИЧЕСКИЕ СЕМИНАРЫ (для нефтегаза, энергетики и производства, более 150 программ):
+${technicalText}
+
+АВТОРСКИЕ ПРОГРАММЫ ПОДРОБНЕЕ:
+${authorText}
+
+ЕСЛИ ТЕМЫ НЕТ В СПИСКЕ:
+- Никогда не говори «мы такое не ведём» и «такого у нас нет». Список выше неполный: у компании 200+ экспертов, и программы часто собирают под задачу клиента.
+- Скажи, что под такую задачу обычно собирают программу, и предложи передать запрос Индире, чтобы она вернулась с вариантами.
+- Для рабочих, синих воротничков и производства сначала вспомни авторские программы (финансовая грамотность с профилактикой лудомании, нематериальная мотивация, инженер стал руководителем) и технические семинары по промбезопасности.
 
 ФОРМАТЫ: очно в Алматы, выезд по РК, онлайн, корпоративные и открытые группы от 2 чел.
 
