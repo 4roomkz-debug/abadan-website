@@ -3,6 +3,7 @@ import {
   isUnifiedLeadWebhookConfigured,
   sendUnifiedLead,
 } from "@/lib/server/leadWebhook";
+import { parseAttributionCookie } from "@/lib/attribution";
 
 /** Подпись источника в общем чате заявок. */
 const SOURCE = "abadan.kz";
@@ -67,6 +68,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid phone" }, { status: 422 });
     }
 
+    // Метка письма, если человек пришёл из рассылки (см. lib/attribution.ts).
+    const attribution = parseAttributionCookie(request.headers.get("cookie"));
+
     // --- Единый приёмник (если настроен) ---
     if (isUnifiedLeadWebhookConfigured()) {
       try {
@@ -76,7 +80,10 @@ export async function POST(request: Request) {
           phone: phoneClean,
           email: emailClean || undefined,
           message: message || undefined,
-          form_data: { raw_message: message },
+          form_data: {
+            raw_message: message,
+            ...(attribution ? { attribution } : {}),
+          },
         });
         // Приёмник сам уведомляет чат и синхронизирует в CRM — локальные
         // отправки ниже не выполняем, иначе будут дубли.

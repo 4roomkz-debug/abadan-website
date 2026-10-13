@@ -22,6 +22,7 @@ import {
   type ChatMessage,
 } from "@/lib/chat/transcript";
 import { contactWindow } from "@/lib/chat/contactWindow";
+import { parseAttributionCookie, type Attribution } from "@/lib/attribution";
 
 // На Vercel переменная называется DEEPSEEK_API; локально/исторически встречается DEEPSEEK_API_KEY.
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API ?? process.env.DEEPSEEK_API_KEY ?? "";
@@ -119,6 +120,7 @@ async function sendChatLead(input: {
   email: string | null;
   context: string;
   sessionId: string | null;
+  attribution?: Attribution;
 }) {
   if (isUnifiedLeadWebhookConfigured()) {
     try {
@@ -132,6 +134,7 @@ async function sendChatLead(input: {
           channel: "asem_chat",
           raw_message: input.context,
           session_id: input.sessionId ?? undefined,
+          ...(input.attribution ? { attribution: input.attribution } : {}),
         },
       });
       return;
@@ -314,6 +317,7 @@ export async function POST(request: Request) {
           email: contactInfo.email,
           context: formatTranscript(messages, AI_PERSONA.name),
           sessionId,
+          attribution: parseAttributionCookie(request.headers.get("cookie")),
         });
       } catch (err) {
         // Последний след лида, если не сработал ни один путь доставки.

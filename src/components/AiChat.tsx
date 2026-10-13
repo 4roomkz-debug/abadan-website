@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { captureAttributionFromUrl } from "@/lib/attribution";
 
 interface Message {
   role: "user" | "assistant";
@@ -51,6 +52,12 @@ export default function AiChat() {
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Чат стоит в общем layout, поэтому здесь — единая точка, где сайт
+  // запоминает метку письма при входе на любую страницу.
+  useEffect(() => {
+    captureAttributionFromUrl();
+  }, [pathname]);
 
   const sendMessage = async (textOverride?: string) => {
     // Принимаем явный текст из быстрых кнопок — иначе setInput+setTimeout
