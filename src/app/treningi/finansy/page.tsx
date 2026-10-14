@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ClientTestimonials from "@/components/ClientTestimonials";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -132,30 +133,6 @@ function isTrendCourse(name: string): boolean {
   const lower = name.toLowerCase();
   return TREND_KEYWORDS.some((kw) => lower.includes(kw.toLowerCase()));
 }
-
-const testimonials = [
-  {
-    quote: "Курс по МСФО позволил нашей команде перейти на международные стандарты за 4 месяца. Сэкономили миллионы на консалтинге, сделав всё внутренними силами",
-    name: "Жанна Каримова",
-    title: "Финансовый директор",
-    company: "Промышленный холдинг",
-    initial: "Ж",
-  },
-  {
-    quote: "После обучения по бюджетированию мы снизили отклонения план-факт с 30% до 8%. Теперь бюджет — реальный инструмент управления, а не формальность",
-    name: "Тимур Нуржанов",
-    title: "Главный бухгалтер",
-    company: "Горнодобывающая компания",
-    initial: "Т",
-  },
-  {
-    quote: "Семинар по налоговому кодексу помог нам легально оптимизировать налоговую нагрузку на 15%. Окупился за первый квартал",
-    name: "Маржан Сулейменова",
-    title: "Руководитель финансового отдела",
-    company: "Торговая сеть",
-    initial: "М",
-  },
-];
 
 const trainingPhotos = [
   { src: "/images/finansy/training-1.webp", caption: "Семинар по МСФО" },
@@ -358,57 +335,6 @@ function EnrollmentModal({
         )}
       </div>
     </div>
-  );
-}
-
-/* ── Testimonial Card ── */
-
-function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof testimonials[0]; index: number }) {
-  return (
-    <div className={`p-6 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${i + 1}`}>
-      <svg className="w-8 h-8 text-[#F0BB1E]/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-      </svg>
-      <blockquote className="text-[#546569] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <div className="w-full h-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
-            <span className="text-white font-bold text-sm">{t.initial}</span>
-          </div>
-        </div>
-        <div>
-          <p className="text-[#2D3A3C] font-semibold text-sm">{t.name}</p>
-          <p className="text-[#7A8B8E] text-xs">{t.title}, {t.company}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Metric Card — expandable case study ── */
-
-function MetricCard({ item, index }: { item: { value: string; label: string; desc: string; caseStudy: string; icon: React.ReactNode }; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <button
-      onClick={() => setExpanded(!expanded)}
-      className={`text-center p-8 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${index + 1} hover:bg-[#f0f9f9] hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
-    >
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
-        {item.icon}
-      </div>
-      <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2 text-center">{item.value}</div>
-      <p className="font-semibold mb-1 text-center text-[#2D3A3C]">{item.label}</p>
-      <p className="text-[#546569] text-sm text-center">{item.desc}</p>
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-[#E0E8E9]">
-          <p className="text-[#546569] text-sm leading-relaxed">{item.caseStudy}</p>
-        </div>
-      )}
-      <p className="text-[#00767D] text-xs mt-3 text-center font-medium">
-        {expanded ? "Свернуть" : "Подробнее"}
-      </p>
-    </button>
   );
 }
 
@@ -876,75 +802,8 @@ export default function FinansyPage() {
         </div>
       </section>
 
-      {/* ═══ METRICS + TESTIMONIALS ═══ */}
-      <section className="py-16 sm:py-24 bg-[#f8f7f4] relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[#00767D]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-[#F0BB1E]/5 rounded-full blur-[100px]" />
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Metrics */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Результат, который <span className="text-[#F0BB1E]">измерим</span>
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-6 mb-20">
-              {[
-                {
-                  value: "↓ 15%",
-                  label: "налоговая нагрузка",
-                  desc: "после курса по оптимизации",
-                  caseStudy: "Провели налоговый аудит для торговой сети с оборотом 5 млрд тенге. Обучили финансовый отдел (12 человек) легальным методам оптимизации. Экономия за год — более 750 млн тенге.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "↓ 8%",
-                  label: "отклонение план-факт",
-                  desc: "после курса по бюджетированию",
-                  caseStudy: "Внедрили систему rolling forecast для горнодобывающей компании. Обучили 30 специалистов по бюджетированию. Отклонение план-факт снизилось с 30% до 8% за два квартала.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "4 мес.",
-                  label: "переход на МСФО",
-                  desc: "вместо обычных 12 месяцев",
-                  caseStudy: "Подготовили финансовую команду промышленного холдинга (20 человек) к переходу на МСФО. Обычно переход занимает год, но благодаря интенсивному обучению компания завершила его за 4 месяца.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  ),
-                },
-              ].map((item, i) => (
-                <MetricCard key={i} item={item} index={i} />
-              ))}
-            </div>
-
-            {/* Testimonials */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Отзывы <span className="text-[#00767D]">клиентов</span>
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} testimonial={t} index={i} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ═══ ОТЗЫВЫ — дословно из благодарственных писем ═══ */}
+      <ClientTestimonials ids={["mfca", "kaspi", "asbis"]} />
 
       {/* ═══ BEFORE / AFTER — Comparison ═══ */}
       <section className="py-16 sm:py-24 bg-[#f0f9f9]">

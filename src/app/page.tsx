@@ -5,6 +5,7 @@ import Problems from "@/components/Problems";
 import Features from "@/components/Features";
 import Stats from "@/components/Stats";
 import Clients from "@/components/Clients";
+import Testimonials from "@/components/Testimonials";
 import TrainingDirections from "@/components/TrainingDirections";
 import Formats from "@/components/Formats";
 import InternationalPrograms from "@/components/InternationalPrograms";
@@ -26,6 +27,8 @@ export default function Home() {
       <Features />
       <Stats />
       <Clients />
+      {/* Логотипы — кто учился, отзывы — что они сказали. Дословно из писем. */}
+      <Testimonials />
       <TrainingDirections />
       <Formats />
       <InternationalPrograms />

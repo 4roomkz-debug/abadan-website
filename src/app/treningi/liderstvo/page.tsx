@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ClientTestimonials from "@/components/ClientTestimonials";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -141,30 +142,6 @@ function isTrendCourse(name: string): boolean {
   const lower = name.toLowerCase();
   return TREND_KEYWORDS.some((kw) => lower.includes(kw.toLowerCase()));
 }
-
-const testimonials = [
-  {
-    quote: "Тренинг по лидерству полностью изменил мой подход к управлению. Команда стала инициативнее, а моя загрузка как руководителя снизилась на 40%",
-    name: "Кайрат Жунусов",
-    title: "Генеральный директор",
-    company: "IT-компания",
-    image: "/images/liderstvo/person-1.webp",
-  },
-  {
-    quote: "Курс по переговорам окупился на первой же крупной сделке. Наши менеджеры научились вести переговоры системно, а не интуитивно",
-    name: "Лаура Бекмуратова",
-    title: "Коммерческий директор",
-    company: "Дистрибьюторская компания",
-    image: "/images/liderstvo/person-2.webp",
-  },
-  {
-    quote: "Программа управления изменениями помогла нам провести реструктуризацию без потери ключевых сотрудников. Вовлечённость даже выросла",
-    name: "Дамир Искаков",
-    title: "HR-директор",
-    company: "Банковский сектор",
-    image: "/images/liderstvo/person-3.webp",
-  },
-];
 
 const trainingPhotos = [
   { src: "/images/liderstvo/training-1.webp", caption: "Тренинг по лидерству" },
@@ -367,55 +344,6 @@ function EnrollmentModal({
         )}
       </div>
     </div>
-  );
-}
-
-/* ── Testimonial Card ── */
-
-function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof testimonials[0]; index: number }) {
-  return (
-    <div className={`p-6 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${i + 1}`}>
-      <svg className="w-8 h-8 text-[#F0BB1E]/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-      </svg>
-      <blockquote className="text-[#546569] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
-        </div>
-        <div>
-          <p className="text-[#2D3A3C] font-semibold text-sm">{t.name}</p>
-          <p className="text-[#7A8B8E] text-xs">{t.title}, {t.company}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Metric Card — expandable case study ── */
-
-function MetricCard({ item, index }: { item: { value: string; label: string; desc: string; caseStudy: string; icon: React.ReactNode }; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <button
-      onClick={() => setExpanded(!expanded)}
-      className={`text-center p-8 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${index + 1} hover:bg-[#f0f9f9] hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
-    >
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
-        {item.icon}
-      </div>
-      <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2 text-center">{item.value}</div>
-      <p className="font-semibold mb-1 text-center text-[#2D3A3C]">{item.label}</p>
-      <p className="text-[#546569] text-sm text-center">{item.desc}</p>
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-[#E0E8E9]">
-          <p className="text-[#546569] text-sm leading-relaxed">{item.caseStudy}</p>
-        </div>
-      )}
-      <p className="text-[#00767D] text-xs mt-3 text-center font-medium">
-        {expanded ? "Свернуть" : "Подробнее"}
-      </p>
-    </button>
   );
 }
 
@@ -872,75 +800,8 @@ export default function LiderstvoPage() {
         </div>
       </section>
 
-      {/* ═══ METRICS + TESTIMONIALS ═══ */}
-      <section className="py-16 sm:py-24 bg-[#f8f7f4] relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[#00767D]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-[#F0BB1E]/5 rounded-full blur-[100px]" />
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Metrics */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Результат, который <span className="text-[#F0BB1E]">измерим</span>
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-6 mb-20">
-              {[
-                {
-                  value: "↑ 40%",
-                  label: "вовлечённость команды",
-                  desc: "после программы лидерства",
-                  caseStudy: "Провели модульную программу для 50 руководителей среднего звена нефтесервисной компании. Через полгода замеры показали рост вовлечённости команд на 40% и снижение текучести на 25%.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "×3",
-                  label: "эффективность переговоров",
-                  desc: "после тренинга по переговорам",
-                  caseStudy: "Обучили коммерческий отдел дистрибьюторской компании (20 человек). Средний размер закрываемых сделок вырос втрое, а цикл продаж сократился на 30%.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "↓ 40%",
-                  label: "загрузка руководителя",
-                  desc: "после курса по делегированию",
-                  caseStudy: "Топ-менеджер IT-компании прошёл индивидуальную программу. Научился делегировать и выстроил систему контроля. Его рабочая неделя сократилась с 70 до 45 часов без потери результатов.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  ),
-                },
-              ].map((item, i) => (
-                <MetricCard key={i} item={item} index={i} />
-              ))}
-            </div>
-
-            {/* Testimonials */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Отзывы <span className="text-[#00767D]">клиентов</span>
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} testimonial={t} index={i} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ═══ ОТЗЫВЫ — дословно из благодарственных писем ═══ */}
+      <ClientTestimonials ids={["oilGasAtyrau", "narxoz", "nuris"]} />
 
       {/* ═══ BEFORE / AFTER — Comparison ═══ */}
       <section className="py-16 sm:py-24 bg-[#f0f9f9]">

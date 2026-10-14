@@ -1192,3 +1192,28 @@ section {
   font-style: italic;
   color: #546569;
 }
+
+/* Отзывы на главной: цитата появляется по словам (components/Testimonials). */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.word-in {
+  display: inline-block;
+  animation: word-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-in {
+    animation: none;
+  }
+}

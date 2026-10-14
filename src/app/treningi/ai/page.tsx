@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ClientTestimonials from "@/components/ClientTestimonials";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -132,33 +133,6 @@ function getTrainingCategory(name: string): { label: string; color: string } | n
   }
   return null;
 }
-
-const testimonials = [
-  {
-    quote: "После курса по промпт-инжинирингу наши юристы сократили время на подготовку договоров на 60%. Теперь ИИ — их ежедневный инструмент.",
-    name: "Динара Касымова",
-    title: "Директор по персоналу",
-    company: "Логистическая компания",
-    photo: "/images/ai/person-1.webp",
-    initial: "Д",
-  },
-  {
-    quote: "Скептически относился к ИИ, пока не прошёл курс. Теперь автоматизировал отчётность — то, что занимало 2 дня, делаю за 2 часа.",
-    name: "Марат Нурланов",
-    title: "Финансовый директор",
-    company: "Производственный холдинг",
-    photo: "/images/ai/person-2.webp",
-    initial: "М",
-  },
-  {
-    quote: "Отраслевая программа по ИИ для нефтегаза — именно то, чего нам не хватало. Внедрили ИИ-анализ геоданных, сэкономили миллионы.",
-    name: "Алексей Петров",
-    title: "Главный инженер",
-    company: "Нефтесервисная компания",
-    photo: "/images/ai/person-3.webp",
-    initial: "А",
-  },
-];
 
 const trainingPhotos = [
   { src: "/images/ai/training-1.webp", caption: "Практикум по промпт-инжинирингу" },
@@ -364,62 +338,6 @@ function EnrollmentModal({
         )}
       </div>
     </div>
-  );
-}
-
-/* ── Testimonial Card ── */
-
-function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof testimonials[0]; index: number }) {
-  const [photoFailed, setPhotoFailed] = useState(false);
-  return (
-    <div className={`p-6 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${i + 1}`}>
-      <svg className="w-8 h-8 text-[#F0BB1E]/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-      </svg>
-      <blockquote className="text-[#546569] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          {photoFailed ? (
-            <div className="w-full h-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">{t.initial}</span>
-            </div>
-          ) : (
-            <Image src={t.photo} alt={t.name} width={40} height={40} className="object-cover w-full h-full" onError={() => setPhotoFailed(true)} />
-          )}
-        </div>
-        <div>
-          <p className="text-[#2D3A3C] font-semibold text-sm">{t.name}</p>
-          <p className="text-[#7A8B8E] text-xs">{t.title}, {t.company}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Metric Card — expandable case study ── */
-
-function MetricCard({ item, index }: { item: { value: string; label: string; desc: string; caseStudy: string; icon: React.ReactNode }; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <button
-      onClick={() => setExpanded(!expanded)}
-      className={`text-center p-8 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${index + 1} hover:bg-[#f0f9f9] hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
-    >
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
-        {item.icon}
-      </div>
-      <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2 text-center">{item.value}</div>
-      <p className="font-semibold mb-1 text-center text-[#2D3A3C]">{item.label}</p>
-      <p className="text-[#546569] text-sm text-center">{item.desc}</p>
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-[#E0E8E9]">
-          <p className="text-[#546569] text-sm leading-relaxed">{item.caseStudy}</p>
-        </div>
-      )}
-      <p className="text-[#00767D] text-xs mt-3 text-center font-medium">
-        {expanded ? "Свернуть" : "Подробнее"}
-      </p>
-    </button>
   );
 }
 
@@ -891,72 +809,8 @@ export default function AIPage() {
         </div>
       </section>
 
-      {/* ═══ METRICS + TESTIMONIALS ═══ */}
-      <section className="py-16 sm:py-24 bg-[#f8f7f4] relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Metrics */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Результат, который <span className="text-[#F0BB1E]">измерим</span>
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-6 mb-20">
-              {[
-                {
-                  value: "80%",
-                  label: "экономии времени",
-                  desc: "на рутинных документах с ИИ",
-                  caseStudy: "Обучили команду бэк-офиса банка (25 человек) работе с ИИ для документооборота. Время подготовки типовых документов сократилось с 4 часов до 45 минут. Годовая экономия — 3,200 рабочих часов.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "8",
-                  label: "программ обучения",
-                  desc: "от базового до продвинутого уровня",
-                  caseStudy: "Разработали 8-модульную программу ИИ-трансформации для нефтегазовой компании. За 3 месяца обучили 150 сотрудников от менеджеров до инженеров. Каждый департамент внедрил минимум 3 ИИ-инструмента.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "150+",
-                  label: "обученных специалистов",
-                  desc: "в Казахстане и СНГ",
-                  caseStudy: "Провели корпоративное обучение для 5 крупных компаний Казахстана. Средняя оценка курсов — 4.8/5. 92% участников активно используют ИИ через месяц после обучения.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  ),
-                },
-              ].map((item, i) => (
-                <MetricCard key={i} item={item} index={i} />
-              ))}
-            </div>
-
-            {/* Testimonials */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Отзывы <span className="text-[#00767D]">клиентов</span>
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} testimonial={t} index={i} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ═══ ОТЗЫВЫ — дословно из благодарственных писем ═══ */}
+      <ClientTestimonials ids={["pharma", "most", "asbis"]} />
 
       {/* ═══ BEFORE / AFTER — Comparison ═══ */}
       <section className="py-16 sm:py-24 bg-[#f0f9f9]">
