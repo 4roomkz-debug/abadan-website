@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ClientTestimonials from "@/components/ClientTestimonials";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -131,33 +132,6 @@ function isTrendCourse(name: string): boolean {
   const lower = name.toLowerCase();
   return TREND_KEYWORDS.some((kw) => lower.includes(kw.toLowerCase()));
 }
-
-const testimonials = [
-  {
-    quote: "Курсы по трудовому законодательству помогли нашей HR-команде избежать судебных рисков. За год — ноль трудовых споров, проигранных компанией",
-    name: "Динара Сагиндыкова",
-    title: "HR-директор",
-    company: "Производственный холдинг",
-    photo: "/images/hr/person-1.webp",
-    initial: "Д",
-  },
-  {
-    quote: "Программа оценки и развития персонала позволила выстроить систему грейдов и ИПР для 500+ сотрудников. Текучесть снизилась на 35%",
-    name: "Алия Мусаева",
-    title: "Директор по персоналу",
-    company: "Горнодобывающая компания",
-    photo: "/images/hr/person-2.webp",
-    initial: "А",
-  },
-  {
-    quote: "Практикум по рекрутингу изменил подход наших HR-менеджеров. Время закрытия вакансий сократилось вдвое, качество найма выросло",
-    name: "Бауржан Темирханов",
-    title: "Руководитель отдела кадров",
-    company: "Телекоммуникационная компания",
-    photo: "/images/hr/person-3.webp",
-    initial: "Б",
-  },
-];
 
 const trainingPhotos = [
   { src: "/images/hr/training-1.webp", caption: "Семинар по трудовому праву" },
@@ -363,62 +337,6 @@ function EnrollmentModal({
         )}
       </div>
     </div>
-  );
-}
-
-/* ── Testimonial Card ── */
-
-function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof testimonials[0]; index: number }) {
-  const [photoFailed, setPhotoFailed] = useState(false);
-  return (
-    <div className={`p-6 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${i + 1}`}>
-      <svg className="w-8 h-8 text-[#F0BB1E]/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-      </svg>
-      <blockquote className="text-[#546569] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          {photoFailed ? (
-            <div className="w-full h-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">{t.initial}</span>
-            </div>
-          ) : (
-            <Image src={t.photo} alt={t.name} width={40} height={40} className="object-cover w-full h-full" onError={() => setPhotoFailed(true)} />
-          )}
-        </div>
-        <div>
-          <p className="text-[#2D3A3C] font-semibold text-sm">{t.name}</p>
-          <p className="text-[#7A8B8E] text-xs">{t.title}, {t.company}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Metric Card — expandable case study ── */
-
-function MetricCard({ item, index }: { item: { value: string; label: string; desc: string; caseStudy: string; icon: React.ReactNode }; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <button
-      onClick={() => setExpanded(!expanded)}
-      className={`text-center p-8 rounded-2xl bg-white border border-[#E0E8E9] shadow-sm scroll-fade-in scroll-delay-${index + 1} hover:bg-[#f0f9f9] hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
-    >
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
-        {item.icon}
-      </div>
-      <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2 text-center">{item.value}</div>
-      <p className="font-semibold mb-1 text-center text-[#2D3A3C]">{item.label}</p>
-      <p className="text-[#546569] text-sm text-center">{item.desc}</p>
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-[#E0E8E9]">
-          <p className="text-[#546569] text-sm leading-relaxed">{item.caseStudy}</p>
-        </div>
-      )}
-      <p className="text-[#00767D] text-xs mt-3 text-center font-medium">
-        {expanded ? "Свернуть" : "Подробнее"}
-      </p>
-    </button>
   );
 }
 
@@ -887,72 +805,8 @@ export default function HRPage() {
         </div>
       </section>
 
-      {/* ═══ METRICS + TESTIMONIALS ═══ */}
-      <section className="py-16 sm:py-24 bg-[#f8f7f4] relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Metrics */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Результат, который <span className="text-[#F0BB1E]">измерим</span>
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-6 mb-20">
-              {[
-                {
-                  value: "↓ 35%",
-                  label: "снижение текучести",
-                  desc: "после внедрения системы оценки",
-                  caseStudy: "Разработали систему грейдов и ИПР для производственной компании в Караганде. 500+ сотрудников прошли оценку компетенций. За год текучесть персонала снизилась с 28% до 18%.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "×2",
-                  label: "скорость закрытия вакансий",
-                  desc: "после тренинга по рекрутингу",
-                  caseStudy: "Провели интенсив для HR-команды логистической компании из 12 рекрутеров. Внедрили воронку найма и скрипты интервью. Среднее время закрытия вакансии сократилось с 45 до 22 дней.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "0",
-                  label: "проигранных трудовых споров",
-                  desc: "после курса по трудовому кодексу",
-                  caseStudy: "Обучили юристов и HR-менеджеров нефтесервисной компании (80 человек). За следующий год все 12 трудовых споров были урегулированы досудебно или выиграны работодателем.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  ),
-                },
-              ].map((item, i) => (
-                <MetricCard key={i} item={item} index={i} />
-              ))}
-            </div>
-
-            {/* Testimonials */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-[#2D3A3C]">
-                Отзывы <span className="text-[#00767D]">клиентов</span>
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} testimonial={t} index={i} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ═══ ОТЗЫВЫ — дословно из благодарственных писем ═══ */}
+      <ClientTestimonials ids={["narxoz", "pharma", "vitaprofi"]} />
 
       {/* ═══ BEFORE / AFTER — Comparison ═══ */}
       <section className="py-16 sm:py-24 bg-[#f0f9f9]">

@@ -53,6 +53,16 @@ Each route has a `layout.tsx` with SEO metadata (title, description, OpenGraph, 
 No database. Static data files in `src/data/`:
 - `schedule.ts` — `SCHEDULE_DATA` array of `ScheduleItem` (dates, prices, categories). Helper `parseDateForSort()`. Both `/schedule` page and `UpcomingTrainings` component consume this with `isEventPassed()` date filtering.
 - `ai-knowledge.ts` — Large knowledge base for AI chat: company info, training catalog, 100+ technical seminars, pricing, FAQ.
+- `testimonials.ts` — client testimonials, **verbatim quotes from thank-you letters only**. Used by `Testimonials` (homepage slider) and `ClientTestimonials` (training pages).
+
+### Testimonials, cases and numbers — never invent
+
+On 14.10.2026 the six `/treningi/*` pages turned out to carry 18 invented testimonials (fake names, stock "person" photos, made-up percentages) and 18 invented "case studies" with numbers — including a fake KMG project. All were removed. Rules:
+
+- A testimonial comes only from `src/data/testimonials.ts`, and that file only from the vault note `Abadan Company/Отзывы клиентов — база.md` (scans of the letters). Quote verbatim; don't "improve" or add numbers.
+- Signature = role + company, no personal names. KazMunayGas and Polpharma Santo are not named publicly — sign them by industry.
+- Show which training the quote is about (`training` field), so a general quote on another course page doesn't pose as a review of that course.
+- No client numbers, case studies or "results" without a source the founder confirmed. If a section needs proof and there is none — leave the section out rather than fill it.
 
 ### Key Components
 

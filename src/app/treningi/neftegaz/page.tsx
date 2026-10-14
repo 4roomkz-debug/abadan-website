@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ClientTestimonials from "@/components/ClientTestimonials";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -141,33 +142,6 @@ function isTrendCourse(name: string): boolean {
   const lower = name.toLowerCase();
   return TREND_KEYWORDS.some((kw) => lower.includes(kw.toLowerCase()));
 }
-
-const testimonials = [
-  {
-    quote: "После внедрения программы обучения от Abadan аварийность на наших объектах снизилась на 40%, а время адаптации новых специалистов сократилось вдвое",
-    name: "Марат Кенжебаев",
-    title: "Начальник отдела обучения",
-    company: "Нефтесервисная компания",
-    photo: "/images/neftegaz/person-1.webp",
-    initial: "М",
-  },
-  {
-    quote: "Мы обучили более 150 сотрудников за год. Качество подготовки и гибкость форматов — именно то, что нужно для нашего производственного графика",
-    name: "Айгуль Нурланова",
-    title: "HR-директор",
-    company: "Нефтеперерабатывающий завод",
-    photo: "/images/neftegaz/person-2.webp",
-    initial: "А",
-  },
-  {
-    quote: "Курсы по бурению и КРС полностью соответствуют реалиям месторождений Западного Казахстана. Наши инженеры сразу применяют полученные знания",
-    name: "Серик Абдрахманов",
-    title: "Главный инженер",
-    company: "Буровая компания",
-    photo: "/images/neftegaz/person-3.webp",
-    initial: "С",
-  },
-];
 
 const trainingPhotos = [
   { src: "/images/neftegaz/training-1.webp", caption: "Теоретическая подготовка" },
@@ -379,62 +353,6 @@ function EnrollmentModal({
         )}
       </div>
     </div>
-  );
-}
-
-/* ── Testimonial Card ── */
-
-function TestimonialCard({ testimonial: t, index: i }: { testimonial: typeof testimonials[0]; index: number }) {
-  const [photoFailed, setPhotoFailed] = useState(false);
-  return (
-    <div className={`p-6 rounded-2xl bg-white/[0.06] border border-white/10 scroll-fade-in scroll-delay-${i + 1}`}>
-      <svg className="w-8 h-8 text-[#F0BB1E]/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-      </svg>
-      <blockquote className="text-[#D4E4E7] text-sm leading-relaxed mb-6">{t.quote}</blockquote>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-          {photoFailed ? (
-            <div className="w-full h-full bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">{t.initial}</span>
-            </div>
-          ) : (
-            <Image src={t.photo} alt={t.name} width={40} height={40} className="object-cover w-full h-full" onError={() => setPhotoFailed(true)} />
-          )}
-        </div>
-        <div>
-          <p className="text-white font-semibold text-sm">{t.name}</p>
-          <p className="text-[#6B9196] text-xs">{t.title}, {t.company}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Metric Card — expandable case study ── */
-
-function MetricCard({ item, index }: { item: { value: string; label: string; desc: string; caseStudy: string; icon: React.ReactNode }; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <button
-      onClick={() => setExpanded(!expanded)}
-      className={`text-center p-8 rounded-2xl bg-white/[0.06] border border-white/10 scroll-fade-in scroll-delay-${index + 1} hover:bg-white/[0.1] hover:scale-105 transition-all duration-300 cursor-pointer text-left`}
-    >
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#00767D] to-[#006D77] flex items-center justify-center text-white mx-auto mb-4">
-        {item.icon}
-      </div>
-      <div className="text-4xl font-extrabold text-[#F0BB1E] mb-2 text-center">{item.value}</div>
-      <p className="font-semibold mb-1 text-center" style={{ color: "#ffffff" }}>{item.label}</p>
-      <p className="text-[#7A9EA3] text-sm text-center">{item.desc}</p>
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-white/10">
-          <p className="text-[#B8CDD0] text-sm leading-relaxed">{item.caseStudy}</p>
-        </div>
-      )}
-      <p className="text-[#00767D] text-xs mt-3 text-center font-medium">
-        {expanded ? "Свернуть" : "Подробнее"}
-      </p>
-    </button>
   );
 }
 
@@ -904,75 +822,8 @@ export default function NeftegazPage() {
         </div>
       </section>
 
-      {/* ═══ METRICS + TESTIMONIALS ═══ */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-[#1a2e30] via-[#0d2628] to-[#0a1f21] relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[#00767D]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-[#F0BB1E]/5 rounded-full blur-[100px]" />
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            {/* Metrics */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
-                Результат, который <span className="text-[#F0BB1E]">измерим</span>
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-6 mb-20">
-              {[
-                {
-                  value: "↓ 40%",
-                  label: "снижение аварийности",
-                  desc: "после курсов промышленной безопасности",
-                  caseStudy: "Обучили 200 сотрудников нефтесервисной компании в Атырау. За 6 месяцев после курсов по промышленной безопасности число инцидентов на объектах снизилось на 40%.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "↑ 25%",
-                  label: "рост производительности",
-                  desc: "через 3 месяца после обучения",
-                  caseStudy: "Программа повышения квалификации для инженеров КМГ: 80 специалистов прошли модульное обучение по интенсификации добычи. Производительность бригад выросла на 25% за первый квартал.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  ),
-                },
-                {
-                  value: "↓ 60%",
-                  label: "время адаптации",
-                  desc: "новых специалистов на объекте",
-                  caseStudy: "Разработали программу адаптации для буровой компании в Мангистау: 50 молодых специалистов за 3 недели интенсива вышли на уровень, который раньше требовал 2 месяца стажировки.",
-                  icon: (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  ),
-                },
-              ].map((item, i) => (
-                <MetricCard key={i} item={item} index={i} />
-              ))}
-            </div>
-
-            {/* Testimonials */}
-            <div className="text-center mb-12 scroll-fade-in">
-              <h2 className="text-3xl sm:text-4xl font-extrabold mb-4" style={{ color: "#ffffff", textShadow: "0 4px 12px rgba(0,0,0,0.6)" }}>
-                Отзывы <span className="text-[#00767D]">клиентов</span>
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} testimonial={t} index={i} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ═══ ОТЗЫВЫ — дословно из благодарственных писем ═══ */}
+      <ClientTestimonials ids={["kbtu", "pits", "nOperating"]} />
 
       {/* ═══ PAIN POINTS — Split Screen ═══ */}
       <section className="py-0 overflow-hidden">
