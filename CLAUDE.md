@@ -63,6 +63,7 @@ On 14.10.2026 the six `/treningi/*` pages turned out to carry 18 invented testim
 - Signature = role + company, no personal names. KazMunayGas and Polpharma Santo are not named publicly — sign them by industry.
 - Show which training the quote is about (`training` field), so a general quote on another course page doesn't pose as a review of that course.
 - No client numbers, case studies or "results" without a source the founder confirmed. If a section needs proof and there is none — leave the section out rather than fill it.
+- Confirmed by the founder on 14.10.2026, keep as is: the client logos (KMG, KazRosGaz, PetroKazakhstan, Kashagan, MMG, KBM, Samruk-Kazyna, Kazminerals) are real past clients — letters from those years were simply not archived; the header stats on `/treningi/*` ("65+ курсов", "200+ экспертов" etc.) are verified. Don't remove them for lack of a letter.
 
 ### Key Components
 
