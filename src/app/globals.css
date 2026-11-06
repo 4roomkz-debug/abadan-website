@@ -1341,6 +1341,8 @@ section {
 /* Метки стоят на предметах рисунка: координаты считаются от рамки картинки (--ix/--iy/--iw/--ih задаёт JS). */
 .story[data-pinned="true"] .story-tags { display: block; margin: 0; position: absolute; inset: 0; pointer-events: none; z-index: 3; transform-origin: 72% 55%; }
 .story[data-pinned="true"] .story-tags li { position: absolute; left: calc(var(--ix) + var(--iw) * var(--hx)); top: calc(var(--iy) + var(--ih) * var(--hy)); transform: translate(-0.6rem, -50%); pointer-events: auto; }
+.story[data-pinned="true"] .story-tags li.is-right { transform: translate(calc(-100% + 0.6rem), -50%); }
+.story[data-pinned="true"] .story-tags li.is-right .story-tag { flex-direction: row-reverse; padding: .25rem .5rem .25rem .7rem; }
 .story[data-pinned="true"] .story-tag { box-shadow: 0 6px 18px -10px rgba(20, 40, 42, .5); }
 .story[data-pinned="true"] .story-art-wrap::after {
   z-index: 2;

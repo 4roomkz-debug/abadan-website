@@ -18,7 +18,10 @@ const subscribe = () => () => {};
 const ART_RATIO = 16 / 9;
 
 function placeArt(frame: HTMLElement) {
-  const { width: w, height: h } = frame.getBoundingClientRect();
+  // offsetWidth/Height — размер до масштаба камеры: getBoundingClientRect
+  // вернул бы уже увеличенный прямоугольник, и точки уезжали бы вправо.
+  const w = frame.offsetWidth;
+  const h = frame.offsetHeight;
   const scale = Math.max(w / ART_RATIO, h);
   const iw = scale * ART_RATIO;
   const ih = scale;
@@ -249,7 +252,7 @@ export default function StoryScroll() {
             {/* Метки на рисунке: что из этой эпохи есть у Abadan сегодня. Нажал — перешёл. */}
             <ul className="story-tags" aria-label={t("tagsLabel")}>
                 {scene.hotspots.map((h) => (
-                  <li key={h.tag} style={{ "--hx": h.x / 100, "--hy": h.y / 100 } as React.CSSProperties}>
+                  <li key={h.tag} className={h.align === "right" ? "is-right" : undefined} style={{ "--hx": h.x / 100, "--hy": h.y / 100 } as React.CSSProperties}>
                     {h.external ? (
                       <a href={h.href} target="_blank" rel="noopener" className="story-tag">
                         <span className="story-tag-dot" aria-hidden="true" />

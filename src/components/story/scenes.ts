@@ -24,7 +24,8 @@ export type HotspotTag =
 
 // x, y — в процентах кадра 16:9. Точка ставится на предмет сцены, который
 // связывает эпоху с тем, что Abadan делает сегодня.
-export type Hotspot = { tag: HotspotTag; x: number; y: number; href: string; external?: boolean };
+// align: "right" — точка справа, подпись растёт влево: для меток у правого края кадра.
+export type Hotspot = { tag: HotspotTag; x: number; y: number; href: string; external?: boolean; align?: "right" };
 
 export type StoryScene = {
   id: "s1" | "s2" | "s3" | "s4" | "s5";
@@ -47,7 +48,7 @@ export const STORY_SCENES: StoryScene[] = [
     hotspots: [
       { tag: "coaching", x: 66, y: 29, href: "/coaching" },
       { tag: "leadership", x: 52, y: 60, href: "/treningi/liderstvo" },
-      { tag: "corporate", x: 72, y: 56, href: "#contact" },
+      { tag: "corporate", x: 80, y: 56, href: "#contact", align: "right" },
     ],
     image: "/story/scene-1.webp",
     imageMobile: "/story/scene-1-m.webp",
@@ -62,7 +63,7 @@ export const STORY_SCENES: StoryScene[] = [
     id: "s2",
     hotspots: [
       { tag: "schedule", x: 60, y: 36, href: "/schedule" },
-      { tag: "hr", x: 78, y: 68, href: "/treningi/hr" },
+      { tag: "hr", x: 84, y: 68, href: "/treningi/hr", align: "right" },
     ],
     image: "/story/scene-2.webp",
     imageMobile: "/story/scene-2-m.webp",
@@ -76,7 +77,7 @@ export const STORY_SCENES: StoryScene[] = [
     hotspots: [
       { tag: "safety", x: 60, y: 26, href: "/treningi/neftegaz/bezopasnost" },
       { tag: "neftegaz", x: 63, y: 67, href: "/treningi/neftegaz" },
-      { tag: "onsite", x: 68, y: 42, href: "#contact" },
+      { tag: "onsite", x: 82, y: 42, href: "#contact", align: "right" },
     ],
     image: "/story/scene-3.webp",
     imageMobile: "/story/scene-3-m.webp",
@@ -90,7 +91,7 @@ export const STORY_SCENES: StoryScene[] = [
     id: "s4",
     hotspots: [
       { tag: "offline", x: 56, y: 36, href: "/schedule" },
-      { tag: "online", x: 74, y: 45, href: "/schedule" },
+      { tag: "online", x: 80, y: 45, href: "/schedule", align: "right" },
       { tag: "finansy", x: 66, y: 66, href: "/treningi/finansy" },
     ],
     image: "/story/scene-4.webp",
@@ -107,7 +108,7 @@ export const STORY_SCENES: StoryScene[] = [
     id: "s5",
     hotspots: [
       { tag: "ibirai", x: 61, y: 63, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 71, y: 32, href: "/treningi/ai" },
+      { tag: "ai", x: 78, y: 32, href: "/treningi/ai", align: "right" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
