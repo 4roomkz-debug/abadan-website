@@ -134,7 +134,8 @@ export default function StoryScroll() {
         },
       });
       scenes.forEach((scene, i) => {
-        tl.fromTo([frames[i], tagLayers[i]], { scale: 1, xPercent: 0 }, { scale: 1.14, xPercent: -3, duration: 1 }, i);
+        // Рисунок крупнее кадра с самого начала, наезд — ещё на 14%.
+        tl.fromTo([frames[i], tagLayers[i]], { scale: 1.16, xPercent: 4 }, { scale: 1.3, xPercent: 0, duration: 1 }, i);
         tl.fromTo(scene.querySelector(".story-copy"), { y: 24 }, { y: -12, duration: 1 }, i);
       });
 

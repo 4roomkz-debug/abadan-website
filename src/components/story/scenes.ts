@@ -46,7 +46,7 @@ export const STORY_SCENES: StoryScene[] = [
     id: "s1",
     hotspots: [
       { tag: "coaching", x: 66, y: 29, href: "/coaching" },
-      { tag: "leadership", x: 55, y: 70, href: "/treningi/liderstvo" },
+      { tag: "leadership", x: 52, y: 60, href: "/treningi/liderstvo" },
       { tag: "corporate", x: 86, y: 62, href: "#contact" },
     ],
     image: "/story/scene-1.webp",
@@ -75,8 +75,8 @@ export const STORY_SCENES: StoryScene[] = [
     id: "s3",
     hotspots: [
       { tag: "safety", x: 60, y: 26, href: "/treningi/neftegaz/bezopasnost" },
-      { tag: "neftegaz", x: 64, y: 78, href: "/treningi/neftegaz" },
-      { tag: "onsite", x: 73, y: 46, href: "#contact" },
+      { tag: "neftegaz", x: 63, y: 67, href: "/treningi/neftegaz" },
+      { tag: "onsite", x: 68, y: 42, href: "#contact" },
     ],
     image: "/story/scene-3.webp",
     imageMobile: "/story/scene-3-m.webp",
@@ -90,8 +90,8 @@ export const STORY_SCENES: StoryScene[] = [
     id: "s4",
     hotspots: [
       { tag: "offline", x: 56, y: 36, href: "/schedule" },
-      { tag: "online", x: 82, y: 28, href: "/schedule" },
-      { tag: "finansy", x: 66, y: 72, href: "/treningi/finansy" },
+      { tag: "online", x: 74, y: 45, href: "/schedule" },
+      { tag: "finansy", x: 66, y: 66, href: "/treningi/finansy" },
     ],
     image: "/story/scene-4.webp",
     imageMobile: "/story/scene-4-m.webp",
@@ -106,7 +106,7 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s5",
     hotspots: [
-      { tag: "ibirai", x: 58, y: 74, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ibirai", x: 61, y: 63, href: "https://www.ibirai.com/ru", external: true },
       { tag: "ai", x: 71, y: 32, href: "/treningi/ai" },
     ],
     image: "/story/scene-5.webp",

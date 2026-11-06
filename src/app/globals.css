@@ -1315,21 +1315,22 @@ section {
 /* Десктоп с анимацией: сцены закреплены и сменяют друг друга через туман. */
 .story[data-pinned="true"] .story-stage { height: 100vh; overflow: hidden; }
 .story[data-pinned="true"] .story-scene { position: absolute; inset: 0; display: block; padding: 0; }
-.story[data-pinned="true"] .story-art-wrap { position: absolute; inset: 0 0 0 26%; overflow: hidden; }
-.story[data-pinned="true"] .story-art-frame { position: absolute; inset: 0; transform-origin: 70% 55%; }
+/* Рисунок во весь экран; текст лежит поверх растушёвки слева. */
+.story[data-pinned="true"] .story-art-wrap { position: absolute; inset: 0; overflow: hidden; }
+.story[data-pinned="true"] .story-art-frame { position: absolute; inset: 0; transform-origin: 72% 55%; }
 .story[data-pinned="true"] .story-art-frame picture { display: contents; }
 .story[data-pinned="true"] .story-art { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: right center; }
 /* Метки стоят на предметах рисунка: координаты считаются от рамки картинки (--ix/--iy/--iw/--ih задаёт JS). */
-.story[data-pinned="true"] .story-tags { display: block; margin: 0; position: absolute; inset: 0; pointer-events: none; z-index: 3; transform-origin: 70% 55%; }
+.story[data-pinned="true"] .story-tags { display: block; margin: 0; position: absolute; inset: 0; pointer-events: none; z-index: 3; transform-origin: 72% 55%; }
 .story[data-pinned="true"] .story-tags li { position: absolute; left: calc(var(--ix) + var(--iw) * var(--hx)); top: calc(var(--iy) + var(--ih) * var(--hy)); transform: translate(-0.6rem, -50%); pointer-events: auto; }
 .story[data-pinned="true"] .story-tag { box-shadow: 0 6px 18px -10px rgba(20, 40, 42, .5); }
 .story[data-pinned="true"] .story-art-wrap::after {
   z-index: 2;
-  content: ""; position: absolute; inset: 0 auto 0 0; width: 46%; pointer-events: none;
-  background: linear-gradient(90deg, var(--paper) 0%, rgba(250,250,247,.92) 30%, rgba(250,250,247,0) 100%);
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 64%; pointer-events: none;
+  background: linear-gradient(90deg, var(--paper) 0%, var(--paper) 30%, rgba(250,250,247,.92) 52%, rgba(250,250,247,0) 100%);
 }
 /* Левый край текста совпадает с контейнером секций ниже (max-w-7xl + px-8). */
-.story[data-pinned="true"] .story-copy { position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); top: 50%; transform: translateY(-50%); width: min(32rem, 36vw); z-index: 2; }
+.story[data-pinned="true"] .story-copy { position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); top: 50%; transform: translateY(-50%); width: min(30rem, 34vw); z-index: 2; }
 /* Дым между эпохами: бумажный слой, вырезанный по маске яркости дыма (белое —
    видно), поднимается и густеет; под ним сплошная бумажная «промывка». */
 .story[data-pinned="true"] .story-wash { display: block; position: absolute; inset: 0; background: var(--paper); pointer-events: none; opacity: 0; visibility: hidden; z-index: 5; }
@@ -1341,7 +1342,7 @@ section {
 }
 .story[data-pinned="true"] .story-smoke-2 { transform: scaleX(-1); -webkit-mask-position: 30% bottom; mask-position: 30% bottom; }
 .story[data-pinned="true"] .story-graph { display: block; position: absolute; right: 2.5vw; top: 5.5rem; width: clamp(140px, 13vw, 220px); height: auto; pointer-events: none; }
-.story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); bottom: 1.6rem; gap: .25rem; }
+.story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); bottom: 1.6rem; gap: .25rem; z-index: 4; }
 .story-eras button { font-size: var(--type-small); font-weight: 700; color: #7A8B8E; padding: .5rem .75rem; border-bottom: 2px solid transparent; font-variant-numeric: tabular-nums; cursor: pointer; }
 .story-eras button:hover { color: var(--ink); }
 .story-eras button.is-active { color: var(--ink); border-color: #F0BB1E; }
