@@ -91,7 +91,7 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s4",
     hotspots: [
-      { tag: "offline", x: 47, y: 29, href: "/schedule" },
+      { tag: "offline", x: 44, y: 19, href: "/schedule" },
       { tag: "online", x: 92, y: 44, href: "/schedule", align: "right" },
       { tag: "finansy", x: 68, y: 72, href: "/treningi/finansy" },
     ],
