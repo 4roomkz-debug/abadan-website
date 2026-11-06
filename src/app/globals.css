@@ -1232,10 +1232,36 @@ section {
    граф, горчица — импульсы и главная кнопка. Без JS, на телефоне и при
    reduced-motion сцены идут обычным потоком; [data-pinned] включает GSAP.
    ================================ */
-.story {
+/* Одна шкала шрифтов на весь бумажный мир: шапка 15px → текст 17px →
+   заголовки секций 30–44px. Больших «героических» кеглей нет. */
+:root {
   --paper: #FAFAF7;
   --ink: #14282A;
   --ink-soft: #3E4F52;
+  --type-display: clamp(1.9rem, 1.2rem + 2vw, 2.75rem);
+  --type-h3: 1.25rem;
+  --type-body: 1.0625rem;
+  --type-small: .875rem;
+}
+.paper-section { background: var(--paper); color: var(--ink); padding: 4.5rem 0; }
+.paper-display { font-size: var(--type-display); line-height: 1.08; font-weight: 800; letter-spacing: -0.025em; text-wrap: balance; color: var(--ink); }
+.paper-lead { margin-top: .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 36rem; }
+.paper-link { font-weight: 700; color: #00767D; padding: .5rem 0; white-space: nowrap; }
+.paper-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.paper-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.upcoming-list { border-top: 2px solid var(--ink); }
+.upcoming-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: .25rem 1rem; padding: .9rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-body); line-height: 1.35; }
+.upcoming-row:hover .upcoming-name { color: #00767D; }
+.upcoming-date { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
+.upcoming-name { font-weight: 600; }
+.upcoming-meta, .upcoming-price { grid-column: 2; font-size: var(--type-small); color: #546569; font-variant-numeric: tabular-nums; }
+@media (min-width: 900px) {
+  .paper-section { padding: 5.5rem 0; }
+  .upcoming-row { grid-template-columns: 8rem 1fr 6rem 7rem; align-items: baseline; }
+  .upcoming-meta, .upcoming-price { grid-column: auto; text-align: right; }
+}
+
+.story {
   position: relative;
   background: var(--paper);
   color: var(--ink);
@@ -1249,27 +1275,27 @@ section {
 .story-art-wrap { position: relative; }
 .story-copy { max-width: 34rem; }
 .story-title {
-  font-size: clamp(2.1rem, 4.6vw, 4.4rem); line-height: 1.02; font-weight: 800;
-  letter-spacing: -0.03em; text-wrap: balance;
+  font-size: var(--type-display); line-height: 1.08; font-weight: 800;
+  letter-spacing: -0.025em; text-wrap: balance;
 }
-.story-text { margin-top: 1.1rem; font-size: clamp(1.05rem, 1.35vw, 1.3rem); line-height: 1.5; color: var(--ink-soft); max-width: 32rem; }
-.story-source { margin-top: .6rem; font-size: .85rem; color: #546569; }
+.story-text { margin-top: 1rem; font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 30rem; }
+.story-source { margin-top: .6rem; font-size: var(--type-small); color: #546569; }
 .story-source a { text-decoration: underline; text-underline-offset: 3px; }
 .story-actions { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: .75rem; }
-.story-btn { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0 1.5rem; border-radius: 6px; font-weight: 700; font-size: 1.05rem; transition: background-color .2s, color .2s, border-color .2s; }
+.story-btn { display: inline-flex; align-items: center; min-height: 3rem; padding: 0 1.35rem; border-radius: 6px; font-weight: 700; font-size: 1rem; transition: background-color .2s, color .2s, border-color .2s; }
 .story-btn-primary { background: #F0BB1E; color: var(--ink); }
 .story-btn-primary:hover { background: #EBB417; }
 .story-btn-ghost { border: 2px solid var(--ink); color: var(--ink); }
 .story-btn-ghost:hover { background: var(--ink); color: var(--paper); }
 .story-btn-dark { background: var(--ink); color: var(--paper); min-height: 2.75rem; font-size: .95rem; }
-.story-links { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-weight: 700; }
+.story-links { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-weight: 700; font-size: var(--type-body); }
 .story-links a { color: #00767D; padding: .35rem 0; display: inline-block; text-underline-offset: 4px; }
 .story-links a:hover { text-decoration: underline; }
 .story-upcoming { margin-top: 1.4rem; border-top: 2px solid var(--ink); }
 .story-upcoming-label { font-size: .85rem; font-weight: 700; padding: .7rem 0 .2rem; color: #546569; }
-.story-upcoming li a { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: .65rem 0; border-bottom: 1px solid #D5DEDE; font-size: .98rem; }
+.story-upcoming li a { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-small); line-height: 1.35; }
 .story-upcoming-date { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
-.story-fog, .story-graph, .story-eras { display: none; }
+.story-smoke, .story-wash, .story-graph, .story-eras { display: none; }
 .story-bar {
   position: sticky; bottom: 1rem; z-index: 30; margin: 0 auto; width: fit-content;
   display: flex; align-items: center; gap: 1rem; padding: .4rem .5rem .4rem .4rem;
@@ -1287,19 +1313,21 @@ section {
   content: ""; position: absolute; inset: 0 auto 0 0; width: 46%; pointer-events: none;
   background: linear-gradient(90deg, var(--paper) 0%, rgba(250,250,247,.92) 30%, rgba(250,250,247,0) 100%);
 }
-.story[data-pinned="true"] .story-copy { position: absolute; left: 6vw; top: 50%; transform: translateY(-50%); width: min(36rem, 38vw); }
-.story[data-pinned="true"] .story-fog { display: block; position: absolute; inset: 0; pointer-events: none; opacity: 0; visibility: hidden; }
-.story-fog span {
-  position: absolute; border-radius: 50%; background: radial-gradient(closest-side, rgba(250,250,247,.98), rgba(250,250,247,.75) 55%, rgba(250,250,247,0));
-  filter: blur(18px);
+/* Левый край текста совпадает с контейнером секций ниже (max-w-7xl + px-8). */
+.story[data-pinned="true"] .story-copy { position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); top: 50%; transform: translateY(-50%); width: min(32rem, 36vw); z-index: 2; }
+/* Дым между эпохами: бумажный слой, вырезанный по маске яркости дыма (белое —
+   видно), поднимается и густеет; под ним сплошная бумажная «промывка». */
+.story[data-pinned="true"] .story-wash { display: block; position: absolute; inset: 0; background: var(--paper); pointer-events: none; opacity: 0; visibility: hidden; z-index: 5; }
+.story[data-pinned="true"] .story-smoke {
+  display: block; position: absolute; inset: -20% -10%; background: var(--paper); pointer-events: none; opacity: 0; visibility: hidden; z-index: 6;
+  -webkit-mask-image: url("/story/smoke-mask.webp"); mask-image: url("/story/smoke-mask.webp");
+  -webkit-mask-size: cover; mask-size: cover; -webkit-mask-position: center bottom; mask-position: center bottom;
+  mask-mode: luminance; transform-origin: 50% 80%;
 }
-.story-fog span:nth-child(1) { width: 70vw; height: 70vh; left: -10vw; top: 10vh; }
-.story-fog span:nth-child(2) { width: 80vw; height: 80vh; left: 30vw; top: -10vh; }
-.story-fog span:nth-child(3) { width: 60vw; height: 60vh; left: 50vw; top: 45vh; }
-.story-fog span:nth-child(4) { width: 90vw; height: 70vh; left: 5vw; top: 40vh; }
+.story[data-pinned="true"] .story-smoke-2 { transform: scaleX(-1); -webkit-mask-position: 30% bottom; mask-position: 30% bottom; }
 .story[data-pinned="true"] .story-graph { display: block; position: absolute; right: 2.5vw; top: 5.5rem; width: clamp(140px, 13vw, 220px); height: auto; pointer-events: none; }
-.story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: 6vw; bottom: 1.6rem; gap: .25rem; }
-.story-eras button { font-size: .85rem; font-weight: 700; color: #7A8B8E; padding: .5rem .75rem; border-bottom: 2px solid transparent; font-variant-numeric: tabular-nums; cursor: pointer; }
+.story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); bottom: 1.6rem; gap: .25rem; }
+.story-eras button { font-size: var(--type-small); font-weight: 700; color: #7A8B8E; padding: .5rem .75rem; border-bottom: 2px solid transparent; font-variant-numeric: tabular-nums; cursor: pointer; }
 .story-eras button:hover { color: var(--ink); }
 .story-eras button.is-active { color: var(--ink); border-color: #F0BB1E; }
 .story[data-pinned="true"] .story-bar { position: fixed; left: 50%; bottom: 1.5rem; margin: 0; transform: translate(-50%, 1rem); opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; }

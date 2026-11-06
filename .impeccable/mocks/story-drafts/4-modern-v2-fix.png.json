@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "input": "4-modern-v2.png",
+  "prompt": "Change ONLY: make every participant and the trainer look like professionals from Kazakhstan, mostly Kazakh with some Slavic people, men and women of different ages; keep their clothing style and seating. Keep identical: composition and crop, camera angle, poses, lighting, colour palette, the watercolour-on-white-paper style, the bare paper on the left, background. Do not add new objects. No text."
+}

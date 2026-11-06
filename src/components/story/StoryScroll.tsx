@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import { Link } from "@/i18n/navigation";
 import { getUpcomingTrainings, type ScheduleItem } from "@/data/schedule";
 import KnowledgeGraph from "./KnowledgeGraph";
@@ -15,9 +14,12 @@ gsap.registerPlugin(ScrollTrigger);
 const subscribe = () => () => {};
 
 // История обучения на прокрутке: сцены-эпохи закреплены, колесо мыши ведёт
-// камеру наездом и переводит эпохи через туман. Без JS, на телефоне и при
+// камеру наездом и переводит эпохи через дым. Без JS, на телефоне и при
 // prefers-reduced-motion сцены идут друг за другом обычной страницей —
 // закрепление включается только на десктопе (data-pinned).
+// Прокрутка нативная: Lenis убран 06.11 — он спорил с scroll-behavior: smooth
+// и на трекпаде в Safari прокрутка залипала на первой сцене, а потом улетала
+// в конец. Плавность даёт scrub у ScrollTrigger.
 export default function StoryScroll() {
   const t = useTranslations("home.story");
   const tAll = useTranslations();
@@ -33,16 +35,15 @@ export default function StoryScroll() {
 
     mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
       el.dataset.pinned = "true";
-      const lenis = new Lenis({ lerp: 0.09 });
-      lenis.on("scroll", ScrollTrigger.update);
-      const raf = (time: number) => lenis.raf(time * 1000);
-      gsap.ticker.add(raf);
-      gsap.ticker.lagSmoothing(0);
 
       const scenes = gsap.utils.toArray<HTMLElement>(".story-scene", el);
-      const fog = el.querySelector<HTMLElement>(".story-fog");
+      const smoke = el.querySelector<HTMLElement>(".story-smoke");
+      const smoke2 = el.querySelector<HTMLElement>(".story-smoke-2");
+      const wash = el.querySelector<HTMLElement>(".story-wash");
       gsap.set(scenes, { autoAlpha: 0 });
       gsap.set(scenes[0], { autoAlpha: 1 });
+      gsap.set([smoke, smoke2], { autoAlpha: 0 });
+      gsap.set(wash, { autoAlpha: 0 });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -51,7 +52,7 @@ export default function StoryScroll() {
           pin: el.querySelector(".story-stage"),
           start: "top top",
           end: `+=${scenes.length * 100}%`,
-          scrub: 0.7,
+          scrub: 0.9,
           onUpdate: (self) => setActive(Math.min(scenes.length - 1, Math.floor(self.progress * scenes.length + 0.15))),
         },
       });
@@ -62,12 +63,18 @@ export default function StoryScroll() {
         // Наезд камеры внутри эпохи.
         tl.fromTo(art, { scale: 1.0, xPercent: 0 }, { scale: 1.14, xPercent: -3, duration: 1 }, i);
         tl.fromTo(copy, { y: 24 }, { y: -12, duration: 1 }, i);
-        if (i < scenes.length - 1 && fog) {
-          // Туман: поднимается, пока эпоха уходит, и рассеивается над новой.
-          tl.to(fog, { autoAlpha: 1, duration: 0.18 }, i + 0.72);
-          tl.to(scene, { autoAlpha: 0, duration: 0.12 }, i + 0.84);
-          tl.to(scenes[i + 1], { autoAlpha: 1, duration: 0.12 }, i + 0.86);
-          tl.to(fog, { autoAlpha: 0, duration: 0.2 }, i + 0.92);
+        if (i < scenes.length - 1 && smoke && smoke2 && wash) {
+          // Два слоя дыма (второй зеркальный, отстаёт) поднимаются снизу и
+          // густеют; на пике короткая сплошная промывка прячет смену эпохи,
+          // дальше дым уходит вверх и редеет над новой сценой.
+          tl.fromTo(smoke, { autoAlpha: 0, yPercent: 55, scale: 1 }, { autoAlpha: 1, yPercent: 0, scale: 1.3, duration: 0.2 }, i + 0.62);
+          tl.fromTo(smoke2, { autoAlpha: 0, yPercent: 70, scale: 1.1 }, { autoAlpha: 1, yPercent: 5, scale: 1.45, duration: 0.2 }, i + 0.68);
+          tl.to(wash, { autoAlpha: 1, duration: 0.05 }, i + 0.81);
+          tl.to(scene, { autoAlpha: 0, duration: 0.03 }, i + 0.85);
+          tl.to(scenes[i + 1], { autoAlpha: 1, duration: 0.03 }, i + 0.86);
+          tl.to(wash, { autoAlpha: 0, duration: 0.05 }, i + 0.9);
+          tl.to(smoke, { autoAlpha: 0, yPercent: -45, scale: 1.6, duration: 0.2 }, i + 0.82);
+          tl.to(smoke2, { autoAlpha: 0, yPercent: -40, scale: 1.7, duration: 0.2 }, i + 0.86);
         }
       });
 
@@ -80,8 +87,6 @@ export default function StoryScroll() {
       return () => {
         barTrigger?.kill();
         delete el.dataset.pinned;
-        gsap.ticker.remove(raf);
-        lenis.destroy();
       };
     });
 
@@ -149,7 +154,7 @@ export default function StoryScroll() {
 
               {scene.primaryCta && (
                 <div className="story-actions">
-                  <Link href="/#contact" className="story-btn story-btn-primary">{t("requestProgram")}</Link>
+                  <a href="#contact" className="story-btn story-btn-primary">{t("requestProgram")}</a>
                   <Link href="/schedule" className="story-btn story-btn-ghost">{t("findCourse")}</Link>
                 </div>
               )}
@@ -174,9 +179,9 @@ export default function StoryScroll() {
           </article>
         ))}
 
-        <div className="story-fog" aria-hidden="true">
-          <span /><span /><span /><span />
-        </div>
+        <div className="story-wash" aria-hidden="true" />
+        <div className="story-smoke" aria-hidden="true" />
+        <div className="story-smoke story-smoke-2" aria-hidden="true" />
 
         <KnowledgeGraph visible={STORY_SCENES[active].graphNodes} className="story-graph" />
 

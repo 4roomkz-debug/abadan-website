@@ -1,0 +1,6 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "prompt": "Spring steppe in Kazakhstan in the morning: a small aul of white felt yurts on fresh green grass with snowy mountains far away, and in front of one yurt an elderly Kazakh teacher with a grey beard, a dark chapan and a small embroidered taqiya skullcap (not a tall white felt hat) sits teaching five attentive children, mid shot from slightly above. No modern objects.\n\nDetailed painterly historical book illustration, high-key light cool palette: azure, turquoise and blue-grey hues, chalk-white highlights, soft translucent shadows, no warm yellow or sepia cast, bright natural daylight, calm and dignified mood, hand-painted book-plate feel with fine ink linework on textured white watercolour paper. The painting fades softly into bare white paper toward the left and the edges. Only small accents of deep petrol teal and mustard gold. Keep the left third calm, mostly bare paper, for a headline. Wide 16:9 landscape composition. No text, no letters, no logos, no watermarks.",
+  "aspect_ratio": "16:9",
+  "size": "1K"
+}

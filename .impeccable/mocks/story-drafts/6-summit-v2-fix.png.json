@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "input": "6-summit-v2.png",
+  "prompt": "Change ONLY: dress the six people as a corporate team from Kazakhstan, mostly Kazakh men and women in light outdoor jackets over business-casual clothes, no large hiking backpacks, still seen from behind on the ridge. Keep identical: composition and crop, camera angle, poses, lighting, colour palette, the watercolour-on-white-paper style, the bare paper on the left, background. Do not add new objects. No text."
+}
