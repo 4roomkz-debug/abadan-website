@@ -106,6 +106,7 @@ export default function Newsletter({ source = 'abadan-kz-footer' }: NewsletterPr
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Ваше имя"
+                    aria-label="Ваше имя"
                     disabled={state === 'loading'}
                     className="dark-input w-full"
                   />
@@ -114,6 +115,7 @@ export default function Newsletter({ source = 'abadan-kz-footer' }: NewsletterPr
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Ваш email"
+                    aria-label="Ваш email"
                     required
                     disabled={state === 'loading'}
                     className="dark-input w-full"

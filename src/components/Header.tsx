@@ -78,14 +78,14 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 text-[#2D3A3C] font-bold text-xl">
-            <span className="text-[#F0BB1E]">Abadan</span> & Co.
+            <span className="text-[#00767D]">Abadan</span> & Co.
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             <Link
               href="/"
-              className={`text-sm font-medium transition-colors ${
+              className={`py-2 text-sm font-medium transition-colors ${
                 isActive("/")
                   ? "text-[#00767D]"
                   : "text-[#546569] hover:text-[#00767D]"
@@ -102,7 +102,7 @@ export default function Header() {
               onMouseLeave={handleEducationLeave}
             >
               <button
-                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                className={`py-2 text-sm font-medium transition-colors flex items-center gap-1 ${
                   isEducationActive
                     ? "text-[#00767D]"
                     : "text-[#546569] hover:text-[#00767D]"
@@ -162,7 +162,7 @@ export default function Header() {
             {/* Расписание standalone */}
             <Link
               href="/schedule"
-              className={`text-sm font-medium transition-colors ${
+              className={`py-2 text-sm font-medium transition-colors ${
                 isActive("/schedule")
                   ? "text-[#00767D]"
                   : "text-[#546569] hover:text-[#00767D]"
@@ -179,7 +179,7 @@ export default function Header() {
               onMouseLeave={handleCompanyLeave}
             >
               <button
-                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                className={`py-2 text-sm font-medium transition-colors flex items-center gap-1 ${
                   isCompanyActive
                     ? "text-[#00767D]"
                     : "text-[#546569] hover:text-[#00767D]"
