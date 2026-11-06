@@ -107,7 +107,7 @@ export default function Contact({ variant = "default", title, subtitle }: Contac
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h3 className="text-3xl font-extrabold text-[#2D3A3C] mb-3">
+                    <h3 className={`${paper ? "text-2xl" : "text-3xl"} font-extrabold text-[#2D3A3C] mb-3`}>
                       {t("successTitle")}
                     </h3>
                     <p className="text-[#546569] text-lg leading-relaxed max-w-sm mx-auto">
@@ -129,7 +129,7 @@ export default function Contact({ variant = "default", title, subtitle }: Contac
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-2xl font-bold text-[#2D3A3C] mb-8">
+                    <h3 className={`${paper ? "text-xl" : "text-2xl"} font-bold text-[#2D3A3C] mb-8`}>
                       {t("formTitle")}
                     </h3>
 
@@ -244,7 +244,7 @@ export default function Contact({ variant = "default", title, subtitle }: Contac
                   </div>
                   <div>
                     <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">{t("phoneLabel")}</p>
-                    <a href="tel:+77022413388" className="text-2xl font-bold text-[#2D3A3C] hover:text-[#00767D] transition-colors">
+                    <a href="tel:+77022413388" className={`${paper ? "text-xl" : "text-2xl"} font-bold text-[#2D3A3C] hover:text-[#00767D] transition-colors`}>
                       +7 702 241 33 88
                     </a>
                   </div>
@@ -260,7 +260,7 @@ export default function Contact({ variant = "default", title, subtitle }: Contac
                   </div>
                   <div>
                     <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">{t("emailLabel")}</p>
-                    <a href="mailto:i.islambek@abadan.kz" className="text-2xl font-bold text-[#2D3A3C] hover:text-[#00767D] transition-colors">
+                    <a href="mailto:i.islambek@abadan.kz" className={`${paper ? "text-xl" : "text-2xl"} font-bold text-[#2D3A3C] hover:text-[#00767D] transition-colors`}>
                       i.islambek@abadan.kz
                     </a>
                   </div>
@@ -280,7 +280,7 @@ export default function Contact({ variant = "default", title, subtitle }: Contac
                       href="https://wa.me/77022413388"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-2xl font-bold text-[#2D3A3C] hover:text-[#25D366] transition-colors"
+                      className={`${paper ? "text-xl" : "text-2xl"} font-bold text-[#2D3A3C] hover:text-[#25D366] transition-colors`}
                     >
                       {t("whatsappAction")}
                     </a>

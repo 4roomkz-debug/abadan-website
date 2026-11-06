@@ -1239,12 +1239,13 @@ section {
   --ink: #14282A;
   --ink-soft: #3E4F52;
   --type-display: clamp(1.9rem, 1.2rem + 2vw, 2.75rem);
+  --type-h2: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
   --type-h3: 1.25rem;
   --type-body: 1.0625rem;
   --type-small: .875rem;
 }
 .paper-section { background: var(--paper); color: var(--ink); padding: 4.5rem 0; }
-.paper-display { font-size: var(--type-display); line-height: 1.08; font-weight: 800; letter-spacing: -0.025em; text-wrap: balance; color: var(--ink); }
+.paper-display { font-size: var(--type-h2); line-height: 1.08; font-weight: 800; letter-spacing: -0.025em; text-wrap: balance; color: var(--ink); }
 .paper-lead { margin-top: .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 36rem; }
 .paper-link { font-weight: 700; color: #00767D; padding: .5rem 0; white-space: nowrap; }
 .paper-link:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -1263,12 +1264,22 @@ section {
 
 .story {
   position: relative;
+  /* Без якорения прокрутки: в Chromium при возврате «назад» закрепление меняет
+     высоту страницы, и браузер утаскивал прокрутку к началу истории. */
+  overflow-anchor: none;
   background: var(--paper);
   color: var(--ink);
 }
 .story-stage { position: relative; }
 .story-scene { position: relative; display: grid; gap: 1.25rem; padding: 2.5rem 1rem 3rem; }
 .story-art-wrap { display: block; }
+.story-art-frame { position: relative; }
+/* Метки на рисунке. Без закрепления (телефон) — ряд ссылок под картинкой. */
+.story-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+.story-tag { display: inline-flex; align-items: center; gap: .45rem; min-height: 2rem; padding: .25rem .7rem .25rem .5rem; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper); font-size: var(--type-small); font-weight: 700; color: var(--ink); white-space: nowrap; transition: background-color .15s, color .15s; }
+.story-tag:hover, .story-tag:focus-visible { background: var(--ink); color: var(--paper); }
+.story-tag-dot { width: .55rem; height: .55rem; border-radius: 50%; background: #00767D; box-shadow: 0 0 0 2px var(--paper); flex: none; }
+.story-tag:hover .story-tag-dot { background: #F0BB1E; }
 .story-art { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3; object-fit: cover; object-position: 78% center; }
 /* Бумага под текстом: растушёвка с левого края картинки, чтобы текст не ложился
    на детальный рисунок и обрез кадра не давал жёсткую границу. */
@@ -1288,9 +1299,6 @@ section {
 .story-btn-ghost { border: 2px solid var(--ink); color: var(--ink); }
 .story-btn-ghost:hover { background: var(--ink); color: var(--paper); }
 .story-btn-dark { background: var(--ink); color: var(--paper); min-height: 2.75rem; font-size: .95rem; }
-.story-links { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-weight: 700; font-size: var(--type-body); }
-.story-links a { color: #00767D; padding: .35rem 0; display: inline-block; text-underline-offset: 4px; }
-.story-links a:hover { text-decoration: underline; }
 .story-upcoming { margin-top: 1.4rem; border-top: 2px solid var(--ink); }
 .story-upcoming-label { font-size: .85rem; font-weight: 700; padding: .7rem 0 .2rem; color: #546569; }
 .story-upcoming li a { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-small); line-height: 1.35; }
@@ -1308,8 +1316,15 @@ section {
 .story[data-pinned="true"] .story-stage { height: 100vh; overflow: hidden; }
 .story[data-pinned="true"] .story-scene { position: absolute; inset: 0; display: block; padding: 0; }
 .story[data-pinned="true"] .story-art-wrap { position: absolute; inset: 0 0 0 26%; overflow: hidden; }
-.story[data-pinned="true"] .story-art { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: right center; transform-origin: 70% 55%; }
+.story[data-pinned="true"] .story-art-frame { position: absolute; inset: 0; transform-origin: 70% 55%; }
+.story[data-pinned="true"] .story-art-frame picture { display: contents; }
+.story[data-pinned="true"] .story-art { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: right center; }
+/* Метки стоят на предметах рисунка: координаты считаются от рамки картинки (--ix/--iy/--iw/--ih задаёт JS). */
+.story[data-pinned="true"] .story-tags { display: block; margin: 0; position: absolute; inset: 0; pointer-events: none; z-index: 3; transform-origin: 70% 55%; }
+.story[data-pinned="true"] .story-tags li { position: absolute; left: calc(var(--ix) + var(--iw) * var(--hx)); top: calc(var(--iy) + var(--ih) * var(--hy)); transform: translate(-0.6rem, -50%); pointer-events: auto; }
+.story[data-pinned="true"] .story-tag { box-shadow: 0 6px 18px -10px rgba(20, 40, 42, .5); }
 .story[data-pinned="true"] .story-art-wrap::after {
+  z-index: 2;
   content: ""; position: absolute; inset: 0 auto 0 0; width: 46%; pointer-events: none;
   background: linear-gradient(90deg, var(--paper) 0%, rgba(250,250,247,.92) 30%, rgba(250,250,247,0) 100%);
 }
