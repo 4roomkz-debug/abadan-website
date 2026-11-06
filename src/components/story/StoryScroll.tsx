@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@/i18n/navigation";
 import { getUpcomingTrainings, type ScheduleItem } from "@/data/schedule";
 import KnowledgeGraph from "./KnowledgeGraph";
-import { STORY_SCENES, STORY_TRANSITIONS } from "./scenes";
+import { STORY_SCENES } from "./scenes";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +16,7 @@ const subscribe = () => () => {};
 // Пропорция картинки сцены (бумажная перекладка, 3:2): по ней считаем, где на
 // экране оказалась точка рисунка после object-fit: cover (картинка прижата к
 // правому краю, по вертикали по центру).
-const ART_RATIO = 16 / 9;
+const ART_RATIO = 3 / 2;
 
 function placeArt(frame: HTMLElement) {
   // offsetWidth/Height — размер до масштаба камеры: getBoundingClientRect
@@ -76,7 +76,6 @@ export default function StoryScroll() {
       const smoke = el.querySelector<HTMLElement>(".story-smoke");
       const smoke2 = el.querySelector<HTMLElement>(".story-smoke-2");
       const wash = el.querySelector<HTMLElement>(".story-wash");
-      const clips = gsap.utils.toArray<HTMLVideoElement>(".story-clip", el);
       const n = scenes.length;
 
       // Метки на рисунке: пересчёт при изменении размера окна.
@@ -85,14 +84,6 @@ export default function StoryScroll() {
 
       gsap.set(scenes, { autoAlpha: 0 });
       gsap.set([smoke, smoke2, wash], { autoAlpha: 0 });
-      gsap.set(clips, { autoAlpha: 0 });
-      // Ролик следующего перехода подгружаем, когда его сцена стала активной.
-      const loaded = new Set<number>();
-      const preload = (i: number) => {
-        const v = clips[i];
-        if (!v || loaded.has(i)) return;
-        loaded.add(i); v.preload = "auto"; v.load();
-      };
 
       let shown = 0;
       let target = 0;
@@ -104,36 +95,11 @@ export default function StoryScroll() {
         shown = i;
       };
 
-      // Вперёд на одну эпоху — видео-трансформация: бумага сцены перекладывается в
-      // следующую, последний кадр ролика и есть новая сцена. Если ролик не может
-      // играть (нет файла, автозапуск запрещён) — дым, как и назад.
-      const playClip = (k: number, to: number): Promise<boolean> =>
-        new Promise((resolve) => {
-          const v = clips[k];
-          if (!v || !v.canPlayType("video/mp4")) return resolve(false);
-          const copy = scenes[shown].querySelector(".story-copy");
-          let settled = false;
-          const finish = (ok: boolean) => {
-            if (settled) return; settled = true;
-            v.removeEventListener("ended", onEnded); v.removeEventListener("error", onError);
-            if (!ok) { gsap.set(v, { autoAlpha: 0 }); gsap.set(copy, { autoAlpha: 1 }); return resolve(false); }
-            reveal(to);
-            gsap.set(copy, { autoAlpha: 1 });
-            gsap.fromTo(scenes[to].querySelector(".story-copy"), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
-            gsap.to(v, { autoAlpha: 0, duration: 0.35, onComplete: () => { v.pause(); resolve(true); } });
-          };
-          const onEnded = () => finish(true);
-          const onError = () => finish(false);
-          v.addEventListener("ended", onEnded); v.addEventListener("error", onError);
-          try { v.currentTime = 0; } catch { /* ещё не загружен */ }
-          gsap.set(v, { autoAlpha: 1, scale: 1.03 });
-          gsap.to(v, { scale: 1, duration: 0.8, ease: "sine.out" });
-          gsap.to(copy, { autoAlpha: 0, duration: 0.4 });
-          v.play().catch(() => finish(false));
-        });
-
-      const smokeTransition = () => {
-        if (!smoke || !smoke2 || !wash) { reveal(target); busy = false; return; }
+      // Переход по времени. Сцена подменяется под дымом на ту, что актуальна в этот
+      // момент: пролистали сразу две эпохи — покажем последнюю, без лишнего дыма.
+      const transition = () => {
+        if (busy || target === shown || !smoke || !smoke2 || !wash) return;
+        busy = true;
         gsap.timeline({ onComplete: () => { busy = false; transition(); } })
           .fromTo(smoke, { autoAlpha: 0, yPercent: 45, scale: 1 }, { autoAlpha: 1, yPercent: 0, scale: 1.25, duration: 0.9, ease: "sine.inOut" }, 0)
           .fromTo(smoke2, { autoAlpha: 0, yPercent: 60, scale: 1.1 }, { autoAlpha: 1, yPercent: 5, scale: 1.4, duration: 0.9, ease: "sine.inOut" }, 0.15)
@@ -142,19 +108,6 @@ export default function StoryScroll() {
           .to(wash, { autoAlpha: 0, duration: 0.45, ease: "sine.inOut" }, 1.1)
           .to(smoke, { autoAlpha: 0, yPercent: -40, scale: 1.5, duration: 0.9, ease: "sine.inOut" }, 1.0)
           .to(smoke2, { autoAlpha: 0, yPercent: -35, scale: 1.6, duration: 0.9, ease: "sine.inOut" }, 1.1);
-      };
-
-      // Переход по времени. Пролистали сразу две эпохи — дым покажет последнюю.
-      const transition = () => {
-        if (busy || target === shown) return;
-        busy = true;
-        if (target === shown + 1 && clips[shown]) {
-          playClip(shown, shown + 1).then((ok) => {
-            if (ok) { busy = false; transition(); } else smokeTransition();
-          });
-          return;
-        }
-        smokeTransition();
       };
 
       // Наезд камеры внутри каждой эпохи — привязан к прокрутке.
@@ -171,7 +124,6 @@ export default function StoryScroll() {
             if (i !== target) {
               target = i;
               setActive(i);
-              preload(i);
               if (restoring) reveal(i); else transition();
             }
           },
@@ -181,14 +133,13 @@ export default function StoryScroll() {
             const i = Math.min(n - 1, Math.floor(self.progress * n));
             target = i;
             setActive(i);
-            preload(i);
             if (!busy) reveal(i);
           },
         },
       });
       scenes.forEach((scene, i) => {
-        // Рисунок помещается в экран целиком; наезд едва заметный — движение дают ролики.
-        tl.fromTo([frames[i], tagLayers[i]], { scale: 1, xPercent: 0 }, { scale: 1.03, xPercent: 0, duration: 1 }, i);
+        // Рисунок помещается в экран целиком; наезд лёгкий, чтобы не резать края.
+        tl.fromTo([frames[i], tagLayers[i]], { scale: 1, xPercent: 0 }, { scale: 1.08, xPercent: 0, duration: 1 }, i);
         tl.fromTo(scene.querySelector(".story-copy"), { y: 24 }, { y: -12, duration: 1 }, i);
       });
 
@@ -328,9 +279,6 @@ export default function StoryScroll() {
         <div className="story-wash" aria-hidden="true" />
         <div className="story-smoke" aria-hidden="true" />
         <div className="story-smoke story-smoke-2" aria-hidden="true" />
-        {STORY_TRANSITIONS.map((tr) => (
-          <video key={tr.src} className="story-clip" src={tr.src} muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
-        ))}
 
         <KnowledgeGraph visible={STORY_SCENES[active].graphNodes} className="story-graph" />
 
