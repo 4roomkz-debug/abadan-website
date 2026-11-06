@@ -2,7 +2,8 @@
 // (story.s1…s5), иллюстрации без текста, поэтому одни и те же на трёх языках.
 // Картинки — бумажная перекладка (стиль каруселей «Код кочевника»): композиция
 // gpt-image-2, увеличение до 4K без изменений — Nano Banana Pro. Промпты и
-// провенанс — .impeccable/mocks/story-papercut/*.png.json. Кадр 3:2.
+// провенанс — .impeccable/mocks/story-papercut/*.png.json. Кадр 16:9: сцены 2–5 —
+// последние кадры видео-переходов (.impeccable/mocks/story-video), увеличенные до 4K.
 
 // Полные ключи словаря: типизация next-intl проверяет, что каждый существует.
 export type SceneLinkLabel =
@@ -23,7 +24,7 @@ export type HotspotTag =
   | "leadership" | "coaching" | "corporate" | "schedule" | "hr" | "neftegaz"
   | "safety" | "onsite" | "offline" | "online" | "finansy" | "ibirai" | "ai";
 
-// x, y — в процентах кадра 3:2. Точка ставится на предмет сцены, который
+// x, y — в процентах кадра 16:9. Точка ставится на предмет сцены, который
 // связывает эпоху с тем, что Abadan делает сегодня.
 // align: "right" — точка справа, подпись растёт влево: для меток у правого края кадра.
 export type Hotspot = { tag: HotspotTag; x: number; y: number; href: string; external?: boolean; align?: "right" };
@@ -43,13 +44,23 @@ export type StoryScene = {
   primaryCta?: boolean;
 };
 
+// Видео-переходы между эпохами (xAI grok-imagine-video-1.5, бумажная перекладка):
+// ролик k ведёт из сцены k в сцену k+1, его последний кадр и есть картинка
+// следующей сцены — переход бесшовный. Назад и на телефоне — дым.
+export const STORY_TRANSITIONS = [
+  { src: "/story/t-1-2.mp4" },
+  { src: "/story/t-2-3.mp4" },
+  { src: "/story/t-3-4.mp4" },
+  { src: "/story/t-4-5.mp4" },
+];
+
 export const STORY_SCENES: StoryScene[] = [
   {
     id: "s1",
     hotspots: [
-      { tag: "coaching", x: 84, y: 30, href: "/coaching", align: "right" },
-      { tag: "leadership", x: 30, y: 74, href: "/treningi/liderstvo" },
-      { tag: "corporate", x: 90, y: 68, href: "#contact", align: "right" },
+      { tag: "coaching", x: 84, y: 27, href: "/coaching", align: "right" },
+      { tag: "leadership", x: 30, y: 77, href: "/treningi/liderstvo" },
+      { tag: "corporate", x: 90, y: 71, href: "#contact", align: "right" },
     ],
     image: "/story/scene-1.webp",
     imageMobile: "/story/scene-1-m.webp",
@@ -63,8 +74,8 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s2",
     hotspots: [
-      { tag: "schedule", x: 52, y: 26, href: "/schedule" },
-      { tag: "hr", x: 88, y: 72, href: "/treningi/hr", align: "right" },
+      { tag: "schedule", x: 70, y: 20, href: "/schedule" },
+      { tag: "hr", x: 88, y: 76, href: "/treningi/hr", align: "right" },
     ],
     image: "/story/scene-2.webp",
     imageMobile: "/story/scene-2-m.webp",
@@ -76,9 +87,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s3",
     hotspots: [
-      { tag: "safety", x: 42, y: 27, href: "/treningi/neftegaz/bezopasnost" },
-      { tag: "neftegaz", x: 86, y: 72, href: "/treningi/neftegaz", align: "right" },
-      { tag: "onsite", x: 92, y: 58, href: "#contact", align: "right" },
+      { tag: "safety", x: 56, y: 20, href: "/treningi/neftegaz/bezopasnost" },
+      { tag: "neftegaz", x: 76, y: 78, href: "/treningi/neftegaz", align: "right" },
+      { tag: "onsite", x: 93, y: 52, href: "#contact", align: "right" },
     ],
     image: "/story/scene-3.webp",
     imageMobile: "/story/scene-3-m.webp",
@@ -91,9 +102,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s4",
     hotspots: [
-      { tag: "offline", x: 44, y: 19, href: "/schedule" },
-      { tag: "online", x: 92, y: 44, href: "/schedule", align: "right" },
-      { tag: "finansy", x: 68, y: 72, href: "/treningi/finansy" },
+      { tag: "offline", x: 62, y: 24, href: "/schedule" },
+      { tag: "online", x: 44, y: 30, href: "/schedule", align: "right" },
+      { tag: "finansy", x: 48, y: 80, href: "/treningi/finansy" },
     ],
     image: "/story/scene-4.webp",
     imageMobile: "/story/scene-4-m.webp",
@@ -108,8 +119,8 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s5",
     hotspots: [
-      { tag: "ibirai", x: 64, y: 70, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 92, y: 28, href: "/treningi/ai", align: "right" },
+      { tag: "ibirai", x: 46, y: 58, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ai", x: 44, y: 30, href: "/treningi/ai" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
