@@ -1,0 +1,6 @@
+{
+  "model": "gpt-image-2",
+  "size": "1536x1024",
+  "quality": "high",
+  "prompt": "A 1920s factory apprentice workshop: a grey-moustached master in a work apron shows two young Kazakh apprentices in flat caps how to operate a lathe, other apprentices at workbenches behind them, tall factory windows and rows of machines receding, mid shot.\n\nDetailed painterly historical illustration, high-key light cool palette — cool azure and turquoise hues, chalk-white highlights, soft translucent shadows, no warm yellow or sepia cast, bright natural light, epic but calm mood, hand-painted book-plate feel, fine linework, no modern objects. IMPORTANT: no text, no letters, no captions, no watermarks anywhere. Leave the left third visually calm and uncluttered — a headline goes there. Wide landscape composition 3:2.\n\nMID-KEY, COOL-DOMINANT, CLEAN, SATURATED — bright daylight. Cool hues carry the image: azure, turquoise, blue-grey, indigo; the darkest tones only for shadow and depth. Highlights are chalk-white and cool cream. Warm colour appears only as small accents. CRITICAL — NEUTRAL WHITE BALANCE: no sepia, no amber wash, no vintage aging. Very high detail and crisp rendering: material texture, fabric, stone, hide and metal readable up close, sharp focus edge to edge. Historical accuracy in clothing and ornament. No logos, no watermarks, no UI elements."
+}

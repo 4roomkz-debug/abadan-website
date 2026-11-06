@@ -13,9 +13,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const subscribe = () => () => {};
 
-// Размер картинки сцены: по нему считаем, где на экране оказалась точка рисунка
-// после object-fit: cover (картинка прижата к правому краю, по вертикали по центру).
-const ART_RATIO = 16 / 9;
+// Пропорция картинки сцены (бумажная перекладка, 3:2): по ней считаем, где на
+// экране оказалась точка рисунка после object-fit: cover (картинка прижата к
+// правому краю, по вертикали по центру).
+const ART_RATIO = 3 / 2;
 
 function placeArt(frame: HTMLElement) {
   // offsetWidth/Height — размер до масштаба камеры: getBoundingClientRect
@@ -199,8 +200,8 @@ export default function StoryScroll() {
                     src={scene.image}
                     alt=""
                     className="story-art"
-                    width={1600}
-                    height={900}
+                    width={2200}
+                    height={1467}
                     fetchPriority={i === 0 ? "high" : "low"}
                     loading={i === 0 ? "eager" : "lazy"}
                     decoding="async"

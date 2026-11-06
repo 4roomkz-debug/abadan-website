@@ -1,7 +1,8 @@
 // Сцены истории обучения на главной. Тексты — в messages/<locale>/home.json
 // (story.s1…s5), иллюстрации без текста, поэтому одни и те же на трёх языках.
-// Картинки пока эскизы (Gemini Flash, 1K) — промпты и провенанс лежат в
-// .impeccable/mocks/story-drafts/*.png.json; чистовики заменят файлы на месте.
+// Картинки — бумажная перекладка (стиль каруселей «Код кочевника»): композиция
+// gpt-image-2, увеличение до 4K без изменений — Nano Banana Pro. Промпты и
+// провенанс — .impeccable/mocks/story-papercut/*.png.json. Кадр 3:2.
 
 // Полные ключи словаря: типизация next-intl проверяет, что каждый существует.
 export type SceneLinkLabel =
@@ -22,7 +23,7 @@ export type HotspotTag =
   | "leadership" | "coaching" | "corporate" | "schedule" | "hr" | "neftegaz"
   | "safety" | "onsite" | "offline" | "online" | "finansy" | "ibirai" | "ai";
 
-// x, y — в процентах кадра 16:9. Точка ставится на предмет сцены, который
+// x, y — в процентах кадра 3:2. Точка ставится на предмет сцены, который
 // связывает эпоху с тем, что Abadan делает сегодня.
 // align: "right" — точка справа, подпись растёт влево: для меток у правого края кадра.
 export type Hotspot = { tag: HotspotTag; x: number; y: number; href: string; external?: boolean; align?: "right" };
@@ -46,9 +47,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s1",
     hotspots: [
-      { tag: "coaching", x: 66, y: 29, href: "/coaching" },
-      { tag: "leadership", x: 52, y: 60, href: "/treningi/liderstvo" },
-      { tag: "corporate", x: 80, y: 56, href: "#contact", align: "right" },
+      { tag: "coaching", x: 75, y: 42, href: "/coaching", align: "right" },
+      { tag: "leadership", x: 46, y: 66, href: "/treningi/liderstvo" },
+      { tag: "corporate", x: 90, y: 68, href: "#contact", align: "right" },
     ],
     image: "/story/scene-1.webp",
     imageMobile: "/story/scene-1-m.webp",
@@ -62,8 +63,8 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s2",
     hotspots: [
-      { tag: "schedule", x: 60, y: 36, href: "/schedule" },
-      { tag: "hr", x: 84, y: 68, href: "/treningi/hr", align: "right" },
+      { tag: "schedule", x: 52, y: 26, href: "/schedule" },
+      { tag: "hr", x: 88, y: 72, href: "/treningi/hr", align: "right" },
     ],
     image: "/story/scene-2.webp",
     imageMobile: "/story/scene-2-m.webp",
@@ -75,9 +76,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s3",
     hotspots: [
-      { tag: "safety", x: 60, y: 26, href: "/treningi/neftegaz/bezopasnost" },
-      { tag: "neftegaz", x: 63, y: 67, href: "/treningi/neftegaz" },
-      { tag: "onsite", x: 82, y: 42, href: "#contact", align: "right" },
+      { tag: "safety", x: 56, y: 22, href: "/treningi/neftegaz/bezopasnost" },
+      { tag: "neftegaz", x: 60, y: 80, href: "/treningi/neftegaz" },
+      { tag: "onsite", x: 90, y: 44, href: "#contact", align: "right" },
     ],
     image: "/story/scene-3.webp",
     imageMobile: "/story/scene-3-m.webp",
@@ -90,9 +91,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s4",
     hotspots: [
-      { tag: "offline", x: 56, y: 36, href: "/schedule" },
-      { tag: "online", x: 80, y: 45, href: "/schedule", align: "right" },
-      { tag: "finansy", x: 66, y: 66, href: "/treningi/finansy" },
+      { tag: "offline", x: 58, y: 30, href: "/schedule" },
+      { tag: "online", x: 92, y: 44, href: "/schedule", align: "right" },
+      { tag: "finansy", x: 68, y: 72, href: "/treningi/finansy" },
     ],
     image: "/story/scene-4.webp",
     imageMobile: "/story/scene-4-m.webp",
@@ -107,8 +108,8 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s5",
     hotspots: [
-      { tag: "ibirai", x: 61, y: 63, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 78, y: 32, href: "/treningi/ai", align: "right" },
+      { tag: "ibirai", x: 64, y: 70, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ai", x: 84, y: 34, href: "/treningi/ai", align: "right" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
