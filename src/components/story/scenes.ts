@@ -47,7 +47,7 @@ export const STORY_SCENES: StoryScene[] = [
     hotspots: [
       { tag: "coaching", x: 66, y: 29, href: "/coaching" },
       { tag: "leadership", x: 52, y: 60, href: "/treningi/liderstvo" },
-      { tag: "corporate", x: 86, y: 62, href: "#contact" },
+      { tag: "corporate", x: 72, y: 56, href: "#contact" },
     ],
     image: "/story/scene-1.webp",
     imageMobile: "/story/scene-1-m.webp",

@@ -1250,6 +1250,24 @@ section {
 .paper-link { font-weight: 700; color: #00767D; padding: .5rem 0; white-space: nowrap; }
 .paper-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .paper-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.paper-note { font-size: var(--type-small); color: #546569; max-width: 28rem; }
+.paper-kicker { font-size: var(--type-small); font-weight: 700; color: #546569; margin-bottom: 1.25rem; }
+.paper-section-tight { padding: 3rem 0; }
+.paper-box { border: 1px solid #D5DEDE; border-radius: 10px; padding: 2rem; background: #fff; }
+/* Логотипы клиентов: ровный ряд, без каруселей и теней */
+.clients-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .75rem; }
+.clients-strip li { display: flex; align-items: center; justify-content: center; min-height: 4.5rem; border: 1px solid #E3E9E9; border-radius: 8px; background: #fff; padding: .75rem; }
+.clients-logo { max-height: 2.5rem; width: auto; object-fit: contain; }
+/* Цитаты из писем */
+.quotes { display: grid; gap: 1.25rem; }
+.quote { border-top: 2px solid var(--ink); padding-top: 1.25rem; }
+.quote-text { font-size: var(--type-body); line-height: 1.55; color: var(--ink); }
+.quote-sig { margin-top: .9rem; display: grid; gap: .15rem; font-size: var(--type-small); color: #546569; }
+.quote-sig > span:first-child { font-weight: 700; color: var(--ink); }
+@media (min-width: 900px) {
+  .quotes { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .paper-box { padding: 2.5rem; }
+}
 .upcoming-list { border-top: 2px solid var(--ink); }
 .upcoming-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: .25rem 1rem; padding: .9rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-body); line-height: 1.35; }
 .upcoming-row:hover .upcoming-name { color: #00767D; }
@@ -1275,7 +1293,7 @@ section {
 .story-art-wrap { display: block; }
 .story-art-frame { position: relative; }
 /* Метки на рисунке. Без закрепления (телефон) — ряд ссылок под картинкой. */
-.story-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+.story-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
 .story-tag { display: inline-flex; align-items: center; gap: .45rem; min-height: 2rem; padding: .25rem .7rem .25rem .5rem; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper); font-size: var(--type-small); font-weight: 700; color: var(--ink); white-space: nowrap; transition: background-color .15s, color .15s; }
 .story-tag:hover, .story-tag:focus-visible { background: var(--ink); color: var(--paper); }
 .story-tag-dot { width: .55rem; height: .55rem; border-radius: 50%; background: #00767D; box-shadow: 0 0 0 2px var(--paper); flex: none; }

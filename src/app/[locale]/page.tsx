@@ -1,47 +1,39 @@
+import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import AboutTeaser from "@/components/AboutTeaser";
-import Problems from "@/components/Problems";
-import Features from "@/components/Features";
-import Stats from "@/components/Stats";
-import Clients from "@/components/Clients";
-import Testimonials from "@/components/Testimonials";
-import TrainingDirections from "@/components/TrainingDirections";
-import Formats from "@/components/Formats";
-import InternationalPrograms from "@/components/InternationalPrograms";
-import UpcomingTrainings from "@/components/UpcomingTrainings";
-import Gallery from "@/components/Gallery";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import Trainers from "@/components/Trainers";
+import StoryScroll from "@/components/story/StoryScroll";
+import UpcomingList from "@/components/story/UpcomingList";
+import ClientsStrip from "@/components/story/ClientsStrip";
+import Quotes from "@/components/story/Quotes";
 import Contact from "@/components/Contact";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+// Главная — «История обучения» на прокрутке (решение Гани 06.11.2026):
+// пять эпох с метками-ссылками, под ними ближайшие курсы, клиенты, цитаты
+// из писем и форма. Прежние 16 секций заменены; их компоненты пока лежат в
+// src/components на случай повторного использования на других страницах.
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  const t = await getTranslations("home.after");
+
   return (
     <>
       <Header />
-      <Hero />
-      <AboutTeaser />
-      <Problems />
-      <Features />
-      <Stats />
-      <Clients />
-      {/* Логотипы — кто учился, отзывы — что они сказали. Дословно из писем. */}
-      <Testimonials />
-      <TrainingDirections />
-      <Formats />
-      <InternationalPrograms />
-      <UpcomingTrainings />
-      <Gallery />
-      <WhyChooseUs />
-      <Trainers />
-      <Contact />
-      {/* Лид-магнит идёт ПОСЛЕ формы заявки: заявка на обучение — главная
-          конверсия сайта, и бесплатный гайд рядом с ней оттягивал бы часть
-          готовых оставить контакт. Внизу он подбирает тех, кто до заявки
-          не дошёл. */}
-      <Newsletter />
+      <StoryScroll />
+      <div id="after-story">
+        <UpcomingList />
+        <ClientsStrip />
+        <Quotes />
+        <Contact variant="paper" title={t("contactTitle")} subtitle={t("contactSubtitle")} />
+        {/* Лид-магнит идёт ПОСЛЕ формы заявки: заявка — главная конверсия сайта,
+            гайд подбирает тех, кто до неё не дошёл. */}
+        <Newsletter variant="paper" />
+      </div>
       <Footer />
     </>
   );

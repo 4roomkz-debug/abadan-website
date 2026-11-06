@@ -8,14 +8,6 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const IBIRAI_URL = "https://www.ibirai.com/ru";
 
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-    ],
-  },
   async redirects() {
     return [
       { source: "/ibirai", destination: IBIRAI_URL, permanent: true },

@@ -14,9 +14,12 @@ interface NewsletterProps {
    * в личную серию с гайдом. Новый источник — сперва проверить маршрутизацию.
    */
   source?: string;
+  /** paper — бумажный вариант для новой главной: без стекла и градиентов. */
+  variant?: 'default' | 'paper';
 }
 
-export default function Newsletter({ source = 'abadan-kz-footer' }: NewsletterProps) {
+export default function Newsletter({ source = 'abadan-kz-footer', variant = 'default' }: NewsletterProps) {
+  const paper = variant === 'paper';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [state, setState] = useState<SubmitState>('idle');
@@ -58,16 +61,18 @@ export default function Newsletter({ source = 'abadan-kz-footer' }: NewsletterPr
   };
 
   return (
-    <section className="section-subtle py-16">
-      <div className="container mx-auto px-4">
-        <div className="glass-card max-w-3xl mx-auto p-8 md:p-10">
+    <section className={paper ? 'paper-section paper-section-tight' : 'section-subtle py-16'}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={paper ? 'paper-box max-w-7xl mx-auto' : 'glass-card max-w-3xl mx-auto p-8 md:p-10'}>
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-gradient-gold mb-3">
-                Бесплатный гайд
-              </p>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gradient-primary">
-                «{GUIDE_TITLE}»
+              {!paper && (
+                <p className="text-sm font-semibold uppercase tracking-wider text-gradient-gold mb-3">
+                  Бесплатный гайд
+                </p>
+              )}
+              <h2 className={paper ? 'paper-display mb-3' : 'text-2xl md:text-3xl font-bold mb-4 text-gradient-primary'}>
+                {paper ? 'Бесплатный гайд: ' : ''}«{GUIDE_TITLE}»
               </h2>
               {/* Аудитория этого сайта — руководители и HR. Поэтому угол про
                   личную продуктивность управленца, а не про дневник рефлексии. */}

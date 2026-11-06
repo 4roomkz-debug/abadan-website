@@ -204,29 +204,6 @@ export default function StoryScroll() {
                   />
                 </picture>
               </div>
-              {/* Метки на рисунке: что из этой эпохи есть у Abadan сегодня. Нажал — перешёл. */}
-              <ul className="story-tags" aria-label={t("tagsLabel")}>
-                  {scene.hotspots.map((h) => (
-                    <li key={h.tag} style={{ "--hx": h.x / 100, "--hy": h.y / 100 } as React.CSSProperties}>
-                      {h.external ? (
-                        <a href={h.href} target="_blank" rel="noopener" className="story-tag">
-                          <span className="story-tag-dot" aria-hidden="true" />
-                          {t(`tags.${h.tag}`)} ↗
-                        </a>
-                      ) : h.href.startsWith("#") ? (
-                        <a href={h.href} className="story-tag">
-                          <span className="story-tag-dot" aria-hidden="true" />
-                          {t(`tags.${h.tag}`)}
-                        </a>
-                      ) : (
-                        <Link href={h.href} className="story-tag">
-                          <span className="story-tag-dot" aria-hidden="true" />
-                          {t(`tags.${h.tag}`)}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-              </ul>
             </div>
 
             <div className="story-copy">
@@ -268,6 +245,30 @@ export default function StoryScroll() {
                 </div>
               )}
             </div>
+
+            {/* Метки на рисунке: что из этой эпохи есть у Abadan сегодня. Нажал — перешёл. */}
+            <ul className="story-tags" aria-label={t("tagsLabel")}>
+                {scene.hotspots.map((h) => (
+                  <li key={h.tag} style={{ "--hx": h.x / 100, "--hy": h.y / 100 } as React.CSSProperties}>
+                    {h.external ? (
+                      <a href={h.href} target="_blank" rel="noopener" className="story-tag">
+                        <span className="story-tag-dot" aria-hidden="true" />
+                        {t(`tags.${h.tag}`)} ↗
+                      </a>
+                    ) : h.href.startsWith("#") ? (
+                      <a href={h.href} className="story-tag">
+                        <span className="story-tag-dot" aria-hidden="true" />
+                        {t(`tags.${h.tag}`)}
+                      </a>
+                    ) : (
+                      <Link href={h.href} className="story-tag">
+                        <span className="story-tag-dot" aria-hidden="true" />
+                        {t(`tags.${h.tag}`)}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+            </ul>
           </article>
         ))}
 

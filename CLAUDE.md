@@ -49,7 +49,7 @@ All routes below are under `/[locale]`.
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Homepage — single-page landing composed of 16 section components |
+| `/` | Homepage — «История обучения»: scroll-driven story of 5 illustrated eras (`src/components/story/*`), then upcoming courses, client logos, verbatim letter quotes, contact form, lead magnet. Scene data and hotspots: `story/scenes.ts`; texts: `messages/*/home.json`; art: `public/story/` (prompts in `.impeccable/mocks/`). The former 16 section components stay in `src/components/` unused for now. |
 | `/about` | Company page — PGT framework, founder bio, hybrid model |
 | `/welcome` | Founder's open letter to HR directors (not in footer, only header + direct link) |
 | `/schedule` | Training schedule with category filters, modal registration, auto-hides past events |
