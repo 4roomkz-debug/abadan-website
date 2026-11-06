@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { captureAttributionFromUrl } from "@/lib/attribution";
 
@@ -13,14 +14,15 @@ interface Message {
 // Страницы где чат скрыт
 const HIDDEN_PATHS = ["/breakfast"];
 
+const QUICK_ACTIONS = ["trainings", "price", "request"] as const;
+
 export default function AiChat() {
+  const t = useTranslations("common.chat");
+  const locale = useLocale();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Привет! Я Асем — виртуальный помощник Abadan & Co. Могу рассказать про наши тренинги, помочь подобрать программу или просто поболтать 😊 Чем могу помочь?"
-    }
+  const [messages, setMessages] = useState<Message[]>(() => [
+    { role: "assistant", content: t("greeting") },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +78,7 @@ export default function AiChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sessionId: getSessionId(),
+          locale,
           messages: [...messages, userMessage].map(m => ({
             role: m.role,
             content: m.content
@@ -88,10 +91,10 @@ export default function AiChat() {
       if (response.ok) {
         setMessages(prev => [...prev, { role: "assistant", content: data.message }]);
       } else {
-        setMessages(prev => [...prev, { role: "assistant", content: data.error || "Произошла ошибка. Попробуйте позже." }]);
+        setMessages(prev => [...prev, { role: "assistant", content: data.error || t("error") }]);
       }
     } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Произошла ошибка. Попробуйте позже или позвоните нам: +7 702 241 33 88" }]);
+      setMessages(prev => [...prev, { role: "assistant", content: t("errorCall") }]);
     } finally {
       setIsLoading(false);
     }
@@ -119,7 +122,8 @@ export default function AiChat() {
             ? "bg-[#546569]"
             : "bg-gradient-to-br from-[#00767D] to-[#006D77] hover:scale-110"
         }`}
-        aria-label={isOpen ? "Закрыть чат" : "Открыть чат с Асем"}
+        aria-label={isOpen ? t("close") : t("open")}
+        aria-expanded={isOpen}
       >
         {isOpen ? (
           <svg className="w-7 h-7 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +133,7 @@ export default function AiChat() {
           <>
             <Image
               src="/asem-avatar.jpg"
-              alt="Асем — виртуальная помощница"
+              alt={t("avatarAlt")}
               width={192}
               height={192}
               className="absolute inset-0 w-full h-full rounded-full object-cover ring-2 ring-white/50"
@@ -146,8 +150,8 @@ export default function AiChat() {
 
       {/* Badge */}
       {!isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 bg-white px-4 py-2 rounded-full shadow-lg border border-[#00767D]/20 animate-bounce">
-          <span className="text-sm font-medium text-[#2D3A3C]">Спросите Асем 👋</span>
+        <div className="fixed bottom-24 right-6 z-50 bg-white px-4 py-2 rounded-full shadow-lg border border-[#00767D]/20">
+          <span className="text-sm font-medium text-[#2D3A3C]">{t("badge")}</span>
         </div>
       )}
 
@@ -159,7 +163,7 @@ export default function AiChat() {
             <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20 ring-2 ring-white/30">
               <Image
                 src="/asem-avatar.jpg"
-                alt="Асем"
+                alt={t("name")}
                 width={192}
                 height={192}
                 className="w-full h-full object-cover"
@@ -168,12 +172,12 @@ export default function AiChat() {
               />
             </div>
             <div>
-              <h3 className="text-white font-bold">Асем</h3>
-              <p className="text-white/80 text-xs">Виртуальная помощница</p>
+              <h3 className="text-white font-bold">{t("name")}</h3>
+              <p className="text-white/80 text-xs">{t("role")}</p>
             </div>
             <div className="ml-auto flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-[#4ADE80] animate-pulse"></span>
-              <span className="text-white/80 text-xs">онлайн</span>
+              <span className="text-white/80 text-xs">{t("online")}</span>
             </div>
           </div>
 
@@ -213,14 +217,14 @@ export default function AiChat() {
 
           {/* Quick Actions */}
           <div className="px-4 py-2 bg-white border-t border-[#00767D]/10 flex gap-2 overflow-x-auto">
-            {["Какие тренинги есть?", "Сколько стоит?", "Оставить заявку"].map((text) => (
+            {QUICK_ACTIONS.map((key) => (
               <button
-                key={text}
-                onClick={() => sendMessage(text)}
+                key={key}
+                onClick={() => sendMessage(t(`quick.${key}`))}
                 disabled={isLoading}
                 className="px-3 py-1.5 text-xs font-medium text-[#00767D] bg-[#00767D]/5 rounded-full hover:bg-[#00767D]/10 transition-colors whitespace-nowrap disabled:opacity-50"
               >
-                {text}
+                {t(`quick.${key}`)}
               </button>
             ))}
           </div>
@@ -234,13 +238,15 @@ export default function AiChat() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Напишите сообщение..."
+                placeholder={t("placeholder")}
+                aria-label={t("placeholder")}
                 disabled={isLoading}
                 className="flex-1 px-4 py-3 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] text-sm focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all disabled:opacity-50"
               />
               <button
                 onClick={() => sendMessage()}
                 disabled={isLoading || !input.trim()}
+                aria-label={t("send")}
                 className="px-4 py-3 bg-gradient-to-br from-[#F0BB1E] to-[#EBB417] rounded-xl text-[#2D3A3C] font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

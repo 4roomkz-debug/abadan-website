@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Contact() {
+  const t = useTranslations("common.contact");
+  const locale = useLocale();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -33,7 +36,7 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, _elapsed: Date.now() - formLoadedAt }),
+        body: JSON.stringify({ ...formData, locale, _elapsed: Date.now() - formLoadedAt }),
       });
       const result = await response.json().catch(() => null);
 
@@ -70,10 +73,10 @@ export default function Contact() {
           {/* Section header */}
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#2D3A3C]">
-              Начнем <span className="text-gradient-gold">сотрудничество?</span>
+              {t("title")} <span className="text-gradient-gold">{t("titleAccent")}</span>
             </h2>
             <p className="text-xl text-[#7A8B8E] max-w-2xl mx-auto">
-              Получите персональную консультацию и коммерческое предложение
+              {t("subtitle")}
             </p>
           </div>
 
@@ -91,13 +94,13 @@ export default function Contact() {
                       </svg>
                     </div>
                     <h3 className="text-3xl font-extrabold text-[#2D3A3C] mb-3">
-                      Заявка принята
+                      {t("successTitle")}
                     </h3>
                     <p className="text-[#546569] text-lg leading-relaxed max-w-sm mx-auto">
-                      Мы свяжемся с вами в ближайшее время — как правило, в течение рабочего дня.
+                      {t("successText")}
                     </p>
                     <p className="text-sm text-[#7A8B8E] mt-6">
-                      Нужно срочно?{" "}
+                      {t("urgent")}{" "}
                       <a href="tel:+77022413388" className="font-bold text-[#00767D] hover:text-[#009BA3] transition-colors">
                         +7 702 241 33 88
                       </a>
@@ -107,19 +110,19 @@ export default function Contact() {
                       onClick={() => setSubmitStatus("idle")}
                       className="teal-button-outline mt-8 cursor-pointer"
                     >
-                      Отправить ещё одну заявку
+                      {t("another")}
                     </button>
                   </div>
                 ) : (
                   <>
                     <h3 className="text-2xl font-bold text-[#2D3A3C] mb-8">
-                      Запросить программу
+                      {t("formTitle")}
                     </h3>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                          Ваше имя *
+                          {t("name")}
                         </label>
                         <input
                           type="text"
@@ -129,13 +132,13 @@ export default function Contact() {
                           onChange={handleChange}
                           required
                           className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all"
-                          placeholder="Введите ваше имя"
+                          placeholder={t("namePlaceholder")}
                         />
                       </div>
 
                       <div>
                         <label htmlFor="phone" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                          Телефон *
+                          {t("phone")}
                         </label>
                         <input
                           type="tel"
@@ -151,7 +154,7 @@ export default function Contact() {
 
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                          Email *
+                          {t("email")}
                         </label>
                         <input
                           type="email"
@@ -167,7 +170,7 @@ export default function Contact() {
 
                       <div>
                         <label htmlFor="message" className="block text-sm font-medium text-[#546569] mb-2 uppercase tracking-wide">
-                          Комментарий
+                          {t("message")}
                         </label>
                         <textarea
                           id="message"
@@ -176,7 +179,7 @@ export default function Contact() {
                           onChange={handleChange}
                           rows={3}
                           className="w-full px-5 py-4 bg-[#F8FAFA] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#7A8B8E] focus:outline-none focus:border-[#00767D] focus:ring-2 focus:ring-[#00767D]/10 transition-all resize-none"
-                          placeholder="Кратко опишите, что вас интересует..."
+                          placeholder={t("messagePlaceholder")}
                         ></textarea>
                       </div>
 
@@ -197,17 +200,17 @@ export default function Contact() {
                         disabled={isSubmitting}
                         className="w-full gold-button text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isSubmitting ? "Отправка..." : "Отправить запрос"}
+                        {isSubmitting ? t("submitting") : t("submit")}
                       </button>
 
                       {submitStatus === "error" && (
                         <p role="alert" className="text-sm text-[#EF4444] text-center font-medium">
-                          Произошла ошибка. Попробуйте ещё раз или позвоните нам.
+                          {t("error")}
                         </p>
                       )}
 
                       <p className="text-xs text-[#7A8B8E] text-center">
-                        Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                        {t("consent")}
                       </p>
                     </form>
                   </>
@@ -226,7 +229,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">Телефон</p>
+                    <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">{t("phoneLabel")}</p>
                     <a href="tel:+77022413388" className="text-2xl font-bold text-[#2D3A3C] hover:text-[#00767D] transition-colors">
                       +7 702 241 33 88
                     </a>
@@ -242,7 +245,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">Email</p>
+                    <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">{t("emailLabel")}</p>
                     <a href="mailto:i.islambek@abadan.kz" className="text-2xl font-bold text-[#2D3A3C] hover:text-[#00767D] transition-colors">
                       i.islambek@abadan.kz
                     </a>
@@ -258,14 +261,14 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">WhatsApp</p>
+                    <p className="text-sm text-[#7A8B8E] font-medium uppercase tracking-wide">{t("whatsappLabel")}</p>
                     <a
                       href="https://wa.me/77022413388"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-2xl font-bold text-[#2D3A3C] hover:text-[#25D366] transition-colors"
                     >
-                      Написать напрямую
+                      {t("whatsappAction")}
                     </a>
                   </div>
                 </div>
@@ -280,8 +283,8 @@ export default function Contact() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <p className="font-bold text-[#2D3A3C]">Консультация</p>
-                  <p className="text-sm text-[#7A8B8E]">30 минут бесплатно</p>
+                  <p className="font-bold text-[#2D3A3C]">{t("consultTitle")}</p>
+                  <p className="text-sm text-[#7A8B8E]">{t("consultText")}</p>
                 </div>
 
                 <div className="card p-6 text-center space-y-3">
@@ -290,8 +293,8 @@ export default function Contact() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <p className="font-bold text-[#2D3A3C]">КП в день запроса</p>
-                  <p className="text-sm text-[#7A8B8E]">Быстрый расчёт</p>
+                  <p className="font-bold text-[#2D3A3C]">{t("quoteTitle")}</p>
+                  <p className="text-sm text-[#7A8B8E]">{t("quoteText")}</p>
                 </div>
               </div>
             </div>

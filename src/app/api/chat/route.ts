@@ -120,6 +120,7 @@ async function sendChatLead(input: {
   email: string | null;
   context: string;
   sessionId: string | null;
+  locale: SiteLocale;
   attribution?: Attribution;
 }) {
   if (isUnifiedLeadWebhookConfigured()) {
@@ -134,6 +135,7 @@ async function sendChatLead(input: {
           channel: "asem_chat",
           raw_message: input.context,
           session_id: input.sessionId ?? undefined,
+          site_locale: input.locale,
           ...(input.attribution ? { attribution: input.attribution } : {}),
         },
       });
@@ -148,12 +150,16 @@ async function sendChatLead(input: {
   }
 
   await sendLeadToTelegram(
-    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone ?? "—"}\n📧 Почта: ${input.email ?? "—"}\n\n💬 Диалог:\n${input.context}`
+    `👤 Имя: ${input.name}\n📞 Телефон: ${input.phone ?? "—"}\n📧 Почта: ${input.email ?? "—"}\n🌐 Язык сайта: ${input.locale}\n\n💬 Диалог:\n${input.context}`
   );
 }
 
+type SiteLocale = "ru" | "kk" | "en";
+const SITE_LOCALES: readonly SiteLocale[] = ["ru", "kk", "en"];
+const LOCALE_NAME: Record<SiteLocale, string> = { ru: "русском", kk: "казахском", en: "английском" };
+
 // Генерируем промпт на основе базы знаний
-const generateSystemPrompt = () => {
+const generateSystemPrompt = (locale: SiteLocale) => {
   const eventIsUpcoming = Date.parse(EVENTS.businessBreakfastAiHr.endsAt) > Date.now();
   const trainingsText = TRAININGS.map(
     (cat) =>
@@ -174,6 +180,7 @@ const generateSystemPrompt = () => {
   const contact = contactWindow();
 
   return `Отвечай на таком же языке на котором к тебе обратились.
+Посетитель открыл сайт на ${LOCALE_NAME[locale]} языке: пока по его сообщениям язык не ясен, отвечай на ${LOCALE_NAME[locale]}.
 
 Ты ${AI_PERSONA.name} — ${AI_PERSONA.role} компании ${COMPANY_INFO.name}.
 
@@ -281,6 +288,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Bad request" }, { status: 400 });
     }
     const messages: ChatMessage[] = body.messages;
+    const locale: SiteLocale = SITE_LOCALES.includes(body?.locale) ? body.locale : "ru";
     const sessionId =
       typeof body?.sessionId === "string" && SESSION_ID_RE.test(body.sessionId)
         ? body.sessionId
@@ -317,6 +325,7 @@ export async function POST(request: Request) {
           email: contactInfo.email,
           context: formatTranscript(messages, AI_PERSONA.name),
           sessionId,
+          locale,
           attribution: parseAttributionCookie(request.headers.get("cookie")),
         });
       } catch (err) {
@@ -333,7 +342,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model: DEEPSEEK_MODEL,
-        messages: [{ role: "system", content: generateSystemPrompt() }, ...messages],
+        messages: [{ role: "system", content: generateSystemPrompt(locale) }, ...messages],
         stream: false,
         max_tokens: 250,
         temperature: 0.9,
