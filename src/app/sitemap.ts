@@ -1,165 +1,60 @@
 import { MetadataRoute } from "next";
 import { ARTICLES } from "@/data/blog";
+import { INDEXED_LOCALES, isRuOnlyPath, type Locale } from "@/i18n/routing";
+import { localeUrl } from "@/lib/seo";
 
+type Entry = {
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+};
+
+// /welcome и /breakfast в sitemap не входят намеренно: письмо открывают по
+// прямой ссылке, презентацию показывают на мероприятии.
+const PAGES: Entry[] = [
+  { path: "/", changeFrequency: "weekly", priority: 1 },
+  { path: "/about", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/schedule", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/coaching", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/projects", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/events/business-breakfast-ai-hr", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/treningi/neftegaz", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/neftegaz/burenie", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/treningi/neftegaz/dobycha", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/treningi/neftegaz/pererabotka", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/treningi/neftegaz/bezopasnost", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/treningi/neftegaz/transport", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/treningi/neftegaz/atyrau", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/neftegaz/aktau", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/hr", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/pravo", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/finansy", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/liderstvo", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/treningi/ai", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/kejsy", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
+  ...ARTICLES.map((article) => ({
+    path: `/blog/${article.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  })),
+];
+
+// Каждая страница — на каждом языке, открытом для индексации (INDEXED_LOCALES),
+// с hreflang-альтернативами. Разделы только на русском — только /ru.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.abadan.kz";
+  const lastModified = new Date();
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/schedule`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/coaching`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/ibirai`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/ibirai/soft-skills`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/ibirai/messenger`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/ibirai/neftegaz`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/events/business-breakfast-ai-hr`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/burenie`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/dobycha`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/pererabotka`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/bezopasnost`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/transport`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/atyrau`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/neftegaz/aktau`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/hr`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/pravo`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/finansy`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/liderstvo`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/treningi/ai`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/kejsy`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    ...ARTICLES.map((article) => ({
-      url: `${baseUrl}/blog/${article.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
-  ];
+  return PAGES.flatMap(({ path, changeFrequency, priority }) => {
+    const locales: readonly Locale[] = isRuOnlyPath(path) ? ["ru"] : INDEXED_LOCALES;
+    const languages = Object.fromEntries(locales.map((l) => [l, localeUrl(l, path)]));
+
+    return locales.map((locale) => ({
+      url: localeUrl(locale, path),
+      lastModified,
+      changeFrequency,
+      priority,
+      alternates: { languages },
+    }));
+  });
 }

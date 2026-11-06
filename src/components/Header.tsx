@@ -1,27 +1,49 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link } from "@/i18n/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
+import { isRuOnlyPath } from "@/i18n/routing";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const educationLinks = [
-  { href: "/treningi/hr", label: "HR и кадры" },
-  { href: "/treningi/finansy", label: "Финансы и учёт" },
-  { href: "/treningi/pravo", label: "Трудовое право" },
-  { href: "/treningi/liderstvo", label: "Лидерство" },
-  { href: "/treningi/neftegaz", label: "Нефтегаз" },
-  { href: "/treningi/ai", label: "ИИ для бизнеса" },
-];
+  { href: "/treningi/hr", key: "hr" },
+  { href: "/treningi/finansy", key: "finansy" },
+  { href: "/treningi/pravo", key: "pravo" },
+  { href: "/treningi/liderstvo", key: "liderstvo" },
+  { href: "/treningi/neftegaz", key: "neftegaz" },
+  { href: "/treningi/ai", key: "ai" },
+] as const;
 
 const companyLinks = [
-  { href: "/about", label: "О компании" },
-  { href: "/kejsy", label: "Кейсы" },
-  { href: "/blog", label: "Блог" },
-  { href: "/projects", label: "Проекты" },
-];
+  { href: "/about", key: "about" },
+  { href: "/kejsy", key: "kejsy" },
+  { href: "/blog", key: "blog" },
+  { href: "/projects", key: "projects" },
+] as const;
+
+// ibirAi — отдельный продукт со своим сайтом (решение Гани 06.11.2026).
+const IBIRAI_URL = "https://www.ibirai.com/ru";
 
 export default function Header() {
+  const t = useTranslations("common.header");
+  const tNav = useTranslations("common.nav");
+  const locale = useLocale();
   const pathname = usePathname();
+
+  // На kk/en помечаем разделы, которые пока есть только на русском.
+  const navLabel = (href: string, key: Parameters<typeof tNav>[0]) =>
+    locale !== "ru" && isRuOnlyPath(href) ? (
+      <>
+        {tNav(key)}{" "}
+        <span title={t("ruOnlyTitle")} className="text-[10px] font-semibold text-[#7A8B8E]">
+          RU
+        </span>
+      </>
+    ) : (
+      tNav(key)
+    );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEducationOpen, setIsEducationOpen] = useState(false);
   const [isCompanyOpen, setIsCompanyOpen] = useState(false);
@@ -91,7 +113,7 @@ export default function Header() {
                   : "text-[#546569] hover:text-[#00767D]"
               }`}
             >
-              Главная
+              {t("home")}
             </Link>
 
             {/* Обучение dropdown */}
@@ -108,7 +130,7 @@ export default function Header() {
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Обучение
+                {t("education")}
                 <svg
                   className={`w-3.5 h-3.5 transition-transform ${isEducationOpen ? "rotate-180" : ""}`}
                   fill="none"
@@ -127,7 +149,7 @@ export default function Header() {
               >
                 <div className="bg-white rounded-xl shadow-xl border border-[#00767D]/10 py-2 min-w-[200px]">
                   <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#7A8B8E]">
-                    Тренинги
+                    {t("trainingsHeading")}
                   </div>
                   {educationLinks.map((link) => (
                     <Link
@@ -140,7 +162,7 @@ export default function Header() {
                           : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
                       }`}
                     >
-                      {link.label}
+                      {navLabel(link.href, link.key)}
                     </Link>
                   ))}
                   <div className="border-t border-[#00767D]/10 my-1" />
@@ -153,7 +175,7 @@ export default function Header() {
                         : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
                     }`}
                   >
-                    Коучинг
+                    {t("coaching")}
                   </Link>
                 </div>
               </div>
@@ -168,7 +190,7 @@ export default function Header() {
                   : "text-[#546569] hover:text-[#00767D]"
               }`}
             >
-              Расписание
+              {t("schedule")}
             </Link>
 
             {/* Компания dropdown */}
@@ -185,7 +207,7 @@ export default function Header() {
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Компания
+                {t("company")}
                 <svg
                   className={`w-3.5 h-3.5 transition-transform ${isCompanyOpen ? "rotate-180" : ""}`}
                   fill="none"
@@ -214,30 +236,36 @@ export default function Header() {
                           : "text-[#546569] hover:text-[#00767D] hover:bg-[#f0f9f9]"
                       }`}
                     >
-                      {link.label}
+                      {navLabel(link.href, link.key)}
                     </Link>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* ibirAi button — visually separated with extra horizontal margin */}
-            <Link
-              href="/ibirai"
-              className="mx-4 px-3 py-1.5 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center gap-1.5"
+            {/* ibirAi — внешняя ссылка на отдельный сайт */}
+            <a
+              href={IBIRAI_URL}
+              target="_blank"
+              rel="noopener"
+              title={t("ibiraiTitle")}
+              className="py-2 text-sm font-medium text-[#546569] hover:text-[#00767D] transition-colors flex items-center gap-1"
             >
-              <span>🤖</span>
               ibirAi
-            </Link>
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M9 7h8v8" />
+              </svg>
+            </a>
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Language + CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            <LanguageSwitcher />
             <Link
               href="/#contact"
               className="px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg hover:shadow-lg transition-all text-sm"
             >
-              Оставить заявку
+              {t("cta")}
             </Link>
           </div>
 
@@ -245,7 +273,8 @@ export default function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-[#2D3A3C]"
-            aria-label="Toggle menu"
+            aria-label={t("toggleMenu")}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -272,7 +301,7 @@ export default function Header() {
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Главная
+                {t("home")}
               </Link>
 
               {/* Mobile Обучение accordion */}
@@ -284,7 +313,7 @@ export default function Header() {
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Обучение
+                {t("education")}
                 <svg
                   className={`w-4 h-4 transition-transform ${isMobileEducationOpen ? "rotate-180" : ""}`}
                   fill="none"
@@ -307,7 +336,7 @@ export default function Header() {
                           : "text-[#546569] hover:text-[#00767D]"
                       }`}
                     >
-                      {link.label}
+                      {navLabel(link.href, link.key)}
                     </Link>
                   ))}
                   <div className="border-t border-[#00767D]/10 my-1" />
@@ -320,7 +349,7 @@ export default function Header() {
                         : "text-[#546569] hover:text-[#00767D]"
                     }`}
                   >
-                    Коучинг
+                    {t("coaching")}
                   </Link>
                 </div>
               )}
@@ -335,7 +364,7 @@ export default function Header() {
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Расписание
+                {t("schedule")}
               </Link>
 
               {/* Mobile Компания accordion */}
@@ -347,7 +376,7 @@ export default function Header() {
                     : "text-[#546569] hover:text-[#00767D]"
                 }`}
               >
-                Компания
+                {t("company")}
                 <svg
                   className={`w-4 h-4 transition-transform ${isMobileCompanyOpen ? "rotate-180" : ""}`}
                   fill="none"
@@ -370,28 +399,34 @@ export default function Header() {
                           : "text-[#546569] hover:text-[#00767D]"
                       }`}
                     >
-                      {link.label}
+                      {navLabel(link.href, link.key)}
                     </Link>
                   ))}
                 </div>
               )}
 
-              {/* ibirAi button */}
-              <Link
-                href="/ibirai"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#00A3AD] text-white font-semibold rounded-lg text-center text-sm hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              {/* ibirAi — внешняя ссылка на отдельный сайт */}
+              <a
+                href={IBIRAI_URL}
+                target="_blank"
+                rel="noopener"
+                title={t("ibiraiTitle")}
+                className="text-sm font-medium py-2 text-[#546569] hover:text-[#00767D] transition-colors flex items-center gap-1"
               >
-                <span>🤖</span>
                 ibirAi
-              </Link>
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M9 7h8v8" />
+                </svg>
+              </a>
+
+              <LanguageSwitcher className="-ml-2" />
 
               <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="mt-2 px-4 py-2 bg-gradient-to-r from-[#F0BB1E] to-[#EBB417] text-[#2D3A3C] font-semibold rounded-lg text-center text-sm"
               >
-                Оставить заявку
+                {t("cta")}
               </Link>
             </nav>
           </div>

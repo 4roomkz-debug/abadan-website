@@ -16,6 +16,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^12.29.2",
     "next": "16.3.8",
+    "next-intl": "4.14",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "swiper": "^12.1.4"

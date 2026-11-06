@@ -1,0 +1,43 @@
+import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
+import { routing } from "@/i18n/routing";
+import { withLocale } from "@/lib/seo";
+
+const baseMetadata: Metadata = {
+  title: "Коучинг первых руководителей — Индивидуальная программа",
+  description: "Авторская программа коучинга для CEO, директоров и первых лиц. 7 сессий за 7-10 недель. Выход из операционки, делегирование, команда. Гани Абадан — тренер с 2012 года, лично обучил более 10 000 человек.",
+  keywords: [
+    "коучинг руководителей Казахстан",
+    "executive coaching Алматы",
+    "коуч для директоров",
+    "бизнес-коучинг Астана",
+    "развитие лидерства",
+    "коучинг CEO",
+    "индивидуальный коучинг",
+    "коуч для первых лиц",
+    "лидерский коучинг Казахстан",
+    "выход из операционки",
+  ],
+  openGraph: {
+    title: "Коучинг первых руководителей — Гани Абадан",
+    description: "Вы построили компанию. Но кто построит вас? 7 сессий, которые меняют стиль управления, команду и результаты.",
+    url: "https://www.abadan.kz/ru/coaching",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://www.abadan.kz/ru/coaching",
+  },
+};
+
+export async function generateMetadata({ params }: LayoutProps<"/[locale]/coaching">): Promise<Metadata> {
+  const { locale } = await params;
+  return hasLocale(routing.locales, locale) ? withLocale(baseMetadata, locale, "/coaching") : baseMetadata;
+}
+
+export default function CoachingLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return children;
+}

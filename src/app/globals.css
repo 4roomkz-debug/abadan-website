@@ -50,7 +50,7 @@
   --color-accent-light: var(--accent-light);
   --color-accent-dark: var(--accent-dark);
   --color-gold: var(--gold);
-  --font-sans: var(--font-manrope);
+  --font-sans: var(--font-onest);
 }
 
 * {
@@ -69,7 +69,10 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  /* Прямо на переменную next/font: --font-sans объявлена в @theme inline, а такие
+     переменные Tailwind в CSS не выводит — из-за этого до 06.11.2026 правило было
+     недействительным и сайт рисовался системным шрифтом вместо Manrope. */
+  font-family: var(--font-onest), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;

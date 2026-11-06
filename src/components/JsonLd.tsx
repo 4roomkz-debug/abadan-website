@@ -91,7 +91,7 @@ export function WebSiteJsonLd() {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://www.abadan.kz/schedule?search={search_term_string}",
+        urlTemplate: "https://www.abadan.kz/ru/schedule?search={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -111,7 +111,7 @@ export function CourseListJsonLd() {
     "@type": "ItemList",
     name: "Открытые тренинги Abadan & Co.",
     description: "Расписание бизнес-тренингов и технических семинаров на 2026 год",
-    url: "https://www.abadan.kz/schedule",
+    url: "https://www.abadan.kz/ru/schedule",
     numberOfItems: 172,
     itemListElement: [
       {

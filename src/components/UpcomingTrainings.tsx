@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { SCHEDULE_DATA, MONTHS, parseDateForSort, type ScheduleItem } from "@/data/schedule";
 
 const subscribeToHydration = () => () => {};

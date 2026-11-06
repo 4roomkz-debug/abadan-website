@@ -1,0 +1,46 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Кейсы корпоративного обучения — Abadan & Co.",
+  description:
+    "Реальные результаты обучения в крупнейших компаниях Казахстана. КазМунайГаз, Kaspi, Самрук-Казына и другие. 50 000+ обученных специалистов с 2015 года.",
+  keywords: [
+    "кейсы обучения Казахстан",
+    "корпоративное обучение результаты",
+    "Abadan кейсы",
+    "тренинги для нефтегаза",
+    "HR обучение кейсы",
+  ],
+  openGraph: {
+    title: "Кейсы корпоративного обучения — Abadan & Co.",
+    description:
+      "Реальные результаты обучения в крупнейших компаниях Казахстана.",
+    url: "https://www.abadan.kz/ru/kejsy",
+    type: "website",
+  },
+  alternates: { canonical: "https://www.abadan.kz/ru/kejsy" },
+};
+
+export default function KejsyLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz/ru" },
+      { "@type": "ListItem", position: 2, name: "Кейсы", item: "https://www.abadan.kz/ru/kejsy" },
+    ],
+  };
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {children}
+    </>
+  );
+}
