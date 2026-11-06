@@ -119,8 +119,8 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s5",
     hotspots: [
-      { tag: "ibirai", x: 66, y: 62, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 34, y: 28, href: "/treningi/ai" },
+      { tag: "ibirai", x: 46, y: 58, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ai", x: 44, y: 30, href: "/treningi/ai" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
