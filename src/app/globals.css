@@ -1225,3 +1225,90 @@ section {
     animation: none;
   }
 }
+
+/* ================================
+   STORY — «История обучения» на главной
+   Бумажный мир: белая фактурная бумага, графитовый текст, бирюза — ссылки и
+   граф, горчица — импульсы и главная кнопка. Без JS, на телефоне и при
+   reduced-motion сцены идут обычным потоком; [data-pinned] включает GSAP.
+   ================================ */
+.story {
+  --paper: #FAFAF7;
+  --ink: #14282A;
+  --ink-soft: #3E4F52;
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+}
+.story-stage { position: relative; }
+.story-scene { position: relative; display: grid; gap: 1.25rem; padding: 2.5rem 1rem 3rem; }
+.story-art-wrap { display: block; }
+.story-art { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3; object-fit: cover; object-position: 78% center; }
+/* Бумага под текстом: растушёвка с левого края картинки, чтобы текст не ложился
+   на детальный рисунок и обрез кадра не давал жёсткую границу. */
+.story-art-wrap { position: relative; }
+.story-copy { max-width: 34rem; }
+.story-title {
+  font-size: clamp(2.1rem, 4.6vw, 4.4rem); line-height: 1.02; font-weight: 800;
+  letter-spacing: -0.03em; text-wrap: balance;
+}
+.story-text { margin-top: 1.1rem; font-size: clamp(1.05rem, 1.35vw, 1.3rem); line-height: 1.5; color: var(--ink-soft); max-width: 32rem; }
+.story-source { margin-top: .6rem; font-size: .85rem; color: #546569; }
+.story-source a { text-decoration: underline; text-underline-offset: 3px; }
+.story-actions { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+.story-btn { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0 1.5rem; border-radius: 6px; font-weight: 700; font-size: 1.05rem; transition: background-color .2s, color .2s, border-color .2s; }
+.story-btn-primary { background: #F0BB1E; color: var(--ink); }
+.story-btn-primary:hover { background: #EBB417; }
+.story-btn-ghost { border: 2px solid var(--ink); color: var(--ink); }
+.story-btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.story-btn-dark { background: var(--ink); color: var(--paper); min-height: 2.75rem; font-size: .95rem; }
+.story-links { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-weight: 700; }
+.story-links a { color: #00767D; padding: .35rem 0; display: inline-block; text-underline-offset: 4px; }
+.story-links a:hover { text-decoration: underline; }
+.story-upcoming { margin-top: 1.4rem; border-top: 2px solid var(--ink); }
+.story-upcoming-label { font-size: .85rem; font-weight: 700; padding: .7rem 0 .2rem; color: #546569; }
+.story-upcoming li a { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: .65rem 0; border-bottom: 1px solid #D5DEDE; font-size: .98rem; }
+.story-upcoming-date { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
+.story-fog, .story-graph, .story-eras { display: none; }
+.story-bar {
+  position: sticky; bottom: 1rem; z-index: 30; margin: 0 auto; width: fit-content;
+  display: flex; align-items: center; gap: 1rem; padding: .4rem .5rem .4rem .4rem;
+  background: var(--paper); border: 1px solid #D5DEDE; border-radius: 10px;
+  box-shadow: 0 10px 24px -14px rgba(20, 40, 42, .35);
+}
+.story-skip { font-weight: 600; font-size: .95rem; color: var(--ink-soft); padding: .5rem .6rem; }
+
+/* Десктоп с анимацией: сцены закреплены и сменяют друг друга через туман. */
+.story[data-pinned="true"] .story-stage { height: 100vh; overflow: hidden; }
+.story[data-pinned="true"] .story-scene { position: absolute; inset: 0; display: block; padding: 0; }
+.story[data-pinned="true"] .story-art-wrap { position: absolute; inset: 0 0 0 26%; overflow: hidden; }
+.story[data-pinned="true"] .story-art { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: right center; transform-origin: 70% 55%; }
+.story[data-pinned="true"] .story-art-wrap::after {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 46%; pointer-events: none;
+  background: linear-gradient(90deg, var(--paper) 0%, rgba(250,250,247,.92) 30%, rgba(250,250,247,0) 100%);
+}
+.story[data-pinned="true"] .story-copy { position: absolute; left: 6vw; top: 50%; transform: translateY(-50%); width: min(36rem, 38vw); }
+.story[data-pinned="true"] .story-fog { display: block; position: absolute; inset: 0; pointer-events: none; opacity: 0; visibility: hidden; }
+.story-fog span {
+  position: absolute; border-radius: 50%; background: radial-gradient(closest-side, rgba(250,250,247,.98), rgba(250,250,247,.75) 55%, rgba(250,250,247,0));
+  filter: blur(18px);
+}
+.story-fog span:nth-child(1) { width: 70vw; height: 70vh; left: -10vw; top: 10vh; }
+.story-fog span:nth-child(2) { width: 80vw; height: 80vh; left: 30vw; top: -10vh; }
+.story-fog span:nth-child(3) { width: 60vw; height: 60vh; left: 50vw; top: 45vh; }
+.story-fog span:nth-child(4) { width: 90vw; height: 70vh; left: 5vw; top: 40vh; }
+.story[data-pinned="true"] .story-graph { display: block; position: absolute; right: 2.5vw; top: 5.5rem; width: clamp(140px, 13vw, 220px); height: auto; pointer-events: none; }
+.story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: 6vw; bottom: 1.6rem; gap: .25rem; }
+.story-eras button { font-size: .85rem; font-weight: 700; color: #7A8B8E; padding: .5rem .75rem; border-bottom: 2px solid transparent; font-variant-numeric: tabular-nums; cursor: pointer; }
+.story-eras button:hover { color: var(--ink); }
+.story-eras button.is-active { color: var(--ink); border-color: #F0BB1E; }
+.story[data-pinned="true"] .story-bar { position: fixed; left: 50%; bottom: 1.5rem; margin: 0; transform: translate(-50%, 1rem); opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; }
+.story[data-pinned="true"] .story-bar.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+@media (min-width: 900px) {
+  .story-scene { grid-template-columns: minmax(0, 36rem) 1fr; align-items: center; padding: 4rem 6vw; }
+  .story-art-wrap { order: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-impulse { display: none; }
+}

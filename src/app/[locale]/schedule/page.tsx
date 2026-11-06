@@ -3,21 +3,12 @@
 import { useState, useMemo, useSyncExternalStore } from "react";
 import { Link } from "@/i18n/navigation";
 import Header from "@/components/Header";
-import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort } from "@/data/schedule";
+import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, isEventPassed } from "@/data/schedule";
 import { submitContactForm } from "@/lib/contactForm";
 
 const subscribeToHydration = () => () => {};
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
-
-function isEventPassed(date: string, month: string, currentDate: Date): boolean {
-  const currentYear = currentDate.getFullYear();
-  const monthIndex = MONTHS.indexOf(month);
-  const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
-  const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
-  const eventDate = new Date(currentYear, monthIndex, endDay, 23, 59, 59);
-  return currentDate > eventDate;
-}
 
 export default function SchedulePage() {
   const [categoryFilter, setCategoryFilter] = useState<"all" | "business" | "technical">("all");

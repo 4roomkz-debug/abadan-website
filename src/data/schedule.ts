@@ -1748,3 +1748,19 @@ export function parseDateForSort(date: string, month: string): number {
   return monthIndex * 100 + day;
 }
 
+// Курс прошёл, если позади последний день диапазона («8-9 января» → 9 января).
+// Год — текущий: SCHEDULE_DATA описывает один календарный год.
+export function isEventPassed(date: string, month: string, now: Date): boolean {
+  const monthIndex = MONTHS.indexOf(month);
+  const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
+  const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
+  return now > new Date(now.getFullYear(), monthIndex, endDay, 23, 59, 59);
+}
+
+// Ближайшие ещё не прошедшие курсы, по дате начала.
+export function getUpcomingTrainings(count: number, now: Date): ScheduleItem[] {
+  return SCHEDULE_DATA
+    .filter((item) => !isEventPassed(item.date, item.month, now))
+    .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month))
+    .slice(0, count);
+}

@@ -2,32 +2,11 @@
 
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { Link } from "@/i18n/navigation";
-import { SCHEDULE_DATA, MONTHS, parseDateForSort, type ScheduleItem } from "@/data/schedule";
+import { getUpcomingTrainings } from "@/data/schedule";
 
 const subscribeToHydration = () => () => {};
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
-
-// Check if event date has passed (same logic as schedule page)
-function isEventPassed(date: string, month: string, now: Date): boolean {
-  const currentYear = now.getFullYear();
-  const monthIndex = MONTHS.indexOf(month);
-
-  // Extract the last day from date range (e.g., "8-9 января" -> 9)
-  const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
-  const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
-
-  const eventDate = new Date(currentYear, monthIndex, endDay, 23, 59, 59);
-  return now > eventDate;
-}
-
-// Фильтрация только будущих тренингов
-function getUpcomingTrainings(count: number, now: Date): ScheduleItem[] {
-  return SCHEDULE_DATA
-    .filter(item => !isEventPassed(item.date, item.month, now))
-    .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month))
-    .slice(0, count);
-}
 
 export default function UpcomingTrainings() {
   const [activeCategory, setActiveCategory] = useState<"all" | "business" | "technical">("all");
