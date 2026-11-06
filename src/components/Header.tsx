@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
@@ -99,8 +100,8 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 text-[#2D3A3C] font-bold text-xl">
-            <span className="text-[#00767D]">Abadan</span> & Co.
+          <Link href="/" className="flex items-center" aria-label="Abadan & Co. — People. Growth. Technology.">
+            <Image src="/images/logo.png" alt="Abadan & Co. — People. Growth. Technology." width={651} height={140} priority className="h-9 md:h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}

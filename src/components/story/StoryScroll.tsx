@@ -101,13 +101,13 @@ export default function StoryScroll() {
         if (busy || target === shown || !smoke || !smoke2 || !wash) return;
         busy = true;
         gsap.timeline({ onComplete: () => { busy = false; transition(); } })
-          .fromTo(smoke, { autoAlpha: 0, yPercent: 55, scale: 1 }, { autoAlpha: 1, yPercent: 0, scale: 1.3, duration: 0.55, ease: "power2.out" }, 0)
-          .fromTo(smoke2, { autoAlpha: 0, yPercent: 70, scale: 1.1 }, { autoAlpha: 1, yPercent: 5, scale: 1.45, duration: 0.55, ease: "power2.out" }, 0.08)
-          .to(wash, { autoAlpha: 1, duration: 0.22 }, 0.42)
-          .call(() => reveal(target), [], 0.64)
-          .to(wash, { autoAlpha: 0, duration: 0.3 }, 0.68)
-          .to(smoke, { autoAlpha: 0, yPercent: -45, scale: 1.6, duration: 0.65, ease: "power1.inOut" }, 0.62)
-          .to(smoke2, { autoAlpha: 0, yPercent: -40, scale: 1.7, duration: 0.65, ease: "power1.inOut" }, 0.7);
+          .fromTo(smoke, { autoAlpha: 0, yPercent: 45, scale: 1 }, { autoAlpha: 1, yPercent: 0, scale: 1.25, duration: 0.9, ease: "sine.inOut" }, 0)
+          .fromTo(smoke2, { autoAlpha: 0, yPercent: 60, scale: 1.1 }, { autoAlpha: 1, yPercent: 5, scale: 1.4, duration: 0.9, ease: "sine.inOut" }, 0.15)
+          .to(wash, { autoAlpha: 1, duration: 0.35, ease: "sine.inOut" }, 0.7)
+          .call(() => reveal(target), [], 1.05)
+          .to(wash, { autoAlpha: 0, duration: 0.45, ease: "sine.inOut" }, 1.1)
+          .to(smoke, { autoAlpha: 0, yPercent: -40, scale: 1.5, duration: 0.9, ease: "sine.inOut" }, 1.0)
+          .to(smoke2, { autoAlpha: 0, yPercent: -35, scale: 1.6, duration: 0.9, ease: "sine.inOut" }, 1.1);
       };
 
       // Наезд камеры внутри каждой эпохи — привязан к прокрутке.
@@ -117,7 +117,7 @@ export default function StoryScroll() {
           trigger: el,
           pin: el.querySelector(".story-stage"),
           start: "top top",
-          end: `+=${n * 100}%`,
+          end: `+=${n * 70}%`,
           scrub: 0.6,
           onUpdate: (self) => {
             const i = Math.min(n - 1, Math.floor(self.progress * n));
@@ -138,8 +138,8 @@ export default function StoryScroll() {
         },
       });
       scenes.forEach((scene, i) => {
-        // Рисунок крупнее кадра с самого начала, наезд — ещё на 14%.
-        tl.fromTo([frames[i], tagLayers[i]], { scale: 1.16, xPercent: 4 }, { scale: 1.3, xPercent: 0, duration: 1 }, i);
+        // Рисунок помещается в экран целиком; наезд лёгкий, чтобы не резать края.
+        tl.fromTo([frames[i], tagLayers[i]], { scale: 1, xPercent: 0 }, { scale: 1.08, xPercent: 0, duration: 1 }, i);
         tl.fromTo(scene.querySelector(".story-copy"), { y: 24 }, { y: -12, duration: 1 }, i);
       });
 
