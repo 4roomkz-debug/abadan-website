@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "input": "3-factory-v2.png",
+  "prompt": "Change ONLY: make the young apprentices a mix of Kazakh and Slavic young men of the 1920s, mostly Kazakh, keep their caps and work clothes. Keep identical: composition and crop, camera angle, poses, lighting, colour palette, the watercolour-on-white-paper style, the bare paper on the left, background. Do not add new objects. No text."
+}

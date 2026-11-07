@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3-pro-image",
+  "input": "5-future-gpt-v1-4k-eyes2.png",
+  "prompt": "Change ONLY: replace the translucent ghost-like virtual mentor figure and its floating diagram with a sphere made of small flat paper dots connected by thin lines, like a constellation network: deep petrol teal dots, a few mustard gold dots, thin blue-grey lines, floating in the air beside the worker's phone at his chest height, about the size of his head and a half, cut from paper with soft shadows. Keep identical: the worker, his pose, his phone, the pump jacks, sky, ground, colours, the paper-cutout style and grain, the plain paper on the left. No text."
+}

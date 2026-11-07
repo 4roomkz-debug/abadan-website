@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "input": "5-future-v1.png",
+  "prompt": "Change ONLY: make the faint line-drawn virtual mentor figure a Kazakh man in his forties in a work jacket, still drawn as translucent fine lines. Keep identical: composition and crop, camera angle, poses, lighting, colour palette, the watercolour-on-white-paper style, the bare paper on the left, background. Do not add new objects. No text."
+}

@@ -42,3 +42,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# impeccable: бриф, снимки критики и промпты картинок — в репозиторий; тяжёлые растры и каталожные карточки — нет
+.impeccable/mocks/**/*.png
+.impeccable/mocks/**/*.jpg
+.impeccable/qb/
+.impeccable/live/
+.impeccable/mocks/**/*.mp4

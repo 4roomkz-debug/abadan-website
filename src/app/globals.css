@@ -50,7 +50,7 @@
   --color-accent-light: var(--accent-light);
   --color-accent-dark: var(--accent-dark);
   --color-gold: var(--gold);
-  --font-sans: var(--font-manrope);
+  --font-sans: var(--font-onest);
 }
 
 * {
@@ -61,10 +61,18 @@ html {
   scroll-behavior: smooth;
 }
 
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid #00767D;
+  outline-offset: 2px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  /* Прямо на переменную next/font: --font-sans объявлена в @theme inline, а такие
+     переменные Tailwind в CSS не выводит — из-за этого до 06.11.2026 правило было
+     недействительным и сайт рисовался системным шрифтом вместо Manrope. */
+  font-family: var(--font-onest), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -1216,4 +1224,150 @@ section {
   .word-in {
     animation: none;
   }
+}
+
+/* ================================
+   STORY — «История обучения» на главной
+   Бумажный мир: белая фактурная бумага, графитовый текст, бирюза — ссылки и
+   граф, горчица — импульсы и главная кнопка. Без JS, на телефоне и при
+   reduced-motion сцены идут обычным потоком; [data-pinned] включает GSAP.
+   ================================ */
+/* Одна шкала шрифтов на весь бумажный мир: шапка 15px → текст 17px →
+   заголовки секций 30–44px. Больших «героических» кеглей нет. */
+:root {
+  --paper: #FAFAF7;
+  --ink: #14282A;
+  --ink-soft: #3E4F52;
+  --type-display: clamp(1.9rem, 1.2rem + 2vw, 2.75rem);
+  --type-h2: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
+  --type-h3: 1.25rem;
+  --type-body: 1.0625rem;
+  --type-small: .875rem;
+}
+.paper-section { background: var(--paper); color: var(--ink); padding: 4.5rem 0; }
+.paper-display { font-size: var(--type-h2); line-height: 1.08; font-weight: 800; letter-spacing: -0.025em; text-wrap: balance; color: var(--ink); }
+.paper-lead { margin-top: .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 36rem; }
+.paper-link { font-weight: 700; color: #00767D; padding: .5rem 0; white-space: nowrap; }
+.paper-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.paper-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.paper-note { font-size: var(--type-small); color: #546569; max-width: 28rem; }
+.paper-kicker { font-size: var(--type-small); font-weight: 700; color: #546569; margin-bottom: 1.25rem; }
+.paper-section-tight { padding: 3rem 0; }
+.paper-box { border: 1px solid #D5DEDE; border-radius: 10px; padding: 2rem; background: #fff; }
+/* Логотипы клиентов: ровный ряд, без каруселей и теней */
+.clients-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .75rem; }
+.clients-strip li { display: flex; align-items: center; justify-content: center; min-height: 4.5rem; border: 1px solid #E3E9E9; border-radius: 8px; background: #fff; padding: .75rem; }
+.clients-logo { max-height: 2.5rem; width: auto; object-fit: contain; }
+/* Цитаты из писем */
+.quotes { display: grid; gap: 1.25rem; }
+.quote { border-top: 2px solid var(--ink); padding-top: 1.25rem; }
+.quote-text { font-size: var(--type-body); line-height: 1.55; color: var(--ink); }
+.quote-sig { margin-top: .9rem; display: grid; gap: .15rem; font-size: var(--type-small); color: #546569; }
+.quote-sig > span:first-child { font-weight: 700; color: var(--ink); }
+@media (min-width: 900px) {
+  .quotes { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .paper-box { padding: 2.5rem; }
+}
+.upcoming-list { border-top: 2px solid var(--ink); }
+.upcoming-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: .25rem 1rem; padding: .9rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-body); line-height: 1.35; }
+.upcoming-row:hover .upcoming-name { color: #00767D; }
+.upcoming-date { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
+.upcoming-name { font-weight: 600; }
+.upcoming-meta, .upcoming-price { grid-column: 2; font-size: var(--type-small); color: #546569; font-variant-numeric: tabular-nums; }
+@media (min-width: 900px) {
+  .paper-section { padding: 5.5rem 0; }
+  .upcoming-row { grid-template-columns: 8rem 1fr 6rem 7rem; align-items: baseline; }
+  .upcoming-meta, .upcoming-price { grid-column: auto; text-align: right; }
+}
+
+.story {
+  position: relative;
+  /* Без якорения прокрутки: в Chromium при возврате «назад» закрепление меняет
+     высоту страницы, и браузер утаскивал прокрутку к началу истории. */
+  overflow-anchor: none;
+  background: var(--paper);
+  color: var(--ink);
+}
+.story-stage { position: relative; }
+.story-scene { position: relative; display: grid; gap: 1.25rem; padding: 2.5rem 1rem 3rem; }
+.story-art-wrap { display: block; }
+.story-art-frame { position: relative; }
+/* Метки на рисунке. Без закрепления (телефон) — ряд ссылок под картинкой. */
+.story-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
+.story-tag { display: inline-flex; align-items: center; gap: .45rem; min-height: 2rem; padding: .25rem .7rem .25rem .5rem; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper); font-size: var(--type-small); font-weight: 700; color: var(--ink); white-space: nowrap; transition: background-color .15s, color .15s; }
+.story-tag:hover, .story-tag:focus-visible { background: var(--ink); color: var(--paper); }
+.story-tag-dot { width: .55rem; height: .55rem; border-radius: 50%; background: #00767D; box-shadow: 0 0 0 2px var(--paper); flex: none; }
+.story-tag:hover .story-tag-dot { background: #F0BB1E; }
+.story-art { width: 100%; height: auto; display: block; aspect-ratio: 4 / 3; object-fit: cover; object-position: 78% center; }
+/* Бумага под текстом: растушёвка с левого края картинки, чтобы текст не ложился
+   на детальный рисунок и обрез кадра не давал жёсткую границу. */
+.story-art-wrap { position: relative; }
+.story-copy { max-width: 34rem; }
+.story-title {
+  font-size: var(--type-display); line-height: 1.08; font-weight: 800;
+  letter-spacing: -0.025em; text-wrap: balance;
+}
+.story-text { margin-top: 1rem; font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 30rem; }
+.story-source { margin-top: .6rem; font-size: var(--type-small); color: #546569; }
+.story-source a { text-decoration: underline; text-underline-offset: 3px; }
+.story-actions { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+.story-btn { display: inline-flex; align-items: center; min-height: 3rem; padding: 0 1.35rem; border-radius: 6px; font-weight: 700; font-size: 1rem; transition: background-color .2s, color .2s, border-color .2s; }
+.story-btn-primary { background: #F0BB1E; color: var(--ink); }
+.story-btn-primary:hover { background: #EBB417; }
+.story-btn-ghost { border: 2px solid var(--ink); color: var(--ink); }
+.story-btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.story-btn-dark { background: var(--ink); color: var(--paper); min-height: 2.75rem; font-size: .95rem; }
+.story-upcoming { margin-top: 1.4rem; border-top: 2px solid var(--ink); }
+.story-upcoming-label { font-size: .85rem; font-weight: 700; padding: .7rem 0 .2rem; color: #546569; }
+.story-upcoming li a { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-small); line-height: 1.35; }
+.story-upcoming-date { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
+.story-graph, .story-eras, .story-clip { display: none; }
+.story-bar {
+  position: sticky; bottom: 1rem; z-index: 30; margin: 0 auto; width: fit-content;
+  display: flex; align-items: center; gap: 1rem; padding: .4rem .5rem .4rem .4rem;
+  background: var(--paper); border: 1px solid #D5DEDE; border-radius: 10px;
+  box-shadow: 0 10px 24px -14px rgba(20, 40, 42, .35);
+}
+.story-skip { font-weight: 600; font-size: .95rem; color: var(--ink-soft); padding: .5rem .6rem; }
+
+/* Десктоп с анимацией: сцены закреплены и сменяют друг друга через туман. */
+.story[data-pinned="true"] .story-stage { height: 100vh; overflow: hidden; }
+.story[data-pinned="true"] .story-scene { position: absolute; inset: 0; display: block; padding: 0; }
+/* Рисунок во весь экран; текст лежит поверх растушёвки слева. */
+.story[data-pinned="true"] .story-art-wrap { position: absolute; inset: 0; overflow: hidden; }
+.story[data-pinned="true"] .story-art-frame { position: absolute; inset: 0; transform-origin: 72% 55%; }
+.story[data-pinned="true"] .story-art-frame picture { display: contents; }
+.story[data-pinned="true"] .story-art { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: right center; }
+/* Метки стоят на предметах рисунка: координаты считаются от рамки картинки (--ix/--iy/--iw/--ih задаёт JS). */
+.story[data-pinned="true"] .story-tags { display: block; margin: 0; position: absolute; inset: 0; pointer-events: none; z-index: 3; transform-origin: 72% 55%; }
+.story[data-pinned="true"] .story-tags li { position: absolute; left: calc(var(--ix) + var(--iw) * var(--hx)); top: calc(var(--iy) + var(--ih) * var(--hy)); transform: translate(-0.6rem, -50%); pointer-events: auto; }
+.story[data-pinned="true"] .story-tags li.is-right { transform: translate(calc(-100% + 0.6rem), -50%); }
+.story[data-pinned="true"] .story-tags li.is-right .story-tag { flex-direction: row-reverse; padding: .25rem .5rem .25rem .7rem; }
+.story[data-pinned="true"] .story-tag { box-shadow: 0 6px 18px -10px rgba(20, 40, 42, .5); }
+.story[data-pinned="true"] .story-art-wrap::after {
+  z-index: 2;
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 64%; pointer-events: none;
+  background: linear-gradient(90deg, var(--paper) 0%, var(--paper) 30%, rgba(250,250,247,.92) 52%, rgba(250,250,247,0) 100%);
+}
+/* Левый край текста совпадает с контейнером секций ниже (max-w-7xl + px-8). */
+.story[data-pinned="true"] .story-copy { position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); top: 50%; transform: translateY(-50%); width: min(30rem, 34vw); z-index: 2; }
+/* Видео-переход: лежит поверх сцен и меток, под полосой эпох; та же посадка, что у картинок. */
+.story[data-pinned="true"] .story-clip { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: 0; visibility: hidden; z-index: 4; transform-origin: 72% 55%; pointer-events: none; background: transparent; }
+/* Ролик без кадров не показываем: под ним сцены растворяются сами. */
+.story[data-pinned="true"] .story-clip:not([data-ready]) { opacity: 0 !important; visibility: hidden !important; }
+.story[data-pinned="true"] .story-graph { z-index: 5; }
+.story[data-pinned="true"] .story-graph { display: block; position: absolute; right: 2.5vw; top: 5.5rem; width: clamp(140px, 13vw, 220px); height: auto; pointer-events: none; }
+.story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); bottom: 1.6rem; gap: .25rem; z-index: 4; }
+.story-eras button { font-size: var(--type-small); font-weight: 700; color: #7A8B8E; padding: .5rem .75rem; border-bottom: 2px solid transparent; font-variant-numeric: tabular-nums; cursor: pointer; }
+.story-eras button:hover { color: var(--ink); }
+.story-eras button.is-active { color: var(--ink); border-color: #F0BB1E; }
+.story[data-pinned="true"] .story-bar { position: fixed; left: 50%; bottom: 1.5rem; margin: 0; transform: translate(-50%, 1rem); opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; }
+.story[data-pinned="true"] .story-bar.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+@media (min-width: 900px) {
+  .story-scene { grid-template-columns: minmax(0, 36rem) 1fr; align-items: center; padding: 4rem 6vw; }
+  .story-art-wrap { order: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-impulse { display: none; }
 }

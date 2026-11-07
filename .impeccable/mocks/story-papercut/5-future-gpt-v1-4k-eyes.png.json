@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3-pro-image",
+  "input": "5-future-gpt-v1-4k.png",
+  "prompt": "Change ONLY: the worker's eyes — make them clearly open, looking down at the phone screen, drawn as small cut-paper shapes in the same style. Keep identical: everything else — composition, all other shapes, colours, the layered paper texture and edges, the plain paper on the left. No text."
+}

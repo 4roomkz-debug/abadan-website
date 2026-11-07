@@ -68,11 +68,11 @@ export default function Hero() {
 
               {/* Main heading */}
               <div className="space-y-6">
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] text-[#2D3A3C]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] text-[#2D3A3C]">
                   Превратите обучение
                   <br />
                   <span className="text-gradient-primary">в рост показателей</span>
-                </h2>
+                </h1>
 
                 <p className="text-xl sm:text-2xl text-[#546569] font-light leading-relaxed max-w-xl">
                   Ваша команда применит знания уже на следующий день — и это отразится в KPI

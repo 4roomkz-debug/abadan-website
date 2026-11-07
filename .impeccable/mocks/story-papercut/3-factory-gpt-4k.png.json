@@ -1,0 +1,6 @@
+{
+  "model": "gemini-3-pro-image",
+  "reference": "3-factory-gpt.png",
+  "prompt": "Reproduce this exact paper-cutout collage at much higher resolution. Keep identical: composition, every shape, colour, the layered paper texture, grain and hand-cut edges, the plain paper on the left. Do not repaint, do not add detail that is not there, do not change the style. No text.",
+  "size": "4K"
+}

@@ -1,26 +1,28 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const trainingLinks = [
-  { href: "/treningi/hr", label: "HR и кадры" },
-  { href: "/treningi/finansy", label: "Финансы и учёт" },
-  { href: "/treningi/pravo", label: "Трудовое право" },
-  { href: "/treningi/liderstvo", label: "Лидерство" },
-  { href: "/treningi/neftegaz", label: "Нефтегаз" },
-  { href: "/treningi/ai", label: "ИИ для бизнеса" },
-  { href: "/coaching", label: "Коучинг" },
-  { href: "/schedule", label: "Расписание" },
-];
+  { href: "/treningi/hr", key: "nav.hr" },
+  { href: "/treningi/finansy", key: "nav.finansy" },
+  { href: "/treningi/pravo", key: "nav.pravo" },
+  { href: "/treningi/liderstvo", key: "nav.liderstvo" },
+  { href: "/treningi/neftegaz", key: "nav.neftegaz" },
+  { href: "/treningi/ai", key: "nav.ai" },
+  { href: "/coaching", key: "header.coaching" },
+  { href: "/schedule", key: "header.schedule" },
+] as const;
 
 const companyLinks = [
-  { href: "/about", label: "О компании" },
-  { href: "/kejsy", label: "Кейсы" },
-  { href: "/blog", label: "Блог" },
-  { href: "/projects", label: "Проекты" },
-];
+  { href: "/about", key: "nav.about" },
+  { href: "/kejsy", key: "nav.kejsy" },
+  { href: "/blog", key: "nav.blog" },
+  { href: "/projects", key: "nav.projects" },
+] as const;
 
 export default function Footer() {
+  const t = useTranslations("common");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -35,12 +37,11 @@ export default function Footer() {
             {/* Company info */}
             <div className="lg:col-span-1 space-y-6">
               <Link href="/" className="flex items-center gap-2 text-white font-bold text-xl">
-                <span className="text-[#F0BB1E]">Abadan</span> & Co.
+                <span className="text-[#009BA3]">Abadan</span> & Co.
               </Link>
 
               <p className="text-[#7A9EA3] text-sm leading-relaxed">
-                Ведущий провайдер корпоративного обучения в Казахстане и СНГ.
-                С 2015 года помогаем компаниям превращать обучение в измеримый рост эффективности.
+                {t("footer.about")}
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -48,28 +49,28 @@ export default function Footer() {
                   <svg className="w-3.5 h-3.5 text-[#00A3AD]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  На рынке с 2015
+                  {t("footer.since")}
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-[#7A9EA3]">
                   <svg className="w-3.5 h-3.5 text-[#00A3AD]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
-                  Алматы, Казахстан
+                  {t("footer.city")}
                 </div>
               </div>
             </div>
 
             {/* Обучение column */}
             <div>
-              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">Обучение</h4>
-              <ul className="space-y-2.5">
+              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">{t("footer.education")}</h4>
+              <ul className="space-y-1">
                 {trainingLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-[#7A9EA3] hover:text-white text-sm transition-colors"
+                      className="inline-block py-1 text-[#7A9EA3] hover:text-white text-sm transition-colors"
                     >
-                      {link.label}
+                      {t(link.key)}
                     </Link>
                   </li>
                 ))}
@@ -78,15 +79,15 @@ export default function Footer() {
 
             {/* Компания column */}
             <div>
-              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">Компания</h4>
-              <ul className="space-y-2.5">
+              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">{t("footer.company")}</h4>
+              <ul className="space-y-1">
                 {companyLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-[#7A9EA3] hover:text-white text-sm transition-colors"
+                      className="inline-block py-1 text-[#7A9EA3] hover:text-white text-sm transition-colors"
                     >
-                      {link.label}
+                      {t(link.key)}
                     </Link>
                   </li>
                 ))}
@@ -95,12 +96,12 @@ export default function Footer() {
 
             {/* Контакты column */}
             <div>
-              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">Контакты</h4>
+              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">{t("footer.contacts")}</h4>
               <ul className="space-y-3">
                 <li>
                   <a
                     href="tel:+77022413388"
-                    className="text-[#7A9EA3] hover:text-white text-sm transition-colors flex items-center gap-2.5 group"
+                    className="py-1 text-[#7A9EA3] hover:text-white text-sm transition-colors flex items-center gap-2.5 group"
                   >
                     <svg className="w-4 h-4 text-[#00A3AD] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -111,7 +112,7 @@ export default function Footer() {
                 <li>
                   <a
                     href="mailto:i.islambek@abadan.kz"
-                    className="text-[#7A9EA3] hover:text-white text-sm transition-colors flex items-center gap-2.5 group"
+                    className="py-1 text-[#7A9EA3] hover:text-white text-sm transition-colors flex items-center gap-2.5 group"
                   >
                     <svg className="w-4 h-4 text-[#00A3AD] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -124,7 +125,7 @@ export default function Footer() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  Алматы, Казахстан
+                  {t("footer.city")}
                 </li>
                 <li className="pt-2">
                   <div className="flex items-center gap-3">
@@ -162,10 +163,10 @@ export default function Footer() {
           <div className="pt-8 border-t border-white/10">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-[#7A9EA3] text-sm text-center sm:text-left">
-                © {currentYear} Abadan & Company. Все права защищены.
+                © {currentYear} Abadan & Company. {t("footer.rights")}
               </p>
               <p className="text-[#546569] text-xs text-center sm:text-right">
-                Алматы, Казахстан · Корпоративное обучение и развитие
+                {t("footer.tagline")}
               </p>
             </div>
           </div>

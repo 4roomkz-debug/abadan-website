@@ -1,0 +1,12 @@
+{
+  "model": "gemini-omni-1.2-flash",
+  "first": "4-modern-gpt-v1-4k.png",
+  "last": "5-future-gpt-v1-4k-sphere.png",
+  "prompt": "The paper training room transforms into a wide oil field at dawn in western Kazakhstan: small pump jacks far away on the horizon; in the right half one young Kazakh worker in petrol-teal coveralls and a mustard hard hat stands alone, looking down at a lesson on his phone. Floating beside his phone at chest height, a sphere made of small paper dots connected by thin lines, like a constellation network, teal and mustard dots on pale paper: the AI mentor. No other people, no human mentor figure, nothing on the ground. Stop-motion paper-cutout animation. STRICT STYLE: flat matte cut-paper shapes with visible paper grain and uneven hand-cut edges, layered with soft shadows between the layers; faces and bodies are simple flat paper silhouettes with minimal detail; not clay, not plastic, not glossy, not 3D-rendered, no volumetric figures, no realistic faces. Cool palette: pale paper, blue-grey and azure papers, deep petrol teal and mustard gold only as accents. The paper pieces lift, slide, fold and re-cut themselves into the new scene, piece by piece. Smooth continuous metamorphosis, calm and elegant, fixed camera, no flashes, no text, no letters. The left third of the frame ends as plain pale paper with nothing on it. The transformation begins in the very first second and continues steadily until the final second, with no static hold at the start or the end. No sound.",
+  "response_format": {
+    "type": "video",
+    "duration": "6s",
+    "resolution": "720p",
+    "aspect_ratio": "16:9"
+  }
+}

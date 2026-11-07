@@ -1,0 +1,7 @@
+{
+  "model": "gemini-3-pro-image",
+  "reference": "3-factory-v2-fix.png",
+  "prompt": "Re-render this exact illustration as a finished, high-fidelity artwork. Keep identical: composition and crop, every character, their faces, poses, clothing and placement, the background, the colour palette and the hand-painted watercolour-on-textured-white-paper style with fine ink linework. Improve: much finer detail and texture, cleaner confident linework, crisp readable faces and hands, subtle watercolour granulation, soft translucent shadows. High-key cool palette: azure, turquoise, blue-grey, chalk-white highlights, no sepia or yellow cast; only small accents of deep petrol teal and mustard gold. The painting still fades softly into bare white paper toward the left and the edges, and the left third stays calm. Wide 16:9. No text, no letters, no logos, no watermarks, no frame.",
+  "aspect_ratio": "16:9",
+  "size": "4K"
+}

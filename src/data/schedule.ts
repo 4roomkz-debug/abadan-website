@@ -1748,3 +1748,34 @@ export function parseDateForSort(date: string, month: string): number {
   return monthIndex * 100 + day;
 }
 
+// Курс прошёл, если позади последний день диапазона («8-9 января» → 9 января).
+// Год — текущий: SCHEDULE_DATA описывает один календарный год.
+export function isEventPassed(date: string, month: string, now: Date): boolean {
+  const monthIndex = MONTHS.indexOf(month);
+  const dayMatch = date.match(/(\d+)(?:-(\d+))?/);
+  const endDay = dayMatch ? parseInt(dayMatch[2] || dayMatch[1], 10) : 1;
+  return now > new Date(now.getFullYear(), monthIndex, endDay, 23, 59, 59);
+}
+
+// Ближайшие ещё не прошедшие курсы, по дате начала.
+export function getUpcomingTrainings(count: number, now: Date): ScheduleItem[] {
+  return SCHEDULE_DATA
+    .filter((item) => !isEventPassed(item.date, item.month, now))
+    .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month))
+    .slice(0, count);
+}
+
+// Дата курса в словах на языке сайта: «9-10 ноября» → «9-10 қараша» / «9–10 November».
+// В SCHEDULE_DATA даты только по-русски, в родительном падеже.
+const MONTHS_GEN_RU = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+const MONTHS_KK = ["қаңтар", "ақпан", "наурыз", "сәуір", "мамыр", "маусым", "шілде", "тамыз", "қыркүйек", "қазан", "қараша", "желтоқсан"];
+const MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export function formatScheduleDate(date: string, locale: string): string {
+  if (locale === "ru") return date;
+  const m = date.trim().match(/^(\d+)(?:\s*-\s*(\d+))?\s+([а-яё]+)$/i);
+  if (!m) return date;
+  const idx = MONTHS_GEN_RU.indexOf(m[3].toLowerCase());
+  if (idx < 0) return date;
+  const days = m[2] ? `${m[1]}${locale === "en" ? "–" : "-"}${m[2]}` : m[1];
+  return `${days} ${(locale === "kk" ? MONTHS_KK : MONTHS_EN)[idx]}`;
+}

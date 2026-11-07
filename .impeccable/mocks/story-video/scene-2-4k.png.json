@@ -1,0 +1,6 @@
+{
+  "model": "gemini-3-pro-image",
+  "reference": "last-2.png",
+  "prompt": "Reproduce this exact paper-cutout collage frame at much higher resolution and sharpness. Keep identical: composition, every shape, colour, the layered paper texture, grain and hand-cut edges, the plain paper on the left. Remove video compression softness and artifacts only. Do not repaint, do not add or remove anything. No text.",
+  "size": "4K"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "grok-imagine-video-1.5",
+  "prompt": "The paper training room transforms into a wide oil field at dawn in western Kazakhstan: small pump jacks far in the distance, and in the right half one young Kazakh worker in petrol-teal coveralls and a mustard hard hat standing alone, looking down at a short lesson on his phone; next to him only a faint translucent ghost-like paper silhouette of a mentor, see-through, no face details, pointing at a small floating paper diagram. No other people, no props on the ground. Stop-motion paper-cutout animation: FLAT matte paper shapes with visible paper grain and uneven hand-cut edges, layered with soft shadows between the layers; not clay, not plastic, not glossy, not 3D-rendered. The paper pieces lift, slide, fold and re-cut themselves into the new scene, piece by piece. Smooth continuous metamorphosis, calm and elegant, fixed camera, no flashes, no text, no letters. The left third of the frame ends as plain pale paper with nothing on it.",
+  "first_frame": "last-4.png",
+  "duration": 6,
+  "usage": {
+    "cost_in_usd_ticks": 8500000000
+  }
+}

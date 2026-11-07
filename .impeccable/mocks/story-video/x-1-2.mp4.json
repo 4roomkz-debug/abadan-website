@@ -1,0 +1,19 @@
+{
+  "model": "grok-imagine-video-1.5",
+  "prompt": "Stop-motion paper-cutout animation. The layered paper scene of the spring steppe with yurts, the elder and the children gently lifts, slides and re-cuts itself, piece by piece, into a nineteenth-century schoolroom in a Kazakh steppe town: pale paper walls, tall windows with the steppe outside, a dark blackboard, wooden desks with Kazakh boys in simple chapans holding slates, and a Kazakh teacher in a dark frock coat standing by the blackboard. Smooth continuous metamorphosis of cut paper shapes with soft shadows between layers, calm and elegant, fixed camera, no flashes, no text, no letters.",
+  "first": "1-steppe-gpt-4k",
+  "duration": 6,
+  "response": {
+    "status": "done",
+    "video": {
+      "url": "https://vidgen.x.ai/xai-vidgen-bucket/xai-video-f85e9530-2ee1-9c6e-9872-82c00ec24f3f.mp4",
+      "duration": 6,
+      "respect_moderation": true
+    },
+    "model": "grok-imagine-video-1.5",
+    "usage": {
+      "cost_in_usd_ticks": 8500000000
+    },
+    "progress": 100
+  }
+}

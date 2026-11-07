@@ -1,0 +1,6 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "prompt": "An oil field at dawn: a Kazakh worker in petrol-teal coveralls and a mustard hard hat looks at a short lesson on his phone, beside him a faint line-drawn virtual mentor figure explains a translucent simulator view of a pump valve, pump jacks in the distance, mid shot.\n\nDetailed painterly historical book illustration, high-key light cool palette: azure, turquoise and blue-grey hues, chalk-white highlights, soft translucent shadows, no warm yellow or sepia cast, bright natural daylight, calm and dignified mood, hand-painted book-plate feel with fine ink linework on textured white watercolour paper. The painting fades softly into bare white paper toward the left and the edges. Only small accents of deep petrol teal and mustard gold. Keep the left third calm, mostly bare paper, for a headline. Wide 16:9 landscape composition. No text, no letters, no logos, no watermarks.",
+  "aspect_ratio": "16:9",
+  "size": "1K"
+}

@@ -1,0 +1,86 @@
+{
+  "header": {
+    "home": "Home",
+    "education": "Training",
+    "trainingsHeading": "Trainings",
+    "coaching": "Coaching",
+    "schedule": "Schedule",
+    "company": "Company",
+    "cta": "Send a request",
+    "toggleMenu": "Open menu",
+    "ibiraiTitle": "ibirAi is a separate website, opens in a new tab",
+    "ruOnlyTitle": "This section is available in Russian only"
+  },
+  "nav": {
+    "hr": "HR & People",
+    "finansy": "Finance & Accounting",
+    "pravo": "Labour Law",
+    "liderstvo": "Leadership",
+    "neftegaz": "Oil & Gas",
+    "ai": "AI for Business",
+    "about": "About us",
+    "kejsy": "Case studies",
+    "blog": "Blog",
+    "projects": "Projects"
+  },
+  "languageSwitcher": {
+    "label": "Site language"
+  },
+  "footer": {
+    "about": "A leading corporate training provider in Kazakhstan and the CIS. Since 2015 we have helped companies turn training into measurable gains in performance.",
+    "since": "In the market since 2015",
+    "city": "Almaty, Kazakhstan",
+    "education": "Training",
+    "company": "Company",
+    "contacts": "Contacts",
+    "rights": "All rights reserved.",
+    "tagline": "Almaty, Kazakhstan · Corporate training and development"
+  },
+  "chat": {
+    "name": "Asem",
+    "role": "Virtual assistant",
+    "online": "online",
+    "badge": "Ask Asem",
+    "open": "Open chat with Asem",
+    "close": "Close chat",
+    "avatarAlt": "Asem, virtual assistant",
+    "greeting": "Hi! I'm Asem, the virtual assistant at Abadan & Co. I can tell you about our trainings, help you choose a program, or just chat 😊 How can I help?",
+    "quick": {
+      "trainings": "What trainings do you offer?",
+      "price": "How much does it cost?",
+      "request": "Send a request"
+    },
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "error": "Something went wrong. Please try again later.",
+    "errorCall": "Something went wrong. Please try again later or call us: +7 702 241 33 88"
+  },
+  "contact": {
+    "title": "Shall we",
+    "titleAccent": "work together?",
+    "subtitle": "Get a personal consultation and a commercial proposal",
+    "successTitle": "Request received",
+    "successText": "We will get back to you shortly, usually within one business day.",
+    "urgent": "Urgent?",
+    "another": "Send another request",
+    "formTitle": "Request a program",
+    "name": "Your name *",
+    "namePlaceholder": "Enter your name",
+    "phone": "Phone *",
+    "email": "Email *",
+    "message": "Comment",
+    "messagePlaceholder": "Briefly describe what you are interested in...",
+    "submitting": "Sending...",
+    "submit": "Send request",
+    "error": "Something went wrong. Please try again or call us.",
+    "consent": "By clicking the button, you agree to the privacy policy",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "whatsappAction": "Message us directly",
+    "consultTitle": "Consultation",
+    "consultText": "30 minutes, free of charge",
+    "quoteTitle": "Proposal the same day",
+    "quoteText": "Fast estimate"
+  }
+}

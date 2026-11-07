@@ -1,0 +1,12 @@
+{
+  "model": "gemini-omni-1.2-flash",
+  "first": "1-steppe-gpt-4k-169.png",
+  "last": "2-school-gpt-v1-4k.png",
+  "prompt": "The paper steppe with yurts, the elder and the children transforms into a nineteenth-century schoolroom in a Kazakh steppe town: pale paper walls, tall windows with the steppe outside, a dark blackboard, wooden desks with Kazakh boys in simple chapans holding slates, and a Kazakh teacher in a dark frock coat standing by the blackboard. Stop-motion paper-cutout animation. STRICT STYLE: flat matte cut-paper shapes with visible paper grain and uneven hand-cut edges, layered with soft shadows between the layers; faces and bodies are simple flat paper silhouettes with minimal detail; not clay, not plastic, not glossy, not 3D-rendered, no volumetric figures, no realistic faces. Cool palette: pale paper, blue-grey and azure papers, deep petrol teal and mustard gold only as accents. The paper pieces lift, slide, fold and re-cut themselves into the new scene, piece by piece. Smooth continuous metamorphosis, calm and elegant, fixed camera, no flashes, no text, no letters. The left third of the frame ends as plain pale paper with nothing on it. Slow, even metamorphosis that uses the ENTIRE clip: the first scene starts coming apart immediately at the very start, at the midpoint the frame is half old scene and half new scene, and the last paper piece of the new scene settles only in the final second. No static hold at the start or the end, no sudden cuts. No sound.",
+  "response_format": {
+    "type": "video",
+    "duration": "6s",
+    "resolution": "720p",
+    "aspect_ratio": "16:9"
+  }
+}

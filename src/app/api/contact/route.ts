@@ -26,7 +26,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, phone, email, message, website: honeypot, _elapsed: elapsedMs } = await request.json();
+    const { name, phone, email, message, website: honeypot, _elapsed: elapsedMs, locale: rawLocale } = await request.json();
+    // Язык страницы, с которой пришла заявка: менеджеру важно, на каком языке отвечать.
+    const locale = ["ru", "kk", "en"].includes(rawLocale) ? rawLocale : "ru";
 
     // Anti-spam: honeypot field (bots fill it, humans don't see it)
     if (honeypot) {
@@ -82,6 +84,7 @@ export async function POST(request: Request) {
           message: message || undefined,
           form_data: {
             raw_message: message,
+            site_locale: locale,
             ...(attribution ? { attribution } : {}),
           },
         });
@@ -101,6 +104,7 @@ export async function POST(request: Request) {
 📞 Телефон: ${phone}
 📧 Email: ${email || "Не указан"}
 💬 Комментарий: ${message || "Не указан"}
+🌐 Язык сайта: ${locale}
     `.trim();
 
     const response = await fetch(

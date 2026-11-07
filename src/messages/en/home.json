@@ -1,0 +1,71 @@
+{
+  "story": {
+    "skip": "Skip the story",
+    "findCourse": "Find a course",
+    "requestProgram": "Request a programme",
+    "progressLabel": "A history of learning",
+    "source": "Source",
+    "upcoming": "Upcoming courses",
+    "s1": {
+      "era": "Steppe",
+      "title": "Knowledge has always passed from person to person",
+      "text": "That is how it was on the steppe, by the elder's yurt. It still is: Abadan & Co. carries that line on — from leadership to drilling."
+    },
+    "s2": {
+      "era": "1864",
+      "title": "1864. Turgai",
+      "text": "Ybyrai Altynsarin opened the first school for Kazakh children in Turgai. His name lives on in our platform, ibirAi.",
+      "source": "e-history.kz"
+    },
+    "s3": {
+      "era": "1920",
+      "title": "From 1920 — learning at the lathe",
+      "text": "Factory apprenticeship schools taught workers right at the plant. We teach engineers and workers the same way — on their equipment, on their tasks.",
+      "source": "Great Soviet Encyclopedia"
+    },
+    "s4": {
+      "era": "Today",
+      "title": "Today — in person, on site and online",
+      "text": "200+ experts, six fields, a programme built on your company's own cases."
+    },
+    "s5": {
+      "era": "Tomorrow",
+      "title": "Tomorrow — a mentor in everyone's phone",
+      "text": "ibirAi reaches workers on their phones: 10 minutes per shift and a comprehension check for everyone."
+    },
+    "allCourses": "Full schedule",
+    "ibiraiSite": "ibirAi website",
+    "tagsLabel": "What we offer today",
+    "tags": {
+      "leadership": "Leadership",
+      "coaching": "Executive coaching",
+      "corporate": "Programme for your company",
+      "schedule": "Open courses 2026",
+      "hr": "HR & People",
+      "neftegaz": "Oil & Gas",
+      "safety": "Industrial safety",
+      "onsite": "Training at your site",
+      "offline": "In Almaty and on site",
+      "online": "Online",
+      "finansy": "Finance & Accounting",
+      "ibirai": "ibirAi: 10 minutes per shift",
+      "ai": "AI for Business"
+    }
+  },
+  "upcoming": {
+    "title": "Upcoming courses",
+    "all": "Full schedule",
+    "hours": "{n} acad. h"
+  },
+  "after": {
+    "contactTitle": "The next chapter is yours",
+    "contactSubtitle": "Tell us about your team's task — we prepare a commercial proposal the same day."
+  },
+  "clients": {
+    "title": "Trusted by"
+  },
+  "quotes": {
+    "title": "From thank-you letters",
+    "note": "Verbatim, unedited. Signed by role and company, as in the letter."
+  }
+}

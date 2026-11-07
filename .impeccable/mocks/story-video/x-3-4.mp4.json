@@ -1,0 +1,9 @@
+{
+  "model": "grok-imagine-video-1.5",
+  "prompt": "The paper workshop transforms into a bright modern corporate training room in Kazakhstan: a trainer standing by a flipchart, adult professionals of different ages, mostly Kazakh, some in engineering jackets and some in office clothes, working around a table with sticky notes, a large wall screen showing remote webinar participants, a city skyline in the window. Stop-motion paper-cutout animation: layered paper pieces lift, slide, fold and re-cut themselves into the new scene, piece by piece, with soft shadows between the layers. Smooth continuous metamorphosis, calm and elegant, fixed camera, no flashes, no text, no letters. The left third of the frame stays plain pale paper.",
+  "first_frame": "last-3.png",
+  "duration": 6,
+  "usage": {
+    "cost_in_usd_ticks": 8500000000
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "prompt": "A small nineteenth-century schoolroom in a Kazakh steppe town: a Kazakh teacher in a dark nineteenth-century civil official's frock coat stands by a blackboard while Kazakh boys in simple chapans sit at wooden desks with slates and books, daylight from tall windows, mid shot. No modern objects.\n\nDetailed painterly historical book illustration, high-key light cool palette: azure, turquoise and blue-grey hues, chalk-white highlights, soft translucent shadows, no warm yellow or sepia cast, bright natural daylight, calm and dignified mood, hand-painted book-plate feel with fine ink linework on textured white watercolour paper. The painting fades softly into bare white paper toward the left and the edges. Only small accents of deep petrol teal and mustard gold. Keep the left third calm, mostly bare paper, for a headline. Wide 16:9 landscape composition. No text, no letters, no logos, no watermarks.",
+  "aspect_ratio": "16:9",
+  "size": "1K"
+}
