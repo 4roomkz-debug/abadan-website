@@ -1,0 +1,69 @@
+{
+  "metaTitle": "Training for leaders and managers",
+  "metaDescription": "12+ leadership training courses in Kazakhstan. Leadership, negotiation, conflict management, time management, coaching. 200+ experts. In person and online.",
+  "name": "Leadership",
+  "title": "Training for leaders and managers",
+  "lead": "From team management to strategic thinking — practical programmes for those who lead others.",
+  "facts": [
+    "12+ courses",
+    "200+ experts",
+    "10+ years of experience",
+    "80% practice"
+  ],
+  "areasTitle": "From management to transformation",
+  "areasLead": "A complete programme for developing management skills.",
+  "areas": {
+    "leadership": {
+      "title": "Leadership and management",
+      "desc": "Team management, delegation, decision-making"
+    },
+    "negotiation": {
+      "title": "Negotiation and communication",
+      "desc": "Business negotiation, public speaking, presentations"
+    },
+    "conflict": {
+      "title": "Conflict management",
+      "desc": "Conflict resolution, mediation, stress management"
+    },
+    "time": {
+      "title": "Time management",
+      "desc": "Time management, priorities, productivity, self-organisation"
+    },
+    "change": {
+      "title": "Change management",
+      "desc": "Change management, transformation, strategic thinking"
+    },
+    "coaching": {
+      "title": "Coaching and mentoring",
+      "desc": "Coaching for managers, mentoring, mentorship"
+    }
+  },
+  "formTitle": "Order a development programme for your team",
+  "formLead": "We will tailor the format and content to your needs, from coaching to team training. We will send a proposal on the day you contact us.",
+  "faq": [
+    {
+      "q": "What leadership training do you offer?",
+      "a": "We run 12+ courses for managers: leadership and team management, business negotiation, conflict management, time management, emotional intelligence, public speaking, coaching, strategic thinking."
+    },
+    {
+      "q": "How much does leadership training cost?",
+      "a": "On the 2026 schedule — {minPrice} to {maxPrice} ₸ per participant, depending on the course and format. Online is cheaper than in person."
+    },
+    {
+      "q": "Is the training suitable for line managers?",
+      "a": "Yes, we have programmes for different levels: from line managers to top management. The trainer adapts cases and exercises to the participants' level."
+    },
+    {
+      "q": "How does leadership training run?",
+      "a": "The format is 20% theory and 80% practice, including business simulations, real-world business cases, group exercises, and individual feedback from the trainer."
+    },
+    {
+      "q": "Can I order corporate leadership training?",
+      "a": "Yes, we run corporate leadership training built around the company's tasks and travel to regions across Kazakhstan. Since 2015 we have trained more than 50,000 specialists."
+    },
+    {
+      "q": "Do you have negotiation programmes?",
+      "a": "Yes, the schedule includes business negotiation courses — \"Effective Negotiation\" and \"Negotiation Mastery\", with hands-on practice on cases."
+    }
+  ]
+}

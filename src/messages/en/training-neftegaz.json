@@ -1,0 +1,69 @@
+{
+  "metaTitle": "Technical courses for the oil and gas industry",
+  "metaDescription": "More than 65 technical courses and seminars for Kazakhstan’s oil and gas industry, covering drilling, production, refining, pipelines, and industrial safety. More than 200 practising experts. In person and online.",
+  "name": "Oil & Gas",
+  "title": "Technical courses for the oil and gas industry",
+  "lead": "From drilling to refining, our experts offer practical courses backed by experience on Kazakhstan’s largest oil fields.",
+  "facts": [
+    "65+ courses",
+    "200+ experts",
+    "10+ years of experience",
+    "80% practice"
+  ],
+  "areasTitle": "From the wellhead to the refinery",
+  "areasLead": "The full training cycle for oil and gas professionals.",
+  "areas": {
+    "drilling": {
+      "title": "Drilling and well construction",
+      "desc": "Design, drilling technology, casing, cementing, horizontal drilling"
+    },
+    "extraction": {
+      "title": "Production and operations",
+      "desc": "Field development, well stimulation, workover, hydraulic fracturing, artificial lift, gas lift"
+    },
+    "refining": {
+      "title": "Refining and petrochemicals",
+      "desc": "Primary and deep processing, cracking, distillation, petroleum product quality control"
+    },
+    "transport": {
+      "title": "Transport and storage",
+      "desc": "Trunk pipelines, oil depots, gas storage facilities, pipeline operations control, and telemetry and remote control"
+    },
+    "safety": {
+      "title": "Industrial safety",
+      "desc": "Hydrogen sulphide, corrosion, environment, occupational safety, emergency response, ISO standards"
+    },
+    "automation": {
+      "title": "Instrumentation and automation",
+      "desc": "Instrumentation, metrology, SCADA, and process automation"
+    }
+  },
+  "formTitle": "Order training for your team",
+  "formLead": "We will put together a programme for your needs — from exploration to refining. A commercial proposal the same day.",
+  "faq": [
+    {
+      "q": "What technical courses do you offer for the oil and gas industry?",
+      "a": "65+ courses: well drilling and workover, oil and gas production, refining and petrochemicals, pipeline transport, industrial safety, instrumentation and automation, geology and geophysics."
+    },
+    {
+      "q": "How much does training for oil and gas specialists cost?",
+      "a": "On the 2026 schedule — {minPrice} to {maxPrice} ₸ per participant, depending on the course and format. Online is cheaper than in person."
+    },
+    {
+      "q": "Do you have courses on industrial safety?",
+      "a": "Yes, we offer courses in industrial safety for the oil and gas sector, hydrogen sulphide safety, occupational health and safety, and HSE management. The programmes meet Kazakhstan’s legal requirements."
+    },
+    {
+      "q": "Do you travel to the fields for training?",
+      "a": "Yes, we run corporate training on site in Atyrau, Aktau, Mangystau, Kyzylorda and other oil and gas regions of Kazakhstan."
+    },
+    {
+      "q": "Who teaches the technical seminars?",
+      "a": "All trainers are practising experts with 10+ years in the oil and gas industry."
+    },
+    {
+      "q": "What certificate do I get after a technical course?",
+      "a": "At the end of the course you receive a personal Abadan & Co. certificate of professional development."
+    }
+  ]
+}

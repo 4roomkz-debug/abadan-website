@@ -1779,3 +1779,12 @@ export function formatScheduleDate(date: string, locale: string): string {
   const days = m[2] ? `${m[1]}${locale === "en" ? "–" : "-"}${m[2]}` : m[1];
   return `${days} ${(locale === "kk" ? MONTHS_KK : MONTHS_EN)[idx]}`;
 }
+
+// Название месяца на языке сайта по русскому имени из SCHEDULE_DATA («Ноябрь»).
+const MONTHS_NOM_KK = ["Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым", "Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан"];
+const MONTHS_NOM_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export function formatMonth(month: string, locale: string): string {
+  const i = MONTHS.indexOf(month);
+  if (i < 0 || locale === "ru") return month;
+  return (locale === "kk" ? MONTHS_NOM_KK : MONTHS_NOM_EN)[i];
+}

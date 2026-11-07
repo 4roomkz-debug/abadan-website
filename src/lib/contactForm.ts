@@ -5,6 +5,7 @@ export type ContactFormPayload = {
   message?: FormDataEntryValue | string | null;
   website?: FormDataEntryValue | string | null;
   _elapsed?: number;
+  locale?: string;
 };
 
 /** Submit a contact form and reject unless the API confirms it was accepted. */

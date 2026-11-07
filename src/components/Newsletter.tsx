@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const SUBSCRIBE_API = 'https://tracking-server-livid.vercel.app/api/subscribe';
-const GUIDE_TITLE = 'От хаоса к порядку';
 
 type SubmitState = 'idle' | 'loading' | 'success' | 'already' | 'error';
 
@@ -20,6 +20,7 @@ interface NewsletterProps {
 
 export default function Newsletter({ source = 'abadan-kz-footer', variant = 'default' }: NewsletterProps) {
   const paper = variant === 'paper';
+  const t = useTranslations('home.newsletter');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [state, setState] = useState<SubmitState>('idle');
@@ -52,11 +53,11 @@ export default function Newsletter({ source = 'abadan-kz-footer', variant = 'def
         }
       } else {
         setState('error');
-        setErrorMessage(data.error || 'Произошла ошибка');
+        setErrorMessage(data.error || t('error'));
       }
     } catch {
       setState('error');
-      setErrorMessage('Ошибка сети. Попробуйте позже.');
+      setErrorMessage(t('netError'));
     }
   };
 
@@ -68,19 +69,18 @@ export default function Newsletter({ source = 'abadan-kz-footer', variant = 'def
             <div>
               {!paper && (
                 <p className="text-sm font-semibold uppercase tracking-wider text-gradient-gold mb-3">
-                  Бесплатный гайд
+                  {t('label')}
                 </p>
               )}
               <h2 className={paper ? 'paper-display mb-3' : 'text-2xl md:text-3xl font-bold mb-4 text-gradient-primary'}>
-                {paper ? 'Бесплатный гайд: ' : ''}«{GUIDE_TITLE}»
+                {t(paper ? 'title' : 'titleShort', { guide: t('guide') })}
               </h2>
               {/* Аудитория этого сайта — руководители и HR. Поэтому угол про
                   личную продуктивность управленца, а не про дневник рефлексии. */}
               <p className="text-gray-600 leading-relaxed">
-                Шесть методов, которые возвращают контроль над рабочим днём
-                руководителя. 11 страниц, рабочий лист на неделю и ссылки
-                на исследования — без сложных систем.
+                {t('text')}
               </p>
+              {t('langNote') && <p className="mt-2 text-sm font-semibold text-[#546569]">{t('langNote')}</p>}
             </div>
 
             <div>
@@ -93,12 +93,10 @@ export default function Newsletter({ source = 'abadan-kz-footer', variant = 'def
                   </span>
                   <div>
                     <p className="text-lg font-bold text-[#2D3A3C]">
-                      {state === 'already' ? 'Вы уже подписаны' : 'Готово'}
+                      {state === 'already' ? t('already') : t('done')}
                     </p>
                     <p className="text-[#546569]">
-                      {state === 'already'
-                        ? 'Гайд мы уже отправляли — проверьте почту, в том числе «Промоакции» и «Спам».'
-                        : 'Гайд уже в пути — проверьте почту, в том числе «Промоакции» и «Спам».'}
+                      {state === 'already' ? t('alreadyText') : t('doneText')}
                     </p>
                   </div>
                 </div>
@@ -110,8 +108,8 @@ export default function Newsletter({ source = 'abadan-kz-footer', variant = 'def
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Ваше имя"
-                    aria-label="Ваше имя"
+                    placeholder={t('name')}
+                    aria-label={t('name')}
                     disabled={state === 'loading'}
                     className="dark-input w-full"
                   />
@@ -119,8 +117,8 @@ export default function Newsletter({ source = 'abadan-kz-footer', variant = 'def
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Ваш email"
-                    aria-label="Ваш email"
+                    placeholder={t('email')}
+                    aria-label={t('email')}
                     required
                     disabled={state === 'loading'}
                     className="dark-input w-full"
@@ -130,7 +128,7 @@ export default function Newsletter({ source = 'abadan-kz-footer', variant = 'def
                     disabled={state === 'loading' || !email.trim()}
                     className="gold-button w-full disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {state === 'loading' ? 'Отправка…' : 'Получить гайд'}
+                    {state === 'loading' ? t('sending') : t('submit')}
                   </button>
                   {state === 'error' && (
                     <p className="text-red-600 text-sm">{errorMessage}</p>

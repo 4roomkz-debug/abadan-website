@@ -1,0 +1,69 @@
+{
+  "metaTitle": "AI courses for business",
+  "metaDescription": "8+ corporate AI courses in Kazakhstan. Prompt engineering, document workflow automation, AI agents, working with data. Practice on real tasks.",
+  "name": "AI for business",
+  "title": "Artificial intelligence for your business",
+  "lead": "From prompt engineering to building AI agents — practical skills for your team.",
+  "facts": [
+    "8+ AI programmes",
+    "150+ specialists",
+    "80% time saved",
+    "4.8 average rating"
+  ],
+  "areasTitle": "From prompts to AI agents",
+  "areasLead": "The full cycle of AI training for your team.",
+  "areas": {
+    "ai-start": {
+      "title": "Quick start in AI",
+      "desc": "Overview of models, prompt basics, practice on everyday tasks"
+    },
+    "prompts": {
+      "title": "Prompt engineering",
+      "desc": "Prompt structure, chains of reasoning, system prompts, libraries"
+    },
+    "docs": {
+      "title": "Document automation",
+      "desc": "AI for reports, proposals, business correspondence, contracts. Saves 80% of time"
+    },
+    "ai-hr": {
+      "title": "AI for HR",
+      "desc": "Resume screening, AI video interviews, job ad generation, onboarding"
+    },
+    "data": {
+      "title": "Working with data",
+      "desc": "Spreadsheet analysis, visualisation, anomaly detection, document summarisation"
+    },
+    "agents": {
+      "title": "AI agents",
+      "desc": "Custom GPTs, Claude Projects, integration with email and messengers"
+    }
+  },
+  "formTitle": "Order AI training for your team",
+  "formLead": "We will put together a programme for your tasks — from a quick start to a full AI transformation. A commercial proposal the same day.",
+  "faq": [
+    {
+      "q": "What AI courses do you offer?",
+      "a": "Prompt engineering for business, document workflow automation with AI, AI in HR processes, building AI agents, working with data and analytics, neural networks and AI for executives."
+    },
+    {
+      "q": "Do I need technical experience for AI courses?",
+      "a": "No, our courses are designed for business users with no technical background. The focus is on practical use of AI in everyday work tasks."
+    },
+    {
+      "q": "How much do AI courses cost?",
+      "a": "On the 2026 schedule — {minPrice} to {maxPrice} ₸ per participant, depending on the course and format. Online is cheaper than in person. We adapt corporate training to the company's industry and tasks."
+    },
+    {
+      "q": "What is prompt engineering?",
+      "a": "Prompt engineering is the skill of interacting effectively with AI tools. In the course you will learn to write precise requests for ChatGPT, Claude and other neural networks to solve business tasks."
+    },
+    {
+      "q": "How can AI help the HR department?",
+      "a": "AI automates HR routine: resume screening, writing job descriptions, engagement analysis, creating training materials, answering employees' standard questions."
+    },
+    {
+      "q": "Is there practice on the courses?",
+      "a": "Yes, the courses are built on practice: every participant works with AI tools and leaves with ready-made prompts and templates for their own work."
+    }
+  ]
+}

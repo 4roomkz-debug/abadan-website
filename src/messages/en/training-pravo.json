@@ -1,0 +1,69 @@
+{
+  "metaTitle": "Legal courses and seminars for business",
+  "metaDescription": "25+ legal courses in Kazakhstan. Labour law, contract work, tax, public procurement, compliance. 200+ practising experts. In person and online.",
+  "name": "Law",
+  "title": "Legal courses for business and the public sector",
+  "lead": "From the Labour Code to public procurement — practical seminars for lawyers, HR officers and managers.",
+  "facts": [
+    "25+ courses",
+    "200+ experts",
+    "10+ years of experience",
+    "80% practice"
+  ],
+  "areasTitle": "From labour law to public procurement",
+  "areasLead": "The full cycle of legal training for business.",
+  "areas": {
+    "labor": {
+      "title": "Labour law",
+      "desc": "Kazakhstan’s Labour Code, labour disputes, mediation, and rotational work"
+    },
+    "contracts": {
+      "title": "Contract law",
+      "desc": "Drafting and reviewing contracts, claims handling"
+    },
+    "tax": {
+      "title": "Tax law",
+      "desc": "Tax Code, VAT, transfer pricing, tax audits"
+    },
+    "corporate": {
+      "title": "Corporate law",
+      "desc": "Corporate governance, compliance, anti-corruption"
+    },
+    "subsoil": {
+      "title": "Subsoil use and environment",
+      "desc": "The Code on Subsoil and Subsoil Use, environmental legislation, and permitting procedures"
+    },
+    "procurement": {
+      "title": "Public procurement and foreign trade",
+      "desc": "Public procurement, customs regulation, and international trade"
+    }
+  },
+  "formTitle": "Order legal training for your team",
+  "formLead": "We will put together a programme for your needs — from labour law to compliance. A commercial proposal the same day.",
+  "faq": [
+    {
+      "q": "What legal courses do you offer in Kazakhstan?",
+      "a": "Abadan & Co. runs courses on labour law, contract work, tax law, corporate law and compliance, subsoil use and environmental legislation, public procurement and foreign trade. Courses run in person in Almaty and online."
+    },
+    {
+      "q": "How much do legal seminars cost?",
+      "a": "On the 2026 schedule — {minPrice} to {maxPrice} ₸ per participant, depending on the course and format. Online is cheaper than in person."
+    },
+    {
+      "q": "Are the programmes current with the latest legislative changes?",
+      "a": "Yes, the programmes are updated to reflect changes in Kazakhstan’s legislation and are delivered by practising lawyers."
+    },
+    {
+      "q": "Are there courses on Kazakhstan's labour law?",
+      "a": "Yes. It is one of our key areas, covering Kazakhstan’s Labour Code, labour disputes, and mediation."
+    },
+    {
+      "q": "Are the courses suitable for lawyers without experience?",
+      "a": "Yes, we have programmes of different levels — from basics for related professionals to advanced courses for practising lawyers. The trainer adapts the material to the group's level."
+    },
+    {
+      "q": "Do you issue a certificate for legal courses?",
+      "a": "Yes, at the end of the course you receive a personal Abadan & Co. certificate of professional development."
+    }
+  ]
+}

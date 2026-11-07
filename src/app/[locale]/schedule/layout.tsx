@@ -1,93 +1,60 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
-import { withLocale } from "@/lib/seo";
+import { localeUrl, withLocale } from "@/lib/seo";
 import { SCHEDULE_DATA } from "@/data/schedule";
+import { localizeCourse } from "@/data/schedule-i18n";
 
-const baseMetadata: Metadata = {
-  title: "Расписание открытых тренингов 2026",
-  description: "Расписание курсов и тренингов Abadan & Co. на 2026 год. Бизнес-тренинги, технические семинары, управление персоналом. Онлайн и очно в Алматы. Запишитесь на обучение прямо сейчас.",
-  keywords: [
-    "расписание тренингов",
-    "открытые тренинги Алматы",
-    "бизнес курсы 2026",
-    "семинары для руководителей",
-    "технические семинары нефтегаз",
-    "курсы HR",
-    "обучение бухгалтеров",
-    "тренинги по управлению"
-  ],
-  openGraph: {
-    title: "Расписание тренингов 2026 — Abadan & Co.",
-    description: "Более 170 курсов: бизнес-тренинги и технические семинары. Онлайн и очно в Алматы.",
-    type: "website",
-    url: "https://www.abadan.kz/ru/schedule",
-  },
-  alternates: {
-    canonical: "https://www.abadan.kz/ru/schedule",
-  },
-};
+const pick = (raw: string) => (hasLocale(routing.locales, raw) ? raw : routing.defaultLocale);
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]/schedule">): Promise<Metadata> {
-  const { locale } = await params;
-  return hasLocale(routing.locales, locale) ? withLocale(baseMetadata, locale, "/schedule") : baseMetadata;
+  const locale = pick((await params).locale);
+  const t = await getTranslations({ locale, namespace: "schedule" });
+  return withLocale(
+    { title: t("metaTitle"), description: t("metaDescription"), openGraph: { title: t("metaTitle"), description: t("metaDescription"), type: "website" } },
+    locale,
+    "/schedule",
+  );
 }
 
-function buildCourseListJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Открытые тренинги Abadan & Co.",
-    description: "Расписание бизнес-тренингов и технических семинаров на 2026 год",
-    url: "https://www.abadan.kz/ru/schedule",
-    numberOfItems: SCHEDULE_DATA.length,
-    itemListElement: SCHEDULE_DATA.slice(0, 30).map((course, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "Course",
-        name: course.name,
-        description: `${course.name}. ${course.hours} часов, очный и онлайн формат.`,
-        provider: {
-          "@type": "Organization",
-          name: "Abadan & Co.",
-          url: "https://www.abadan.kz",
+// Разметка schema.org на языке страницы: список курсов и хлебные крошки.
+export default async function ScheduleLayout({ children, params }: LayoutProps<"/[locale]/schedule">) {
+  const locale = pick((await params).locale);
+  const t = await getTranslations({ locale, namespace: "schedule" });
+  const tr = await getTranslations({ locale, namespace: "training" });
+  const url = localeUrl(locale, "/schedule");
+  const data = [
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: t("title"),
+      url,
+      numberOfItems: SCHEDULE_DATA.length,
+      itemListElement: SCHEDULE_DATA.slice(0, 30).map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Course",
+          name: localizeCourse(c.name, locale),
+          description: `${localizeCourse(c.name, locale)}. ${c.hours} h.`,
+          provider: { "@type": "Organization", name: "Abadan & Co.", url: localeUrl(locale, "/") },
+          offers: { "@type": "Offer", price: c.priceOffline, priceCurrency: "KZT", availability: "https://schema.org/InStock" },
         },
-        offers: {
-          "@type": "Offer",
-          price: course.priceOffline,
-          priceCurrency: "KZT",
-          availability: "https://schema.org/InStock",
-        },
-      },
-    })),
-  };
-}
-
-export default function ScheduleLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const courseListJsonLd = buildCourseListJsonLd();
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: "https://www.abadan.kz/ru" },
-      { "@type": "ListItem", position: 2, name: "Расписание", item: "https://www.abadan.kz/ru/schedule" },
-    ],
-  };
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: tr("home"), item: localeUrl(locale, "/") },
+        { "@type": "ListItem", position: 2, name: t("title"), item: url },
+      ],
+    },
+  ];
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseListJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
       {children}
     </>
   );

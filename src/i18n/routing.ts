@@ -10,10 +10,11 @@ export const routing = defineRouting({
 
 export type Locale = (typeof routing.locales)[number];
 
-// Языки, которые открыты поисковикам. kk и en добавляем сюда только после
-// вычитки перевода носителем языка: до этого они отдаются с noindex,
-// не попадают в sitemap и в hreflang.
-export const INDEXED_LOCALES: readonly Locale[] = ["ru"];
+// Языки, которые открыты поисковикам. Язык добавляем сюда только после
+// вычитки перевода: до этого он отдаётся с noindex, не попадает в sitemap и
+// hreflang. en открыт 07.11.2026 (решение Гани, английский проверен Codex);
+// kk — после вычитки Индиры.
+export const INDEXED_LOCALES: readonly Locale[] = ["ru", "en"];
 
 // Разделы, которые в первой волне есть только на русском. Proxy уводит
 // /kk/... и /en/... этих разделов на /ru/..., переключатель языка их не предлагает.
