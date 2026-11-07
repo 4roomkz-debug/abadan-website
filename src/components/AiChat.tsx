@@ -121,7 +121,7 @@ export default function AiChat() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
           isOpen
             ? "bg-[#546569]"
             : "bg-gradient-to-br from-[#00767D] to-[#006D77] hover:scale-110"
@@ -154,14 +154,14 @@ export default function AiChat() {
 
       {/* Badge */}
       {!isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 bg-white px-4 py-2 rounded-full shadow-lg border border-[#00767D]/20">
+        <div className="hidden sm:block fixed bottom-24 right-6 z-50 bg-white px-4 py-2 rounded-full shadow-lg border border-[#00767D]/20">
           <span className="text-sm font-medium text-[#2D3A3C]">{t("badge")}</span>
         </div>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl border border-[#00767D]/10 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl border border-[#00767D]/10 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#00767D] to-[#006D77] px-5 py-4 flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20 ring-2 ring-white/30">
