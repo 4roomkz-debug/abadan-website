@@ -1,9 +1,9 @@
 {
   "metaTitle": "Technical courses for the oil and gas industry",
-  "metaDescription": "65+ technical courses and seminars for the oil and gas industry in Kazakhstan. Drilling, production, refining, pipelines, industrial safety. 200+ practising experts. Offline and online.",
+  "metaDescription": "More than 65 technical courses and seminars for Kazakhstan’s oil and gas industry, covering drilling, production, refining, pipelines, and industrial safety. More than 200 practising experts. In person and online.",
   "name": "Oil & Gas",
   "title": "Technical courses for the oil and gas industry",
-  "lead": "From drilling to refining — practical courses from experts with experience at Kazakhstan's largest fields.",
+  "lead": "From drilling to refining, our experts offer practical courses backed by experience on Kazakhstan’s largest oil fields.",
   "facts": [
     "65+ courses",
     "200+ experts",
@@ -27,7 +27,7 @@
     },
     "transport": {
       "title": "Transport and storage",
-      "desc": "Trunk pipelines, oil depots, gas storage facilities, dispatching, telemechanics"
+      "desc": "Trunk pipelines, oil depots, gas storage facilities, pipeline operations control, and telemetry and remote control"
     },
     "safety": {
       "title": "Industrial safety",
@@ -35,7 +35,7 @@
     },
     "automation": {
       "title": "Instrumentation and automation",
-      "desc": "Measuring instruments, metrology, SCADA, process automation"
+      "desc": "Instrumentation, metrology, SCADA, and process automation"
     }
   },
   "formTitle": "Order training for your team",
@@ -51,7 +51,7 @@
     },
     {
       "q": "Do you have courses on industrial safety?",
-      "a": "Yes, we have courses on industrial safety in the oil and gas sector, hydrogen sulphide safety, occupational safety and HSE management. The programmes meet RK legal requirements."
+      "a": "Yes, we offer courses in industrial safety for the oil and gas sector, hydrogen sulphide safety, occupational health and safety, and HSE management. The programmes meet Kazakhstan’s legal requirements."
     },
     {
       "q": "Do you travel to the fields for training?",

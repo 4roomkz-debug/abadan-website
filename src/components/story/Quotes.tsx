@@ -1,5 +1,6 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TESTIMONIALS, signature, type TestimonialId } from "@/data/testimonials";
+import { TESTIMONIALS_I18N } from "@/data/testimonials-i18n";
 
 // Три дословные цитаты из благодарственных писем. Источник и правила —
 // src/data/testimonials.ts; ничего не сокращаем и не «улучшаем».
@@ -7,6 +8,7 @@ const PICK: TestimonialId[] = ["pharma", "kbtu", "narxoz"];
 
 export default function Quotes({ ids = PICK, title, note }: { ids?: TestimonialId[]; title?: string; note?: string } = {}) {
   const t = useTranslations("home.quotes");
+  const locale = useLocale();
 
   return (
     <section className="paper-section" aria-labelledby="quotes-title">
@@ -17,7 +19,8 @@ export default function Quotes({ ids = PICK, title, note }: { ids?: TestimonialI
         </div>
         <ul className="quotes">
           {ids.map((id) => {
-            const q = TESTIMONIALS[id];
+            const tr = locale === "kk" || locale === "en" ? TESTIMONIALS_I18N[locale][id] : undefined;
+            const q = tr ?? TESTIMONIALS[id];
             return (
               <li key={id} className="quote">
                 <blockquote>
@@ -25,6 +28,7 @@ export default function Quotes({ ids = PICK, title, note }: { ids?: TestimonialI
                   <footer className="quote-sig">
                     <span>{signature(q)}</span>
                     <span className="quote-training">{q.training}</span>
+                    {tr && <span className="quote-translated">{t("translated")}</span>}
                   </footer>
                 </blockquote>
               </li>

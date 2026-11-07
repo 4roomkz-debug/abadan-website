@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Onest } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import "../globals.css";
 import { INDEXED_LOCALES, routing } from "@/i18n/routing";
 import { withLocale } from "@/lib/seo";
@@ -120,6 +120,14 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   if (!hasLocale(routing.locales, locale)) return baseMetadata;
 
   const metadata = withLocale(baseMetadata, locale, "/");
+  if (locale !== "ru") {
+    const t = await getTranslations({ locale, namespace: "home.meta" });
+    metadata.title = { default: t("title"), template: "%s | Abadan & Co." };
+    metadata.description = t("description");
+    metadata.keywords = undefined;
+    metadata.openGraph = { ...metadata.openGraph, title: t("title"), description: t("description") };
+    metadata.twitter = { ...metadata.twitter, title: t("title"), description: t("description") };
+  }
   // kk и en до вычитки носителем не индексируются.
   if (!INDEXED_LOCALES.includes(locale)) {
     metadata.robots = { index: false, follow: true };

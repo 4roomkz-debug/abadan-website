@@ -20,13 +20,13 @@
     "s3": {
       "era": "1920",
       "title": "From 1920 — learning at the lathe",
-      "text": "Factory apprenticeship schools taught workers right at the plant. We teach engineers and workers the same way — on their equipment, on their tasks.",
+      "text": "Factory apprenticeship schools taught workers at the plants. We also train engineers and workers using their own equipment and real work tasks.",
       "source": "Great Soviet Encyclopedia"
     },
     "s4": {
       "era": "Today",
       "title": "Today — in person, on site and online",
-      "text": "200+ experts, six fields, a programme built on your company's own cases."
+      "text": "More than 200 experts, six subject areas, and programmes built around your company’s real business cases."
     },
     "s5": {
       "era": "Tomorrow",
@@ -55,7 +55,7 @@
   "upcoming": {
     "title": "Upcoming courses",
     "all": "Full schedule",
-    "hours": "{n} acad. h"
+    "hours": "{n} academic hours"
   },
   "after": {
     "contactTitle": "The next chapter is yours",
@@ -66,6 +66,29 @@
   },
   "quotes": {
     "title": "From thank-you letters",
-    "note": "Verbatim, unedited. Signed by role and company, as in the letter."
+    "note": "A faithful translation of the Russian original. Signed by role and company, as in the letter.",
+    "translated": "Translated from Russian"
+  },
+  "newsletter": {
+    "label": "Free guide",
+    "title": "Free guide: “{guide}”",
+    "titleShort": "“{guide}”",
+    "guide": "From Chaos to Order",
+    "text": "Six methods that give a manager back control of the working day. 11 pages, a one-week worksheet and links to research — no complicated systems.",
+    "langNote": "The guide and the emails are in Russian.",
+    "name": "Your name",
+    "email": "Your email",
+    "submit": "Get the guide",
+    "sending": "Sending…",
+    "done": "Done",
+    "already": "You are already subscribed",
+    "doneText": "The guide is on its way — check your inbox, including the Promotions and Spam folders.",
+    "alreadyText": "We have already sent you the guide — check your inbox, including the Promotions and Spam folders.",
+    "error": "Something went wrong",
+    "netError": "Network error. Please try again later."
+  },
+  "meta": {
+    "title": "Abadan & Co. — Corporate training and business courses in Kazakhstan",
+    "description": "Corporate training and professional development courses in Kazakhstan. Since 2015: 50,000+ people trained, 360+ client companies, 80% practice on your own cases. Business training, technical seminars, online and in person in Almaty."
   }
 }

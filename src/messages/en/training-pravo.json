@@ -15,7 +15,7 @@
   "areas": {
     "labor": {
       "title": "Labour law",
-      "desc": "Labour Code of the RK, labour disputes, mediation, rotational work"
+      "desc": "Kazakhstan’s Labour Code, labour disputes, mediation, and rotational work"
     },
     "contracts": {
       "title": "Contract law",
@@ -31,11 +31,11 @@
     },
     "subsoil": {
       "title": "Subsoil use and environment",
-      "desc": "Subsoil use law, environmental legislation, permitting procedures"
+      "desc": "The Code on Subsoil and Subsoil Use, environmental legislation, and permitting procedures"
     },
     "procurement": {
       "title": "Public procurement and foreign trade",
-      "desc": "Public procurement, customs regulation, export-import"
+      "desc": "Public procurement, customs regulation, and international trade"
     }
   },
   "formTitle": "Order legal training for your team",
@@ -51,11 +51,11 @@
     },
     {
       "q": "Are the programmes current with the latest legislative changes?",
-      "a": "Yes, the programmes are updated to reflect changes in RK legislation and are run by practising lawyers."
+      "a": "Yes, the programmes are updated to reflect changes in Kazakhstan’s legislation and are delivered by practising lawyers."
     },
     {
       "q": "Are there courses on Kazakhstan's labour law?",
-      "a": "Yes, this is one of our key areas: the Labour Code of the RK, labour disputes, mediation."
+      "a": "Yes. It is one of our key areas, covering Kazakhstan’s Labour Code, labour disputes, and mediation."
     },
     {
       "q": "Are the courses suitable for lawyers without experience?",

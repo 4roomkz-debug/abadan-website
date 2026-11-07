@@ -1538,3 +1538,4 @@ section {
   .co-steps { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) { .co-form, .co-steps { grid-template-columns: 1fr; } }
+.quote-translated { display: block; margin-top: .25rem; font-size: .8rem; font-style: italic; color: #6B7C7F; }
