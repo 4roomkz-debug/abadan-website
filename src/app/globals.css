@@ -1321,7 +1321,7 @@ section {
 .story-upcoming-label { font-size: .85rem; font-weight: 700; padding: .7rem 0 .2rem; color: #546569; }
 .story-upcoming li a { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-small); line-height: 1.35; }
 .story-upcoming-date { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
-.story-smoke, .story-wash, .story-graph, .story-eras, .story-clip { display: none; }
+.story-graph, .story-eras, .story-clip { display: none; }
 .story-bar {
   position: sticky; bottom: 1rem; z-index: 30; margin: 0 auto; width: fit-content;
   display: flex; align-items: center; gap: 1rem; padding: .4rem .5rem .4rem .4rem;
@@ -1351,16 +1351,6 @@ section {
 }
 /* Левый край текста совпадает с контейнером секций ниже (max-w-7xl + px-8). */
 .story[data-pinned="true"] .story-copy { position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); top: 50%; transform: translateY(-50%); width: min(30rem, 34vw); z-index: 2; }
-/* Дым между эпохами: бумажный слой, вырезанный по маске яркости дыма (белое —
-   видно), поднимается и густеет; под ним сплошная бумажная «промывка». */
-.story[data-pinned="true"] .story-wash { display: block; position: absolute; inset: 0; background: var(--paper); pointer-events: none; opacity: 0; visibility: hidden; z-index: 5; }
-.story[data-pinned="true"] .story-smoke {
-  display: block; position: absolute; inset: -20% -10%; background: var(--paper); pointer-events: none; opacity: 0; visibility: hidden; z-index: 6;
-  -webkit-mask-image: url("/story/smoke-mask.webp"); mask-image: url("/story/smoke-mask.webp");
-  -webkit-mask-size: cover; mask-size: cover; -webkit-mask-position: center bottom; mask-position: center bottom;
-  mask-mode: luminance; transform-origin: 50% 80%;
-}
-.story[data-pinned="true"] .story-smoke-2 { transform: scaleX(-1); -webkit-mask-position: 30% bottom; mask-position: 30% bottom; }
 /* Видео-переход: лежит поверх сцен и меток, под полосой эпох; та же посадка, что у картинок. */
 .story[data-pinned="true"] .story-clip { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: 0; visibility: hidden; z-index: 4; transform-origin: 72% 55%; pointer-events: none; background: var(--paper); }
 .story[data-pinned="true"] .story-graph { z-index: 5; }

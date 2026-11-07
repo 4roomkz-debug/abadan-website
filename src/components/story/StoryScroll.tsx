@@ -33,10 +33,10 @@ function placeArt(frame: HTMLElement) {
 }
 
 // История обучения на прокрутке. На десктопе сцены-эпохи закреплены: внутри
-// эпохи прокрутка ведёт камеру наездом, а смена эпох — дым — идёт по времени
-// (≈1,3 с) и запускается, когда прокрутка пересекает границу сцены. Так переход
-// одинаково плавный при любой скорости колёсика. Без JS, на телефоне и при
-// prefers-reduced-motion сцены идут друг за другом обычной страницей.
+// эпохи прокрутка ведёт лёгкий наезд, а между эпохами кадр видео-перехода
+// задаётся положением прокрутки — бумага перекладывается ровно в темпе
+// колёсика и складывается обратно при прокрутке назад. Без JS, на телефоне и
+// при prefers-reduced-motion сцены идут друг за другом обычной страницей.
 // Прокрутка нативная: Lenis убран 06.11 — он спорил с scroll-behavior: smooth,
 // и на трекпаде в Safari прокрутка залипала на первой сцене.
 export default function StoryScroll() {
@@ -65,7 +65,6 @@ export default function StoryScroll() {
     let lastY = window.scrollY;
     const onScroll = () => { lastY = window.scrollY; };
     window.addEventListener("scroll", onScroll, { passive: true });
-    let restoring = savedY !== null;
 
     mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
       el.dataset.pinned = "true";
@@ -73,9 +72,6 @@ export default function StoryScroll() {
       const scenes = gsap.utils.toArray<HTMLElement>(".story-scene", el);
       const frames = gsap.utils.toArray<HTMLElement>(".story-art-frame", el);
       const tagLayers = gsap.utils.toArray<HTMLElement>(".story-tags", el);
-      const smoke = el.querySelector<HTMLElement>(".story-smoke");
-      const smoke2 = el.querySelector<HTMLElement>(".story-smoke-2");
-      const wash = el.querySelector<HTMLElement>(".story-wash");
       const clips = gsap.utils.toArray<HTMLVideoElement>(".story-clip", el);
       const n = scenes.length;
 
@@ -84,146 +80,88 @@ export default function StoryScroll() {
       tagLayers.forEach((f) => { placeArt(f); ro.observe(f); });
 
       gsap.set(scenes, { autoAlpha: 0 });
-      gsap.set([smoke, smoke2, wash], { autoAlpha: 0 });
+      gsap.set(scenes[0], { autoAlpha: 1 });
       gsap.set(clips, { autoAlpha: 0 });
-      // Ролик следующего перехода подгружаем, когда его сцена стала активной.
+
+      // Ролики грузим заранее: первый сразу, остальные — когда их сцена близко.
       const loaded = new Set<number>();
       const preload = (i: number) => {
         const v = clips[i];
         if (!v || loaded.has(i)) return;
         loaded.add(i); v.preload = "auto"; v.load();
       };
+      preload(0);
 
-      let shown = 0;
-      let target = 0;
-      let busy = false;
-      // Пока идёт ролик, страница не листается: колёсико ускоряет ролик,
-      // а прокрутка сама подъезжает к началу следующей эпохи. Иначе сцены,
-      // граф и полоса эпох убегали вперёд, а ролики догоняли очередью.
-      let lock = false;
-      let current: HTMLVideoElement | null = null;
-      let st: ScrollTrigger | null = null;
-      const onWheel = (e: WheelEvent) => {
-        if (!lock) return;
-        e.preventDefault();
-        if (current && e.deltaY > 0) current.playbackRate = Math.min(3, current.playbackRate + 0.25);
-      };
-      const onTouch = (e: TouchEvent) => { if (lock) e.preventDefault(); };
-      const onKey = (e: KeyboardEvent) => {
-        if (lock && ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(e.key)) e.preventDefault();
-      };
-      window.addEventListener("wheel", onWheel, { passive: false });
-      window.addEventListener("touchmove", onTouch, { passive: false });
-      window.addEventListener("keydown", onKey);
-
-      const reveal = (i: number) => {
-        gsap.set(scenes[shown], { autoAlpha: 0 });
-        gsap.set(scenes[i], { autoAlpha: 1 });
-        shown = i;
+      // Кадр ролика задаётся положением прокрутки (как у Apple): крутишь — бумага
+      // перекладывается, остановился — замерла, назад — складывается обратно.
+      // Ролики закодированы так, что каждый кадр ключевой: перемотка мгновенная.
+      const canVideo = clips.length > 0 && clips[0].canPlayType("video/mp4") !== "";
+      const seek = (v: HTMLVideoElement, t: number) => {
+        if (!Number.isFinite(v.duration) || v.duration <= 0 || v.readyState < 1) return;
+        const time = Math.max(0, Math.min(v.duration - 0.04, t * v.duration));
+        if (Math.abs(v.currentTime - time) > 0.02) v.currentTime = time;
       };
 
-      // Вперёд на одну эпоху — видео-трансформация: бумага сцены перекладывается в
-      // следующую, последний кадр ролика и есть новая сцена. Если ролик не может
-      // играть (нет файла, автозапуск запрещён) — дым, как и назад.
-      const playClip = (k: number, to: number): Promise<boolean> =>
-        new Promise((resolve) => {
-          const v = clips[k];
-          if (!v || !v.canPlayType("video/mp4")) return resolve(false);
-          const copy = scenes[shown].querySelector(".story-copy");
-          let settled = false;
-          const finish = (ok: boolean) => {
-            if (settled) return; settled = true;
-            lock = false; current = null; v.playbackRate = 1;
-            v.removeEventListener("ended", onEnded); v.removeEventListener("error", onError);
-            if (!ok) { gsap.set(v, { autoAlpha: 0 }); gsap.set(copy, { autoAlpha: 1 }); return resolve(false); }
-            reveal(to);
-            gsap.set(copy, { autoAlpha: 1 });
-            gsap.fromTo(scenes[to].querySelector(".story-copy"), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 });
-            gsap.to(v, { autoAlpha: 0, duration: 0.45, ease: "sine.inOut", onComplete: () => { v.pause(); resolve(true); } });
-          };
-          const onEnded = () => finish(true);
-          const onError = () => finish(false);
-          v.addEventListener("ended", onEnded); v.addEventListener("error", onError);
-          const start = () => {
-            try { v.currentTime = 0; } catch { /* ещё не загружен */ }
-            lock = true; current = v;
-            // Подъезжаем к началу следующей эпохи, пока идёт ролик.
-            if (st) window.scrollTo({ top: st.start + (st.end - st.start) * ((to + 0.02) / n), behavior: "smooth" });
-            gsap.set(v, { scale: 1.03 });
-            gsap.to(v, { autoAlpha: 1, duration: 0.3 });
-            gsap.to(v, { scale: 1, duration: 0.8, ease: "sine.out" });
-            gsap.to(copy, { autoAlpha: 0, duration: 0.4 });
-            v.play().catch(() => finish(false));
-          };
-          // Стартуем, когда ролик догружен; на медленной сети через 1,5 с — дым.
-          if (v.readyState >= 3) start();
-          else {
-            const timer = window.setTimeout(() => { v.removeEventListener("canplaythrough", ready); finish(false); }, 1500);
-            const ready = () => { window.clearTimeout(timer); start(); };
-            v.addEventListener("canplaythrough", ready, { once: true });
-            if (!loaded.has(k)) preload(k);
-          }
-        });
-
-      const smokeTransition = () => {
-        if (!smoke || !smoke2 || !wash) { reveal(target); busy = false; return; }
-        gsap.timeline({ onComplete: () => { busy = false; transition(); } })
-          .fromTo(smoke, { autoAlpha: 0, yPercent: 45, scale: 1 }, { autoAlpha: 1, yPercent: 0, scale: 1.25, duration: 0.9, ease: "sine.inOut" }, 0)
-          .fromTo(smoke2, { autoAlpha: 0, yPercent: 60, scale: 1.1 }, { autoAlpha: 1, yPercent: 5, scale: 1.4, duration: 0.9, ease: "sine.inOut" }, 0.15)
-          .to(wash, { autoAlpha: 1, duration: 0.35, ease: "sine.inOut" }, 0.7)
-          .call(() => reveal(target), [], 1.05)
-          .to(wash, { autoAlpha: 0, duration: 0.45, ease: "sine.inOut" }, 1.1)
-          .to(smoke, { autoAlpha: 0, yPercent: -40, scale: 1.5, duration: 0.9, ease: "sine.inOut" }, 1.0)
-          .to(smoke2, { autoAlpha: 0, yPercent: -35, scale: 1.6, duration: 0.9, ease: "sine.inOut" }, 1.1);
+      // Разметка прокрутки, в экранах: эпоха — HOLD, переход между эпохами — TRANS.
+      const HOLD = 0.6;
+      const TRANS = 1;
+      const total = n * HOLD + (n - 1) * TRANS;
+      const starts = Array.from({ length: n }, (_, i) => i * (HOLD + TRANS));
+      const indexAt = (progress: number) => {
+        const t = progress * total;
+        let i = 0;
+        for (let k = 1; k < n; k++) if (t >= starts[k] - TRANS / 2) i = k;
+        return i;
       };
 
-      // Переход по времени. Пролистали сразу две эпохи — дым покажет последнюю.
-      const transition = () => {
-        if (busy || target === shown) return;
-        busy = true;
-        if (target === shown + 1 && clips[shown]) {
-          playClip(shown, shown + 1).then((ok) => {
-            if (ok) { busy = false; transition(); } else smokeTransition();
-          });
-          return;
-        }
-        smokeTransition();
-      };
-
-      // Наезд камеры внутри каждой эпохи — привязан к прокрутке.
+      let active = 0;
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: el,
           pin: el.querySelector(".story-stage"),
           start: "top top",
-          end: `+=${n * 70}%`,
-          scrub: 0.6,
+          end: `+=${total * 100}%`,
+          scrub: 0.5,
           onUpdate: (self) => {
-            const i = Math.min(n - 1, Math.floor(self.progress * n));
-            if (i !== target) {
-              target = i;
-              setActive(i);
-              preload(i);
-              if (restoring) reveal(i); else transition();
-            }
+            const i = indexAt(self.progress);
+            if (i !== active) { active = i; setActive(i); preload(i); preload(i + 1); }
           },
           onRefresh: (self) => {
-            // Страница открылась или вернулась «назад» с прокруткой посреди истории:
-            // показываем нужную эпоху сразу, без дыма.
-            const i = Math.min(n - 1, Math.floor(self.progress * n));
-            target = i;
-            setActive(i);
-            preload(i);
-            if (!busy) reveal(i);
+            const i = indexAt(self.progress);
+            active = i; setActive(i); preload(i); preload(i + 1);
           },
         },
       });
-      st = tl.scrollTrigger ?? null;
+
+      let pos = 0;
       scenes.forEach((scene, i) => {
-        // Рисунок помещается в экран целиком; наезд едва заметный — движение дают ролики.
-        tl.fromTo([frames[i], tagLayers[i]], { scale: 1, xPercent: 0 }, { scale: 1.03, xPercent: 0, duration: 1 }, i);
-        tl.fromTo(scene.querySelector(".story-copy"), { y: 24 }, { y: -12, duration: 1 }, i);
+        const copy = scene.querySelector(".story-copy");
+        // Внутри эпохи — едва заметный наезд; движение дают переходы.
+        tl.fromTo([frames[i], tagLayers[i]], { scale: 1 }, { scale: 1.03, duration: HOLD }, pos);
+        tl.fromTo(copy, { y: 16 }, { y: -8, duration: HOLD }, pos);
+        pos += HOLD;
+        if (i < n - 1) {
+          const next = scenes[i + 1];
+          const nextCopy = next.querySelector(".story-copy");
+          const v = clips[i];
+          if (canVideo && v) {
+            const proxy = { t: 0 };
+            tl.to(v, { autoAlpha: 1, duration: 0.06 }, pos);
+            tl.to(copy, { autoAlpha: 0, duration: 0.08 }, pos);
+            tl.to(proxy, { t: 1, duration: TRANS, onUpdate: () => seek(v, proxy.t) }, pos);
+            // Под роликом меняем сцену на середине перехода.
+            tl.set(scene, { autoAlpha: 0 }, pos + TRANS * 0.5);
+            tl.set(next, { autoAlpha: 1 }, pos + TRANS * 0.5);
+            tl.fromTo(nextCopy, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.1 }, pos + TRANS - 0.12);
+            tl.to(v, { autoAlpha: 0, duration: 0.06 }, pos + TRANS - 0.06);
+          } else {
+            // Без видео — спокойное растворение.
+            tl.to(scene, { autoAlpha: 0, duration: TRANS * 0.5 }, pos + TRANS * 0.25);
+            tl.to(next, { autoAlpha: 1, duration: TRANS * 0.5 }, pos + TRANS * 0.25);
+          }
+          pos += TRANS;
+        }
       });
 
       // Панель «Найти курс» видна, пока идёт история, и уходит вместе с ней.
@@ -239,9 +177,6 @@ export default function StoryScroll() {
       if (firstArt && !firstArt.complete) firstArt.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
 
       return () => {
-        window.removeEventListener("wheel", onWheel);
-        window.removeEventListener("touchmove", onTouch);
-        window.removeEventListener("keydown", onKey);
         window.removeEventListener("pageshow", onShow);
         ro.disconnect();
         barTrigger?.kill();
@@ -254,7 +189,6 @@ export default function StoryScroll() {
       requestAnimationFrame(() => {
         window.scrollTo(0, y);
         ScrollTrigger.refresh();
-        restoring = false;
       });
     }
 
@@ -269,7 +203,11 @@ export default function StoryScroll() {
     const el = root.current;
     if (!el) return;
     const st = ScrollTrigger.getAll().find((s) => s.trigger === el && s.pin);
-    if (st) window.scrollTo({ top: st.start + (st.end - st.start) * ((i + 0.05) / STORY_SCENES.length) });
+    if (st) {
+      const n = STORY_SCENES.length;
+      const total = n * 0.6 + (n - 1) * 1;
+      window.scrollTo({ top: st.start + (st.end - st.start) * ((i * 1.6 + 0.05) / total) });
+    }
     else el.querySelectorAll(".story-scene")[i]?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -362,9 +300,6 @@ export default function StoryScroll() {
           </article>
         ))}
 
-        <div className="story-wash" aria-hidden="true" />
-        <div className="story-smoke" aria-hidden="true" />
-        <div className="story-smoke story-smoke-2" aria-hidden="true" />
         {STORY_TRANSITIONS.map((tr) => (
           <video key={tr.src} className="story-clip" src={tr.src} muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
         ))}
