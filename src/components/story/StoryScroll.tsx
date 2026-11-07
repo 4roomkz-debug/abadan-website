@@ -68,6 +68,34 @@ export default function StoryScroll() {
     const onScroll = () => { lastY = window.scrollY; };
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    // Телефон: сцены идут лентой, а переход в каждую эпоху — короткий ролик,
+    // который сам проигрывается, когда попадает на экран. Ролик грузится только
+    // тогда, когда до него долистали; после конца он гаснет и открывает ту же
+    // картинку эпохи (последний кадр ролика с ней совпадает).
+    mm.add("(max-width: 899px) and (prefers-reduced-motion: no-preference)", () => {
+      const vids = gsap.utils.toArray<HTMLVideoElement>(".story-mclip", el);
+      const play = (v: HTMLVideoElement) => {
+        if (!v.src) { v.src = v.dataset.src!; v.preload = "auto"; }
+        v.dataset.state = "playing"; v.currentTime = 0;
+        v.play().catch(() => { v.dataset.state = "done"; });
+      };
+      const onEnd = (e: Event) => { (e.target as HTMLVideoElement).dataset.state = "done"; };
+      const onTap = (e: Event) => play(e.target as HTMLVideoElement);
+      const near = new IntersectionObserver((entries) => entries.forEach((en) => {
+        const v = en.target as HTMLVideoElement;
+        if (en.isIntersecting && !v.src) { v.src = v.dataset.src!; v.preload = "auto"; }
+      }), { rootMargin: "100% 0px" });
+      const seen = new IntersectionObserver((entries) => entries.forEach((en) => {
+        const v = en.target as HTMLVideoElement;
+        if (en.isIntersecting && !v.dataset.state) play(v);
+      }), { threshold: 0.6 });
+      vids.forEach((v) => { near.observe(v); seen.observe(v); v.addEventListener("ended", onEnd); v.addEventListener("click", onTap); });
+      return () => {
+        near.disconnect(); seen.disconnect();
+        vids.forEach((v) => { v.removeEventListener("ended", onEnd); v.removeEventListener("click", onTap); v.pause(); });
+      };
+    });
+
     mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
       el.dataset.pinned = "true";
 
@@ -267,6 +295,20 @@ export default function StoryScroll() {
                     decoding="async"
                   />
                 </picture>
+                {i > 0 && (
+                  // Телефон: превращение из прошлой эпохи в эту — ролик проигрывается
+                  // один раз, когда кадр попадает на экран; тап — повтор.
+                  <video
+                    className="story-mclip"
+                    data-src={STORY_TRANSITIONS[i - 1].src}
+                    poster={STORY_SCENES[i - 1].imageMobile}
+                    muted
+                    playsInline
+                    preload="none"
+                    aria-hidden="true"
+                    tabIndex={-1}
+                  />
+                )}
               </div>
             </div>
 

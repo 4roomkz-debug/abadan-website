@@ -1539,3 +1539,10 @@ section {
 }
 @media (max-width: 560px) { .co-form, .co-steps { grid-template-columns: 1fr; } }
 .quote-translated { display: block; margin-top: .25rem; font-size: .8rem; font-style: italic; color: #6B7C7F; }
+
+/* Телефон: ролик-превращение поверх картинки эпохи (та же обрезка 4:3, что у .story-art). */
+.story-mclip { display: none; }
+@media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
+  .story-mclip { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 78% center; background: var(--paper); transition: opacity .6s ease-out; cursor: pointer; }
+  .story-mclip[data-state="done"] { opacity: 0; }
+}
