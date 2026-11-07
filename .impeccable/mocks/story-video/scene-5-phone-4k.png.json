@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3-pro-image",
+  "input": "scene-5-avatar-4k.png",
+  "prompt": "Change ONLY two things. 1) Replace the floating sphere of dots and lines with a large flat paper-cut smartphone standing upright in the air beside the worker at his chest height, about as tall as his torso, shown as an enlarged view of the small phone in his hands: a thin callout line connects the small phone in his hands to the large phone. On the large phone's pale screen is the same sphere made of small paper dots connected by thin lines: deep petrol teal dots, a few mustard gold dots, thin blue-grey lines. 2) The worker's eyes are open and looking down at the phone in his hands. Keep identical: everything else — the worker's pose, clothes, hard hat, the pump jacks, sky, ground, colours, the paper-cutout style and grain, the plain paper on the left. No text."
+}

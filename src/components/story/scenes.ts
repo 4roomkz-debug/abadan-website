@@ -122,10 +122,10 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s5",
     // Сфера-аватар ibirAi на кадре: центр и диаметр в процентах картинки; сюда прилетает граф логотипа.
-    avatar: { x: 58.5, y: 37, size: 17 },
+    avatar: { x: 57, y: 42, size: 14 },
     hotspots: [
-      { tag: "ibirai", x: 50, y: 58, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 49, y: 23, href: "/treningi/ai", align: "right" },
+      { tag: "ibirai", x: 49, y: 72, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ai", x: 48, y: 20, href: "/treningi/ai", align: "right" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
