@@ -1,0 +1,18 @@
+{
+  "home": "Home",
+  "trainings": "Training",
+  "ctaCourses": "See courses",
+  "ctaOrder": "Order training",
+  "courses": "{n, plural, one {# course} other {# courses}}",
+  "areaSub": "More about this field",
+  "scheduleTitle": "Upcoming courses",
+  "all": "All",
+  "empty": "No upcoming dates here. Write to us and we will run the course for your company.",
+  "showAll": "Show all — {n}",
+  "collapse": "Collapse",
+  "fullSchedule": "Full schedule",
+  "quotesTitle": "From thank-you letters",
+  "quotesNote": "Verbatim, unedited. Under each quote: which training the letter is about.",
+  "faqTitle": "Frequently asked questions",
+  "loading": "Loading the schedule…"
+}

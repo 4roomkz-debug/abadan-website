@@ -5,18 +5,18 @@ import { TESTIMONIALS, signature, type TestimonialId } from "@/data/testimonials
 // src/data/testimonials.ts; ничего не сокращаем и не «улучшаем».
 const PICK: TestimonialId[] = ["pharma", "kbtu", "narxoz"];
 
-export default function Quotes() {
+export default function Quotes({ ids = PICK, title, note }: { ids?: TestimonialId[]; title?: string; note?: string } = {}) {
   const t = useTranslations("home.quotes");
 
   return (
     <section className="paper-section" aria-labelledby="quotes-title">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8"><div className="max-w-7xl mx-auto">
         <div className="paper-head">
-          <h2 id="quotes-title" className="paper-display">{t("title")}</h2>
-          <p className="paper-note">{t("note")}</p>
+          <h2 id="quotes-title" className="paper-display">{title ?? t("title")}</h2>
+          <p className="paper-note">{note ?? t("note")}</p>
         </div>
         <ul className="quotes">
-          {PICK.map((id) => {
+          {ids.map((id) => {
             const q = TESTIMONIALS[id];
             return (
               <li key={id} className="quote">

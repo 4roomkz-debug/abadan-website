@@ -1432,3 +1432,37 @@ section {
   .sched-form-grid { grid-template-columns: 1fr; }
   .sched-form { padding: 1rem; }
 }
+
+/* ── Страницы направлений (/treningi/*) ───────────────────────────────────── */
+.tr-hero { padding-top: 3rem; }
+.tr-crumbs { display: flex; flex-wrap: wrap; gap: .5rem; font-size: var(--type-small); color: #546569; margin-bottom: 1.5rem; }
+.tr-crumbs a { color: #546569; text-decoration: underline; text-underline-offset: 3px; }
+.tr-crumbs a:hover { color: #00767D; }
+.tr-crumbs [aria-current] { color: var(--ink); font-weight: 700; }
+.tr-title { max-width: 24ch; }
+.tr-lead { max-width: 40rem; }
+.tr-facts { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .25rem 0; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tr-facts li + li::before { content: "·"; margin: 0 .7rem; color: #00767D; }
+.tr-areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; border-top: 2px solid var(--ink); }
+.tr-areas li { border-bottom: 1px solid #D5DEDE; }
+.tr-area { display: grid; grid-template-columns: 1fr auto; gap: .2rem 1rem; width: 100%; padding: 1.1rem 0; text-align: left; cursor: pointer; }
+.tr-area-title { font-weight: 800; font-size: 1.15rem; color: var(--ink); }
+.tr-area-desc { grid-column: 1; font-size: var(--type-small); color: #546569; line-height: 1.45; }
+.tr-area-count { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-weight: 700; color: #00767D; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tr-area:hover .tr-area-title { color: #00767D; }
+.tr-area-sub { display: inline-block; margin: -.4rem 0 .8rem; font-size: var(--type-small); }
+.tr-seg { flex-wrap: wrap; margin-bottom: 1.25rem; max-width: 100%; }
+.tr-seg button { border-bottom: 1px solid var(--ink); margin-bottom: -1px; }
+.tr-empty { padding: 1.5rem 0; border-top: 2px solid var(--ink); max-width: none; }
+.tr-more { margin-top: 1.5rem; }
+.tr-faq { margin-top: 1.25rem; border-top: 2px solid var(--ink); max-width: 56rem; }
+.tr-faq details { border-bottom: 1px solid #D5DEDE; }
+.tr-faq summary { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; font-weight: 700; font-size: 1.08rem; color: var(--ink); cursor: pointer; list-style: none; }
+.tr-faq summary::-webkit-details-marker { display: none; }
+.tr-faq summary::after { content: "+"; font-weight: 400; font-size: 1.4rem; line-height: 1; color: #00767D; transition: transform .2s; }
+.tr-faq details[open] summary::after { transform: rotate(45deg); }
+.tr-faq details p { padding: 0 0 1.2rem; max-width: 48rem; color: var(--ink-soft); line-height: 1.55; }
+@media (max-width: 767px) {
+  .tr-areas { grid-template-columns: 1fr; }
+  .tr-seg { display: flex; overflow-x: auto; flex-wrap: nowrap; }
+}

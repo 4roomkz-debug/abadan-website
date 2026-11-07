@@ -1,0 +1,69 @@
+{
+  "metaTitle": "HR courses and training for people professionals",
+  "metaDescription": "20+ courses for HR professionals in Kazakhstan: labour law, recruitment, staff assessment, KPIs, grading. 200+ experts. In person and online.",
+  "name": "HR & People",
+  "title": "HR courses and training for people professionals",
+  "lead": "From labour law to HR analytics — practical courses for HR directors, HR officers and managers.",
+  "facts": [
+    "20+ courses",
+    "200+ experts",
+    "10+ years of experience",
+    "80% practice"
+  ],
+  "areasTitle": "From hiring to development",
+  "areasLead": "The full cycle of HR training for professionals.",
+  "areas": {
+    "labor-law": {
+      "title": "Labour law",
+      "desc": "Labour Code of the RK, legislative changes, labour disputes"
+    },
+    "recruitment": {
+      "title": "Hiring and onboarding",
+      "desc": "Recruitment, staff adaptation, onboarding"
+    },
+    "compensation": {
+      "title": "Pay and work standards",
+      "desc": "Remuneration, work standards, summarised time accounting, rotational work"
+    },
+    "assessment": {
+      "title": "Staff assessment",
+      "desc": "Competency assessment, appraisal, individual development plans, org structure"
+    },
+    "performance": {
+      "title": "Performance management",
+      "desc": "KPIs, grading, motivation, performance management"
+    },
+    "development": {
+      "title": "Development and learning",
+      "desc": "Leadership development, coaching, mentoring"
+    }
+  },
+  "formTitle": "Order HR training for your team",
+  "formLead": "We will put together a programme for your tasks — from recruitment to HR analytics. A commercial proposal the same day.",
+  "faq": [
+    {
+      "q": "What HR courses are available in Kazakhstan?",
+      "a": "Abadan & Co. runs HR courses on RK labour law, hiring and onboarding, staff assessment, KPIs and grading, pay and work standards. Courses run in person in Almaty and online."
+    },
+    {
+      "q": "How much do HR courses cost?",
+      "a": "On the 2026 schedule — {minPrice} to {maxPrice} ₸ per participant, depending on the course and format. Online is cheaper than in person."
+    },
+    {
+      "q": "What certificate do I get?",
+      "a": "At the end of the course you receive a personal Abadan & Co. certificate of professional development."
+    },
+    {
+      "q": "Can I take an HR course online?",
+      "a": "Yes, every course on the schedule has an online format with its own price."
+    },
+    {
+      "q": "How long is an HR course?",
+      "a": "Scheduled courses last {hours} academic hours."
+    },
+    {
+      "q": "Do you run corporate HR training?",
+      "a": "Yes, we run corporate training built around the company's tasks and travel to regions across Kazakhstan. Since 2015 we have trained more than 50,000 specialists."
+    }
+  ]
+}
