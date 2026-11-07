@@ -83,13 +83,19 @@ export default function StoryScroll() {
       gsap.set(scenes[0], { autoAlpha: 1 });
       gsap.set(clips, { autoAlpha: 0 });
 
-      // Ролики грузим заранее: первый сразу, остальные — когда их сцена близко.
+      // Ролики грузим заранее по цепочке: первый сразу, каждый следующий — как только
+      // предыдущий получил кадры. Пока у ролика нет кадров (data-ready), он скрыт
+      // стилями, и переход идёт растворением сцен, а не пустым окном.
       const loaded = new Set<number>();
       const preload = (i: number) => {
         const v = clips[i];
         if (!v || loaded.has(i)) return;
         loaded.add(i); v.preload = "auto"; v.load();
       };
+      clips.forEach((v, i) => {
+        const ready = () => { v.dataset.ready = "1"; preload(i + 1); };
+        if (v.readyState >= 2) ready(); else v.addEventListener("loadeddata", ready, { once: true });
+      });
       preload(0);
 
       // Кадр ролика задаётся положением прокрутки (как у Apple): крутишь — бумага
@@ -167,9 +173,10 @@ export default function StoryScroll() {
             tl.to(v, { autoAlpha: 1, duration: 0.06 }, pos);
             tl.to(copy, { autoAlpha: 0, duration: 0.08 }, pos);
             tl.to(proxy, { t: 1, duration: TRANS, onUpdate: () => seek(v, proxy.t) }, pos);
-            // Под роликом меняем сцену на середине перехода.
-            tl.set(scene, { autoAlpha: 0 }, pos + TRANS * 0.5);
-            tl.set(next, { autoAlpha: 1 }, pos + TRANS * 0.5);
+            // Под роликом сцены растворяются одна в другую на середине перехода:
+            // под готовым роликом этого не видно, без ролика остаётся мягкая смена.
+            tl.to(scene, { autoAlpha: 0, duration: TRANS * 0.2 }, pos + TRANS * 0.4);
+            tl.to(next, { autoAlpha: 1, duration: TRANS * 0.2 }, pos + TRANS * 0.4);
             tl.fromTo(nextCopy, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.1 }, pos + TRANS - 0.12);
             tl.to(v, { autoAlpha: 0, duration: 0.06 }, pos + TRANS - 0.06);
             if (i === n - 2 && graph && avatar) {

@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useSyncExternalStore } from "react";
 import { Link } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import Header from "@/components/Header";
-import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, isEventPassed } from "@/data/schedule";
+import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, isEventPassed, formatScheduleDate } from "@/data/schedule";
 import { submitContactForm } from "@/lib/contactForm";
 
 const subscribeToHydration = () => () => {};
@@ -11,6 +12,7 @@ const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
 export default function SchedulePage() {
+  const locale = useLocale();
   const [categoryFilter, setCategoryFilter] = useState<"all" | "business" | "technical">("all");
   const [monthFilter, setMonthFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -211,7 +213,7 @@ export default function SchedulePage() {
                     className="border-b border-[#00767D]/5 hover:bg-[#F8FAFB]/50 transition-colors"
                   >
                     <td className="px-6 py-4">
-                      <div className="text-[#2D3A3C] font-medium">{item.date}</div>
+                      <div className="text-[#2D3A3C] font-medium">{formatScheduleDate(item.date, locale)}</div>
                       <div className="text-xs text-[#94A3B8]">{item.month} 2026</div>
                     </td>
                     <td className="px-6 py-4">
@@ -253,7 +255,7 @@ export default function SchedulePage() {
                   }`}>
                     {item.category === "business" ? "Бизнес" : "Технический"}
                   </div>
-                  <div className="text-sm text-[#546569]">{item.date}</div>
+                  <div className="text-sm text-[#546569]">{formatScheduleDate(item.date, locale)}</div>
                 </div>
                 <h3 className="text-[#2D3A3C] font-medium mb-3">{item.name}</h3>
                 <div className="flex items-center justify-between mb-3">

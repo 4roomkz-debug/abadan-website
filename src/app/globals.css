@@ -1352,7 +1352,9 @@ section {
 /* Левый край текста совпадает с контейнером секций ниже (max-w-7xl + px-8). */
 .story[data-pinned="true"] .story-copy { position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); top: 50%; transform: translateY(-50%); width: min(30rem, 34vw); z-index: 2; }
 /* Видео-переход: лежит поверх сцен и меток, под полосой эпох; та же посадка, что у картинок. */
-.story[data-pinned="true"] .story-clip { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: 0; visibility: hidden; z-index: 4; transform-origin: 72% 55%; pointer-events: none; background: var(--paper); }
+.story[data-pinned="true"] .story-clip { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: 0; visibility: hidden; z-index: 4; transform-origin: 72% 55%; pointer-events: none; background: transparent; }
+/* Ролик без кадров не показываем: под ним сцены растворяются сами. */
+.story[data-pinned="true"] .story-clip:not([data-ready]) { opacity: 0 !important; visibility: hidden !important; }
 .story[data-pinned="true"] .story-graph { z-index: 5; }
 .story[data-pinned="true"] .story-graph { display: block; position: absolute; right: 2.5vw; top: 5.5rem; width: clamp(140px, 13vw, 220px); height: auto; pointer-events: none; }
 .story[data-pinned="true"] .story-eras { display: flex; position: absolute; left: max(1.5rem, calc((100vw - 80rem) / 2 + 2rem)); bottom: 1.6rem; gap: .25rem; z-index: 4; }
