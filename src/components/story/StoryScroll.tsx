@@ -83,19 +83,25 @@ export default function StoryScroll() {
       gsap.set(scenes[0], { autoAlpha: 1 });
       gsap.set(clips, { autoAlpha: 0 });
 
-      // Ролики грузим заранее по цепочке: первый сразу, каждый следующий — как только
-      // предыдущий получил кадры. Пока у ролика нет кадров (data-ready), он скрыт
-      // стилями, и переход идёт растворением сцен, а не пустым окном.
+      // Ролики скачиваем целиком в память по цепочке: первый сразу, следующий — когда
+      // готов предыдущий. Перемотка по недокачанному файлу на медленной сети замирает
+      // на одном кадре, и превращения не видно. Пока ролик не готов (data-ready),
+      // он скрыт стилями, и сцены растворяются друг в друга.
       const loaded = new Set<number>();
+      const blobs: string[] = [];
       const preload = (i: number) => {
         const v = clips[i];
         if (!v || loaded.has(i)) return;
-        loaded.add(i); v.preload = "auto"; v.load();
+        loaded.add(i);
+        fetch(v.dataset.src!)
+          .then((r) => (r.ok ? r.blob() : Promise.reject(r.status)))
+          .then((b) => {
+            const url = URL.createObjectURL(b); blobs.push(url);
+            v.addEventListener("loadeddata", () => { v.dataset.ready = "1"; preload(i + 1); }, { once: true });
+            v.preload = "auto"; v.src = url; v.load();
+          })
+          .catch(() => preload(i + 1));
       };
-      clips.forEach((v, i) => {
-        const ready = () => { v.dataset.ready = "1"; preload(i + 1); };
-        if (v.readyState >= 2) ready(); else v.addEventListener("loadeddata", ready, { once: true });
-      });
       preload(0);
 
       // Кадр ролика задаётся положением прокрутки (как у Apple): крутишь — бумага
@@ -206,6 +212,7 @@ export default function StoryScroll() {
       return () => {
         window.removeEventListener("pageshow", onShow);
         ro.disconnect();
+        blobs.forEach((u) => URL.revokeObjectURL(u));
         barTrigger?.kill();
         delete el.dataset.pinned;
       };
@@ -328,7 +335,7 @@ export default function StoryScroll() {
         ))}
 
         {STORY_TRANSITIONS.map((tr) => (
-          <video key={tr.src} className="story-clip" src={tr.src} muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
+          <video key={tr.src} className="story-clip" data-src={tr.src} muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
         ))}
 
         <KnowledgeGraph visible={STORY_SCENES[active].graphNodes} className="story-graph" />
