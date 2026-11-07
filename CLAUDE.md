@@ -77,7 +77,7 @@ No database. Static data files in `src/data/`:
 On 14.10.2026 the six `/treningi/*` pages turned out to carry 18 invented testimonials (fake names, stock "person" photos, made-up percentages) and 18 invented "case studies" with numbers — including a fake KMG project. All were removed. Rules:
 
 - A testimonial comes only from `src/data/testimonials.ts`, and that file only from the vault note `Abadan Company/Отзывы клиентов — база.md` (scans of the letters). Quote verbatim; don't "improve" or add numbers.
-- Signature = role + company, no personal names. KazMunayGas and Polpharma Santo are not named publicly — sign them by industry.
+- Signature = role + company, no personal names. KazMunayGas and Polpharma Santo are not named publicly — sign them by industry. This is about quote signatures: their logos in the homepage "Нам доверяют" strip stay (Gani, 07.11.2026).
 - Show which training the quote is about (`training` field), so a general quote on another course page doesn't pose as a review of that course.
 - No client numbers, case studies or "results" without a source the founder confirmed. If a section needs proof and there is none — leave the section out rather than fill it.
 - Confirmed by the founder on 14.10.2026, keep as is: the client logos (KMG, KazRosGaz, PetroKazakhstan, Kashagan, MMG, KBM, Samruk-Kazyna, Kazminerals) are real past clients — letters from those years were simply not archived; the header stats on `/treningi/*` ("65+ курсов", "200+ экспертов" etc.) are verified. Don't remove them for lack of a letter.
