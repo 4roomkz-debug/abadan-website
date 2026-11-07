@@ -1,0 +1,12 @@
+{
+  "model": "gemini-omni-1.2-flash",
+  "first": "3-factory-gpt-4k.png",
+  "last": "4-modern-gpt-v1-4k.png",
+  "prompt": "The paper workshop transforms into a bright modern corporate training room in Kazakhstan: a trainer standing by a flipchart, adult professionals of different ages, mostly Kazakh, some in engineering jackets and some in office clothes, working around a table with sticky notes, a large wall screen showing remote webinar participants, a city skyline in the window. Stop-motion paper-cutout animation. STRICT STYLE: flat matte cut-paper shapes with visible paper grain and uneven hand-cut edges, layered with soft shadows between the layers; faces and bodies are simple flat paper silhouettes with minimal detail; not clay, not plastic, not glossy, not 3D-rendered, no volumetric figures, no realistic faces. Cool palette: pale paper, blue-grey and azure papers, deep petrol teal and mustard gold only as accents. The paper pieces lift, slide, fold and re-cut themselves into the new scene, piece by piece. Smooth continuous metamorphosis, calm and elegant, fixed camera, no flashes, no text, no letters. The left third of the frame ends as plain pale paper with nothing on it. The transformation begins in the very first second and continues steadily until the final second, with no static hold at the start or the end. No sound.",
+  "response_format": {
+    "type": "video",
+    "duration": "6s",
+    "resolution": "720p",
+    "aspect_ratio": "16:9"
+  }
+}

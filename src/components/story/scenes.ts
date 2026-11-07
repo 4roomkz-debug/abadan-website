@@ -77,8 +77,8 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s2",
     hotspots: [
-      { tag: "schedule", x: 70, y: 20, href: "/schedule" },
-      { tag: "hr", x: 88, y: 76, href: "/treningi/hr", align: "right" },
+      { tag: "schedule", x: 44, y: 20, href: "/schedule" },
+      { tag: "hr", x: 96, y: 70, href: "/treningi/hr", align: "right" },
     ],
     image: "/story/scene-2.webp",
     imageMobile: "/story/scene-2-m.webp",
@@ -90,9 +90,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s3",
     hotspots: [
-      { tag: "safety", x: 56, y: 20, href: "/treningi/neftegaz/bezopasnost" },
-      { tag: "neftegaz", x: 76, y: 78, href: "/treningi/neftegaz", align: "right" },
-      { tag: "onsite", x: 93, y: 52, href: "#contact", align: "right" },
+      { tag: "safety", x: 62, y: 12, href: "/treningi/neftegaz/bezopasnost" },
+      { tag: "neftegaz", x: 96, y: 50, href: "/treningi/neftegaz", align: "right" },
+      { tag: "onsite", x: 44, y: 86, href: "#contact" },
     ],
     image: "/story/scene-3.webp",
     imageMobile: "/story/scene-3-m.webp",
@@ -105,9 +105,9 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s4",
     hotspots: [
-      { tag: "offline", x: 62, y: 24, href: "/schedule" },
-      { tag: "online", x: 44, y: 30, href: "/schedule", align: "right" },
-      { tag: "finansy", x: 48, y: 80, href: "/treningi/finansy" },
+      { tag: "offline", x: 66, y: 12, href: "/schedule" },
+      { tag: "online", x: 44, y: 12, href: "/schedule" },
+      { tag: "finansy", x: 34, y: 82, href: "/treningi/finansy" },
     ],
     image: "/story/scene-4.webp",
     imageMobile: "/story/scene-4-m.webp",
@@ -122,10 +122,10 @@ export const STORY_SCENES: StoryScene[] = [
   {
     id: "s5",
     // Сфера-аватар ibirAi на кадре: центр и диаметр в процентах картинки; сюда прилетает граф логотипа.
-    avatar: { x: 58.5, y: 37, size: 17 },
+    avatar: { x: 80, y: 62, size: 20 },
     hotspots: [
-      { tag: "ibirai", x: 50, y: 58, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 49, y: 23, href: "/treningi/ai", align: "right" },
+      { tag: "ibirai", x: 72, y: 84, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ai", x: 70, y: 18, href: "/treningi/ai" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
