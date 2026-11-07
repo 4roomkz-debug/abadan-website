@@ -1,39 +1,20 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { withLocale } from "@/lib/seo";
 
-const baseMetadata: Metadata = {
-  title: "О компании — People Growth Technology",
-  description: "Abadan & Co. — компания по развитию людей с 2015 года. Гибридная модель обучения: офлайн + онлайн + ibirAi. 359 компаний, 50K+ выпускников, 200+ экспертов.",
-  keywords: [
-    "Abadan",
-    "People Growth Technology",
-    "корпоративное обучение",
-    "развитие персонала",
-    "бизнес-тренинги Казахстан",
-    "Гани Абадан",
-  ],
-  openGraph: {
-    title: "О компании Abadan & Co. — People Growth Technology",
-    description: "Развиваем людей. Растим показатели. Через технологии. С 2015 года.",
-    url: "https://www.abadan.kz/ru/about",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://www.abadan.kz/ru/about",
-  },
-};
-
 export async function generateMetadata({ params }: LayoutProps<"/[locale]/about">): Promise<Metadata> {
-  const { locale } = await params;
-  return hasLocale(routing.locales, locale) ? withLocale(baseMetadata, locale, "/about") : baseMetadata;
+  const { locale: raw } = await params;
+  const locale = hasLocale(routing.locales, raw) ? raw : routing.defaultLocale;
+  const t = await getTranslations({ locale, namespace: "about" });
+  return withLocale(
+    { title: t("metaTitle"), description: t("metaDescription"), openGraph: { title: t("metaTitle"), description: t("metaDescription"), type: "website" } },
+    locale,
+    "/about",
+  );
 }
 
-export default function AboutLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

@@ -1,0 +1,47 @@
+{
+  "metaTitle": "About us — People Growth Technology",
+  "metaDescription": "Abadan & Co. — corporate training in Kazakhstan since 2015: in person, online and ibirAi. 360+ companies, 50,000+ people trained, 200+ experts.",
+  "crumb": "About us",
+  "title": "We develop people. We grow results. Through technology.",
+  "lead": "Abadan & Co. is a corporate training company from Kazakhstan. We combine live training built on the client's own cases with online formats and learning on the phone.",
+  "facts": ["since 2015", "360+ companies", "50,000+ people trained", "200+ experts"],
+  "founder": {
+    "title": "A word from the founder",
+    "name": "Gani Abadan",
+    "role": "Founder and senior partner",
+    "photoAlt": "Gani Abadan, founder of Abadan & Co.",
+    "quote": "We don't “run trainings” — we solve business problems by developing teams.",
+    "greeting": "Dear colleagues,",
+    "p1": "My name is Gani Abadan, and I am the founder and senior partner of Abadan & Company. Over more than ten years in corporate training we have grown from a small training centre into one of Kazakhstan's leading people-development companies.",
+    "p2": "I am writing to you personally because I know the challenges you face every day: finding qualified trainers, justifying training budgets to management, measuring the real return on investing in people. I want to tell you why more than 360 companies have already chosen us as their partner.",
+    "p3": "Every programme we run is 80% practice on your company's real cases. Not abstract theory, but concrete skills your people apply the very next day.",
+    "p4": "Over the years we have built a pool of more than 200 practising experts across a wide range of fields — from oil and gas and industrial safety to HR management and artificial intelligence.",
+    "p5": "I personally guarantee the quality of every programme. If the result does not meet your expectations, we will run a repeat session at our own expense.",
+    "sign": "With respect and warmth,"
+  },
+  "advTitle": "What exactly we give our partners",
+  "adv": [
+    { "t": "A proposal the same day", "d": "A commercial proposal on the day you ask, training launched within 3 days. No lengthy approvals." },
+    { "t": "80% practice on your cases", "d": "The programme is built on the company's real tasks and tied to its metrics." },
+    { "t": "200+ experts for any task", "d": "We match a trainer to your industry and context: oil and gas, finance, law, HR, leadership, AI." },
+    { "t": "Follow-through to results", "d": "Assignments, review and support after the training, so the skill sticks at work." },
+    { "t": "Training from 2 participants", "d": "No need to gather a large group. Every participant gets personal feedback." },
+    { "t": "Paperwork and logistics on us", "d": "Closing documents on the last day of training. We arrange accommodation and transfers for participants from the regions." }
+  ],
+  "pgtTitle": "People · Growth · Technology",
+  "pgtLead": "The three pillars of our approach to corporate training.",
+  "pgt": [
+    { "k": "P", "t": "People", "d": "A focus on developing people: HR competencies, soft skills, leadership, teamwork. A company grows when each employee grows." },
+    { "k": "G", "t": "Growth", "d": "Training aimed at business metrics. We don't just run trainings — we work for real change in how teams operate." },
+    { "k": "T", "t": "Technology", "d": "A hybrid format: in-person training, online courses and learning on the phone through the ibirAi platform." }
+  ],
+  "formatsTitle": "A hybrid learning model",
+  "formats": [
+    { "t": "In-person training", "d": "Live learning with practice on real cases: in Almaty and on site at your facility." },
+    { "t": "Online learning", "d": "Webinars and courses for distributed teams." },
+    { "t": "ibirAi — learning on the phone", "d": "A messenger-based safety training platform for frontline workers, with understanding verified for every employee. A separate product with its own website." }
+  ],
+  "ibiraiLink": "ibirAi website",
+  "ctaTitle": "Ready to develop your team?",
+  "ctaLead": "Tell us about your task — we will prepare a commercial proposal the same day."
+}
