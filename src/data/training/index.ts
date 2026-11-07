@@ -1,8 +1,13 @@
 import { SCHEDULE_DATA, type ScheduleItem } from "@/data/schedule";
 import type { TrainingCategory } from "./types";
 import hr from "./hr";
+import finansy from "./finansy";
+import pravo from "./pravo";
+import liderstvo from "./liderstvo";
+import neftegaz from "./neftegaz";
+import ai from "./ai";
 
-export const TRAINING_CATEGORIES = { hr } satisfies Record<string, TrainingCategory>;
+export const TRAINING_CATEGORIES = { hr, finansy, pravo, liderstvo, neftegaz, ai } satisfies Record<string, TrainingCategory>;
 export type TrainingSlug = keyof typeof TRAINING_CATEGORIES;
 
 const has = (name: string, kws: string[]) => {

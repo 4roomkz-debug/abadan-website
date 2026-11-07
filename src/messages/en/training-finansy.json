@@ -1,0 +1,69 @@
+{
+  "metaTitle": "Finance courses and seminars for business",
+  "metaDescription": "18+ courses for finance professionals in Kazakhstan. IFRS, tax, budgeting, treasury, audit. 200+ practising experts. In person and online.",
+  "name": "Finance",
+  "title": "Finance courses for business and accounting",
+  "lead": "From bookkeeping to IFRS — practical courses for finance professionals, accountants and managers.",
+  "facts": [
+    "18+ courses",
+    "200+ experts",
+    "10+ years of experience",
+    "80% practice"
+  ],
+  "areasTitle": "From accounting to investment",
+  "areasLead": "The full cycle of finance training for business.",
+  "areas": {
+    "accounting": {
+      "title": "Accounting",
+      "desc": "Bookkeeping, financial reporting, primary documentation, 1C"
+    },
+    "ifrs": {
+      "title": "IFRS and audit",
+      "desc": "International Financial Reporting Standards, audit, due diligence"
+    },
+    "tax": {
+      "title": "Taxation",
+      "desc": "Tax Code of the RK, VAT, CIT, transfer pricing"
+    },
+    "budgeting": {
+      "title": "Budgeting",
+      "desc": "Budgeting, planning, cost control, unit cost"
+    },
+    "treasury": {
+      "title": "Treasury and cash flow",
+      "desc": "Cash flow management, treasury, liquidity"
+    },
+    "investment": {
+      "title": "Investment and valuation",
+      "desc": "Investment analysis, business valuation, financial modelling"
+    }
+  },
+  "formTitle": "Order finance training for your team",
+  "formLead": "We will put together a programme for your tasks — from bookkeeping to investment analysis. A commercial proposal the same day.",
+  "faq": [
+    {
+      "q": "What finance courses are available for business?",
+      "a": "Abadan & Co. runs courses on IFRS, RK taxation, budgeting and planning, treasury, financial analysis, audit, management accounting and transfer pricing. Courses run in person in Almaty and online."
+    },
+    {
+      "q": "How much do finance courses cost?",
+      "a": "On the 2026 schedule — {minPrice} to {maxPrice} ₸ per participant, depending on the course and format. Online is cheaper than in person."
+    },
+    {
+      "q": "Are there IFRS courses in Kazakhstan?",
+      "a": "Yes, the schedule includes several IFRS programmes — from a basic course to advanced topics adapted to Kazakhstani practice."
+    },
+    {
+      "q": "Who runs the finance training?",
+      "a": "Trainers are practising finance professionals, auditors and consultants with experience at Kazakhstani and international companies. We have a pool of more than 200 experts."
+    },
+    {
+      "q": "Can I take a finance course online?",
+      "a": "Yes, every course on the schedule has an online format with its own price."
+    },
+    {
+      "q": "Are the courses suitable for oil and gas finance professionals?",
+      "a": "Yes, we have specialised programmes that account for the oil and gas industry: accounting at extractive companies, taxation of subsoil users, PRMS."
+    }
+  ]
+}

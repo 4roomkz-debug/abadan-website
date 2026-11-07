@@ -1497,3 +1497,44 @@ section {
   .ab-photo { position: static; max-width: 22rem; }
   .ab-pgt, .ab-formats { grid-template-columns: 1fr; gap: 1.5rem; }
 }
+
+/* ── Коучинг (/coaching) ──────────────────────────────────────────────────── */
+.co-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); gap: 3rem; align-items: center; }
+.co-title { max-width: 16ch; }
+.co-hero-photo { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 10px; }
+.co-traps { margin-top: 1.25rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; border-top: 2px solid var(--ink); }
+.co-traps li { padding: 1.25rem 0; border-bottom: 1px solid #D5DEDE; }
+.co-traps h3 { font-weight: 800; font-size: 1.15rem; color: var(--ink); }
+.co-trap-q { margin-top: .4rem; font-weight: 600; color: #00767D; }
+.co-traps p:last-child { margin-top: .4rem; color: var(--ink-soft); line-height: 1.5; font-size: var(--type-small); }
+.co-note { margin-top: 1.5rem; font-weight: 700; color: var(--ink); max-width: 44rem; }
+.co-results { margin-top: 1.25rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; border-top: 2px solid var(--ink); }
+.co-results li { padding: .9rem 0 .9rem 1.5rem; border-bottom: 1px solid #D5DEDE; position: relative; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.co-results li::before { content: ""; position: absolute; left: 0; top: 1.35rem; width: .55rem; height: .55rem; border-radius: 50%; background: #F0BB1E; }
+.co-sessions { border-top: 2px solid var(--ink); }
+.co-sessions li { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid #D5DEDE; }
+.co-num { font-size: 2rem; line-height: 1; font-weight: 800; color: #00767D; font-variant-numeric: tabular-nums; }
+.co-sessions h3, .co-steps h3 { font-weight: 800; font-size: 1.1rem; color: var(--ink); }
+.co-sessions p { margin-top: .3rem; color: var(--ink-soft); line-height: 1.5; max-width: 46rem; }
+.co-res { font-size: var(--type-small); }
+.co-res b { color: #00767D; }
+.co-role { margin-top: .4rem; }
+.co-coach { margin-top: 1rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+.co-facts { grid-template-columns: 1fr; margin-top: 0; }
+.co-quote { margin-top: 0; }
+.co-steps { margin-top: 1.25rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; border-top: 2px solid var(--ink); padding-top: 1.25rem; }
+.co-steps .co-num { display: block; margin-bottom: .5rem; }
+.co-steps p { margin-top: .3rem; color: var(--ink-soft); font-size: var(--type-small); line-height: 1.5; }
+.co-form-wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3rem; align-items: start; }
+.co-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.co-wide { grid-column: 1 / -1; }
+.co-form .story-btn { justify-content: center; }
+.co-contacts { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .3rem; font-weight: 700; }
+.co-contacts a { color: #00767D; width: fit-content; }
+@media (max-width: 899px) {
+  .co-hero, .co-form-wrap, .co-coach { grid-template-columns: 1fr; }
+  .co-hero-photo { max-width: 18rem; }
+  .co-traps, .co-results { grid-template-columns: 1fr; }
+  .co-steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .co-form, .co-steps { grid-template-columns: 1fr; } }
