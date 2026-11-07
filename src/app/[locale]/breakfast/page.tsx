@@ -857,7 +857,7 @@ function Story1Slide() {
     <div className="text-center max-w-4xl relative">
       {/* Large decorative quote marks */}
       <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-[200px] font-serif text-[#00767D]/5 leading-none pointer-events-none select-none">
-        "
+        &ldquo;
       </div>
 
       <div className="relative">

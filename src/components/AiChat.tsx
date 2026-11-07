@@ -16,6 +16,13 @@ const HIDDEN_PATHS = ["/breakfast"];
 
 const QUICK_ACTIONS = ["trainings", "price", "request"] as const;
 
+// Вне компонента: генерация id — побочный эффект, React-линтер не пускает его в тело компонента.
+function newSessionId(): string {
+  return typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
 export default function AiChat() {
   const t = useTranslations("common.chat");
   const locale = useLocale();
@@ -33,10 +40,7 @@ export default function AiChat() {
   const sessionIdRef = useRef<string | null>(null);
   const getSessionId = () => {
     if (!sessionIdRef.current) {
-      sessionIdRef.current =
-        typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
-          ? crypto.randomUUID()
-          : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+      sessionIdRef.current = newSessionId();
     }
     return sessionIdRef.current;
   };
