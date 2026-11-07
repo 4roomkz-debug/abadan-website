@@ -123,6 +123,7 @@ export default function StoryScroll() {
           start: "top top",
           end: `+=${total * 100}%`,
           scrub: 0.5,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             const i = indexAt(self.progress);
             if (i !== active) { active = i; setActive(i); preload(i); preload(i + 1); }
@@ -133,6 +134,22 @@ export default function StoryScroll() {
           },
         },
       });
+
+      // В финале граф-логотип из угла прилетает в кадр и становится аватаром ibirAi
+      // (сфера из точек и связей, по которым бегут импульсы). Цель считаем от
+      // рамки картинки, при смене размера окна ScrollTrigger пересчитает.
+      const graph = el.querySelector<SVGElement>(".story-graph");
+      const avatar = STORY_SCENES[n - 1].avatar;
+      const landing = () => {
+        if (!graph || !avatar) return { x: 0, y: 0, scale: 1 };
+        const stage = el.querySelector<HTMLElement>(".story-stage")!;
+        const w = stage.offsetWidth, h = stage.offsetHeight;
+        const k = Math.max(w / ART_RATIO, h); const iw = k * ART_RATIO, ih = k; const ix = w - iw, iy = (h - ih) / 2;
+        const cx = ix + iw * avatar.x / 100, cy = iy + ih * avatar.y / 100, size = iw * avatar.size / 100;
+        const r = graph.getBoundingClientRect(); const sr = stage.getBoundingClientRect();
+        const gx = r.left - sr.left + r.width / 2, gy = r.top - sr.top + r.height / 2;
+        return { x: cx - gx, y: cy - gy, scale: size / r.width };
+      };
 
       let pos = 0;
       scenes.forEach((scene, i) => {
@@ -155,6 +172,9 @@ export default function StoryScroll() {
             tl.set(next, { autoAlpha: 1 }, pos + TRANS * 0.5);
             tl.fromTo(nextCopy, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.1 }, pos + TRANS - 0.12);
             tl.to(v, { autoAlpha: 0, duration: 0.06 }, pos + TRANS - 0.06);
+            if (i === n - 2 && graph && avatar) {
+              tl.to(graph, { x: () => landing().x, y: () => landing().y, scale: () => landing().scale, duration: TRANS * 0.45, ease: "sine.inOut" }, pos + TRANS * 0.55);
+            }
           } else {
             // Без видео — спокойное растворение.
             tl.to(scene, { autoAlpha: 0, duration: TRANS * 0.5 }, pos + TRANS * 0.25);

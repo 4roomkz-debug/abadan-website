@@ -1,0 +1,5 @@
+{
+  "model": "gemini-3-pro-image",
+  "input": "scene-5-v2-4k.png",
+  "prompt": "Change ONLY: replace the translucent ghost-like human mentor silhouette with a sphere made of small flat paper dots connected by thin lines, like a constellation network: deep petrol teal dots, a few mustard gold dots, thin blue-grey lines, floating in the air beside the worker's phone at his chest height, about the size of his head and a half, cut from paper with soft shadows. Remove the small floating diagram too. Keep identical: the worker, his phone, the pump jacks, sky, ground, colours, the paper-cutout style and grain, the plain paper on the left. No text."
+}

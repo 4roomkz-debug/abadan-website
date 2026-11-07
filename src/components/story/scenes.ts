@@ -42,6 +42,9 @@ export type StoryScene = {
   sourceLabel?: "home.story.s2.source" | "home.story.s3.source";
   showUpcoming?: boolean;
   primaryCta?: boolean;
+  // Куда в последней сцене прилетает граф-логотип и становится аватаром ibirAi:
+  // центр в процентах кадра 16:9, size — доля ширины кадра.
+  avatar?: { x: number; y: number; size: number };
 };
 
 // Видео-переходы между эпохами (xAI grok-imagine-video-1.5, бумажная перекладка):
@@ -118,9 +121,11 @@ export const STORY_SCENES: StoryScene[] = [
   },
   {
     id: "s5",
+    // Сфера-аватар ibirAi на кадре: центр и диаметр в процентах картинки; сюда прилетает граф логотипа.
+    avatar: { x: 58.5, y: 37, size: 17 },
     hotspots: [
-      { tag: "ibirai", x: 46, y: 58, href: "https://www.ibirai.com/ru", external: true },
-      { tag: "ai", x: 44, y: 30, href: "/treningi/ai" },
+      { tag: "ibirai", x: 50, y: 58, href: "https://www.ibirai.com/ru", external: true },
+      { tag: "ai", x: 49, y: 23, href: "/treningi/ai", align: "right" },
     ],
     image: "/story/scene-5.webp",
     imageMobile: "/story/scene-5-m.webp",
