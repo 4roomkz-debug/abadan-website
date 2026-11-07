@@ -1,435 +1,200 @@
 "use client";
 
-import { useState, useMemo, useSyncExternalStore } from "react";
+import { Fragment, useMemo, useState, useSyncExternalStore } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
 import Header from "@/components/Header";
-import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, isEventPassed, formatScheduleDate } from "@/data/schedule";
+import Footer from "@/components/Footer";
+import {
+  SCHEDULE_DATA, MONTHS, parseDateForSort, isEventPassed, formatScheduleDate, formatMonth, type ScheduleItem,
+} from "@/data/schedule";
 import { localizeCourse } from "@/data/schedule-i18n";
 import { submitContactForm } from "@/lib/contactForm";
 
-const subscribeToHydration = () => () => {};
-const getClientSnapshot = () => true;
-const getServerSnapshot = () => false;
+const subscribe = () => () => {};
+type Category = "all" | "business" | "technical";
+const keyOf = (c: ScheduleItem) => `${c.month}|${c.date}|${c.name}`;
 
+// Расписание в бумажном мире главной: месяцы — разделы, курс — строка таблицы,
+// запись раскрывается прямо под строкой, без всплывающего окна. Прошедшие курсы
+// скрыты по дате браузера, поэтому список строится после гидратации.
 export default function SchedulePage() {
+  const t = useTranslations("schedule");
   const locale = useLocale();
-  const [categoryFilter, setCategoryFilter] = useState<"all" | "business" | "technical">("all");
-  const [monthFilter, setMonthFilter] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const hydrated = useSyncExternalStore(subscribe, () => true, () => false);
+  const [now] = useState(() => new Date());
 
-  // Modal state
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<string>("");
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    participants: "1",
-    website: "",
-  });
-  const [formLoadedAt] = useState(() => Date.now());
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-  const hydrated = useSyncExternalStore(
-    subscribeToHydration,
-    getClientSnapshot,
-    getServerSnapshot
+  const [category, setCategory] = useState<Category>("all");
+  const [month, setMonth] = useState("all");
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState<string | null>(null);
+
+  const future = useMemo(
+    () => (hydrated ? SCHEDULE_DATA.filter((c) => !isEventPassed(c.date, c.month, now)) : []),
+    [hydrated, now],
   );
-  const [browserDate] = useState(() => new Date());
-  const currentDate = hydrated ? browserDate : null;
+  const months = useMemo(() => MONTHS.filter((m) => future.some((c) => c.month === m)), [future]);
 
-  const openModal = (courseName: string) => {
-    setSelectedCourse(courseName);
-    setIsModalOpen(true);
-    setSubmitSuccess(false);
-    setSubmitError(false);
-  };
+  const items = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return future
+      .filter((c) => category === "all" || c.category === category)
+      .filter((c) => month === "all" || c.month === month)
+      .filter((c) => !q || c.name.toLowerCase().includes(q) || localizeCourse(c.name, locale).toLowerCase().includes(q))
+      .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month));
+  }, [future, category, month, query, locale]);
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedCourse("");
-    setFormData({ name: "", phone: "", email: "", participants: "1", website: "" });
-    setSubmitSuccess(false);
-    setSubmitError(false);
-  };
+  const groups = useMemo(() => {
+    const out: { month: string; list: ScheduleItem[] }[] = [];
+    for (const c of items) {
+      const last = out[out.length - 1];
+      if (last?.month === c.month) last.list.push(c); else out.push({ month: c.month, list: [c] });
+    }
+    return out;
+  }, [items]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const price = (n: number) => n.toLocaleString(locale === "en" ? "en-US" : "ru-RU");
+
+  return (
+    <>
+      <Header />
+      <main className="paper-section sched">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8"><div className="max-w-7xl mx-auto">
+          <h1 className="sched-title">{t("title")}</h1>
+          <p className="paper-lead">{t("lead")}</p>
+
+          <div className="sched-filters" role="search">
+            <label className="sched-field sched-search">
+              <span>{t("search")}</span>
+              <input type="search" className="paper-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("searchPlaceholder")} />
+            </label>
+            <fieldset className="sched-field">
+              <legend>{t("category")}</legend>
+              <div className="sched-seg">
+                {(["all", "business", "technical"] as const).map((c) => (
+                  <button key={c} type="button" aria-pressed={category === c} onClick={() => setCategory(c)}>{t(`categories.${c}`)}</button>
+                ))}
+              </div>
+            </fieldset>
+            <label className="sched-field">
+              <span>{t("month")}</span>
+              <select className="paper-input" value={month} onChange={(e) => setMonth(e.target.value)}>
+                <option value="all">{t("allMonths")}</option>
+                {months.map((m) => <option key={m} value={m}>{formatMonth(m, locale)}</option>)}
+              </select>
+            </label>
+          </div>
+
+          <p className="sched-count" aria-live="polite">{hydrated ? t("found", { n: items.length }) : t("loading")}</p>
+
+          {groups.map((g) => (
+            <section key={g.month} className="sched-month" aria-labelledby={`m-${g.month}`}>
+              <h2 id={`m-${g.month}`}>{formatMonth(g.month, locale)} 2026</h2>
+              <div className="sched-table" role="table" aria-label={formatMonth(g.month, locale)}>
+                <div className="sched-row sched-headrow" role="row">
+                  <span role="columnheader">{t("cols.date")}</span>
+                  <span role="columnheader">{t("cols.course")}</span>
+                  <span role="columnheader" className="num">{t("cols.hours")}</span>
+                  <span role="columnheader" className="num">{t("cols.online")}</span>
+                  <span role="columnheader" className="num">{t("cols.offline")}</span>
+                  <span role="columnheader" />
+                </div>
+                {g.list.map((c) => {
+                  const k = keyOf(c);
+                  const isOpen = open === k;
+                  return (
+                    <Fragment key={k}>
+                      <div className={`sched-row${isOpen ? " is-open" : ""}`} role="row">
+                        <span role="cell" className="sched-date">{formatScheduleDate(c.date, locale)}</span>
+                        <span role="cell" className="sched-name">
+                          {localizeCourse(c.name, locale)}
+                          <em className={c.category === "technical" ? "is-tech" : undefined}>{t(c.category)}</em>
+                        </span>
+                        <span role="cell" className="num sched-hours">{t("hours", { n: c.hours })}</span>
+                        <span role="cell" className="num"><b className="sched-m">{t("cols.online")} </b>{price(c.priceOnline)} ₸</span>
+                        <span role="cell" className="num"><b className="sched-m">{t("cols.offline")} </b>{price(c.priceOffline)} ₸</span>
+                        <span role="cell" className="sched-act">
+                          <button type="button" className={isOpen ? "story-btn-ghost sched-btn" : "story-btn-dark sched-btn"} aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : k)}>
+                            {isOpen ? t("close") : t("register")}
+                          </button>
+                        </span>
+                      </div>
+                      {isOpen && <SignUp course={c} onDone={() => setOpen(null)} />}
+                    </Fragment>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
+
+          {hydrated && items.length === 0 && (
+            <div className="sched-empty">
+              <p className="sched-empty-title">{t("empty")}</p>
+              <p className="paper-lead">{t("emptyHint")}</p>
+              <Link href="/#contact" className="story-btn story-btn-primary">{t("emptyCta")}</Link>
+            </div>
+          )}
+
+          <p className="paper-note sched-note">{t("priceNote")}</p>
+        </div></div>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+function SignUp({ course, onDone }: { course: ScheduleItem; onDone: () => void }) {
+  const t = useTranslations("schedule.form");
+  const locale = useLocale();
+  const [loadedAt] = useState(() => Date.now());
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError(false);
-
+    const fd = new FormData(e.currentTarget);
+    setState("sending");
     try {
-      // Send to /api/contact → Telegram "Заявки Абадан"
-      const message = `🎓 Запись на курс: ${selectedCourse}\n👥 Участников: ${formData.participants}`;
-
+      // В Telegram уходит русское название: команда ищет курс по нему.
       await submitContactForm({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        message,
-        website: formData.website,
-        _elapsed: Date.now() - formLoadedAt,
+        name: fd.get("name"), phone: fd.get("phone"), email: fd.get("email"), website: fd.get("website"),
+        message: `🎓 Запись на курс: ${course.name} (${course.date})\n👥 Участников: ${fd.get("participants")}`,
+        locale, _elapsed: Date.now() - loadedAt,
       });
-
-      setSubmitSuccess(true);
-      setTimeout(() => {
-        closeModal();
-      }, 2000);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setSubmitError(true);
-    } finally {
-      setIsSubmitting(false);
+      setState("sent");
+      setTimeout(onDone, 4000);
+    } catch {
+      setState("error");
     }
   };
 
-  // Get unique months from data (only future events)
-  const availableMonths = useMemo(() => {
-    if (!currentDate) return [];
-    const futureEvents = SCHEDULE_DATA.filter(item => !isEventPassed(item.date, item.month, currentDate));
-    const months = new Set(futureEvents.map(item => item.month));
-    return MONTHS.filter(m => months.has(m));
-  }, [currentDate]);
-
-  // Filter and sort data by calendar date (hide past events)
-  const filteredData = useMemo(() => {
-    if (!currentDate) return [];
-    return SCHEDULE_DATA
-      .filter(item => {
-        // Hide past events
-        if (isEventPassed(item.date, item.month, currentDate)) return false;
-
-        const matchesCategory = categoryFilter === "all" || item.category === categoryFilter;
-        const matchesMonth = monthFilter === "all" || item.month === monthFilter;
-        const matchesSearch = searchQuery === "" ||
-          item.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesMonth && matchesSearch;
-      })
-      .sort((a, b) => parseDateForSort(a.date, a.month) - parseDateForSort(b.date, b.month));
-  }, [categoryFilter, monthFilter, searchQuery, currentDate]);
-
-  // Format price (without currency suffix - footnote explains it's in tenge)
-  const formatPrice = (price: number) => {
-    return price.toLocaleString("ru-RU");
-  };
+  if (state === "sent") {
+    return (
+      <div className="sched-form" role="status">
+        <p className="sched-form-title">{t("successTitle")}</p>
+        <p className="paper-lead">{t("successText")}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F8FAFB] to-white">
-      <Header />
-
-      {/* Main content */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-sm text-[#7A8B8E] mb-8">
-          <Link href="/" className="hover:text-[#00767D] transition-colors">Главная</Link>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-          <span className="text-[#2D3A3C] font-medium">Расписание</span>
-        </nav>
-
-        {/* Page title */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-[#2D3A3C] mb-4">
-            <span className="text-[#00767D]">Расписание</span> открытых тренингов
-          </h1>
-          <p className="text-[#546569] text-lg max-w-2xl mx-auto">
-            Выберите интересующий курс и запишитесь на обучение.
-            Мы проводим тренинги онлайн и очно в Алматы.
-          </p>
-        </div>
-
-        {/* Filters */}
-        <div className="bg-white rounded-2xl p-6 mb-8 border border-[#00767D]/10 shadow-sm">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Search */}
-            <div className="lg:col-span-2">
-              <label className="block text-sm text-[#546569] mb-2">Поиск по названию</label>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Введите название курса..."
-                className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#94A3B8] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
-              />
-            </div>
-
-            {/* Category filter */}
-            <div>
-              <label className="block text-sm text-[#546569] mb-2">Категория</label>
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value as "all" | "business" | "technical")}
-                className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all cursor-pointer"
-              >
-                <option value="all">{CATEGORIES.all}</option>
-                <option value="business">{CATEGORIES.business}</option>
-                <option value="technical">{CATEGORIES.technical}</option>
-              </select>
-            </div>
-
-            {/* Month filter */}
-            <div>
-              <label className="block text-sm text-[#546569] mb-2">Месяц</label>
-              <select
-                value={monthFilter}
-                onChange={(e) => setMonthFilter(e.target.value)}
-                className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all cursor-pointer"
-              >
-                <option value="all">Все месяцы</option>
-                {availableMonths.map(month => (
-                  <option key={month} value={month}>{month}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Results count */}
-          <div className="mt-4 text-sm text-[#546569]">
-            Найдено курсов: <span className="text-[#00767D] font-semibold">{filteredData.length}</span>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="bg-white rounded-2xl border border-[#00767D]/10 shadow-sm overflow-hidden">
-          {/* Desktop table */}
-          <div className="hidden lg:block overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-[#F8FAFB] border-b border-[#00767D]/10">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-[#546569]">Дата</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-[#546569]">Название курса</th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-[#546569]">Часов</th>
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-[#546569]">Онлайн</th>
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-[#546569]">Очно</th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-[#546569]"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((item, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-[#00767D]/5 hover:bg-[#F8FAFB]/50 transition-colors"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="text-[#2D3A3C] font-medium">{formatScheduleDate(item.date, locale)}</div>
-                      <div className="text-xs text-[#94A3B8]">{item.month} 2026</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-[#2D3A3C]">{localizeCourse(item.name, locale)}</div>
-                      <div className={`inline-block mt-1 px-2 py-0.5 rounded text-xs ${
-                        item.category === "business"
-                          ? "bg-[#00767D]/10 text-[#00767D]"
-                          : "bg-[#F0BB1E]/20 text-[#B8860B]"
-                      }`}>
-                        {item.category === "business" ? "Бизнес" : "Технический"}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-center text-[#546569]">{item.hours}</td>
-                    <td className="px-6 py-4 text-right text-[#00767D] font-medium">{formatPrice(item.priceOnline)}</td>
-                    <td className="px-6 py-4 text-right text-[#B8860B] font-medium">{formatPrice(item.priceOffline)}</td>
-                    <td className="px-6 py-4 text-center">
-                      <button
-                        onClick={() => openModal(item.name)}
-                        className="inline-block px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-[#00767D]/20 transition-all cursor-pointer"
-                      >
-                        Записаться
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile cards */}
-          <div className="lg:hidden divide-y divide-[#00767D]/5">
-            {filteredData.map((item, index) => (
-              <div key={index} className="p-4 hover:bg-[#F8FAFB]/50 transition-colors">
-                <div className="flex justify-between items-start mb-2">
-                  <div className={`px-2 py-0.5 rounded text-xs ${
-                    item.category === "business"
-                      ? "bg-[#00767D]/10 text-[#00767D]"
-                      : "bg-[#F0BB1E]/20 text-[#B8860B]"
-                  }`}>
-                    {item.category === "business" ? "Бизнес" : "Технический"}
-                  </div>
-                  <div className="text-sm text-[#546569]">{formatScheduleDate(item.date, locale)}</div>
-                </div>
-                <h3 className="text-[#2D3A3C] font-medium mb-3">{localizeCourse(item.name, locale)}</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="text-sm">
-                    <span className="text-[#94A3B8]">Онлайн: </span>
-                    <span className="text-[#00767D] font-medium">{formatPrice(item.priceOnline)}</span>
-                  </div>
-                  <div className="text-sm">
-                    <span className="text-[#94A3B8]">Очно: </span>
-                    <span className="text-[#B8860B] font-medium">{formatPrice(item.priceOffline)}</span>
-                  </div>
-                </div>
-                <button
-                  onClick={() => openModal(item.name)}
-                  className="block w-full text-center px-4 py-2 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all cursor-pointer"
-                >
-                  Записаться
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Empty state */}
-          {filteredData.length === 0 && (
-            <div className="py-16 text-center">
-              <div className="text-[#94A3B8] mb-4">
-                <svg className="w-16 h-16 mx-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <p className="text-[#546569] text-lg">По вашему запросу ничего не найдено</p>
-              <p className="text-[#94A3B8] text-sm mt-2">Попробуйте изменить фильтры</p>
-            </div>
-          )}
-        </div>
-
-        {/* Price footnote */}
-        <p className="mt-4 text-sm text-[#94A3B8] text-center">
-          * Все цены указаны в тенге (₸)
-        </p>
-
-        {/* Back button */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-[#546569] hover:text-[#00767D] transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Вернуться на главную
-          </Link>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-[#00767D]/10 py-8 mt-12 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[#94A3B8] text-sm">
-            © 2025 Abadan & Co. Все права защищены.
-          </p>
-        </div>
-      </footer>
-
-      {/* Registration Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={closeModal}
-          />
-
-          {/* Modal */}
-          <div className="relative bg-white rounded-2xl border border-[#00767D]/10 w-full max-w-md p-6 shadow-2xl">
-            {/* Close button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-[#94A3B8] hover:text-[#2D3A3C] transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {submitSuccess ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#00767D]/10 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-[#00767D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-[#2D3A3C] mb-2">Заявка отправлена!</h3>
-                <p className="text-[#546569]">Мы свяжемся с вами в ближайшее время</p>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-xl font-bold text-[#2D3A3C] mb-2">Записаться на курс</h3>
-                <p className="text-[#546569] text-sm mb-6 line-clamp-2">{selectedCourse}</p>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-sm text-[#546569] mb-1">Ваше имя *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#94A3B8] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
-                      placeholder="Введите ваше имя"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm text-[#546569] mb-1">Телефон *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#94A3B8] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
-                      placeholder="+7 (___) ___-__-__"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm text-[#546569] mb-1">Email *</label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] placeholder-[#94A3B8] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all"
-                      placeholder="email@example.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm text-[#546569] mb-1">Количество участников</label>
-                    <select
-                      value={formData.participants}
-                      onChange={(e) => setFormData({ ...formData, participants: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#00767D]/20 rounded-xl text-[#2D3A3C] focus:outline-none focus:border-[#00767D] focus:ring-1 focus:ring-[#00767D] transition-all cursor-pointer"
-                    >
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-                        <option key={n} value={n}>{n} {n === 1 ? "человек" : n < 5 ? "человека" : "человек"}</option>
-                      ))}
-                      <option value="10+">Более 10</option>
-                    </select>
-                  </div>
-
-                  <div className="absolute opacity-0 -z-10 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
-                    <input type="text" name="website" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} autoComplete="off" tabIndex={-1} />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3 bg-gradient-to-r from-[#00767D] to-[#006D77] text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-[#00767D]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                  >
-                    {isSubmitting ? "Отправка..." : "Отправить заявку"}
-                  </button>
-                  {submitError && (
-                    <p className="text-red-600 text-sm" role="alert">
-                      Заявка не отправлена. Попробуйте ещё раз.
-                    </p>
-                  )}
-                </form>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    <form className="sched-form" onSubmit={submit}>
+      <p className="sched-form-title">{t("title")}: {localizeCourse(course.name, locale)}</p>
+      <div className="sched-form-grid">
+        <label className="sched-field"><span>{t("name")}</span><input name="name" required autoComplete="name" className="paper-input" /></label>
+        <label className="sched-field"><span>{t("phone")}</span><input name="phone" type="tel" required autoComplete="tel" placeholder="+7 7__ ___ __ __" className="paper-input" /></label>
+        <label className="sched-field"><span>{t("email")}</span><input name="email" type="email" required autoComplete="email" className="paper-input" /></label>
+        <label className="sched-field"><span>{t("participants")}</span>
+          <select name="participants" defaultValue="1" className="paper-input">
+            {Array.from({ length: 10 }, (_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
+            <option value="10+">{t("participantsMore")}</option>
+          </select>
+        </label>
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="sched-hp" />
+        <button type="submit" className="story-btn story-btn-primary" disabled={state === "sending"}>
+          {state === "sending" ? t("submitting") : t("submit")}
+        </button>
+      </div>
+      {state === "error" && <p className="sched-error" role="alert">{t("error")}</p>}
+    </form>
   );
 }

@@ -1371,3 +1371,64 @@ section {
 @media (prefers-reduced-motion: reduce) {
   .story-impulse { display: none; }
 }
+
+/* ── Расписание (/schedule): бумажный мир главной ─────────────────────────── */
+.paper-input { width: 100%; min-height: 2.9rem; padding: .55rem .8rem; background: #fff; border: 1px solid #B9C6C7; border-radius: 6px; color: var(--ink); font-size: 1rem; }
+.paper-input::placeholder { color: #6B7C7F; }
+.paper-input:focus { outline: 2px solid #00767D; outline-offset: 1px; border-color: #00767D; }
+.sched { padding-top: 3.5rem; min-height: 70vh; }
+.sched-title { font-size: var(--type-display); line-height: 1.06; font-weight: 800; letter-spacing: -0.03em; text-wrap: balance; color: var(--ink); max-width: 22ch; }
+.sched-filters { margin-top: 2.25rem; display: grid; grid-template-columns: minmax(16rem, 2fr) auto minmax(11rem, 1fr); gap: 1rem 1.5rem; align-items: end; }
+.sched-field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; border: 0; padding: 0; margin: 0; }
+.sched-field > span, .sched-field > legend { font-size: var(--type-small); font-weight: 700; color: var(--ink-soft); padding: 0; }
+.sched-field > legend { margin-bottom: .4rem; }
+.sched-seg { display: inline-flex; border: 1px solid var(--ink); border-radius: 6px; overflow: hidden; }
+.sched-seg button { min-height: 2.9rem; padding: 0 1rem; font-weight: 700; font-size: .95rem; color: var(--ink); white-space: nowrap; transition: background-color .15s, color .15s; }
+.sched-seg button + button { border-left: 1px solid var(--ink); }
+.sched-seg button:hover { background: #EEF2F1; }
+.sched-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.sched-count { margin-top: 1.25rem; font-size: var(--type-small); font-weight: 700; color: #546569; font-variant-numeric: tabular-nums; }
+.sched-month { margin-top: 2.75rem; }
+.sched-month h2 { font-size: var(--type-h2); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-bottom: .75rem; }
+.sched-table { border-top: 2px solid var(--ink); }
+.sched-row { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 6rem 7.5rem 7.5rem 9rem; gap: .25rem 1.25rem; align-items: center; padding: .85rem 0; border-bottom: 1px solid #D5DEDE; font-size: var(--type-body); line-height: 1.35; font-variant-numeric: tabular-nums; }
+.sched-row.is-open { border-bottom-color: transparent; }
+.sched-headrow { padding: .6rem 0; font-size: var(--type-small); font-weight: 700; color: #546569; }
+.sched-row .num { text-align: right; }
+.sched-date { font-weight: 700; color: #00767D; }
+.sched-name { font-weight: 600; color: var(--ink); }
+.sched-name em { display: block; margin-top: .2rem; font-style: normal; font-size: var(--type-small); font-weight: 600; color: #546569; }
+.sched-name em.is-tech { color: #8A6A00; }
+.sched-hours { color: #546569; font-size: var(--type-small); }
+.sched-m { display: none; }
+.sched-act { text-align: right; }
+.sched-btn { min-height: 2.6rem; padding: 0 1rem; font-size: .95rem; }
+.sched-form { padding: 1.25rem 1.5rem 1.5rem; margin-bottom: .5rem; background: #fff; border: 1px solid #D5DEDE; border-top: 2px solid #F0BB1E; border-radius: 0 0 10px 10px; }
+.sched-form-title { font-weight: 800; font-size: 1.1rem; color: var(--ink); margin-bottom: 1rem; }
+.sched-form-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 9rem auto; gap: 1rem; align-items: end; }
+.sched-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.sched-error { margin-top: .75rem; color: #B42318; font-weight: 600; }
+.sched-empty { margin-top: 2.5rem; padding: 2rem 0; border-top: 2px solid var(--ink); }
+.sched-empty-title { font-size: var(--type-h2); font-weight: 800; color: var(--ink); }
+.sched-empty .story-btn { margin-top: 1.25rem; }
+.sched-note { margin-top: 2rem; }
+@media (max-width: 1023px) {
+  .sched-filters { grid-template-columns: 1fr 1fr; }
+  .sched-search { grid-column: 1 / -1; }
+  .sched-headrow { display: none; }
+  .sched-row { grid-template-columns: 1fr auto; padding: 1rem 0; }
+  .sched-date { grid-column: 1 / -1; }
+  .sched-name { grid-column: 1 / -1; }
+  .sched-row .num { text-align: left; font-size: var(--type-small); color: var(--ink-soft); }
+  .sched-hours { grid-column: 1 / -1; }
+  .sched-m { display: inline; font-weight: 600; color: #546569; }
+  .sched-act { grid-column: 1 / -1; text-align: left; margin-top: .5rem; }
+  .sched-form-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .sched-filters { grid-template-columns: 1fr; }
+  .sched-seg { display: flex; }
+  .sched-seg button { flex: 1; padding: 0 .5rem; font-size: .9rem; white-space: normal; line-height: 1.15; }
+  .sched-form-grid { grid-template-columns: 1fr; }
+  .sched-form { padding: 1rem; }
+}
