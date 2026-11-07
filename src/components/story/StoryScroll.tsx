@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "@/i18n/navigation";
-import { getUpcomingTrainings, type ScheduleItem } from "@/data/schedule";
+import { getUpcomingTrainings, formatScheduleDate, type ScheduleItem } from "@/data/schedule";
+import { localizeCourse } from "@/data/schedule-i18n";
 import KnowledgeGraph from "./KnowledgeGraph";
 import { STORY_SCENES, STORY_TRANSITIONS } from "./scenes";
 
@@ -42,6 +43,7 @@ function placeArt(frame: HTMLElement) {
 export default function StoryScroll() {
   const t = useTranslations("home.story");
   const tAll = useTranslations();
+  const locale = useLocale();
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
   const hydrated = useSyncExternalStore(subscribe, () => true, () => false);
@@ -291,8 +293,8 @@ export default function StoryScroll() {
                     {upcoming.map((c) => (
                       <li key={`${c.date}-${c.name}`}>
                         <Link href="/schedule">
-                          <span className="story-upcoming-date">{c.date}</span>
-                          <span>{c.name}</span>
+                          <span className="story-upcoming-date">{formatScheduleDate(c.date, locale)}</span>
+                          <span>{localizeCourse(c.name, locale)}</span>
                         </Link>
                       </li>
                     ))}

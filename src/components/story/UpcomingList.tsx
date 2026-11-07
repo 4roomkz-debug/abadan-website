@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { getUpcomingTrainings, formatScheduleDate } from "@/data/schedule";
+import { localizeCourse } from "@/data/schedule-i18n";
 
 const subscribe = () => () => {};
 
@@ -28,7 +29,7 @@ export default function UpcomingList({ count = 6 }: { count?: number }) {
             <li key={`${c.date}-${c.name}`}>
               <Link href="/schedule" className="upcoming-row">
                 <span className="upcoming-date">{formatScheduleDate(c.date, locale)}</span>
-                <span className="upcoming-name">{c.name}</span>
+                <span className="upcoming-name">{localizeCourse(c.name, locale)}</span>
                 <span className="upcoming-meta">{t("hours", { n: c.hours })}</span>
                 <span className="upcoming-price">{price(c.priceOffline)}</span>
               </Link>

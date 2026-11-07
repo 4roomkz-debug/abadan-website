@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import Header from "@/components/Header";
 import { SCHEDULE_DATA, MONTHS, CATEGORIES, parseDateForSort, isEventPassed, formatScheduleDate } from "@/data/schedule";
+import { localizeCourse } from "@/data/schedule-i18n";
 import { submitContactForm } from "@/lib/contactForm";
 
 const subscribeToHydration = () => () => {};
@@ -217,7 +218,7 @@ export default function SchedulePage() {
                       <div className="text-xs text-[#94A3B8]">{item.month} 2026</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-[#2D3A3C]">{item.name}</div>
+                      <div className="text-[#2D3A3C]">{localizeCourse(item.name, locale)}</div>
                       <div className={`inline-block mt-1 px-2 py-0.5 rounded text-xs ${
                         item.category === "business"
                           ? "bg-[#00767D]/10 text-[#00767D]"
@@ -257,7 +258,7 @@ export default function SchedulePage() {
                   </div>
                   <div className="text-sm text-[#546569]">{formatScheduleDate(item.date, locale)}</div>
                 </div>
-                <h3 className="text-[#2D3A3C] font-medium mb-3">{item.name}</h3>
+                <h3 className="text-[#2D3A3C] font-medium mb-3">{localizeCourse(item.name, locale)}</h3>
                 <div className="flex items-center justify-between mb-3">
                   <div className="text-sm">
                     <span className="text-[#94A3B8]">Онлайн: </span>
