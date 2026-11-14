@@ -14,5 +14,26 @@
   "quotesTitle": "From thank-you letters",
   "quotesNote": "A faithful translation of the Russian original. Under each quote: which training the letter is about.",
   "faqTitle": "Frequently asked questions",
-  "loading": "Loading the schedule…"
+  "loading": "Loading the schedule…",
+  "program": {
+    "title": "How a corporate programme runs",
+    "steps": [
+      {
+        "title": "Request and proposal",
+        "desc": "A commercial proposal on the day you contact us."
+      },
+      {
+        "title": "Training starts",
+        "desc": "We can launch the training within three days."
+      },
+      {
+        "title": "80% practice on your cases",
+        "desc": "The programme is built on the company's real tasks and tied to its metrics."
+      },
+      {
+        "title": "Follow-through to results",
+        "desc": "Assignments, review and support after the training."
+      }
+    ]
+  }
 }
