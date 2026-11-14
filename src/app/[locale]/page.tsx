@@ -10,6 +10,7 @@ import Quotes from "@/components/story/Quotes";
 import Contact from "@/components/Contact";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
+import ScrollHaze from "@/components/ScrollHaze";
 
 // Главная — «История обучения» на прокрутке (решение Гани 06.11.2026):
 // пять эпох с метками-ссылками, под ними ближайшие курсы, клиенты, цитаты
@@ -35,6 +36,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <Newsletter variant="paper" />
       </div>
       <Footer />
+      <ScrollHaze />
     </>
   );
 }
