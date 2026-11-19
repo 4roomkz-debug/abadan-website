@@ -87,14 +87,6 @@ export function WebSiteJsonLd() {
     "@type": "WebSite",
     name: "Abadan & Co.",
     url: "https://www.abadan.kz",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: "https://www.abadan.kz/ru/schedule?search={search_term_string}",
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (
