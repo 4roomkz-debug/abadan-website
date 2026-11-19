@@ -11,7 +11,7 @@ export default function proxy(request: NextRequest) {
   if (match && isRuOnlyPath(match[2])) {
     const url = request.nextUrl.clone();
     url.pathname = `/ru${match[2]}`;
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(url, 308);
   }
 
   return handleI18nRouting(request);

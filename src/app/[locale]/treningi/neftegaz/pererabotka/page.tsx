@@ -73,7 +73,7 @@ export default function PererabotkaPage() {
             <nav className="flex items-center gap-2 text-sm text-[#7A9EA3] mb-8 scroll-fade-in">
               <Link href="/" className="hover:text-[#00767D] transition-colors">Главная</Link>
               <span>/</span>
-              <Link href="/treningi" className="hover:text-[#00767D] transition-colors">Тренинги</Link>
+              <Link href="/schedule" className="hover:text-[#00767D] transition-colors">Тренинги</Link>
               <span>/</span>
               <Link href="/treningi/neftegaz" className="hover:text-[#00767D] transition-colors">Нефтегаз</Link>
               <span>/</span>

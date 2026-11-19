@@ -14,6 +14,17 @@ const nextConfig: NextConfig = {
       { source: "/ibirai/:path*", destination: IBIRAI_URL, permanent: true },
       { source: "/:locale(ru|kk|en)/ibirai", destination: IBIRAI_URL, permanent: true },
       { source: "/:locale(ru|kk|en)/ibirai/:path*", destination: IBIRAI_URL, permanent: true },
+      // Страницы-хаба /treningi нет, а страницу /treningi/neftegaz/kompetentsii
+      // удалили. Google нашёл оба адреса по старым ссылкам и видел 404 (Search
+      // Console, 19.11.2026). Ведём сразу на живые страницы, без цепочки через /ru.
+      { source: "/treningi", destination: "/ru/schedule", permanent: true },
+      { source: "/:locale(ru|kk|en)/treningi", destination: "/:locale/schedule", permanent: true },
+      { source: "/treningi/neftegaz/kompetentsii", destination: "/ru/treningi/neftegaz", permanent: true },
+      {
+        source: "/:locale(ru|kk|en)/treningi/neftegaz/kompetentsii",
+        destination: "/:locale/treningi/neftegaz",
+        permanent: true,
+      },
       // Сайт переехал на адреса с префиксом языка. Старые русские адреса без
       // префикса (/about, /treningi/hr) — постоянным 308 на /ru/..., чтобы
       // поисковики перенесли позиции. Корень "/" сюда не попадает: его по
