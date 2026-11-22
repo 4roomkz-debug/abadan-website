@@ -1546,3 +1546,96 @@ section {
   .story-mclip { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 78% center; background: var(--paper); transition: opacity .6s ease-out; cursor: pointer; }
   .story-mclip[data-state="done"] { opacity: 0; }
 }
+
+/* ================================
+   Маршрут «От скважины до переработки» (/treningi/neftegaz)
+   Слева закреплённая сцена с кадром, справа шаги; до 900px — обычный поток,
+   у каждого шага свой кадр. Кадр — фото на бумаге: белое паспарту, мягкая тень.
+   ================================ */
+.rt { border-top: 2px solid var(--ink); }
+.rt-steps { list-style: none; margin: 0; padding: 0; }
+.rt-step { padding: 1.25rem 0 1.5rem; border-bottom: 1px solid #D5DEDE; }
+.rt-media, .rt-frames { position: relative; aspect-ratio: 16 / 9; padding: .5rem; background: #fff; border-radius: 4px; box-shadow: 0 8px 22px -12px rgba(20, 40, 42, .35); }
+.rt-media { margin-bottom: 1.1rem; }
+.rt-photo { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 2px; background: #E6E9E2; }
+.rt-img, .rt-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rt-video { opacity: 0; transition: opacity .5s cubic-bezier(.16, 1, .3, 1); }
+.rt-video.is-playing { opacity: 1; }
+.rt-n { display: block; font-size: var(--type-small); font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; margin-bottom: .2rem; }
+.rt-pick { display: grid; gap: .3rem; width: 100%; text-align: left; cursor: pointer; padding: .25rem 0; }
+.rt-title { font-size: clamp(1.3rem, 1.05rem + 1vw, 1.9rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+.rt-desc { font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 34rem; }
+.rt-count { font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; margin-top: .2rem; }
+.rt-pick:hover .rt-title { color: #00767D; }
+.rt-wide { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: stretch; }
+.rt-stage-in { position: sticky; top: 6rem; padding-top: 1.5rem; }
+.rt-frame { position: absolute; inset: .5rem; opacity: 0; transition: opacity .6s cubic-bezier(.16, 1, .3, 1); }
+.rt-frame.on { opacity: 1; }
+.rt-prog { display: flex; align-items: center; gap: .9rem; margin-top: 1rem; font-size: var(--type-small); font-weight: 700; color: #546569; font-variant-numeric: tabular-nums; }
+.rt-prog-bar { flex: 1; height: 2px; background: #D5DEDE; }
+.rt-prog-bar i { display: block; height: 100%; background: var(--ink); transition: width .5s cubic-bezier(.16, 1, .3, 1); }
+.rt-wide .rt-step { min-height: 58svh; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 1.75rem; border-bottom: 0; border-top: 2px solid #D5DEDE; transition: border-color .4s; }
+.rt-wide .rt-step:first-child { border-top-color: transparent; }
+.rt-wide .rt-step.on { border-top-color: var(--ink); }
+.rt-wide .rt-step:first-child.on { border-top-color: transparent; }
+.rt-wide .rt-step .tr-area-sub { align-self: flex-start; }
+@media (prefers-reduced-motion: reduce) {
+  .rt-frame, .rt-video, .rt-prog-bar i, .rt-wide .rt-step { transition: none; }
+}
+
+/* ================================
+   Схема «Как идёт корпоративная программа»
+   ================================ */
+.pf-head { margin-bottom: 1.5rem; }
+.pf-steps { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.pf-step { padding: 1.25rem 0 1.5rem; border-bottom: 1px solid #D5DEDE; }
+.pf-mini { display: block; width: min(100%, 22rem); height: auto; margin-bottom: .75rem; }
+.pf-svg, .pf-mini { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.pf-n { display: block; font-size: var(--type-small); font-weight: 700; color: #00767D; font-variant-numeric: tabular-nums; }
+.pf-title { font-size: clamp(1.3rem, 1.05rem + 1vw, 1.9rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; margin-top: .15rem; }
+.pf-desc { margin-top: .4rem; font-size: var(--type-body); line-height: 1.5; color: var(--ink-soft); max-width: 32rem; }
+.pf-fill { fill: #F0BB1E; }
+.pf-track { stroke: #D5DEDE; }
+.pf-arc { stroke-width: 5; stroke-dasharray: .8px 1px; stroke-linecap: butt; }
+.pf-fine { stroke: #546569; stroke-width: 1; }
+.pf-bar { stroke-width: 10; stroke-linecap: butt; }
+.pf-tick { stroke-width: 2.4; stroke: #00767D; }
+.pf-spine { stroke: #D5DEDE; stroke-width: 1.2; }
+.pf-wide { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); }
+.pf-stage { border-top: 2px solid var(--ink); }
+.pf-svg { position: sticky; top: 6rem; display: block; width: min(100%, 30rem); max-height: calc(100svh - 8rem); margin-top: 1.5rem; }
+.pf-wide .pf-steps { border-top-color: transparent; }
+.pf-wide .pf-step { min-height: 48svh; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 1.75rem; border-bottom: 0; border-top: 2px solid #D5DEDE; transition: border-color .4s; }
+.pf-wide .pf-step:first-child { border-top-color: transparent; }
+.pf-wide .pf-step.on { border-top-color: var(--ink); }
+.pf-wide .pf-step:first-child.on { border-top-color: transparent; }
+.pf-wide .pf-part { opacity: 0; transition: opacity .5s cubic-bezier(.16, 1, .3, 1); }
+.pf-wide .pf-part.on { opacity: 1; }
+/* Линии рисуются через Web Animations (ProgramFlow.tsx): CSS-переход stroke-dashoffset в Chrome зависал на старте. */
+.pf-wide .pf-part [pathLength] { stroke-dasharray: 1px; stroke-dashoffset: 1px; }
+.pf-wide .pf-part.on [pathLength] { stroke-dashoffset: 0px; }
+.pf-wide .pf-part .pf-arc { stroke-dasharray: 0px 1px; stroke-dashoffset: 0px; }
+.pf-wide .pf-part.on .pf-arc { stroke-dasharray: .8px 1px; }
+@media (prefers-reduced-motion: reduce) {
+  .pf-wide .pf-part { opacity: 1; transition: none; }
+  .pf-wide .pf-part [pathLength] { stroke-dashoffset: 0; transition: none; }
+  .pf-wide .pf-part .pf-arc { stroke-dasharray: .8px 1px; transition: none; }
+  .pf-wide .pf-step { transition: none; }
+}
+
+/* ================================
+   Дымка у нижнего края окна: три слоя backdrop-filter 2/6/14px с масками,
+   без заливки и рамки. Гаснет в конце страницы и над формой заявки.
+   ================================ */
+.scroll-haze { position: fixed; left: 0; right: 0; bottom: 0; height: 112px; z-index: 20; pointer-events: none; transition: opacity .5s; }
+.scroll-haze.is-off { opacity: 0; }
+.scroll-haze i { position: absolute; inset: 0; }
+.scroll-haze i:nth-child(1) { -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); -webkit-mask: linear-gradient(transparent 0%, #000 33%, #000 66%, transparent 100%); mask: linear-gradient(transparent 0%, #000 33%, #000 66%, transparent 100%); }
+.scroll-haze i:nth-child(2) { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); -webkit-mask: linear-gradient(transparent 33%, #000 66%, #000 100%); mask: linear-gradient(transparent 33%, #000 66%, #000 100%); }
+.scroll-haze i:nth-child(3) { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); -webkit-mask: linear-gradient(transparent 60%, #000 100%); mask: linear-gradient(transparent 60%, #000 100%); }
+@media (prefers-reduced-transparency: reduce) { .scroll-haze { display: none; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .scroll-haze { display: none; } }
+
+/* Глобальное `section { overflow: hidden }` делает секцию контейнером прокрутки и ломает
+   position: sticky внутри; clip обрезает так же, но sticky остаётся рабочим. */
+.paper-section.has-sticky { overflow: clip; }

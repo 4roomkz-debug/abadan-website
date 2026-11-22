@@ -7,6 +7,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Contact from "@/components/Contact";
 import CourseTable from "@/components/CourseTable";
+import ScrollHaze from "@/components/ScrollHaze";
+import OilRoute from "./OilRoute";
+import ProgramFlow from "./ProgramFlow";
 import Quotes from "@/components/story/Quotes";
 import ClientsStrip from "@/components/story/ClientsStrip";
 import { isEventPassed, parseDateForSort } from "@/data/schedule";
@@ -20,7 +23,11 @@ const PAGE = 12;
 // курсы с записью под строкой, цитаты из писем, форма заявки, вопросы.
 // Курсы — из SCHEDULE_DATA по ключевым словам (src/data/training/<slug>.ts),
 // тексты — messages/*/training-<slug>.json.
-export default function TrainingCategoryPage({ slug }: { slug: TrainingSlug }) {
+// routeOrder — порядок областей в маршруте со сценой и клипами (пока только нефтегаз);
+// programFlow — схема «Как идёт корпоративная программа» перед формой заявки.
+export default function TrainingCategoryPage({
+  slug, routeOrder, programFlow = false,
+}: { slug: TrainingSlug; routeOrder?: readonly string[]; programFlow?: boolean }) {
   const t = useTranslations("training");
   const p = useTranslations(`training.${slug}`);
   const locale = useLocale();
@@ -78,24 +85,41 @@ export default function TrainingCategoryPage({ slug }: { slug: TrainingSlug }) {
           </div></div>
         </section>
 
-        <section className="paper-section paper-section-tight" aria-labelledby="areas-title">
+        <section className={`paper-section paper-section-tight${routeOrder ? " has-sticky" : ""}`} aria-labelledby="areas-title">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8"><div className="max-w-7xl mx-auto">
             <div className="paper-head">
               <h2 id="areas-title" className="paper-display">{p("areasTitle")}</h2>
               <p className="paper-note">{p("areasLead")}</p>
             </div>
-            <ul className="tr-areas">
-              {cfg.areas.map((a) => (
-                <li key={a.id}>
-                  <button type="button" className="tr-area" onClick={() => pickArea(a.id)}>
-                    <span className="tr-area-title">{p(`areas.${a.id}.title`)}</span>
-                    <span className="tr-area-desc">{p(`areas.${a.id}.desc`)}</span>
-                    {hydrated && countIn(a.id) > 0 && <span className="tr-area-count">{t("courses", { n: countIn(a.id) })} →</span>}
-                  </button>
-                  {"href" in a && a.href && <Link href={a.href} className="paper-link tr-area-sub">{t("areaSub")} ↗</Link>}
-                </li>
-              ))}
-            </ul>
+            {routeOrder ? (
+              <OilRoute
+                steps={routeOrder.map((id) => {
+                  const a = cfg.areas.find((x) => x.id === id)!;
+                  return {
+                    id,
+                    title: p(`areas.${id}.title`),
+                    desc: p(`areas.${id}.desc`),
+                    countLabel: hydrated && countIn(id) > 0 ? t("courses", { n: countIn(id) }) : null,
+                    href: "href" in a ? a.href : undefined,
+                  };
+                })}
+                subLabel={t("areaSub")}
+                onPick={pickArea}
+              />
+            ) : (
+              <ul className="tr-areas">
+                {cfg.areas.map((a) => (
+                  <li key={a.id}>
+                    <button type="button" className="tr-area" onClick={() => pickArea(a.id)}>
+                      <span className="tr-area-title">{p(`areas.${a.id}.title`)}</span>
+                      <span className="tr-area-desc">{p(`areas.${a.id}.desc`)}</span>
+                      {hydrated && countIn(a.id) > 0 && <span className="tr-area-count">{t("courses", { n: countIn(a.id) })} →</span>}
+                    </button>
+                    {"href" in a && a.href && <Link href={a.href} className="paper-link tr-area-sub">{t("areaSub")} ↗</Link>}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div></div>
         </section>
 
@@ -137,6 +161,7 @@ export default function TrainingCategoryPage({ slug }: { slug: TrainingSlug }) {
 
         <Quotes ids={cfg.testimonials} title={t("quotesTitle")} note={t("quotesNote")} />
         <ClientsStrip />
+        {programFlow && <ProgramFlow />}
         <Contact variant="paper" title={p("formTitle")} subtitle={p("formLead")} />
 
         <section className="paper-section" aria-labelledby="faq-title">
@@ -154,6 +179,7 @@ export default function TrainingCategoryPage({ slug }: { slug: TrainingSlug }) {
         </section>
       </main>
       <Footer />
+      <ScrollHaze />
     </>
   );
 }
