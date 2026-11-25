@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "updated": "2026-08-26",
+    "updated": "2026-09-09",
     "note": "ИСТОЧНИК ПРАВДЫ. Правки только здесь, затем npm run sync:canon в каждом репозитории."
   },
   "person": {
@@ -16,15 +16,15 @@
       "en": "Founder of ibirAi, business trainer and mentor from Kazakhstan, Chairman of the Board at Kazakhstan Gharysh Sapary."
     },
     "description": {
-      "ru": "Гани Абадан — казахстанский предприниматель, бизнес-тренер и ментор. Тренер с 2012 года, лично обучил более 10 000 человек. Основатель ibirAi — мобильной платформы обучения технике безопасности для рабочих. Сооснователь Abadan & Company — компании корпоративного обучения. Автор книги «Бизнес по любви 2.0». Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары».",
-      "en": "Gani Abadan is a Kazakhstani entrepreneur, business trainer and mentor. A trainer since 2012, he has personally trained over 10,000 people. Founder of ibirAi, a mobile safety training platform for frontline workers. Co-founder of Abadan & Company, a corporate training firm. Author of the book Business with Love 2.0. Chairman of the Board of Directors at Kazakhstan Gharysh Sapary."
+      "ru": "Гани Абадан — казахстанский предприниматель, бизнес-тренер и ментор. Тренер с 2011 года, лично обучил более 10 000 человек. Основатель ibirAi — мобильной платформы обучения технике безопасности для рабочих. Сооснователь Abadan & Company — компании корпоративного обучения. Автор книги «Бизнес по любви 2.0». Председатель совета директоров АО НК «Қазақстан Ғарыш Сапары».",
+      "en": "Gani Abadan is a Kazakhstani entrepreneur, business trainer and mentor. A trainer since 2011, he has personally trained over 10,000 people. Founder of ibirAi, a mobile safety training platform for frontline workers. Co-founder of Abadan & Company, a corporate training firm. Author of the book Business with Love 2.0. Chairman of the Board of Directors at Kazakhstan Gharysh Sapary."
     },
     "jobTitle": {
       "ru": "Основатель ibirAi",
       "en": "Founder of ibirAi"
     },
     "facts": {
-      "trainerSince": "2012",
+      "trainerSince": "2011",
       "trainedPersonally": "10 000+",
       "book": "«Бизнес по любви 2.0»"
     },
@@ -73,7 +73,7 @@
       "ru": "ibirAi — казахстанская платформа обучения технике безопасности для линейного персонала. Обучение приходит к рабочему в телефон: 10 минут в смену, с проверкой ответа голосом. Урок открывается в Telegram без установки приложения, напоминание дублируется в WhatsApp. Компания получает поимённую картину — кто понял материал, а кто в зоне риска, и запись по каждому работнику. Не заменяет обязательный инструктаж и аттестацию — добавляет к ним доказательство понимания. Флагманский кейс — Polpharma Santo, программа для руководителей 2025 года: 117 человек, 3 страны, 12 недель, 80%+ дошли до финала, 100% применили на работе.",
       "en": "ibirAi is a Kazakhstan-based safety training platform for frontline workers. Training reaches the worker on their phone: 10 minutes per shift, with answers verified by voice. The lesson opens in Telegram with no app to install; the reminder is mirrored to WhatsApp. Employers get a name-by-name view of who understood the material and who is at risk, plus a record for every worker. It does not replace mandatory briefings or certification — it adds proof of understanding on top. Flagship case: Polpharma Santo, a 2025 leadership program: 117 people across 3 countries over 12 weeks, 80%+ reached the finish, 100% applied it on the job."
     },
-    "founded": "2024",
+    "founded": "2025",
     "site": "https://ibirai.com",
     "credentials": [
       "Резидент Astana Hub",
@@ -124,12 +124,14 @@
       "en": "An AI journaling coach in Telegram: morning and evening reflection built on the 7-questions method."
     },
     "description": {
-      "ru": "AiKun — Telegram-бот ежедневной рефлексии с AI-коучем. Утренний и вечерний чек-ин по методике «7 вопросов» Гани Абадана, еженедельные обзоры с разбором от ИИ, отслеживание целей. Работает с декабря 2025 года. Наблюдение по данным продукта: пользователи, которые ведут и утренний, и вечерний чек-ин, остаются в четыре раза дольше тех, кто заполняет только утро.",
-      "en": "AiKun is a Telegram bot for daily reflection with an AI coach. Morning and evening check-ins follow Gani Abadan's 7-questions method, with weekly AI-reviewed summaries and goal tracking. Live since December 2025. Product data shows users who keep both morning and evening check-ins stay four times longer than morning-only users."
+      "ru": "AiKun — Telegram-бот ежедневной рефлексии с AI-коучем. Утренний и вечерний чек-ин по методике «7 вопросов» Гани Абадана, еженедельные обзоры с разбором от ИИ, отслеживание целей. Работает с декабря 2025 года.",
+      "en": "AiKun is a Telegram bot for daily reflection with an AI coach. Morning and evening check-ins follow Gani Abadan's 7-questions method, with weekly AI-reviewed summaries and goal tracking. Live since December 2025."
     },
-    "site": "https://aikun.app",
+    "site": "https://t.me/abadan_mentor_bot",
     "bot": "https://t.me/abadan_mentor_bot",
     "notForPublic": [
+      "aikun.app — чужой припаркованный домен; не указывать как сайт проекта. Подтверждено 06.09.2026, исправлено 09.09.2026",
+      "Не использовать старое сравнение удержания «в четыре раза»: июльская пара не воспроизводится; актуальный срез — заявка Astana Hub Battle от 06.09.2026",
       "Не публиковать число активных платных подписок и выручку — внутренние метрики",
       "Число регистраций публиковать только актуальное, сверяясь с боевой базой"
     ]
@@ -171,16 +173,20 @@
       "note": "9000 обученных, обратный порядок"
     },
     {
-      "pattern": "14\\s*000\\s*\\+?[^\\n]{0,25}(обучен|участник)",
+      "pattern": "14\\s*000\\s*\\+?[^\\n]{0,25}(обучен|участник|человек)",
       "note": "14 000+ — прежний канон, заменён на 10 000+ лично / 50 000+ компанией"
     },
     {
-      "pattern": "12\\s*\\+?\\s*лет[^\\n]{0,30}(тренер|обучени|опыт)",
-      "note": "12 лет опыта — устарело, канон «тренер с 2012 года»"
+      "pattern": "(TOP|ТОП|Топ|топ)[-\\s]?10\\s+тренер",
+      "note": "«TOP-10 тренеров КЗ» — источник не найден, снято с abadangani.com 24.11.2026 решением Гани"
     },
     {
-      "pattern": "15\\s*\\+?\\s*лет[^\\n]{0,25}(в обучении|тренер)",
-      "note": "15+ лет не сходится с «с 2012 года» — использовать «тренер с 2012 года»"
+      "pattern": "12\\s*\\+?\\s*лет[^\\n]{0,30}(тренер|обучени|опыт)",
+      "note": "12 лет опыта — устарело, канон «тренер с 2011 года»"
+    },
+    {
+      "pattern": "([Тт]ренер[^\\n]{0,15}с\\s+2012|since\\s+2012|10\\s*000[^\\n]{0,30}с\\s+2012)",
+      "note": "«с 2012» — прежний канон; с 25.11.2026 «тренер с 2011 года»"
     },
     {
       "pattern": "[Чч]лен\\s+совета\\s+директоров[^\\n]{0,40}(Ғарыш|ҒАРЫШ|Гарыш|Сапары)",
